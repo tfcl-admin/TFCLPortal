@@ -1,0 +1,441 @@
+﻿@model TFCLPortal.SalesDetails.Dto.SalesDetailListDto
+
+@{ int counter = 1; }
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+
+<div class="tab_content" style="padding: 15px 20px">
+    <!---->
+    <div class="row">
+        @if (@Model != null)
+        {
+            <div class="col-md-12">
+                <div class="accordion md-accordion" id="accordionSchoolBranches" role="tablist" aria-multiselectable="true">
+                    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+                    @foreach (var item in Model.SalesDetailChild)
+                    {
+
+                        <div class="card">
+
+                            <!-- Card header -->
+                            <div class="card-header" role="tab" id="headingOneSD-@item.Id">
+                                <a data-toggle="collapse" data-parent="#accordionSchoolBranches" href="#collapseOneSD-@item.Id" aria-expanded="true"
+                                   aria-controls="collapseOneSD-@item.Id">
+                                    <h5 class="mb-0">
+                                        @item.BusinessName <i class="fa fa-angle-down rotate-icon"></i>
+                                    </h5>
+                                </a>
+                            </div>
+
+                            <!-- Card body -->
+                            <div id="collapseOneSD-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneSD-@item.Id"
+                                 data-parent="#accordionSchoolBranches">
+                                <div class="card-body">
+                                    <div class="row">
+                                        @*<div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    Inventory Record Maintanance
+                                                </p>
+                                                <p class="detailText">@(item.InventoryRecordMaintenanceName == null || item.InventoryRecordMaintenanceName == "" ? "--" : item.InventoryRecordMaintenanceName)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    Inventory Entry Source
+                                                </p>
+                                                <p class="detailText">@(item.InventoryEntrySourceName == null || item.InventoryEntrySourceName == "" ? "--" : item.InventoryEntrySourceName)</p>
+                                            </div>*@
+                                        <div class="col-md-12 text-center">
+                                            <p class="detailHeading">
+                                                Seasonal Sales ( @item.AnalysisMonth.ToString("MMM yyyy") )
+                                            </p>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered" style="text-align:center ">
+                                                <thead>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month1)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month2)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month3)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month4)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month5)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month6)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month7)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month8)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month9)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month10)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month11)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month12)
+                                                </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>@(item.Month1Sales == null || item.Month1Sales == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.Month1Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month2Sales == null || item.Month2Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month2Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month3Sales == null || item.Month3Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month3Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month4Sales == null || item.Month4Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month4Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month5Sales == null || item.Month5Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month5Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month6Sales == null || item.Month6Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month6Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month7Sales == null || item.Month7Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month7Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month8Sales == null || item.Month8Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month8Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month9Sales == null || item.Month9Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month9Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month10Sales == null || item.Month10Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month10Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month11Sales == null || item.Month11Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month11Sales).Replace(",", ""))))</td>
+                                                        <td>@(item.Month12Sales == null || item.Month12Sales == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month12Sales).Replace(",", ""))))</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-12 text-center">
+                                            <p class="detailHeading">
+                                                Product Wise Sales
+                                            </p>
+
+                                        </div>
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered" style="text-align:center ">
+                                                <thead>
+                                                <th>
+                                                    Sr
+                                                </th>
+                                                <th>
+                                                    Item Name
+                                                </th>
+                                                <th>
+                                                    Per Unit Sales Price
+                                                </th>
+                                                <th>
+                                                    Monthly Sale (Units)
+                                                </th>
+                                                <th>
+                                                    Total Sale
+                                                </th>
+
+                                                </thead>
+                                                @if (item.SalesDetailGrandChild != null)
+                                                {
+
+                                                    @if (item.SalesDetailGrandChild.Count > 0)
+                                                    {
+                                                        <tbody>
+                                                            @foreach (var child in item.SalesDetailGrandChild)
+                                                            {
+                                                                <tr>
+                                                                    <td>@(counter++)</td>
+                                                                    <td>@(child.ItemName == null || child.ItemName == "" ? "--" : child.ItemName)</td>
+                                                                    <td style="text-align:right">@(child.PerUnitSalePrice == null || child.PerUnitSalePrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.PerUnitSalePrice).Replace(",", ""))))</td>
+                                                                    <td>@(child.MonthlySaleUnit == null || child.MonthlySaleUnit == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.MonthlySaleUnit).Replace(",", ""))))</td>
+                                                                    <td style="text-align:right">@(child.TotalSale == null || child.TotalSale == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.TotalSale).Replace(",", ""))))</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+
+                                                    }
+                                                }
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="4" class="text-right">
+                                                            Total
+                                                        </td>
+                                                        <td style="text-align:right">@(item.TotalMonthlyProductWiseSale == null || item.TotalMonthlyProductWiseSale == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalMonthlyProductWiseSale).Replace(",", ""))))</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+
+                                        <div class="col-md-6 text-center">
+                                            <p class="detailHeading">
+                                                Daily Sales
+                                            </p>
+                                     
+                                            <table class="table table-bordered" style="text-align:center ">
+                                                <thead>
+                                                <th>
+                                                    Frequency
+                                                </th>
+                                                <th>
+                                                    Amount
+                                                </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Daily Sales</td>
+                                                        <td style="text-align:right">@(item.DailySalesAmount == null || item.DailySalesAmount == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.DailySalesAmount).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>No of Working Days per Month</td>
+                                                        <td style="text-align:right">@(item.NoOfWorkingDays == null || item.NoOfWorkingDays == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.NoOfWorkingDays).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    @*<tr>
+                                                            <td>Weekly Sales</td>
+                                                            <td style="text-align:right">@(item.WeeklySales == null || item.WeeklySales == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.WeeklySales).Replace(",", ""))))</td>
+                                                        </tr>*@
+                                                    <tr>
+                                                        <td>Monthly Sales</td>
+                                                        <td style="text-align:right">@(item.MonthlySales == null || item.MonthlySales == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.MonthlySales).Replace(",", ""))))</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-6 text-center">
+                                            <p class="detailHeading">
+                                                Accumulative
+                                            </p>
+
+                                            <table class="table table-bordered" style="text-align:center ">
+                                                <thead>
+                                                <th>
+                                                    Frequency
+                                                </th>
+                                                <th>
+                                                    Amount
+                                                </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sales to be Considered </td>
+                                                        <td style="text-align:right">@(item.SalesToBeConsideredThreeLower == null || item.SalesToBeConsideredThreeLower == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.SalesToBeConsideredThreeLower).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Income Efficiency</td>
+                                                        <td style="text-align:right">@(item.IncomeEfficiency == null || item.IncomeEfficiency == "" ? "0" : string.Format("{0:#,##0}%",  Int32.Parse((item.IncomeEfficiency).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Sales To be Considered</td>
+                                                        <td style="text-align:right">@(item.SalesToBeConsidered == null || item.SalesToBeConsidered == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.SalesToBeConsidered).Replace(",", ""))))</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+
+
+                    <div class="col-md-12" style="text-align: right;margin-top:10px">
+                        <a id="screenBtnSD" href="" data-toggle="modal" data-target="#_SalesDetail_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                        <a id="discrepentBtnSD" href="" data-toggle="modal" data-target="#_SalesDetail_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="tab_content" style="padding: 15px 20px">
+                <div class="row">
+                    <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Approved Modal -->
+<div class="modal fade" id="_SalesDetail_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenSD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_SalesDetail_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdSalD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorSD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentSalD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+        $('#commentId').attr('required', 'required');
+
+        $(document).ready(function () {
+            //alert('@ViewBag.PersonalAction');
+            btnChange('@ViewBag.SalesAction');
+        });
+
+
+        function btnChange(currentState) {
+            //alert(currentState);
+            if (currentState == "Screened") {
+                $('#screenBtnSD').html("<i class='fa fa-check'></i>  Marked Screened");
+                //$('#screenBtnSD').click(false);
+
+
+                $('#discrepentBtnSD').html("Discrepent");
+                //$("#discrepentBtnSD").attr("data-toggle", "modal");
+                //$("#discrepentBtnSD").attr("data-target", "#_businessPlan_discrepent");
+                //$("#discrepentBtnSD").attr("href", "");
+                //$('#screenBtnSD').click(true);
+            }
+            else if (currentState == "Discrepent") {
+
+                $('#discrepentBtnSD').html("<i class='fa fa-times'></i> Marked Discrepent");
+                //$('#discrepentBtnSD').click(false);
+
+                $('#screenBtnSD').html("Screen");
+                //$("#screenBtnSD").attr("data-toggle", "modal");
+                //$("#screenBtnSD").attr("data-target", "#_businessPlan_approved");
+                //$("#screenBtnSD").attr("href", "");
+                //$('#screenBtnSD').click(true);
+
+            }
+            else if (currentState == "Hide") {
+                $('#screenBtnSD').toggleClass("d-none");
+                $('#discrepentBtnSD').toggleClass("d-none");
+            }
+        }
+
+        $('#btnScreenSD').click(function () {
+            debugger;
+            var comment = $('#commentIdSalD').val();
+            var Id = $('#ApplicationId').val();
+                $.ajax({
+                        type: 'POST',
+                        datatype: "json",
+                        contenttype: 'application/json; charset=utf-8',
+                        url: '@Url.Content("~/Dashboard/MarkScreened")',
+                    data: { 'ApplicationId': Id, 'Screen': 'Sales Details'} ,
+                    success: function (data) {
+
+
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Screened');
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Screened');
+                        }
+
+                        btnChange("Screened");
+
+
+                        },
+                        error: function (data) {
+                            debugger
+                            abp.notify.error(data.result, 'Error');
+                         }
+
+
+                    });
+        });
+        $('#btndiscrepentSalD').click(function () {
+            debugger;
+            if (!$('#commentIdSalD').val()) {
+                $('#comment_errorSD').css("display", "block");;
+                return false;
+            } else {
+                $('#comment_errorSD').css("display", "none");
+            }
+            var comment = $('#commentIdSalD').val();
+            var Id = $('#ApplicationId').val();
+                $.ajax({
+                        type: 'POST',
+                        datatype: "json",
+                        contenttype: 'application/json; charset=utf-8',
+                        url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                    data: { 'ApplicationId': Id, 'Screen': 'Sales Details','Reason': comment },
+                    success: function (data) {
+
+                            $('.close').click();
+
+                            if (data.result.includes("successfully")) {
+                                abp.notify.success(data.result, 'Mark Discrepent');
+
+                            }
+                            else {
+                                abp.notify.info(data.result, 'Mark Discrepent');
+                        }
+
+                        btnChange("Discrepent");
+
+                        $('#commentIdSalD').val("");
+
+                        },
+                        error: function (data) {
+                            debugger;
+                            abp.notify.error(data.result, 'Error');
+                        }
+                    });
+            });
+</script>
+
+
+

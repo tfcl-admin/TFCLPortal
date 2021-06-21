@@ -1,0 +1,391 @@
+﻿@model TFCLPortal.TDSBusinessExpenses.Dto.TDSBusinessExpenseListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <div class="tab_content" style="padding: 15px 20px">
+
+        @if (Model.TDSBusinessExpenseChild.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion md-accordion" id="accordionSchoolsLists" role="tablist" aria-multiselectable="true">
+
+                        @foreach (var item in Model.TDSBusinessExpenseChild)
+                        {
+                            <div class="card">
+                                <!-- Card header -->
+                                <div class="card-header" role="tab" id="headingOneBE-@item.Id" style="width:100%">
+                                    <a data-toggle="collapse" data-parent="#accordionSchoolsLists" href="#collapseOneBE-@item.Id" aria-expanded="true"
+                                       aria-controls="collapseOneBE-@item.Id">
+                                        <h5 class="mb-0">
+                                            @item.BusinessName <i class="fa fa-angle-down rotate-icon"></i>
+                                        </h5>
+                                    </a>
+                                </div>
+
+                                <!-- Card body -->
+                                <div id="collapseOneBE-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneBE-@item.Id"
+                                     data-parent="#accordionSchoolsLists">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            @if (item.TDSBusinessExpenseGrandChilds != null)
+                                            {
+
+                                                @if (item.TDSBusinessExpenseGrandChilds.Count > 0)
+                                                {
+
+                                                    <div class="col-md-12">
+                                                        <table class="table table-bordered" style="text-align:center">
+                                                            <thead>
+                                                            <th >
+                                                                Employee Name
+                                                            </th>
+                                                            <th>
+                                                                Designation
+                                                            </th>
+                                                            <th>
+                                                                Gender
+                                                            </th>
+                                                            <th>
+                                                                Salary
+                                                            </th>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                @foreach (var schoolClass in item.TDSBusinessExpenseGrandChilds)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@(schoolClass.EmployerName == null || schoolClass.EmployerName == "" ? "--" : schoolClass.EmployerName)</td>
+                                                                        <td>@(schoolClass.Designation == null || schoolClass.Designation == "" ? "--" : schoolClass.Designation)</td>
+                                                                        <td>@(schoolClass.Gender == null || schoolClass.Gender == "" ? "--" : schoolClass.Gender)</td>
+                                                                        <td style="text-align:right">@(schoolClass.Salary == null || schoolClass.Salary == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((schoolClass.Salary).Replace(",", ""))))</td>
+                                                                    </tr>
+                                                                }
+
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="3" class="text-right">
+                                                                        Total
+                                                                    </td>
+                                                                    <td style="text-align:right">@(item.TotalSalary == null || item.TotalSalary == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalSalary).Replace(",", ""))))</td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                }
+                                            }
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Purchases
+                                                </p>
+                                                <p class="detailText">@(item.Purchases == null || item.Purchases == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Purchases).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Staff Salary
+                                                </p>
+                                                <p class="detailText">@(item.StaffSalary == null || item.StaffSalary == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.StaffSalary).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Rent Amount
+                                                </p>
+                                                <p class="detailText">@(item.RentAmount == null || item.RentAmount == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.RentAmount).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Utilities
+                                                </p>
+                                                <p class="detailText">@(item.Utilities == null || item.Utilities == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Utilities).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Entertainment
+                                                </p>
+                                                <p class="detailText">@(item.Entertainment == null || item.Entertainment == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Entertainment).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Repair & Maintenance
+                                                </p>
+                                                <p class="detailText">@(item.RepairMaintenance == null || item.RepairMaintenance == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.RepairMaintenance).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Transportation
+                                                </p>
+                                                <p class="detailText">@(item.Transportation == null || item.Transportation == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Transportation).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Carriage
+                                                </p>
+                                                <p class="detailText">@(item.Carriage == null || item.Carriage == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Carriage).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Committee
+                                                </p>
+                                                <p class="detailText">@(item.Committee == null || item.Committee == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Committee).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Tax
+                                                </p>
+                                                <p class="detailText">@(item.Tax == null || item.Tax == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Tax).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Internet Charges
+                                                </p>
+                                                <p class="detailText">@(item.Internet == null || item.Internet == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Internet).Replace(",",""))))</p>
+                                            </div>
+
+                                            @*@{item.AdditionalFieldLabel1 = "Hidden Expenses";}
+        @{item.AdditionalFieldValue1 = "15545";}*@
+
+                                            <div class="col-md-4 @(item.OtherExpenseLabelOne == "" || item.OtherExpenseLabelOne == null ? "d-none" : "")">
+                                                <p class="detailHeading">
+                                                    @item.OtherExpenseLabelOne
+                                                </p>
+                                                <p class="detailText">@(item.OtherExpenseValueOne == null || item.OtherExpenseValueOne == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherExpenseValueOne).Replace(",",""))))</p>
+                                            </div>
+
+                                            <div class="col-md-4 @(item.OtherExpenseLabelTwo == "" || item.OtherExpenseLabelTwo == null ? "d-none" : "" )">
+                                                <p class="detailHeading">
+                                                    @item.OtherExpenseLabelTwo
+                                                </p>
+                                                <p class="detailText">@(item.OtherExpenseValueTwo == null || item.OtherExpenseValueTwo == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherExpenseValueTwo).Replace(",",""))))</p>
+                                            </div>
+
+                                            <div class="col-md-4 @(item.OtherExpenseLabelThree == "" || item.OtherExpenseLabelThree == null ? "d-none" : "" )">
+                                                <p class="detailHeading">
+                                                    @item.OtherExpenseLabelThree
+                                                </p>
+                                                <p class="detailText">@(item.OtherExpenseValueThree == null || item.OtherExpenseValueThree == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherExpenseValueThree).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Other Expenses
+                                                </p>
+                                                <p class="detailText">@(item.OtherExpenses == null || item.OtherExpenses == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherExpenses).Replace(",",""))))</p>
+                                            </div>
+
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Total Monthly Expenses
+                                                </p>
+                                                <p class="detailText">@(item.TotalMonthlyExpenses == null || item.TotalMonthlyExpenses == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.TotalMonthlyExpenses).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Provision of Expenses
+                                                </p>
+                                                <p class="detailText">@(item.ProvisionOfExpenses == null || item.ProvisionOfExpenses == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.ProvisionOfExpenses).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Amount of Provision
+                                                </p>
+                                                <p class="detailText">@(item.AmountOfProvision == null || item.AmountOfProvision == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AmountOfProvision).Replace(",",""))))</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Monthly Business Expenses
+                                                </p>
+                                                <p class="detailText">@(item.MonthlyBusinessExpenses == null || item.MonthlyBusinessExpenses == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyBusinessExpenses).Replace(",",""))))</p>
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-3">
+                <p class="detailHeading">
+                    Grand Total Business Expenses
+                </p>
+                <p class="detailText">@(Model.NetMonthlyBusinessExpense == null || Model.NetMonthlyBusinessExpense == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.NetMonthlyBusinessExpense).Replace(",",""))))</p>
+            </div>
+          
+        </div>
+
+        <div class="col-md-12" style="text-align: right;">
+            <a id="screenBtnBE" href="" data-toggle="modal" data-target="#_BusinessExpense_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+            <a id="discrepentBtnBE" href="" data-toggle="modal" data-target="#_BusinessExpense_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+<!--Approved Modal -->
+<div class="modal fade" id="_BusinessExpense_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenBE" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_BusinessExpense_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdBE"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorBE">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentBE" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.BusinessExpenseAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnBE').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnBE').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnBE').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnBE').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnBE').toggleClass("d-none");
+            $('#discrepentBtnBE').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenBE').click(function () {
+        debugger;
+        var comment = $('#commentIdBE').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'BUSINESS EXPENSES'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentBE').click(function () {
+        debugger;
+        if (!$('#commentIdBE').val()) {
+            $('#comment_errorBE').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorBE').css("display", "none");
+        }
+        var comment = $('#commentIdBE').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'BUSINESS EXPENSES','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdBE').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

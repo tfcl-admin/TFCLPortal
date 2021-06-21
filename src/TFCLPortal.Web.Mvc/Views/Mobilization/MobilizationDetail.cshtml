@@ -1,0 +1,113 @@
+﻿@model TFCLPortal.Mobilizations.Dto.MobilizationListDto
+
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@{
+    ViewData["Title"] = "MobilizationDetail";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<h2>MobilizationDetail</h2>
+
+<input type="hidden" id="Id" value="@Model.Id" />
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100'>
+    <div id='mainContent'>
+        <form>
+            <div class="row gap-20 masonry pos-r">
+                <div class="masonry-sizer col-md-6"></div>
+                <div class="masonry-item col-md-12">
+                    <div class="bgc-white p-20 bd">
+                        <div class="card p-10">
+                            <h4 class="">Mobilization Detail</h4>
+                            <div style="text-align: right;float: right; width: 100%; position: absolute; margin-top: -7px;">
+                                
+                                    <a href="~/Mobilization/Mobilizations" class="btn btn-primary bg1 eft-1" title="Back">Back<span></span></a>
+                                </div>
+                            </div>
+                      
+                        <div class="mT-30">
+
+                            <div class="row">
+                                <div class="masonry-sizer col-md-2"></div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @if (@Model != null)
+                                    {
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="page-form">
+                                                    <div class="form-group">
+                                                        <label for="">Applicant name</label>
+                                                        <h4>@Model.ClientName</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Mobile #</label>
+                                                        <h4>@Model.MobileNo </h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">address</label>
+                                                        <h4>@Model.Address</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">status</label>
+                                                        <h4>@Model.MobStatusName  </h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Next meeting</label>
+                                                        @*<h4>@Model.NextMeeting.ToString("dd/MM/yyyy")</h4>*@
+                                                        <h4>@string.Format("{0:dd MMM yyyy}", Model.NextMeeting)</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="page-form">
+                                                    <div class="form-group">
+                                                        <label for="">Cnic</label>
+                                                        <h4>@Model.CNICNo</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">landline #</label>
+                                                        <h4>@Model.LandLineNo</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">school name</label>
+                                                        <h4>@Model.SchoolName</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">product type</label>
+                                                        <h4>@Model.ProductTypeName</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="page-form">
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="page-form">
+
+
+                                                </div>
+                                            </div>
+                                            <div class="masonry-sizer col-md-2"></div>
+                                        </div>
+                                    }
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>

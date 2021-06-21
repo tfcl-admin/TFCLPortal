@@ -1,0 +1,189 @@
+﻿@model  TFCLPortal.ApplicationWorkFlows.BccStates.Dto.UpdateBccStateDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    @*<link href="~/Theame/css/chosen.min.css" rel="stylesheet" asp-append-version="true" />*@
+    @*<link href="~/Theame/css/colors.css" rel="stylesheet" asp-append-version="true" />*@
+    @*<link href="~/Theame/css/svg-icons.css" rel="stylesheet" asp-append-version="true" />*@
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link href="~/Theame/css/prettyPhoto.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/toastr/toastr.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/materialize.css" rel="stylesheet" asp-append-version="true" />
+
+    <link href="~/fonts/material-icons/materialicons.css" rel="stylesheet" asp-append-version="true" />
+    @*<link href="~/lib/famfamfam-flags/dist/sprite/famfamfam-flags.css" rel="stylesheet" asp-append-version="true" />*@
+    <link href="~/lib/Waves/dist/waves.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/animate.css/animate.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/themes/all-themes.css" rel="stylesheet" asp-append-version="true" />
+    @*<link href="~/view-resources/Views/Shared/_Layout.css" rel="stylesheet" asp-append-version="true" />*@
+    <link href="~/Theame/css/style.css" rel="stylesheet" asp-append-version="true" />
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>*@
+
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>*@
+    <script src="~/Theame/js/bootstrap.js"></script>
+
+</head>
+<body>
+  
+
+    <div class="tab_content" style="padding: 15px 20px">
+
+        <form asp-action="AddReccomendationByUser" method="post">
+            <div class="row">
+
+                <input type="hidden" asp-for="ApplicationId" value="@ViewBag.AppId" />
+                <input type="hidden" asp-for="Fk_UserId" value="@ViewBag.UserId" />
+                <div class="col-md-6">
+                    <p class="detailHeading">
+                        Client ID
+                    </p>
+                    <p class="detailText">@ViewBag.ClientId</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">
+                        APPLICANT / RESPONDENT NAME
+                    </p>
+                    <p class="detailText">@ViewBag.ApplicantName</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">
+                        CLIENT / SCHOOL / BUSINESS NAME
+                    </p>
+                    <p class="detailText">@ViewBag.SchoolName</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">
+                        CNIC No.
+                    </p>
+                    <p class="detailText">@ViewBag.Cnic</p>
+                </div>
+
+                <div class="col-md-6">
+                    <p class="detailHeading">
+                        Decision of Member
+                    </p>
+                    <select class="form-control" asp-for="Status">
+                        <option value="">Select Decision</option>
+                        <option value="Approve">Approve</option>
+                        <option value="Decline">Decline</option>
+                        <option value="Discrepent">Discrepent</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <p class="detailHeading">
+                        If Discrepant/Decline, Reason
+                    </p>
+                    <input type="text" class="form-control" asp-for="Reason" />
+                </div>
+
+                <div class="col-md-6" style="margin-top:30px">
+                    <a href="/Dashboard/ViewApplication?id=@ViewBag.AppId" class="btn btn-sm btn-outline-primary" title="View Application"><i class="fa fa-search"></i> View Application<span></span></a>
+                </div>
+
+                <div class="col-md-6" style="text-align: right; margin-top:30px">
+                    <button id="recommend" type="submit" class="btn btn-sm btn-outline-success" title="Recommend">Recommend<span></span></button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    @*<script src="~/Theame/js/jquery.js"></script>*@
+    <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>*@
+
+    @*<script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>*@
+    <script type="text/javascript" src="~/Theame/js/utils.js" asp-append-version="true"></script>
+    @*<script type="text/javascript" src="~/Theame/js/Chart.min.js" asp-append-version="true"></script>*@
+    <script type="text/javascript" src="~/Theame/js/vendor.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/Theame/js/style.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/Theame/js/ajax.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/Theame/js/accordain.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/Theame/js/charlist1.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/Theame/js/highcharts.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/Theame/js/custom.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/Theame/js/jquery.prettyPhoto.js" asp-append-version="true"></script>
+    <script src="~/lib/json2/json2.js" asp-append-version="true"></script>
+    <script src="~/lib/moment/min/moment-with-locales.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+    <script src="~/lib/blockUI/jquery.blockUI.js" asp-append-version="true"></script>
+    <script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
+    <script src="~/lib/sweetalert/dist/sweetalert.min.js" asp-append-version="true"></script>
+    <script src="~/lib/spin.js/spin.js" asp-append-version="true"></script>
+    <script src="~/lib/spin.js/jquery.spin.js" asp-append-version="true"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js" asp-append-version="true"></script>
+    @*<script src="~/lib/bootstrap-select/dist/js/bootstrap-select.js" asp-append-version="true"></script>*@
+    <script src="~/lib/jquery-slimscroll/jquery.slimscroll.js" asp-append-version="true"></script>
+    <script src="~/lib/Waves/dist/waves.js" asp-append-version="true"></script>
+    <script src="~/lib/push.js/push.js" asp-append-version="true"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/abp.js" asp-append-version="true"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js" asp-append-version="true"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js" asp-append-version="true"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js" asp-append-version="true"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js" asp-append-version="true"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js" asp-append-version="true"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+
+    <script>
+        @*$('#recommend').click(function (e) {
+
+            if ($('#Recommendation').val() != "") {
+
+                var Recommendation = $('#Recommendation').val();
+                var UserId = $('#UserId').val();
+                var ApplicationId = $('#ApplicationId').val();
+                var Reason = $('#Reason').val();
+
+                    $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/BCC/AddReccomendationByUser")',
+                        data: { 'ApplicationId': ApplicationId, 'UserId': UserId, 'Recommendation': Recommendation, 'Reason': Reason} ,
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         window.location.reload();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!" + data, "error");
+                        alert(data);
+                        //console.log(data);
+                    }
+                });
+
+
+            }
+            else {
+                alert("Please Select Decision");
+            }
+        });*@
+    </script>
+
+</body>
+</html>

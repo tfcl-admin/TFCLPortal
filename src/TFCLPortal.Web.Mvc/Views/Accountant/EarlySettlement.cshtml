@@ -1,0 +1,322 @@
+﻿@model TFCLPortal.EarlySettlements.Dto.CreateEarlySettlement
+
+@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Early Settlement
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Loan Recovery > Early Settlement
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <form asp-action="CreateEarlySettlement" method="post">
+                <div class="row">
+                    <input asp-for="ApplicationId" type="hidden" id="ApplicationId" value="@ViewBag.Applicationid" />
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Client ID</label>
+                            <input type="text" value="@ViewBag.ClientId" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Applicant Name</label>
+                            <input type="text" value="@ViewBag.ClientName" readonly="readonly" class="form-control text-uppercase" />
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Loan Amount</label>
+                            <input asp-for="LoanAmount" value="@ViewBag.LoanAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Markup Rate</label>
+                            <input asp-for="Markup" value="@ViewBag.Markup" readonly="readonly" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>O/S Principal Amount</label>
+                            <input asp-for="OsPrincipalAmount" value="@ViewBag.OsPrincipalAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>O/S Markup Amount</label>
+                            <input asp-for="OsMarkupAmount" value="@ViewBag.OsMarkupAmount" readonly="readonly" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Last Paid Installment Date / Disbursement Date</label>
+                            <input asp-for="LastPaidInstallmentDate" type="date" value="@ViewBag.PaymentDate" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tentative Settlement Date</label>
+                            <input asp-for="TentativeSettlementDate" type="date" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Per Day Markup</label>
+                            <input asp-for="OneDayMarkup" value="@ViewBag.PerDay" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Days Consumed</label>
+                            <input asp-for="DaysConsumed" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-check form-check-inline p-10">
+                                <input asp-for="isEarlySettlementCharges" class="form-check-input" />
+                                <label class="form-check-label" for="isEarlySettlementCharges">Apply Early Settlement</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Early Settlement Charges</label>
+                            <input asp-for="EarlySettlmentCharges" value="@ViewBag.ESC" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>FED on Early Settlement Charges</label>
+                            <input asp-for="FEDonESC" value="@ViewBag.FEDonESC" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-check form-check-inline p-10">
+                                <input asp-for="isLateDays" class="form-check-input" />
+                                <label class="form-check-label" for="isLateDays">Apply Late Payment Charges</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Late Payment Charges</label>
+                            <input asp-for="LatePaymentCharges" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>FED on Late Payment Charges</label>
+                            <input asp-for="FEDonLPC" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Markup Payable (Rs)</label>
+                            <input asp-for="MarkupPayable" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Principal Payable (Rs)</label>
+                            <input asp-for="PrincipalPayable" value="@ViewBag.OsPrincipalAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Previous Balance (Rs)</label>
+                            <input asp-for="previousBalance" value="@ViewBag.PreviousBalance" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Total Amount Payable (Rs)</label>
+                            <input asp-for="totalAmountPayable" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount Deposited (Rs)</label>
+                            <input asp-for="amountDeposited" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+<script src="~/vendor/numwords/index.js" crossorigin="anonymous"></script>
+
+<script>
+
+    $(function () {
+
+
+
+        //$('#inlineCheckbox0').change(function (e) {
+        //    if (this.checked) {
+        //        $("#isEarlySettlementCharges").val(true);
+        //    }
+        //    else {
+        //        $("#isEarlySettlementCharges").val(false);
+        //    }
+        //});
+
+        $('#TentativeSettlementDate').change(function (e) {
+            var StartDate = moment($("#LastPaidInstallmentDate").val());
+            var EndDate = moment($("#TentativeSettlementDate").val());
+
+            var diff = EndDate.diff(StartDate, 'days');
+
+            if (diff < 0) {
+                diff = 0;
+            }
+
+            $("#DaysConsumed").val(diff);
+
+            var OneDayMarkup = $("#OneDayMarkup").val();
+
+            $("#MarkupPayable").val((Number(diff) * Number(OneDayMarkup)).toFixed(2));
+            calculatePayableAmount();
+        });
+
+        function calculatePayableAmount() {
+            var MarkupPayable = Number($("#MarkupPayable").val().replaceAll(',', ''));
+            var EarlySettlmentCharges = Number($("#EarlySettlmentCharges").val().replaceAll(',',''));
+            var FEDonESC = Number($("#FEDonESC").val().replaceAll(',', ''));
+            var PrincipalPayable = Number($("#PrincipalPayable").val().replaceAll(',', ''));
+            var previousBalance = Number($("#previousBalance").val().replaceAll(',', ''));
+            var LatePaymentCharges = Number($("#LatePaymentCharges").val().replaceAll(',', ''));
+            var FEDonLPC = Number($("#FEDonLPC").val().replaceAll(',', ''));
+
+            var AmountPayable = 0;
+
+            AmountPayable = MarkupPayable + PrincipalPayable - previousBalance;
+
+            console.log("isEarlySettlementCharges : " + $("#isEarlySettlementCharges").val());
+            console.log("isLateDays : " + $("#isLateDays").val());
+
+                if ($('#isEarlySettlementCharges').is(":checked")) {
+                AmountPayable += EarlySettlmentCharges + FEDonESC;
+            }
+
+                if ($('#isLateDays').is(":checked")) {
+                AmountPayable += LatePaymentCharges + FEDonLPC;
+            }
+
+            $("#totalAmountPayable").val(numberWithCommas(AmountPayable));
+        }
+
+
+        $('#LatePaymentCharges').change(function (e) {
+            var lpc = Number(this.value);
+
+            $("#FEDonLPC").val(lpc*0.16);
+
+            if ($("#isLateDays").val() == 'true') {
+                calculatePayableAmount();
+            }
+        });
+
+        $('#isEarlySettlementCharges').change(function (e) {
+            calculatePayableAmount();
+        });
+
+        $('#isLateDays').change(function (e) {
+            calculatePayableAmount();
+        });
+
+        function formatDate(loanStart) {
+
+            return moment(loanStart).format('DD MMM YYYY');
+
+        }
+        function formatDateAndTime(loanStart) {
+
+            return moment(loanStart).format('DD MMM YYYY hh:mm A');
+
+        }
+
+        function numberWithCommas(x) {
+            x = Math.round(x);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        $("#TentativeSettlementDate").val(getDate());
+
+
+        $("#LastPaidInstallmentDate").val(getPaymentDate());
+
+        function getPaymentDate() {
+             //var d = new Date().toJSON().slice(0, 19);
+
+            var cDate = new moment('@ViewBag.PaymentDate').format('YYYY-MM-DD');
+            //console.log(d);
+           //var str = d.substr(0, 11)+ gh + ":" + gm + ":" + gs
+            //var str = d.substr(0, 10);
+            console.log(cDate);
+            return cDate;
+        }
+
+
+
+        function getDate() {
+
+
+            var d = new Date().toJSON().slice(0, 19);
+
+            var cDate = new Date('@ViewBag.PaymentDate');
+
+            var gh = cDate.getHours();
+
+            if (gh < 10) {
+                gh = '0' + gh;
+            }
+
+            var gm = cDate.getMinutes();
+
+            if (gm < 10) {
+                gm = '0' + gm;
+            }
+
+            var gs = cDate.getSeconds();
+
+            if (gs < 10) {
+                gs = '0' + gs;
+            }
+
+            console.log(d);
+           //var str = d.substr(0, 11)+ gh + ":" + gm + ":" + gs
+            var str = d.substr(0, 10);
+            console.log(str);
+            return str;
+        }
+
+    });
+
+</script>

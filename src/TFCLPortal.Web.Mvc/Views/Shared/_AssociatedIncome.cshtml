@@ -1,0 +1,365 @@
+﻿@model TFCLPortal.AssociatedIncomeDetails.Dto.AssociatedIncomeListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+@if (@Model != null)
+{
+    @*@if (Model.isNonAssociatedIncome == "YES")
+        {*@
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (@Model.AssociatedIncomeChilds != null)
+                    {
+                        <div class="accordion md-accordion" id="accordionAssociatedChildLists" role="tablist" aria-multiselectable="true">
+
+                            @foreach (var item in @Model.AssociatedIncomeChilds)
+                            {
+                                <div class="card">
+                                    <!-- Card header -->
+                                    <div class="card-header" role="tab" id="headingOneAI-@item.Id" style="width:100%">
+                                        <a data-toggle="collapse" data-parent="#accordionAssociatedChildLists" href="#collapseOneAI-@item.Id" aria-expanded="true"
+                                           aria-controls="collapseOneAI-@item.Id">
+                                            <h5 class="mb-0">
+                                                @item.BranchName <i class="fa fa-angle-down rotate-icon"></i>
+                                            </h5>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div id="collapseOneAI-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneAI-@item.Id"
+                                         data-parent="#accordionAssociatedChildLists">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                @if (item.associatedIncomeGrandChilds != null)
+                                                {
+                                                    <div class="col-md-12">
+
+                                                        <div class="accordion md-accordion" id="accordionAssociatedGrandChildLists" role="tablist" aria-multiselectable="true">
+
+                                                            @foreach (var school in @item.associatedIncomeGrandChilds)
+                                                            {
+                                                                <div class="card">
+                                                                    <!-- Card header -->
+                                                                    <div class="card-header" role="tab" id="headingOne-schoolAII-@school.Id" style="width:100%">
+                                                                        <a data-toggle="collapse" data-parent="#accordionAssociatedGrandChildLists" href="#collapseOne-schoolAII-@school.Id" aria-expanded="true"
+                                                                           aria-controls="collapseOne-schoolAII-@school.Id">
+                                                                            <h5 class="mb-0">
+                                                                                @school.OtherAssociatedIncomeName <i class="fa fa-angle-down rotate-icon"></i>
+                                                                            </h5>
+                                                                        </a>
+                                                                    </div>
+
+                                                                    <!-- Card body -->
+                                                                    <div id="collapseOne-schoolAII-@school.Id" class="collapse" role="tabpanel" aria-labelledby="headingOne-schoolAII-@school.Id"
+                                                                         data-parent="#accordionAssociatedGrandChildLists">
+                                                                        <div class="card-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Other Associated Income
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.OtherAssociatedIncomeName == null || school.OtherAssociatedIncomeName == "" ? "--" : school.OtherAssociatedIncomeName)</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Others
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.OtherAssociatedIncomeOthers == null || school.OtherAssociatedIncomeOthers == "" ? "--" : school.OtherAssociatedIncomeOthers)</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Documentary Proof
+                                                                                    </p>
+                                                                                    @if (school.DocumentProof == null)
+                                                                                    {<p class="detailText">N/A</p> }
+                                                                                    else if (school.DocumentProof == false)
+                                                                                    {<p class="detailText">No</p>}
+                                                                                    else if (school.DocumentProof == true)
+                                                                                    {<p class="detailText">Yes</p>}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Number of Students
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.NumberOfStudents == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((school.NumberOfStudents).Replace(",",""))))</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Average Charges
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.AvgCharges == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((school.AvgCharges).Replace(",",""))))</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Yearly Revenue
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.YearlyRevenue == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((school.YearlyRevenue).Replace(",",""))))</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Monthly Revenue
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.MonthlyRevenue == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((school.MonthlyRevenue).Replace(",",""))))</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Profit Margin
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.ProfitMargin == null || school.ProfitMargin == "" ? "--" : school.ProfitMargin + "%")</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        actual monthy income
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.OtherAssociatedIncomeAmount == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((school.OtherAssociatedIncomeAmount).Replace(",",""))))</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Considered %age
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.ConsideredPercentage == null || school.ConsideredPercentage == "" ? "--" : school.ConsideredPercentage + "%")</p>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <p class="detailHeading">
+                                                                                        Considered Amount
+                                                                                    </p>
+                                                                                    <p class="detailText">@(school.ConsideredAmount == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((school.ConsideredAmount).Replace(",",""))))</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            }
+
+
+                                                        </div>
+                                                    </div>
+
+                                                }
+
+
+
+
+
+                                            </div>
+                                            <div class="row" style="margin-top:20px">
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Total Associated Income
+                                                    </p>
+                                                    <p class="detailText">@( item.TotalAssociatedIncome == null || item.TotalAssociatedIncome == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.TotalAssociatedIncome).Replace(",",""))))</p>
+                                                </div>
+                                                <!--Irfan-->
+                                                <div class="col-md-12" style="text-align: right; display:none">
+                                                    <a href="" data-toggle="modal" data-target="#_AssociatedIncome_approved" class="btn btn-success bg1 eft-1" title="Approved">Approved</a>
+                                                    <a href="" data-toggle="modal" data-target="#_AssociatedIncome_discrepant" class="btn btn-warning bg1 eft-1" title="discrepant">Discrepant</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            }
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-12"></div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Grand Total Associated Income
+                    </p>
+                    <p class="detailText">@(Model.GrandTotalAssociatedIncome == null || Model.GrandTotalAssociatedIncome == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.GrandTotalAssociatedIncome).Replace(",",""))))</p>
+                </div>
+
+                <div class="col-md-12" style="text-align: right;">
+                    <a id="screenBtnAI" href="" data-toggle="modal" data-target="#_AssociatedIncome_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                    <a id="discrepentBtnAI" href="" data-toggle="modal" data-target="#_AssociatedIncome_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*}
+        else
+        {
+            <p>No Non-Associated Income Found</p>
+        }*@
+
+
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<!--Approved Modal -->
+<div class="modal fade" id="_AssociatedIncome_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenAI" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_AssociatedIncome_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdAI"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorAI">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentAI" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.ASSOCIATEDINCOMEAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnAI').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnAI').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnAI').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnAI').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnAI').toggleClass("d-none");
+            $('#discrepentBtnAI').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenAI').click(function () {
+        debugger;
+        var comment = $('#commentIdAI').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'ASSOCIATED INCOME'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentAI').click(function () {
+        debugger;
+        if (!$('#commentIdAI').val()) {
+            $('#comment_errorAI').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorAI').css("display", "none");
+        }
+        var comment = $('#commentIdAI').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'ASSOCIATED INCOME','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdAI').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

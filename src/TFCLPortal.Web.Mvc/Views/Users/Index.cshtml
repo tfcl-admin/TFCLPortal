@@ -1,0 +1,402 @@
+﻿@using Abp.Authorization.Users
+@using TFCLPortal.Web.Startup
+
+@model TFCLPortal.Web.Models.Users.UserListViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Users; // The menu item will be active for this page.
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+
+}
+@section scripts
+{
+    <environment names="Development,Staging,Production">
+
+    </environment>
+
+
+}
+
+<style>
+    body {
+        padding: 0px !important;
+    }
+
+    .form-label {
+        font-size: 11px;
+        font-weight: bold;
+        color: #008c45;
+    }
+
+    label {
+        font-size: 11px !important;
+    }
+
+    .modal-title {
+        color: #008c45;
+    }
+</style>
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">Users</h4>
+            <h6 class="page-title-breadcrumbs"><a href="~/Dashboard/Dashboard">Home</a> > Users</h6>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <button type="button" class="btn btn-sm btn-outline-success bg1 eft-1 pull-right" style="margin-bottom:20px" data-toggle="modal" data-target="#UserCreateModal">
+                <i class="fa fa-user-plus"></i> Add User
+            </button>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>@L("FullName")</th>
+                        <th>@L("UserName")</th>
+                        <th>@L("EmailAddress")</th>
+                        <th>Android ID</th>
+                        <th>@L("BranchName")</th>
+                        <th>Active</th>
+                        <th>@L("Actions")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.FullName</td>
+                            <td>@user.UserName</td>
+                            <td>@user.EmailAddress</td>
+                            <td>@user.IMEI</td>
+                            <td>@user.BranchId</td>
+                            <td><i class="material-icons" style="color:@(user.IsActive ? "green":"red");">@(user.IsActive ? "check_box" : "indeterminate_check_box")</i></td>
+                            <td>
+                                <a class="edit-user" data-user-id="@user.Id" data-toggle="modal" data-target="#UserEditModal"><i class="fa fa-edit"></i> @L("Edit")</a>
+                                <a class="getPass" data-user-id="@user.Id" data-toggle="modal" data-target="#ChangePassModal"><i class="fa fa-toggle-on"></i> Change Password</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="modal modal-dialog-centered fade" id="UserCreateModal" aria-labelledby="UserCreateModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-left: -150px;  width: 800px;">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>Add New User</span>
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="userCreateForm" role="form" novalidate class="form-validation">
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane animated fadeIn active" id="create-user-details">
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <label class="form-label">@L("Name")</label>
+                                                <input type="text" name="Name" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <label class="form-label">@L("Surname")</label>
+                                                <input type="text" name="Surname" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <label class="form-label">@L("UserName")</label>
+                                                <input class="form-control" type="text" name="UserName" required maxlength="@AbpUserBase.MaxUserNameLength" minlength="2">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <label class="form-label">@L("EmailAddress")</label>
+                                                <input type="email" name="EmailAddress" class="form-control" required maxlength="@AbpUserBase.MaxEmailAddressLength">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <label class="form-label">@L("Password")</label>
+                                                <input type="password" id="Password" name="Password" class="form-control" required maxlength="@AbpUserBase.MaxPlainPasswordLength">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <label class="form-label">@L("ConfirmPassword")</label>
+                                                <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" required maxlength="@AbpUserBase.MaxPlainPasswordLength">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <label class="form-label">Android ID</label>
+                                                <input type="text" name="IMEI" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                @*@Html.DropDownList("FinancialYearID", null, "Select FY", new { @class = "foo" })*@
+                                                <label class="form-label">@L("BranchName")</label>
+                                                @Html.DropDownList("BranchId", ViewBag.Branches as SelectList, "Select Branch", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="checkbox" name="IsActive" value="true" id="CreateUserIsActive" class="filled-in" checked />
+                                        <label for="CreateUserIsActive">@L("IsActive")</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 form-line">
+                                        <label class="form-label">User Role</label>
+
+                                    </div>
+                                    @foreach (var role in Model.Roles)
+                                    {
+                                        <div class="col-sm-4 ">
+                                            <input type="checkbox" name="role" value="@role.NormalizedName" title="@role.Description" class="filled-in" id="role-@role.Id" />
+                                            <label for="role-@role.Id" title="@role.DisplayName">@role.Name</label>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-outline-danger bg1 eft-1" data-dismiss="modal">@L("Cancel")</button>
+                            <button type="submit" class="btn btn-sm btn-outline-success bg1 eft-1">@L("Save")</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-dialog-centered fade" id="UserEditModal" tabindex="-1" role="dialog" aria-labelledby="UserEditModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-left: -150px;  width: 800px;">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>Update User Data</span>
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form name="userCreateForm" role="form" novalidate class="form-validation">
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-outline-danger bg1 eft-1" data-dismiss="modal">@L("Cancel")</button>
+                            <button type="submit" class="btn btn-sm btn-outline-success bg1 eft-1">Update</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-dialog-centered fade" id="ChangePassModal" tabindex="-1" role="dialog" aria-labelledby="ChangePassModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-left: -150px;  width: 800px;">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>Change Password</span>
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="useridHidden" />
+                    <input type="text" id="NewPassword" class="form-control" placeholder="Enter New Password" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="ChangePasswordSubmit" class="btn btn-sm btn-outline-success bg1 eft-1">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="~/view-resources/Views/Users/Index.min.js" asp-append-version="true"></script>
+
+<script>
+    $('.getPass').click(function (e) {
+        var userId = $(this).attr("data-user-id");
+        $('#useridHidden').val(userId);
+        $('#NewPassword').val('');
+
+    });
+    $('#ChangePasswordSubmit').click(function () {
+        var userId = $('#useridHidden').val();
+        var password = $('#NewPassword').val();
+        $.ajax({
+            url: abp.appPath + 'Users/ResetPasswordAsync',
+            type: 'post',
+            dataType: 'json',
+            contenttype: 'application/json; charset=utf-8',
+            data: { 'password': password, 'UserId': userId },
+            success: function (response) {
+                alert(response.result);
+                $('#ChangePassModal').modal('hide');
+            },
+            error: function (error) {
+                console.log(error.responseJSON.error.message);
+                alert(error.responseJSON.error.message);
+
+            }
+        });
+
+    });
+</script>
+@*<script>
+        (function () {
+            $(function () {
+
+                var _userService = abp.services.app.user;
+                var _$modal = $('#UserCreateModal');
+                var _$form = _$modal.find('form');
+
+                _$form.validate({
+                    rules: {
+                        Password: "required",
+                        ConfirmPassword: {
+                            equalTo: "#Password"
+                        }
+                    }
+                });
+
+                $('#RefreshButton').click(function () {
+                    refreshUserList();
+                });
+
+                $('.delete-user').click(function () {
+                    var userId = $(this).attr("data-user-id");
+                    var userName = $(this).attr('data-user-name');
+
+                    deleteUser(userId, userName);
+                });
+
+                $('.edit-user').click(function (e) {
+                    var userId = $(this).attr("data-user-id");
+
+                    e.preventDefault();
+
+
+                    $.ajax({
+                        url: abp.appPath + 'Users/EditUserModal?userId=' + userId,
+                        type: 'post',
+                        dataType: 'json',
+                        contentType: 'application/json;charset=utf-8',
+                        success: function (response) {
+                            $('#UserEditModal div.modal-content').html(content);
+                            alert(error.statusText);
+                        },
+                        error: function (error) {
+                            $('#UserEditModal div.modal-content').html(error.responseText);
+                            // $('#RoleEditModal div.modal-content').html(error.responseText);
+                            //alert(error.statusText);
+                        }
+                    });
+
+                });
+
+                _$form.find('button[type="submit"]').click(function (e) {
+                    debugger
+                    e.preventDefault();
+
+                    if (!_$form.valid()) {
+                        return;
+                    }
+
+                    var user = _$form.serializeFormToObject(); //serializeFormToObject is defined in main.js
+                    user.roleNames = [];
+                    var _$roleCheckboxes = $("input[name='role']:checked");
+                    if (_$roleCheckboxes) {
+                        for (var roleIndex = 0; roleIndex < _$roleCheckboxes.length; roleIndex++) {
+                            var _$roleCheckbox = $(_$roleCheckboxes[roleIndex]);
+                            user.roleNames.push(_$roleCheckbox.val());
+                        }
+                    }
+
+                    abp.ui.setBusy(_$modal);
+                    _userService.create(user).done(function () {
+                        _$modal.modal('hide');
+                        location.reload(true); //reload page to see new user!
+                    }).always(function () {
+                        abp.ui.clearBusy(_$modal);
+                    });
+                });
+
+                _$modal.on('shown.bs.modal', function () {
+                    _$modal.find('input:not([type=hidden]):first').focus();
+                });
+
+                function refreshUserList() {
+                    location.reload(true); //reload page to see new user!
+                }
+
+                function deleteUser(userId, userName) {
+                    abp.message.confirm(
+                        abp.utils.formatString(abp.localization.localize('AreYouSureWantToDelete', 'TFCLPortal'), userName),
+                        function (isConfirmed) {
+                            if (isConfirmed) {
+                                _userService.delete({
+                                    id: userId
+                                }).done(function () {
+                                    refreshUserList();
+                                });
+                            }
+                        }
+                    );
+                }
+            });
+        })();
+
+    </script>*@

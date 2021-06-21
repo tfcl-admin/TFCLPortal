@@ -1,0 +1,502 @@
+﻿@model IEnumerable<TFCLPortal.Applications.ApplicationDto>
+@{
+    ViewData["Title"] = "Applications";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+    
+}
+<style>
+    .dropdown-item {
+        font-size: 11px;
+        color: #416a2c;
+        text-align: left;
+    }
+
+    #dataTable_length {
+        display: inherit;
+    }
+    /*.dataTables_wrapper {*/
+    /*overflow: inherit !important;*/
+    /*}*/
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
+</style>
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                @ViewBag.ScreenTitle
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Loan Applications > @ViewBag.ScreenTitle
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    @using (Html.BeginForm("Applications", "Application"))
+    {
+        <div class="row pt-3" id="filterForm" style="display:none">
+            <div class="col-md-2">
+                <input type="date" id="startdate" name="startdate" placeholder="yyyy-mm-dd" class="form-control" value="@ViewBag.StartDate" />
+            </div>
+            <div class="col-md-2">
+                <input type="date" id="enddate" name="enddate" class="form-control" value="@ViewBag.EndDate" />
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("screenText", ViewBag.ApplicationStateList as SelectList, "Select Application Status", htmlAttributes: new { Name = "ApplicationStatusId", @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownList("sdeText", ViewBag.SDEUserList as SelectList, "Select SDE Name", htmlAttributes: new { Name = "SDEID", @class = "form-control" })
+            </div>
+            <div class="col-md-2 text-right">
+                <input type="submit" value="Filter" class="btn btn-outline-success btn-block" />
+            </div>
+        </div>
+    }
+    <div class="card p-10 mB-20">
+        <table id="dataTable" class="table table-striped table-bordered table-responsive table-scrollable" cellspacing="0" width="100%" style="min-height: 400px;">
+            <thead>
+                <tr>
+                    <th>Sr#</th>
+                    <th>Acquired On</th>
+                    <th style="width: 80px !important">Client Id</th>
+                    <th>CNIC</th>
+                    <th>Applicant / Respondent Name</th>
+                    <th>Branch Name</th>
+                    <th>Client / School / Business Name</th>
+                    <th>product</th>
+                    <th>SDE Name </th>
+                    <th>App Status </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    int i = 0;
+                    foreach (var item in Model.ToList())
+                    {
+                        i = i + 1;
+                        <tr>
+                            <td>@i</td>
+                            @*<td>@item.Id</td>*@
+                            @*<td>@item.ClientID</td>*@
+                            <td>@item.AppDate.ToString("dd MMM yyyy hh:mm tt")</td>
+                            <td>@(String.IsNullOrEmpty(item.ClientID) ? item.ShortCode+"-"+item.AppNumber : item.ClientID)</td>
+                            <td>@item.CNICNo</td>
+                            <td>@item.ApplicantName</td>
+                            <td>@item.BranchName</td>
+                            <td>@item.SchoolName</td>
+                            <td>@item.Product</td>
+                            @*<td>@item.MobilizationStatus</td>*@
+                            <td>@item.SDEName</td>
+                            @*<td>@item.NextMeeting.ToString("dd/MM/yyyy")</td>*@
+                            <td>@item.AppStatus</td>
+                            @*<td><a href="~/Application/ApplicationDetail/@item.Id" class="edit-btn"><i class="fa fa-edit" aria-hidden="true"></i></a></td>*@
+                            <!--<td>-->@*<a href="~/Dashboard/Application?id=@item.Id" class="edit-btn"><i class="fa fa-desktop" aria-hidden="true"></i></a>*@<!--</td>-->
+                            @*<td><a href="~/Dashboard/Application?id=@item.Id&&AppDate=@item.AppDate&&ApplicationNo=@(String.IsNullOrEmpty(item.ClientID) ? item.ShortCode+"-"+item.AppNumber : item.ClientID)&&AppStatus=@item.AppStatus&&appName=@item.ApplicantName" class="edit-btn"><i class="fa fa-desktop" aria-hidden="true"></i></a></td>*@
+                            <td>
+                                @*<a href="~/About/Index?id=@item.Id&&u=BM"><i class="fa fa-file" aria-hidden="true"></i></a>*@
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-list"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                        @if (item.AppStatus.Contains("ecline"))
+                                        {
+                                            <p class="text-center detailHeading dropdown-item">Decline Reason</p>
+                                            <p class="text-center" style="font-size:11px">@item.Comments</p>
+                                            <div class="dropdown-divider"></div>
+                                        }
+                                        @if (item.AppStatus.Contains("rocess"))
+                                        {
+                                            <p class="text-center detailHeading dropdown-item">Last Screen</p>
+                                            <p class="text-center" style="font-size:11px">@(item.LastScreen==null || item.LastScreen == "" ? "--" : item.LastScreen )</p>
+                                            <div class="dropdown-divider"></div>
+                                        }
+
+
+
+
+
+                                        @if (item.ClientID.Length > 0)
+                                        {
+
+                                            @if (item.ClientID.Substring(0, 3) == "TSS" || item.ClientID.Substring(0, 3) == "TSA")
+                                            {
+                                                <a class="dropdown-item" href="~/Dashboard/Application?id=@item.Id"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>
+                                                <a class="dropdown-item " target="_blank" href="/Dashboard/ApplicationReport?ApplicationId=@item.Id"><i class="fa fa-print"></i> Print Application</a>
+                                            }
+                                            else if (item.ClientID.Substring(0, 3) == "TDS" || item.ClientID.Substring(0, 3) == "TJS")
+                                            {
+                                                <a class="dropdown-item" href="~/Dashboard/TDSApplication?id=@item.Id"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>
+                                                <a class="dropdown-item " target="_blank" href="/Dashboard/ApplicationReportTds?ApplicationId=@item.Id"><i class="fa fa-print"></i> Print Application</a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a class="dropdown-item"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>
+                                        }
+                                        <a class="dropdown-item" href="~/About/Index?id=@item.Id&&u=BM" target="_blank"><i class="fa fa-upload"></i> Upload Documents</a>
+                                        <a class="dropdown-item" href="~/Deviation/ApplicationWiseDetails/@item.Id" target="_blank"><i class="fa fa-clipboard"></i> View Deviation Matrix</a>
+                                        <a class="dropdown-item" href="/Dashboard/ViewApplication?id=@item.Id" target="_blank"><i class="fa fa-search-plus"></i> View Full Application</a>
+                                        <a class="dropdown-item" href="/accountant/UploadedDocuments?applicationid=@item.Id" target="_blank"><i class="fa fa-search-plus"></i> View Credit Bureau Files</a>
+                                        <a class="dropdown-item" href="/Dashboard/Timeline?ApplicationId=@item.Id" target="_blank"><i class="fa fa-search-plus"></i> Application Timeline</a>
+                                        @*<a class="dropdown-item clickingClass" data-toggle="modal" data-target="#Modal" applicationId="@item.Id"><i class="fa fa-print"></i> Print Application</a>*@
+                                        <a class="dropdown-item" href="/McrcDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
+                                        <a class="dropdown-item" href="/BCCDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
+                                        <a class="dropdown-item" href="/Application/ApplicationDiscrepencies?id=@item.Id" target="_blank"><i class="fa fa-warning"></i> View Discrepencies</a>
+                                        @if (item.AppStatus == "Early Settled" || item.AppStatus == "Disbursed")
+                                        {
+                                            <a class="dropdown-item" href="/Accountant/ViewSchedule?ApplicationId=@item.Id" target="_blank"><i class="fa fa-calendar"></i> View Schedule</a>
+
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!--Approved Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" style="z-index: 1100;">
+        <div class="modal-dialog modal-lg" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-print"></i> Please select items to Print</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="loadingDiv">
+                    <div class="pageloader d-none"></div>
+                    <div class="row innerModal">
+
+                        <input id="txtAppId" type="hidden" value="" />
+
+                        <div class="col-md-12 border-bottom" style="margin-bottom:20px">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkAll">
+                                <label class="form-check-label" for="chkAll">
+                                    Select All
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsLRD">
+                                <label class="form-check-label" for="chkIsLRD">
+                                    Loan Requision Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsPD">
+                                <label class="form-check-label" for="chkIsPD">
+                                    Personal Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsCD">
+                                <label class="form-check-label" for="chkIsCD">
+                                    Contact Details
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsBD">
+                                <label class="form-check-label" for="chkIsBD">
+                                    Business Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsColD">
+                                <label class="form-check-label" for="chkIsColD">
+                                    Collateral Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsED">
+                                <label class="form-check-label" for="chkIsED">
+                                    Exposure Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsALD">
+                                <label class="form-check-label" for="chkIsALD">
+                                    Asset Liability Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsBI">
+                                <label class="form-check-label" for="chkIsBI">
+                                    Business Income
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsAI">
+                                <label class="form-check-label" for="chkIsAI">
+                                    Associated Income
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsNAI">
+                                <label class="form-check-label" for="chkIsNAI">
+                                    Non Associated Income
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsBE">
+                                <label class="form-check-label" for="chkIsBE">
+                                    Business Expenses
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsHE">
+                                <label class="form-check-label" for="chkIsHE">
+                                    Household Expenses
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsLE">
+                                <label class="form-check-label" for="chkIsLE">
+                                    Loan Eligibility
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsBAD">
+                                <label class="form-check-label" for="chkIsBAD">
+                                    Bank Account Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsCoD">
+                                <label class="form-check-label" for="chkIsCoD">
+                                    Co Applicant Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsGD">
+                                <label class="form-check-label" for="chkIsGD">
+                                    Guarantor Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsRD">
+                                <label class="form-check-label" for="chkIsRD">
+                                    References Details
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsSDE">
+                                <label class="form-check-label" for="chkIsSDE">
+                                    SDE Recommendations
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsUD">
+                                <label class="form-check-label" for="chkIsUD">
+                                    Uploaded Documents
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chkIsDCD">
+                                <label class="form-check-label" for="chkIsDCD">
+                                    Data Check Documents
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer text-right">
+                    <a class="btn btn-outline-success PrintApplication">View Printable Application</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+
+
+
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+
+<script>
+    $(function () {
+
+        var appid = 0;
+
+        $('.clickingClass').click(function () {
+            alert(appid);
+            appid = $(this).attr("applicationid");
+            $('#txtAppId').val(appid);
+            $('.innerModal input:checkbox').prop('checked', false);
+            $('.innerModal input:checkbox').prop('disabled', true);
+            $(".pageloader").toggleClass("d-none");
+              $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/getDisableScreenList")',
+                  data: { 'Id': appid} ,
+                     success: function (data) {
+                         var returnData = data.result;
+                         disableFields(returnData);
+                         $(".pageloader").toggleClass("d-none");
+                         console.log(returnData);
+                    },
+                    error: function (data) {
+                         console.log(returnData);
+                    }
+                });
+
+
+
+        });
+
+        function disableFields(data) {
+            $('#chkAll').prop('disabled', false);
+            data.forEach(function (item, index) {
+                if (item == "LRD") {
+                    $('#chkIsLRD').prop('disabled', false);
+                }
+                else if (item == "PD") {
+                    $('#chkIsPD').prop('disabled', false);
+                }
+                else if (item == "CD") {
+                    $('#chkIsCD').prop('disabled', false);
+                }
+                else if (item == "BD") {
+                    $('#chkIsBD').prop('disabled', false);
+                }
+                else if (item == "ColD") {
+                    $('#chkIsColD').prop('disabled', false);
+                }
+                else if (item == "ED") {
+                    $('#chkIsED').prop('disabled', false);
+                }
+                else if (item == "ALD") {
+                    $('#chkIsALD').prop('disabled', false);
+                }
+                else if (item == "BI") {
+                    $('#chkIsBI').prop('disabled', false);
+                }
+                else if (item == "AI") {
+                    $('#chkIsAI').prop('disabled', false);
+                }
+                else if (item == "NAI") {
+                    $('#chkIsNAI').prop('disabled', false);
+                }
+                else if (item == "BE") {
+                    $('#chkIsBE').prop('disabled', false);
+                }
+                else if (item == "HE") {
+                    $('#chkIsHE').prop('disabled', false);
+                }
+                else if (item == "LE") {
+                    $('#chkIsLE').prop('disabled', false);
+                }
+                else if (item == "BAD") {
+                    $('#chkIsBAD').prop('disabled', false);
+                }
+                else if (item == "CoD") {
+                    $('#chkIsCoD').prop('disabled', false);
+                }
+                else if (item == "GD") {
+                    $('#chkIsGD').prop('disabled', false);
+                }
+                else if (item == "RD") {
+                    $('#chkIsRD').prop('disabled', false);
+                }
+                else if (item == "SDE") {
+                    $('#chkIsSDE').prop('disabled', false);
+                }
+                else if (item == "FU") {
+                    $('#chkIsUD').prop('disabled', false);
+                }
+            });
+        }
+
+        $('.declineReason').click(function () {
+            var appid = $(this).attr("applicationId");
+
+            $('#declineReasonTxt').val();
+        });
+
+        $('.PrintApplication').click(function () {
+
+            var dataToSend = 'ApplicationId=' + appid + '&&isLRD=' + $('#chkIsLRD').is(":checked") + '&&isPD=' + $('#chkIsPD').is(":checked") + '&&isCD=' + $('#chkIsCD').is(":checked") + '&&isBD=' + $('#chkIsBD').is(":checked") + '&&isColD=' + $('#chkIsColD').is(":checked") + '&&isED=' + $('#chkIsED').is(":checked") + '&&isALD=' + $('#chkIsALD').is(":checked") + '&&isBI=' + $('#chkIsBI').is(":checked") + '&&isAI=' + $('#chkIsAI').is(":checked") + '&&isNAI=' + $('#chkIsNAI').is(":checked") + '&&isBE=' + $('#chkIsBE').is(":checked") + '&&isHE=' + $('#chkIsHE').is(":checked") + '&&isLE=' + $('#chkIsLE').is(":checked") + '&&isBAD=' + $('#chkIsBAD').is(":checked") + '&&isCoD=' + $('#chkIsCoD').is(":checked") + '&&isGD=' + $('#chkIsGD').is(":checked") + '&&isRD=' + $('#chkIsRD').is(":checked") + '&&isSDE=' + $('#chkIsSDE').is(":checked") + '&&isUD=' + $('#chkIsUD').is(":checked") + '&&isDCD=' + $('#chkIsDCD').is(":checked");
+            console.log(dataToSend);
+
+            $('.innerModal input:checkbox').prop('checked', false);
+
+            window.location.href = "/Dashboard/ApplicationReport?" + dataToSend;
+
+        });
+
+        $('#chkAll').change(function () {
+            $('.innerModal input:checkbox:enabled').not(this).prop('checked', this.checked);
+            //$(".pageloader").toggleClass("d-none");
+        });
+    });
+</script>
+<!-- ### $App Screen Footer ### -->

@@ -1,0 +1,280 @@
+﻿@using TFCLPortal.Authorization
+
+@{
+    ViewData["Title"] = "Application";
+    Layout = null;
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<link href="~/Theame/css/prettyPhoto.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/lib/toastr/toastr.css" rel="stylesheet" asp-append-version="true" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+<link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/materialize.css" rel="stylesheet" asp-append-version="true" />
+
+<link href="~/fonts/material-icons/materialicons.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/lib/Waves/dist/waves.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/lib/animate.css/animate.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/themes/all-themes.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/Theame/css/style.css" rel="stylesheet" asp-append-version="true" />
+<style>
+    .main-content {
+        padding: 85px 20px 20px;
+        min-height: calc(110vh - 61px);
+    }
+
+    .sticky-top {
+        top: 3.4em;
+    }
+
+    .subnavbar {
+        width: 100%;
+    }
+
+    .disableHeader {
+        background-color: #bbbbbb !important;
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .mb-0 {
+        text-transform: uppercase;
+    }
+</style>
+
+<div class="container-fluid">
+
+    @*<div class="row d-none" id="ActionBar" style="padding-top: 20px;">
+            <div class="col-md-12 text-right">
+                <a href="" class="btn btn-sm btn-outline-success bg1 eft-1" title="Decline Application"><i class="fa fa-print"></i> Print Application</a>
+                <a id="pushApplication" data-toggle="modal" data-target="#PushApplicationModal" class="btn btn-sm btn-outline-success bg1 eft-1" title="Decline Application"><i class="fa fa-forward"></i> Send Application</a>
+                <a href="" class="btn btn-sm btn-outline-danger bg1 eft-1" title="Decline Application"><i class="fa fa-times"></i> Decline Application</a>
+
+            </div>
+
+        </div>*@
+
+    <div class="row ">
+        <div class="col-md-12" style="background-color:#fff">
+            <table border="1" width="100%" class="text-center">
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th colspan="3">APPLICANT / RESPONDENT NAME</th>
+                        <th colspan="3">CLIENT / BUSINESS / SCHOOL NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">@ViewBag.appName</td>
+                        <td colspan="3">@ViewBag.SchoolName</td>
+                    </tr>
+                </tbody>
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th>CLIENT ID</th>
+                        <th>APPLICATION DATE</th>
+                        <th>APPLICATION TIME</th>
+                        <th>APPLICATION STATUS</th>
+                        <th>Branch</th>
+                        <th>SDE Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.ApplicationNo</td>
+                        <td>@ViewBag.appDate</td>
+                        <td>@ViewBag.appTime</td>
+                        @if (ViewBag.appStatus == "Discrepent")
+                        {
+                            <td>@ViewBag.appStatus <a id="checkDiscrepency" data-toggle="modal" data-target="#DiscrepencyModal"><i class="fa fa-info-circle"></i></a></td>
+                        }
+                        else
+                        {
+                            <td>@ViewBag.appStatus</td>
+                        }
+                        <td>@ViewBag.branch</td>
+                        <td>@ViewBag.SDE</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:30px">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>LOAN REQUISITION DETAILS</u></p>
+            <div id="PartialViewLOANREQUISITIONDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>PERSONAL DETAILS</u></p>
+            <div id="PartialViewPERSONALDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>CONTACT DETAILS</u></p>
+            <div id="PartialViewCONTACTDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>BUSINESS DETAILS</u></p>
+            <div id="PartialViewBUSINESSDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>COLLATERAL DETAILS</u></p>
+            <div id="PartialViewCOLLATERALDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>EXPOSURE DETAILS</u></p>
+            <div id="PartialViewEXPOSUREDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>ASSET LIABILITY DETAILS</u></p>
+            <div id="PartialViewASSETLIABILITYDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>BUSINESS INCOME</u></p>
+            <div id="PartialViewBUSINESSINCOME"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>ASSOCIATED INCOME</u></p>
+            <div id="PartialViewASSOCIATEDINCOME"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>NON ASSOCIATED INCOME</u></p>
+            <div id="PartialViewNONASSOCIATEDINCOME"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>BUSINESS EXPENSES</u></p>
+            <div id="PartialViewBUSINESSEXPENSES"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>HOUSEHOLD EXPENSES</u></p>
+            <div id="PartialViewHOUSEHOLDEXPENSES"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>LOAN ELIGIBILITY</u></p>
+            <div id="PartialViewLOANELIGIBILITY"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>BANK ACCOUNT DETAILS</u></p>
+            <div id="PartialViewBANKACCOUNTDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>CO-APPLICANT DETAILS</u></p>
+            <div id="PartialViewCO-APPLICANTDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>GUARANTOR DETAILS</u></p>
+            <div id="PartialViewGUARANTORDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>REFERENCES DETAILS</u></p>
+            <div id="PartialViewREFERENCESDETAILS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>SDE RECOMMENDATIONS</u></p>
+            <div id="PartialViewSDERECOMMENDATIONS"></div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p class="text-center text-success"><u>Uploaded Documents</u></p>
+            <div id="PartialViewUploadedDocuments"></div>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+<script src="~/Theame/js/bootstrap.js"></script>
+
+<script src="~/lib/Waves/dist/waves.js" asp-append-version="true"></script>
+<script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
+<script src="~/lib/sweetalert/dist/sweetalert.min.js" asp-append-version="true"></script>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="~/Theame/js/style.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/Theame/js/ajax.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/abp.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js" asp-append-version="true"></script>
+<script src="~/js/admin.js" asp-append-version="true"></script>
+<script src="~/js/main.js" asp-append-version="true"></script>
+<script>
+
+    $(document).ready(function () {
+             var AppId = '@ViewBag.AppId';
+
+        var screen = [];
+        screen.push('LOAN REQUISITION DETAILS');
+        screen.push('PERSONAL DETAILS');
+        screen.push('CONTACT DETAILS');
+        screen.push('BUSINESS DETAILS');
+        screen.push('COLLATERAL DETAILS');
+        screen.push('EXPOSURE DETAILS');
+        screen.push('ASSET LIABILITY DETAILS');
+        screen.push('BUSINESS INCOME');
+        screen.push('ASSOCIATED INCOME');
+        screen.push('NON ASSOCIATED INCOME');
+        screen.push('BUSINESS EXPENSES');
+        screen.push('HOUSEHOLD EXPENSES');
+        screen.push('LOAN ELIGIBILITY');
+        screen.push('BANK ACCOUNT DETAILS');
+        screen.push('CO-APPLICANT DETAILS');
+        screen.push('GUARANTOR DETAILS');
+        screen.push('REFERENCES DETAILS');
+        screen.push('SDE RECOMMENDATIONS');
+        screen.push('Uploaded Documents');
+
+        screen.forEach(function (item) {
+
+            var value = item.trim();
+            value = value.replace(/[0-9]+./g, '');
+            value = value.trim();
+
+                var value2 = value.replace(/\s/g, '');
+            $('#PartialView' + value2.trim()).html("<p class='text-center' ><img width='50px' src='/Theame/images/loader.gif'/> Loading " + item+" ...</p>");
+
+
+            $.ajax({
+            type: 'POST',
+            datatype: "json",
+            contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Dashboard/ReturnPartialView")',
+            data: { 'viewName': value,'ApplicationId':AppId} ,
+            success: function (data) {
+
+
+                if (data != null) {
+
+                    value = value.replace(/\s/g, '');
+                    $('#PartialView' + value.trim()).html("");
+                    $('#PartialView' + value.trim()).html(data);
+                }
+                else
+                    abp.notify.error("Some error occure contact with admin..!", "error");
+
+            },
+            error: function (data) {
+
+                abp.notify.error("Some error occure contact with admin..!", "error");
+                //console.log(data);
+            }
+        });
+
+        });
+
+        function test() {
+            alert('test');
+            $(function () {
+                $('#accordion').accordion({
+                    collapsible: true,
+                    heightStyle: 'content',
+                    create: function (event, ui) {
+                        $('#accordion .ui-accordion-content').show();
+                    }
+                });
+            });
+        }
+
+
+
+        });
+</script>

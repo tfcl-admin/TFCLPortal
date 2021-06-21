@@ -1,0 +1,453 @@
+﻿@model TFCLPortal.PurchaseDetails.Dto.PurchaseDetailListDto
+
+@{ int counter = 1; }
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+
+<div class="tab_content" style="padding: 15px 20px">
+    <!---->
+    <div class="row">
+        @if (@Model != null)
+        {
+            <div class="col-md-12">
+                <div class="accordion md-accordion" id="accordionSchoolBranches" role="tablist" aria-multiselectable="true">
+                    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+                    @foreach (var item in Model.PurchaseDetailChild)
+                    {
+
+                        <div class="card">
+
+                            <!-- Card header -->
+                            <div class="card-header" role="tab" id="headingOnePurD-@item.Id">
+                                <a data-toggle="collapse" data-parent="#accordionSchoolBranches" href="#collapseOnePurD-@item.Id" aria-expanded="true"
+                                   aria-controls="collapseOnePurD-@item.Id">
+                                    <h5 class="mb-0">
+                                        @item.BusinessName <i class="fa fa-angle-down rotate-icon"></i>
+                                    </h5>
+                                </a>
+                            </div>
+
+                            <!-- Card body -->
+                            <div id="collapseOnePurD-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOnePurD-@item.Id"
+                                 data-parent="#accordionSchoolBranches">
+                                <div class="card-body">
+                                    <div class="row">
+                                        @*<div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    Inventory Record Maintanance
+                                                </p>
+                                                <p class="detailText">@(item.InventoryRecordMaintenanceName == null || item.InventoryRecordMaintenanceName == "" ? "--" : item.InventoryRecordMaintenanceName)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    Inventory Entry Source
+                                                </p>
+                                                <p class="detailText">@(item.InventoryEntrySourceName == null || item.InventoryEntrySourceName == "" ? "--" : item.InventoryEntrySourceName)</p>
+                                            </div>*@
+                                        <div class="col-md-12 text-center">
+                                            <p class="detailHeading">
+                                                Seasonal Purchase ( @item.AnalysisMonth.ToString("MMM yyyy") )
+                                            </p>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered" style="text-align:center ">
+                                                <thead>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month1)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month2)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month3)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month4)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month5)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month6)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month7)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month8)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month9)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month10)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month11)
+                                                </th>
+                                                <th>
+                                                    @string.Format("{0: MMM yyyy}", item.Month12)
+                                                </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>@(item.Month1Purchases == null || item.Month1Purchases == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.Month1Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month2Purchases == null || item.Month2Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month2Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month3Purchases == null || item.Month3Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month3Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month4Purchases == null || item.Month4Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month4Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month5Purchases == null || item.Month5Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month5Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month6Purchases == null || item.Month6Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month6Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month7Purchases == null || item.Month7Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month7Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month8Purchases == null || item.Month8Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month8Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month9Purchases == null || item.Month9Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month9Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month10Purchases == null || item.Month10Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month10Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month11Purchases == null || item.Month11Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month11Purchases).Replace(",", ""))))</td>
+                                                        <td>@(item.Month12Purchases == null || item.Month12Purchases == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.Month12Purchases).Replace(",", ""))))</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-12 text-center">
+                                            <p class="detailHeading">
+                                                Prodcut Wise Purchases
+                                            </p>
+
+                                        </div>
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered" style="text-align:center ">
+                                                <thead>
+                                                <th>
+                                                    Sr
+                                                </th>
+                                                <th>
+                                                    Item Name
+                                                </th>
+                                                <th>
+                                                    Per Unit Purchase Price
+                                                </th>
+                                                <th>
+                                                    Monthly Purchase (Units)
+                                                </th>
+                                                <th>
+                                                    Total Purchase
+                                                </th>
+
+                                                </thead>
+                                                @if (item.PurchaseDetailGrandChild != null)
+                                                {
+
+                                                    @if (item.PurchaseDetailGrandChild.Count > 0)
+                                                    {
+                                                        <tbody>
+                                                            @foreach (var child in item.PurchaseDetailGrandChild)
+                                                            {
+                                                                <tr>
+                                                                    <td>@(counter++)</td>
+                                                                    <td>@(child.ItemName == null || child.ItemName == "" ? "--" : child.ItemName)</td>
+                                                                    <td style="text-align:right">@(child.PerUnitPurchasePrice == null || child.PerUnitPurchasePrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.PerUnitPurchasePrice).Replace(",", ""))))</td>
+                                                                    <td>@(child.MonthlyPurchaseUnit == null || child.MonthlyPurchaseUnit == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.MonthlyPurchaseUnit).Replace(",", ""))))</td>
+                                                                    <td style="text-align:right">@(child.TotalPurchase == null || child.TotalPurchase == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.TotalPurchase).Replace(",", ""))))</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+
+                                                    }
+                                                }
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="4" class="text-right">
+                                                            Total
+                                                        </td>
+                                                        <td style="text-align:right">@(item.TotalMonthlyPurchase == null || item.TotalMonthlyPurchase == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalMonthlyPurchase).Replace(",", ""))))</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                        <div class="col-md-12 text-center">
+                                            <p class="detailHeading">
+                                                Tranche Purchase
+                                            </p>
+
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <table class="table table-bordered" style="text-align:center ">
+                                                <thead>
+                                                <th>
+                                                    Frequency
+                                                </th>
+                                                <th>
+                                                    Amount
+                                                </th>
+                                                <th>
+                                                    Purchase Frequency
+                                                </th>
+                                                <th>
+                                                    Total
+                                                </th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Daily</td>
+                                                        <td style="text-align:right">@(item.DailyPurchasesAmount == null || item.DailyPurchasesAmount == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.DailyPurchasesAmount).Replace(",", ""))))</td>
+                                                        <td>@(item.DailyPurchaseFrequency == null || item.DailyPurchaseFrequency == "" ? "0" : string.Format("{0:#,##0}",  decimal.Parse((item.DailyPurchaseFrequency).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.DailyTotal == null || item.DailyTotal == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.DailyTotal).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Weekly</td>
+                                                        <td style="text-align:right">@(item.WeeklyPurchasesAmount == null || item.WeeklyPurchasesAmount == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.WeeklyPurchasesAmount).Replace(",", ""))))</td>
+                                                        <td>@(item.WeeklyPurchaseFrequency == null || item.WeeklyPurchaseFrequency == "" ? "0" : string.Format("{0:#,##0}",  decimal.Parse((item.WeeklyPurchaseFrequency).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.WeeklyTotal == null || item.WeeklyTotal == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.WeeklyTotal).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Fortnightly</td>
+                                                        <td style="text-align:right">@(item.FortnightlyPurchasesAmount == null || item.FortnightlyPurchasesAmount == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.FortnightlyPurchasesAmount).Replace(",", ""))))</td>
+                                                        <td>@(item.FortnightlyPurchaseFrequency == null || item.FortnightlyPurchaseFrequency == "" ? "0" : string.Format("{0:#,##0}",  decimal.Parse((item.FortnightlyPurchaseFrequency).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.FortnightlyTotal == null || item.FortnightlyTotal == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.FortnightlyTotal).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Monthly</td>
+                                                        <td style="text-align:right">@(item.MonthlyPurchasesAmount == null || item.MonthlyPurchasesAmount == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.MonthlyPurchasesAmount).Replace(",", ""))))</td>
+                                                        <td>@(item.MonthlyPurchaseFrequency == null || item.MonthlyPurchaseFrequency == "" ? "0" : string.Format("{0:#,##0}",  decimal.Parse((item.MonthlyPurchaseFrequency).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.MonthlyTotal == null || item.MonthlyTotal == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.MonthlyTotal).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Quaterly</td>
+                                                        <td style="text-align:right">@(item.QuaterlyPurchasesAmount == null || item.QuaterlyPurchasesAmount == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.QuaterlyPurchasesAmount).Replace(",", ""))))</td>
+                                                        <td>@(item.QuaterlyPurchaseFrequency == null || item.QuaterlyPurchaseFrequency == "" ? "0" : string.Format("{0:#,##0}",  decimal.Parse((item.QuaterlyPurchaseFrequency).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.QuaterlyTotal == null || item.QuaterlyTotal == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.QuaterlyTotal).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Semi-Annually</td>
+                                                        <td style="text-align:right">@(item.SemiAnnuallyPurchasesAmount == null || item.SemiAnnuallyPurchasesAmount == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.SemiAnnuallyPurchasesAmount).Replace(",", ""))))</td>
+                                                        <td>@(item.SemiAnnuallyPurchaseFrequency == null || item.SemiAnnuallyPurchaseFrequency == "" ? "0" : string.Format("{0:#,##0}",  decimal.Parse((item.SemiAnnuallyPurchaseFrequency).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.SemiAnnuallyTotal == null || item.SemiAnnuallyTotal == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.SemiAnnuallyTotal).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Annually</td>
+                                                        <td style="text-align:right">@(item.AnnuallyPurchasesAmount == null || item.AnnuallyPurchasesAmount == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.AnnuallyPurchasesAmount).Replace(",", ""))))</td>
+                                                        <td>@(item.AnnuallyPurchaseFrequency == null || item.AnnuallyPurchaseFrequency == "" ? "0" : string.Format("{0:#,##0}",  decimal.Parse((item.AnnuallyPurchaseFrequency).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.AnnuallyTotal == null || item.AnnuallyTotal == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.AnnuallyTotal).Replace(",", ""))))</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" class="text-right">Total Monthly Purchase</td>
+                                                        <td style="text-align:right">@(item.TotalMonthlyPurchaseTranche == null || item.TotalMonthlyPurchaseTranche == "" ? "0" : string.Format("{0:#,##0}",  Int32.Parse((item.TotalMonthlyPurchaseTranche).Replace(",", ""))))</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Purchases To be Considered
+                        </p>
+                        <p class="detailText">@(Model.grandTotalPurchaseToBeConsidered == null || Model.grandTotalPurchaseToBeConsidered == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.grandTotalPurchaseToBeConsidered).Replace(",", ""))) )</p>
+                    </div>
+
+
+                    <div class="col-md-12" style="text-align: right;margin-top:10px">
+                        <a id="screenBtnPurD" href="" data-toggle="modal" data-target="#_PurchaseDetail_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                        <a id="discrepentBtnPurD" href="" data-toggle="modal" data-target="#_PurchaseDetail_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="tab_content" style="padding: 15px 20px">
+                <div class="row">
+                    <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Approved Modal -->
+<div class="modal fade" id="_PurchaseDetail_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenPurD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_PurchaseDetail_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdPurD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorPurD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentPurD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+        $('#commentId').attr('required', 'required');
+
+        $(document).ready(function () {
+            //alert('@ViewBag.PersonalAction');
+            btnChange('@ViewBag.PurchaseAction');
+        });
+
+
+        function btnChange(currentState) {
+            //alert(currentState);
+            if (currentState == "Screened") {
+                $('#screenBtnPurD').html("<i class='fa fa-check'></i>  Marked Screened");
+                //$('#screenBtnPurD').click(false);
+
+
+                $('#discrepentBtnPurD').html("Discrepent");
+                //$("#discrepentBtnPurD").attr("data-toggle", "modal");
+                //$("#discrepentBtnPurD").attr("data-target", "#_businessPlan_discrepent");
+                //$("#discrepentBtnPurD").attr("href", "");
+                //$('#screenBtnPurD').click(true);
+            }
+            else if (currentState == "Discrepent") {
+
+                $('#discrepentBtnPurD').html("<i class='fa fa-times'></i> Marked Discrepent");
+                //$('#discrepentBtnPurD').click(false);
+
+                $('#screenBtnPurD').html("Screen");
+                //$("#screenBtnPurD").attr("data-toggle", "modal");
+                //$("#screenBtnPurD").attr("data-target", "#_businessPlan_approved");
+                //$("#screenBtnPurD").attr("href", "");
+                //$('#screenBtnPurD').click(true);
+
+            }
+            else if (currentState == "Hide") {
+                $('#screenBtnPurD').toggleClass("d-none");
+                $('#discrepentBtnPurD').toggleClass("d-none");
+            }
+        }
+
+        $('#btnScreenPurD').click(function () {
+            debugger;
+            var comment = $('#commentIdPurD').val();
+            var Id = $('#ApplicationId').val();
+                $.ajax({
+                        type: 'POST',
+                        datatype: "json",
+                        contenttype: 'application/json; charset=utf-8',
+                        url: '@Url.Content("~/Dashboard/MarkScreened")',
+                    data: { 'ApplicationId': Id, 'Screen': 'Purchase Details'} ,
+                    success: function (data) {
+
+
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Screened');
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Screened');
+                        }
+
+                        btnChange("Screened");
+
+
+                        },
+                        error: function (data) {
+                            debugger
+                            abp.notify.error(data.result, 'Error');
+                         }
+
+
+                    });
+        });
+        $('#btndiscrepentPurD').click(function () {
+            debugger;
+            if (!$('#commentIdPurD').val()) {
+                $('#comment_errorPurD').css("display", "block");;
+                return false;
+            } else {
+                $('#comment_errorPurD').css("display", "none");
+            }
+            var comment = $('#commentIdPurD').val();
+            var Id = $('#ApplicationId').val();
+                $.ajax({
+                        type: 'POST',
+                        datatype: "json",
+                        contenttype: 'application/json; charset=utf-8',
+                        url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                    data: { 'ApplicationId': Id, 'Screen': 'Purchase Details','Reason': comment },
+                    success: function (data) {
+
+                            $('.close').click();
+
+                            if (data.result.includes("successfully")) {
+                                abp.notify.success(data.result, 'Mark Discrepent');
+
+                            }
+                            else {
+                                abp.notify.info(data.result, 'Mark Discrepent');
+                        }
+
+                        btnChange("Discrepent");
+
+                        $('#commentIdPurD').val("");
+
+                        },
+                        error: function (data) {
+                            debugger;
+                            abp.notify.error(data.result, 'Error');
+                        }
+                    });
+            });
+</script>
+
+
+

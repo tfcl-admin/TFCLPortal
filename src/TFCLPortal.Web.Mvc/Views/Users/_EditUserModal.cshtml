@@ -1,0 +1,130 @@
+﻿@using TFCLPortal.Web.Models.Common.Modals
+@model TFCLPortal.Web.Models.Users.EditUserModalViewModel
+@{
+    Layout = null;
+}
+
+<div class="mode-content">
+    <div class="modal-header">
+        <h4 class="modal-title">
+            <span>Update User Data</span>
+        </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="UserEditForm" role="form" novalidate class="form-validation">
+            <input type="hidden" name="Id" value="@Model.User.Id" />
+
+            <div role="tabpanel" class="tab-pane animated fadeIn active" id="edit-user-details">
+
+
+
+                <div class="row ">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label for="name" class="form-label">@L("Name")</label>
+                                <input id="name" type="text" name="Name" value="@Model.User.Name" required maxlength="32" class="validate form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label for="surname" class="form-label">@L("Surname")</label>
+                                <input id="surname" type="text" name="Surname" value="@Model.User.Surname" required maxlength="32" class="validate form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label for="username" class="form-label">@L("UserName")</label>
+                                <input id="username" type="text" name="UserName" value="@Model.User.UserName" required maxlength="32" minlength="2" class="validate form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label for="email" class="form-label">@L("EmailAddress")</label>
+                                <input id="email" type="email" name="EmailAddress" value="@Model.User.EmailAddress" maxlength="256" class="validate form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Android ID</label>
+                                <input type="text" name="IMEI" value="@Model.User.IMEI" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                @*@Html.DropDownList("FinancialYearID", null, "Select FY", new { @class = "foo" })*@
+
+
+                                <label class="form-label">@L("BranchName")</label>
+                                @Html.DropDownListFor(m => m.BranchId, ViewBag.Branches as SelectList, "Select Branch", new { name = "BranchId", id = "BranchId", @class = "form-control" })
+
+                                @*@Html.DropDownListFor(m => m.User.BranchId, ViewBag.Branches as SelectList, "Select Branch", new { Id = "BranchId", @class = "form-control", Name = "BranchId" })*@
+                                @*@Html.DropDownListFor(m => m.User.BranchId, new SelectList(ViewBag.Branches, "Id", "BranchName"));*@
+                                @*@Html.DropDownListFor(m => m.User.BranchId, new SelectList(ViewBag.Branches, "AccountID", "AccountName"), new { @class = "form-control" })*@
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-12">
+                        <div class="form-group form-float">
+                            <input id="IsActive" type="checkbox" name="IsActive" value="true" @(Model.User.IsActive ? "checked" : "") class="form-control" />
+                            <label for="IsActive" class="form-label">@L("IsActive")</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 ">
+                        <label class="form-label">User Role</label>
+
+                    </div>
+
+                    @foreach (var role in Model.Roles)
+                    {
+                        <div class="col-sm-4">
+                            <input type="checkbox" name="role" value="@role.NormalizedName" title="@role.Description" class="filled-in" id="@string.Format("role{0}",role.Id)" @(Model.UserIsInRole(role) ? "checked" : "") />
+                            <label for="@string.Format("role{0}",role.Id)" title="@role.DisplayName">@role.Name</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </form>
+
+        @*<div class="modal-footer">
+                <button type="button" class="btn btn-sm close-button btn-outline-danger bg1 eft-1" data-dismiss="modal">@L("Cancel")</button>
+                <button type="submit" class="save-button btn btn-sm btn-outline-success bg1 eft-1">Update</button>
+            </div>*@
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger close-button waves-effect" data-dismiss="modal">@L("Cancel")</button>
+            <button type="button" class="btn btn-outline-success save-button waves-effect">Update</button>
+        </div>
+    </div>
+</div>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+
+<script src="~/view-resources/Views/Users/_EditUserModal.js" asp-append-version="true"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#BranchId").attr('name', 'BranchId');
+    });
+
+</script>

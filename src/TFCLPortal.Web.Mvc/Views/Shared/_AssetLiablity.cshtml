@@ -1,0 +1,399 @@
+﻿@model TFCLPortal.AssetLiabilityDetails.Dto.AssetLiabilityDetailListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    #dataTable tr td:nth-child(2) { /* I don't think they are 0 based */
+        text-align: center;
+    }
+
+    #dataTable tr td:nth-child(5) { /* I don't think they are 0 based */
+        text-align: center;
+    }
+
+    #dataTable tr td:nth-child(3) { /* I don't think they are 0 based */
+        text-align: right;
+    }
+
+    #dataTable tr td:nth-child(6) { /* I don't think they are 0 based */
+        text-align: right;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Asset/Liabilty Detail as on
+                </p>
+                <p class="detailText">@(Model.AssetLiabilityAsOn == null ? "N/A" : string.Format("{0:dd MMM yyyy}", Model.AssetLiabilityAsOn))</p>
+            </div>
+
+
+            <table id="dataTable" class="table table-striped table-bordered align-left" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Business Assets</th>
+                        <th style="text-align: center">Details</th>
+                        <th style="text-align: center">Rs.</th>
+                        <th>Business Liabilities</th>
+                        <th style="text-align: center">Details</th>
+                        <th style="text-align: center">Rs.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Cash in hand / at Bank
+                        </td>
+                        <td>@(Model.qtyAssetCashInHandAtBank == "" || Model.qtyAssetCashInHandAtBank == null  ? "--" : Model.qtyAssetCashInHandAtBank)</td>
+                        <td>@(Model.AssetCashInHandAtBank == 0 ? "--" : string.Format("{0:#,###}", Model.AssetCashInHandAtBank))</td>
+                        <td>Loans Payable - Bank</td>
+                        <td>@(Model.detailsLoanPayableBank == "" || Model.detailsLoanPayableBank == null  ? "--" : Model.detailsLoanPayableBank)</td>
+                        <td>@(Model.LiablityLoanPayebleBank == 0 ? "--" : string.Format("{0:#,###}", Model.LiablityLoanPayebleBank))</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Stock In Hand
+                        </td>
+                        <td>@(Model.qtyAssetStockInHand == "" || Model.qtyAssetStockInHand == null  ? "--" : Model.qtyAssetStockInHand)</td>
+                        <td>@(Model.AssetStockInHand == 0 ? "--" : string.Format("{0:#,###}", Model.AssetStockInHand))</td>
+                        <td>
+                            Student Security Deposit
+                        </td>
+                        <td>@(Model.detailsStudentSecurityDeposit == "" || Model.detailsStudentSecurityDeposit == null  ? "--" : Model.detailsStudentSecurityDeposit)</td>
+                        <td>@(Model.LiablityStudentSecurityDeposit == 0 ? "--" : string.Format("{0:#,###}", Model.LiablityStudentSecurityDeposit))</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Account Receivables
+                        </td>
+                        <td>@(Model.qtyAssetAccountReceivable == "" || Model.qtyAssetAccountReceivable == null  ? "--" : Model.qtyAssetAccountReceivable)</td>
+                        <td>@(Model.AssetAccountReceivable == 0 ? "--" : string.Format("{0:#,###}", Model.AssetAccountReceivable))</td>
+                        <td>Advance Received</td>
+                        <td>@(Model.detailsAdvanceReceived == "" || Model.detailsAdvanceReceived == null  ? "--" : Model.detailsAdvanceReceived)</td>
+                        <td>@(Model.LiablityAdvanceReceived == 0 ? "--" : string.Format("{0:#,###}", Model.LiablityAdvanceReceived))</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Franchise Fee (Advances)
+                        </td>
+                        <td>@(Model.qtyAssetFranchiseFee == "" || Model.qtyAssetFranchiseFee == null  ? "--" : Model.qtyAssetFranchiseFee)</td>
+                        <td>@(Model.AssetFranchiseFee == 0 ? "--" : string.Format("{0:#,###}", Model.AssetFranchiseFee))</td>
+                        <td>Account Payables</td>
+                        <td>@(Model.detailsAccountPayable == "" || Model.detailsAccountPayable == null  ? "--" : Model.detailsAccountPayable)</td>
+                        <td>@(Model.LiablityAccountPayable == 0 ? "--" : string.Format("{0:#,###}", Model.LiablityAccountPayable))</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Committee
+                        </td>
+                        <td>@(Model.qtyAssetCommittee == "" || Model.qtyAssetCommittee == null  ? "--" : Model.qtyAssetCommittee)</td>
+                        <td>@(Model.AssetCommittee == 0 ? "--" : string.Format("{0:#,###}", Model.AssetCommittee))</td>
+                        <td>Committee</td>
+                        <td>@(Model.detailsCommittee == "" || Model.detailsCommittee == null  ? "--" : Model.detailsCommittee)</td>
+                        <td>@(Model.LiablityCommittee == 0 ? "--" : string.Format("{0:#,###}", Model.LiablityCommittee))</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            GIRVI / ADVANCE AMOUNT
+                        </td>
+                        <td>@(Model.qtyAssetGirviAmount == "" || Model.qtyAssetGirviAmount == null  ? "--" : Model.qtyAssetGirviAmount)</td>
+                        <td>@(Model.AssetGirviAmount == 0 ? "--" : string.Format("{0:#,###}", Model.AssetGirviAmount))</td>
+                        <td>Other Liabilities</td>
+                        <td>@(Model.detailsOtherLiabilities == "" || Model.detailsOtherLiabilities == null  ? "--" : Model.detailsOtherLiabilities)</td>
+                        <td>@(Model.OtherLiablity == 0 ? "--" : string.Format("{0:#,###}", Model.OtherLiablity))</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Furniture & Fixtures
+                        </td>
+                        <td>@(Model.qtyAssetFurnitureFixture == "" || Model.qtyAssetFurnitureFixture == null  ? "--" : Model.qtyAssetFurnitureFixture)</td>
+                        <td>@(Model.AssetFurnitureFixture == 0 ? "--" : string.Format("{0:#,###}", Model.AssetFurnitureFixture))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Vehicles
+                        </td>
+                        <td>@(Model.qtyAssetVehicle == "" || Model.qtyAssetVehicle == null  ? "--" : Model.qtyAssetVehicle)</td>
+                        <td>@(Model.AssetVehicle == 0 ? "--" : string.Format("{0:#,###}", Model.AssetVehicle))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Air Conditioners
+                        </td>
+                        <td>@(Model.qtyAssetAirConditioners == "" || Model.qtyAssetAirConditioners == null  ? "--" : Model.qtyAssetAirConditioners)</td>
+                        <td>@(Model.AssetAirConditioners == 0 ? "--" : string.Format("{0:#,###}", Model.AssetAirConditioners))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Computers
+                        </td>
+                        <td>@(Model.qtyAssetComputers == "" || Model.qtyAssetComputers == null  ? "--" : Model.qtyAssetComputers)</td>
+                        <td>@(Model.AssetComputers == 0 ? "--" : string.Format("{0:#,###}", Model.AssetComputers))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Generator/UPS
+                        </td>
+                        <td>@(Model.qtyAssetGeneratorUps == "" || Model.qtyAssetGeneratorUps == null  ? "--" : Model.qtyAssetGeneratorUps)</td>
+                        <td>@(Model.AssetGeneratorUps == 0 ? "--" : string.Format("{0:#,###}", Model.AssetGeneratorUps))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Solar
+                        </td>
+                        <td>@(Model.qtyAssetSolar == "" || Model.qtyAssetSolar == null  ? "--" : Model.qtyAssetSolar)</td>
+                        <td>@(Model.AssetSolar == 0 ? "--" : string.Format("{0:#,###}", Model.AssetSolar))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Other Equipment (Fridge/Photo Copier/Printers etc)
+                        </td>
+                        <td>@(Model.qtyAssetEquipment == "" || Model.qtyAssetEquipment == null  ? "--" : Model.qtyAssetEquipment)</td>
+                        <td>@(Model.AssetEquipment == 0 ? "--" : string.Format("{0:#,###}", Model.AssetEquipment))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Land & Building
+                        </td>
+                        <td>@(Model.qtyAssetLandBuliding == "" || Model.qtyAssetLandBuliding == null  ? "--" : Model.qtyAssetLandBuliding)</td>
+                        <td>@(Model.AssetLandBuliding == 0 ? "--" : string.Format("{0:#,###}", Model.AssetLandBuliding))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Other Assets
+                        </td>
+                        <td>@(Model.qtyOtherAssets == "" || Model.qtyOtherAssets == null  ? "--" : Model.qtyOtherAssets)</td>
+                        <td>@(Model.OtherAssets == 0 ? "--" : string.Format("{0:#,###}", Model.OtherAssets))</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><b>Total Business Assets</b></td>
+                        <td style="text-align: right;"><b>@(Model.TotalBusinessAsset == 0 ? "--" : string.Format("{0:#,###}", Model.TotalBusinessAsset))</b></td>
+                        <td colspan="2" style="text-align: right;"><b>Total Business Liabilities</b></td>
+                        <td style="text-align: right;"><b>@(Model.TotalBusinessLiability == 0 ? "--" : string.Format("{0:#,###}", Model.TotalBusinessLiability))</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Business Net Worth</b></td>
+                        <td style="text-align: right;"><b>@(Model.AssetBusinessNetWorth == 0 ? "--" : string.Format("{0:#,###}", Model.AssetBusinessNetWorth))</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Total Household Assets</td>
+                        <td style="text-align: right;">@(Model.TotalHouseholdAsset == 0 ? "--" : string.Format("{0:#,###}", Model.TotalHouseholdAsset))</td>
+                        <td colspan="2" style="text-align: right;">Total Household Liabilities</td>
+                        <td style="text-align: right;">@(Model.TotalHouseholdLiability == 0 ? "--" : string.Format("{0:#,###}", Model.TotalHouseholdLiability))</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Household Net Worth</b></td>
+                        <td style="text-align: right;"><b>@(Model.AssetHouseholdNetWorth == 0 ? "--" : string.Format("{0:#,###}", Model.AssetHouseholdNetWorth))</b></td>
+                        <td colspan="2" style="text-align: right;"><b>Borrower's Net Worth</b></td>
+                        <td style="text-align: right;"><b>@(Model.BorrowerNetWorthLiability == 0 ? "--" : string.Format("{0:#,###}", Model.BorrowerNetWorthLiability))</b></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--Irfan-->
+            @*<div class="col-md-12" style="text-align: right;">
+                    <a href="" data-toggle="modal" data-target="#_AssetLiability_approved" class="btn btn-success bg1 eft-1" title="Approved">Approved</a>
+                    <a href="" data-toggle="modal" data-target="#_AssetLiability_discrepant" class="btn btn-warning bg1 eft-1" title="discrepant">Discrepant</a>
+                </div>*@
+
+            <div class="col-md-12" style="text-align: right;">
+                <a id="screenBtnALD" href="" data-toggle="modal" data-target="#_AssetLiability_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                <a id="discrepentBtnALD" href="" data-toggle="modal" data-target="#_AssetLiability_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+<!--Approved Modal -->
+<div class="modal fade" id="_AssetLiability_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenALD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_AssetLiability_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdALD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorALD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentALD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.AssetLiabilityAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnALD').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnALD').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnALD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnALD').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnALD').toggleClass("d-none");
+            $('#discrepentBtnALD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenALD').click(function () {
+        debugger;
+        var comment = $('#commentIdALD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'ASSET LIABILITY DETAILS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentALD').click(function () {
+        debugger;
+        if (!$('#commentIdALD').val()) {
+            $('#comment_errorALD').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorALD').css("display", "none");
+        }
+        var comment = $('#commentIdALD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'ASSET LIABILITY DETAILS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdALD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

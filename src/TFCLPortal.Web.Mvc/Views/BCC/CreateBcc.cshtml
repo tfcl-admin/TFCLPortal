@@ -1,0 +1,109 @@
+﻿@model TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.CreateBranchCreditCommitteeDto
+
+@{
+    ViewData["Title"] = "CreateBcc";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Create BCC
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Branch Credit Committee > Create BCC
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/BCC/Index" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back To List"><i class="fa fa-angle-double-left"></i> Back To List </a>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <form asp-action="CreateBcc" method="post">
+
+
+            <div class="row" style="margin-top:50px">
+
+                <div class="col-md-4">
+                    <p class="detailHeading">Client ID</p>
+                    <p class="detailText">@ViewBag.ClientId</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">APPLICANT NAME</p>
+                    <p class="detailText">@ViewBag.applicantName</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Client/Business Name</p>
+                    <p class="detailText">@ViewBag.BusinessName</p>
+                </div>
+            </div>
+            <div class="row" style="margin-top:30px">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            First SDE
+                        </label>
+                        @Html.DropDownListFor(m => m.SDE1_UserId, ViewBag.SDEUserList as SelectList, "Select 1st SDE", new { @class = "form-control text-capitalize" })
+                        <span asp-validation-for="SDE1_UserId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Second SDE
+                        </label>
+                        @Html.DropDownListFor(m => m.SDE2_UserId, ViewBag.SDEUserList as SelectList, "Select 2nd SDE", new { @class = "form-control text-capitalize" })
+                        <span asp-validation-for="SDE2_UserId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Comments
+                        </label>
+                        <input asp-for="Status" class="form-control" />
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 d-none">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Application #
+                        </label>
+                        <input asp-for="ApplicationId" class="form-control" value="@ViewBag.AppId" />
+                        <span asp-validation-for="ApplicationId" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group  d-none">
+                    <label asp-for="IsActive" class="control-label"></label>
+                    <input asp-for="IsActive" value="true" />
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-12 text-right" style="margin-top:50px">
+
+                    <input type="submit" value="Create BCC" class="btn btn-sm btn-outline-success bg1 eft-1" />
+
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+</main>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

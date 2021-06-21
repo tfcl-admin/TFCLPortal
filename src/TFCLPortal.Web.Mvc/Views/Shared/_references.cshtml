@@ -1,0 +1,253 @@
+﻿@model List<TFCLPortal.Preferences.Dto.PreferencesListDto>
+@{int index = 1;}
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+@if (@Model.Count > 0)
+{
+    <input type="hidden" id="ApplicationId" value="@Model[0].ApplicationId" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion md-accordion" id="accordionReferences" role="tablist" aria-multiselectable="true">
+                        @foreach (var item in Model)
+                        {
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingOneRD-@item.Id" style="width:100%">
+                                    <a data-toggle="collapse" data-parent="#accordionReferences" href="#collapseOneRD-@item.Id" aria-expanded="true"
+                                       aria-controls="collapseOneRD-@item.Id">
+                                        <h5 class="mb-0">
+                                            Reference @index <i class="fa fa-angle-down rotate-icon"></i>
+                                        </h5>
+                                    </a>
+                                </div>
+                                @{index++;}
+                                <!-- Card body -->
+                                <div id="collapseOneRD-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneRD-@item.Id"
+                                     data-parent="#accordionReferences">
+                                    <div class="card-body">
+                                        <input type="hidden" id="Id" value="@item.ApplicationId" />
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">NAME</p>
+                                                <p class="detailText">@(item.FullName == null || item.FullName == "" ? "--" : item.FullName)</p>
+                                            </div>
+
+                                            <div class="col-md-3 ">
+                                                <p class="detailHeading">PRESENT ADDRESS</p>
+                                                <p class="detailText">@(item.PresentAddress == null || item.PresentAddress == "" ? "--" : item.PresentAddress)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">MOBILE / Phone Number</p>
+                                                <p class="detailText">@(item.MobileNumber == null || item.MobileNumber == "" ? "--" : item.MobileNumber)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">KNOW APPLICANT SINCE</p>
+                                                <p class="detailText">@string.Format("{0:dd MMM yyyy}", DateTime.Parse(item.KnowApplicantSince))</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">Relationship With Applicant</p>
+                                                <p class="detailText">@(item.RelationshipWithApplicantName == null || item.RelationshipWithApplicantName == "" ? "--" : item.RelationshipWithApplicantName)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">Others</p>
+                                                <p class="detailText">@(item.RelationshipWithApplicantOthers == null || item.RelationshipWithApplicantOthers == "" ? "--" : item.RelationshipWithApplicantOthers)</p>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <p class="detailHeading">Comments</p>
+                                                <p class="detailText">@(item.Comments == null || item.Comments == "" ? "--" : item.Comments)</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12" style="text-align: right;">
+                <a id="screenBtnRD" href="" data-toggle="modal" data-target="#_Preferences_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                <a id="discrepentBtnRD" href="" data-toggle="modal" data-target="#_Preferences_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+            </div>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<!--Approved Modal -->
+<div class="modal fade" id="_Preferences_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenRD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_Preferences_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdRD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorRD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentRD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.ReferenceDetailAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnRD').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnRD').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnRD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnRD').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnRD').toggleClass("d-none");
+            $('#discrepentBtnRD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenRD').click(function () {
+        debugger;
+        var comment = $('#commentIdRD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'REFERENCES DETAILS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentRD').click(function () {
+        debugger;
+        if (!$('#commentIdRD').val()) {
+            $('#comment_errorRD').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorRD').css("display", "none");
+        }
+        var comment = $('#commentIdRD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'REFERENCES DETAILS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdRD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

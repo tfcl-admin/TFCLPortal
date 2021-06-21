@@ -1,0 +1,363 @@
+﻿
+@model TFCLPortal.BusinessPlans.Dto.BusinessPlanListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+
+        @*<div class="col-md-12 text-right ">
+            <a class="btn btn-sm btn-outline-success bg1 eft-1 text-success" title="Mark Screened"><i class="fa fa-check-circle"></i></a>
+            <a class="btn btn-sm btn-outline-danger bg1 eft-1 text-danger" title="Decline Application"><i class="fa fa-times-circle"></i></a>
+        </div>*@
+        <div class="row">
+            @*<div class="col-md-3">
+                <p class="detailHeading">Applicant Name</p>
+                <p class="detailText">@(Model.ApplicantName == null ? "--" : Model.ApplicantName)</p>
+            </div>*@
+
+            <div class="col-md-3">
+                <p class="detailHeading">APPLICATION DATE</p>
+                <p class="detailText">@Model.CreationTime.ToString("dd MMM yyyy")</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">BRANCH CODE</p>
+                <p class="detailText">@(Model.BranchCode == null ? "--" : Model.BranchCode)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Client status</p>
+                <p class="detailText">@(Model.clientStatusName == null ? "--" : Model.clientStatusName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Reason Of Decline</p>
+                <p class="detailText">@(Model.ReasonOfDeclineName == null || Model.ReasonOfDeclineName == "0" ? "--" : Model.ReasonOfDeclineName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Others</p>
+                <p class="detailText">@(Model.ReasonOfDecineOthers == null || Model.ReasonOfDecineOthers == "" ? "--" : Model.ReasonOfDecineOthers)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Credit Bureau Status</p>
+                <p class="detailText">@(Model.CreditBureauCheckName == null || Model.CreditBureauCheckName == "0" ? "--" : Model.CreditBureauCheckName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Over Dues (Over 30 Days)</p>
+                @if (Model.OverDues == null)
+                {<p class="detailText">--</p> }
+                else if (Model.OverDues == false)
+                {<p class="detailText">No</p>}
+                else if (Model.OverDues == true)
+                {<p class="detailText">Yes</p>}
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Over Dues Approval Taken</p>
+                @if (Model.ApprovalTaken == null || Model.ApprovalTaken == "" || Model.ApprovalTaken == "null")
+                {<p class="detailText">--</p> }
+                else
+                {<p class="detailText">@Model.ApprovalTaken</p>}
+
+            </div>
+            @*<div class="col-md-3">
+                <p class="detailHeading">Over Dues Approval Taken</p>
+                <p class="detailText">@Model.ApprovalTaken</p>
+            </div>*@
+            <div class="col-md-3">
+                <p class="detailHeading">
+                    AML/CFT Check
+                </p>
+                @if (Model.AmlCftCheck == null)
+                {<p class="detailText">N/A</p> }
+                else if (Model.AmlCftCheck == false)
+                {<p class="detailText">No</p>}
+                else if (Model.AmlCftCheck == true)
+                {<p class="detailText">Yes</p>}
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">
+                    AML/CFT Clearance
+                </p>
+                @if (Model.AmlCftClearance == null)
+                {<p class="detailText">N/A</p> }
+                else if (Model.AmlCftClearance == false)
+                {<p class="detailText">No</p>}
+                else if (Model.AmlCftClearance == true)
+                {<p class="detailText">Yes</p>}
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">CLIENT EXIST IN CEL</p>
+                @if (Model.ClientInCell == null)
+                {<p class="detailText">N/A</p> }
+                else if (Model.ClientInCell == false)
+                {<p class="detailText">No</p>}
+                else if (Model.ClientInCell == true)
+                {<p class="detailText">Yes</p>}
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">CLIENT EXIST IN BEL</p>
+                @if (Model.ClientInBell == null)
+                {<p class="detailText">N/A</p> }
+                else if (Model.ClientInBell == false)
+                {<p class="detailText">No</p>}
+                else if (Model.ClientInBell == true)
+                {<p class="detailText">Yes</p>}
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PURPOSE OF LOAN</p>
+                <p class="detailText">@(Model.LoanpurposeName == null || Model.LoanpurposeName == "" ? "--" : Model.LoanpurposeName)</p>
+            </div>
+            <!--<div class="col-md-12" style="padding-bottom: 20px;color: #008c45;">-->
+            @*I am applying for the loan as per details given below:*@
+            <!--</div>-->
+            <div class="col-md-9">
+                <p class="detailHeading">Loan Purpose Details</p>
+                <p class="detailText">@(Model.PurposeOfLoanUtilization == null || Model.PurposeOfLoanUtilization == "" ? "--" : Model.PurposeOfLoanUtilization)</p>
+
+            </div>
+        </div>
+
+
+        @if (ViewBag.productId != 8 && ViewBag.productId != 9)
+        {
+            <div class="row">
+
+                <div class="col-md-6">
+                    <p class="detailHeading">Loan Purpose Classification</p>
+                    <p class="detailText">@(Model.LoanPurposeClassificationName == null || Model.LoanPurposeClassificationName == "" ? "--" : Model.LoanPurposeClassificationName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">Others</p>
+                    <p class="detailText">@(Model.LoanPurposeClassificationOthers == null || Model.LoanPurposeClassificationOthers == "" ? "--" : Model.LoanPurposeClassificationOthers)</p>
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-4">
+                <p class="detailHeading">Amount for Capital Expenditure (Rs)</p>
+                <p class="detailText">@Convert.ToDecimal(Model.AmountCapitalExpenditure).ToString("#,##0")</p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">Amount for Working Capital (Rs)</p>
+                <p class="detailText">@Convert.ToDecimal(Model.AmountWorkingCapital).ToString("#,##0")</p>
+            </div>
+
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Total Investment Required(Rs)
+                </p>
+                <p class="detailText"><b style="font-weight:600">@Convert.ToDecimal(Model.TotalInvestmentRequired).ToString("#,##0") </b></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <p class="detailHeading">Loan Amount Required (Rs)</p>
+                <p class="detailText">@(Model.RequiredLoanAmount == "" || Model.RequiredLoanAmount == null ? "0" : Convert.ToDecimal(Model.RequiredLoanAmount).ToString("#,###")) </p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">Loan Amount Recommended (Rs)</p>
+                <p class="detailText">@(Model.LoanAmountRecommended == "" || Model.LoanAmountRecommended == null ? "0" : Convert.ToDecimal(Model.LoanAmountRecommended).ToString("#,###")) </p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">Loan Tenure Recommended (Months)</p>
+                <p class="detailText">@(Model.LoanTenureRequestedName == null || Model.LoanTenureRequestedName == "" ? "--" : Model.LoanTenureRequestedName)</p>
+            </div>
+        </div>
+        <div class="row">
+
+
+            <div class="col-md-4">
+                <p class="detailHeading">PAYMENT FREQUENCY</p>
+                <p class="detailText">@(Model.PaymentName == null ? "--" : Model.PaymentName)</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">Security</p>
+                <p class="detailText">@(Model.CollateralGiven == null ? "--" : Model.CollateralGiven)</p>
+            </div>
+        </div>
+        @*<div class="col-md-3">
+            <p class="detailHeading">Client ID</p>
+            <p class="detailText">@Model.clientID</p>
+        </div>*@
+
+    </div>
+    <div class="col-md-12" style="text-align: right;">
+        @*@if (ViewBag.Action == "Screened")
+        {*@
+            @*<a id="screenBtnLRD" class="btn btn-sm btn-outline-success" title="Screened" disabled><i class="fa fa-check"></i> Marked Screened</a>*@
+            <a id="screenBtnLRD" href="" data-toggle="modal" data-target="#_businessPlan_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+            <a id="discrepentBtnLRD" href="" data-toggle="modal" data-target="#_businessPlan_discrepent" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+        @*}
+        else if (ViewBag.Action == "Discrepent")
+        {
+
+            <a id="screenBtnLRD" href="" data-toggle="modal" data-target="#_businessPlan_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+            <a id="discrepentBtnLRD" class="btn btn-sm btn-outline-danger" title="discrepented" disabled><i class="fa fa-times"></i> Marked Discrepent</a>
+        }
+        else
+        {
+            <a id="screenBtnLRD" href="" data-toggle="modal" data-target="#_businessPlan_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+            <a id="discrepentBtnLRD" href="" data-toggle="modal" data-target="#_businessPlan_discrepent" class="btn btn-sm btn-outline-danger" title="discrepent">discrepent<span></span></a>
+        }*@
+
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+<!--Approved Modal -->
+<div class="modal fade" id="_businessPlan_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Approved Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to Mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenLRD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_businessPlan_discrepent" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Discrepent Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdLRD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorLRD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentLRD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $('#commentIdLRD').attr('required', 'required');
+
+
+    $(document).ready(function () {
+        //alert('@ViewBag.businessPlanAction');
+        btnChange('@ViewBag.businessPlanAction');
+    });
+
+
+    function btnChange(currentState) {
+        if (currentState == "Screened") {
+            $('#screenBtnLRD').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnLRD').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnLRD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnLRD').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnLRD').toggleClass("d-none");
+            $('#discrepentBtnLRD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenLRD').click(function () {
+        debugger;
+        var comment = $('#commentIdLRD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'Loan Requisition Details'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+                   
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentLRD').click(function () {
+        debugger;
+        if (!$('#commentIdLRD').val()) {
+            $('#comment_errorLRD').css("display", "block");
+            return false;
+        } else {
+            $('#comment_errorLRD').css("display", "none");
+        }
+        var comment = $('#commentIdLRD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'Loan Requisition Details','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+                    $('#commentIdLRD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

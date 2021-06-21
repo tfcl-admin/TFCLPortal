@@ -1,0 +1,109 @@
+﻿@model TFCLPortal.ProductMarkupRates.Dto.CreateProductDetailDto
+@{
+    ViewData["Title"] = "AddProductDetail";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Create Product Details
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Product Details > Create Product Details
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/BCC/Index" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back To List"><i class="fa fa-angle-double-left"></i> Back To List </a>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <form asp-action="AddProductDetail" asp-controller="Product" method="post">
+            @*<input type="hidden" id="Id" value="@Model.Id" />*@
+            <div class="row ">
+                <div class="masonry-item col-md-12">
+                    <div class="bgc-white p-20 bd">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Product Name</label>
+                                    @Html.DropDownListFor(m => m.Fk_ProductId, ViewBag.products as SelectList, "Select Product", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+                                <div class="form-group">
+                                    <label asp-for="Tenure" class="control-label"></label>
+                                    <input asp-for="Tenure" class="form-control" />
+                                    <span asp-validation-for="Tenure" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Min Slab</label>
+                                    <input asp-for="SlabMin" class="form-control" />
+                                    <span asp-validation-for="SlabMin" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Max Slab</label>
+                                    <input asp-for="SlabMax" class="form-control" />
+                                    <span asp-validation-for="SlabMax" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Fresh Client UnSecure MarkupRate</label>
+                                    <input asp-for="FreshClientUnSecureMarkupRate" class="form-control" />
+                                    <span asp-validation-for="FreshClientUnSecureMarkupRate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label"> Fresh Client Secure  MarkupRate </label>
+                                    <input asp-for="FreshClientSecureMarkupRate" class="form-control" />
+                                    <span asp-validation-for="FreshClientSecureMarkupRate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Repeat Client UnSecure MarkupRate</label>
+                                    <input asp-for="RepeatClientUnSecureMarkupRate" class="form-control" />
+                                    <span asp-validation-for="RepeatClientUnSecureMarkupRate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Repeat Client Secure MarkupRate</label>
+                                    <input asp-for="RepeatClientSecureMarkupRate" class="form-control" />
+                                    <span asp-validation-for="RepeatClientSecureMarkupRate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            @*<div class="col-md-4">
+
+                                <div class="form-group">
+                                    <label asp="Fresh Client LoanStatus" class="control-label"></label>
+                                    <select id="FreshClientLoanStatus" name="FreshClientLoanStatus" class="form-control">
+                                        <option selected>Applicable</option>
+                                        <option>Non-Applicable</option>
+                                    </select>
+
+                                </div>
+                            </div>*@
+                            <div class="col-md-12 text-right">
+                               
+                                <button type="submit" class="btn btn-normal bg1 eft-1">Add Markup<span></span></button>
+                                <a href="~/Product/ProductDetaillist" value="@ViewBag.values" class="btn btn-normal bg1 eft-1">Product Markup List<span></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</main>

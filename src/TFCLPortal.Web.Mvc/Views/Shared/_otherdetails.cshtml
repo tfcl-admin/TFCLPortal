@@ -1,0 +1,214 @@
+﻿@model TFCLPortal.OtherDetails.Dto.OtherDetailListDto
+
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if(@Model != null)
+{
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <div class="tab_content">
+                <div class="col-md-6">
+                    <div class="page-form">
+                        <div class="form-group">
+                            <label>NATIONALITY</label>
+                            <h4>@Model.Nationality</h4>
+                        </div>
+                        <div class="form-group">
+                            <label>OTHER NATIONALITY</label>
+                            <h4>@Model.OtherNationality</h4>
+                        </div>
+                        <div class="form-group">
+                            <label>NTN #</label>
+                            <h4>@Model.NTNNumber</h4>
+                        </div>
+                        <div class="form-group">
+                            <label>MOTHER’s MAIDEN NAME </label>
+                            <h4>@Model.MotherMaidenName</h4>
+                        </div>
+                        
+                       
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="page-form">
+
+                        <div class="form-group">
+                            <label>OTHER OCCUPATION</label>
+                            <h4>@Model.OccupationName</h4>
+                        </div>
+                        <div class="form-group">
+                            <label>OTHERS</label>
+                            <h4>@Model.OtherOccupationDD</h4>
+                        </div>
+                        <div class="form-group">
+                            <label>OTHER SOURCE OF FUNDS</label>
+                            <h4>@Model.FundSourceName</h4>
+                        </div>
+                        <div class="form-group">
+                            <label>OTHERS</label>
+                            <h4>@Model.OtherSourceOfFundDD</h4>
+                        </div>
+                        <div class="form-group">
+                            <label>AMOUNT</label>
+                            <h4>@Model.Amount</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Irfan-->
+            <div class="col-md-12" style="text-align: right;">
+                <a href="" data-toggle="modal" data-target="#_OtherDetail_approved" class="btn btn-success bg1 eft-1" title="Approved">Approved</a>
+                <a href="" data-toggle="modal" data-target="#_OtherDetail_discrepant" class="btn btn-warning bg1 eft-1" title="discrepant">Discrepant</a>
+            </div>
+
+        </div>
+        </div>
+    }
+    else
+    {
+        <div class="tab_content" style="padding: 15px 20px">
+            <div class="row">
+                <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+            </div>
+        </div>
+    }
+    <!--Irfan-->
+            <!--Approved Modal -->
+            <div class="modal fade" id="_OtherDetail_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Approved Confirmation</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to approved this item?
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnContinueDelete" type="button" class="btn btn-success bg1 ef1">Approved</button>
+                            <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <!--discrepant Modal -->
+            <div class="modal fade" id="_OtherDetail_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">discrepant Confirmation</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea placeholder="Type Reason??" id="commentId"></textarea>
+                            <span class="text-danger" style="display:none" id="comment_error">this field is required</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btndiscrepant" class="btn btn-success bg1 ef1">Submit</button>
+                            <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <script>
+    $('#commentId').attr('required', 'required');
+
+
+    $('#btnContinueDelete').click(function () {
+        debugger;
+        var comment = $('#commentId').val();
+        var Id = $('#Id').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/OtherDetailScreenApproved")',
+                    data: { 'Id': Id, 'comment': comment} ,
+                    success: function (data) {
+                        debugger
+                        if (data.result == "Records Approved Successfully") {
+                            alert(data.result);
+                            $('#_OtherDetail_approved').modal('hide');
+                            $('.modal-backdrop').remove();
+                            $('body').removeClass("modal-open");
+                        }
+                    },
+                    error: function (data) {
+                        debugger
+                        alert("error");
+                    }
+                });
+    });
+    $('#btndiscrepant').click(function () {
+        debugger;
+        if (!$('#commentId').val()) {
+            $('#comment_error').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_error').css("display", "none");
+        }
+        var comment = $('#commentId').val();
+        var Id = $('#Id').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/OtherDetailScreenApproved")',
+                    data: { 'Id': Id, 'comment': comment} ,
+                    success: function (data) {
+                        debugger
+                        if (data.result == "Records discrepant Successfully") {
+                            alert(data.result);
+                            $('#commentId').val("");
+                            $('#_OtherDetail_discrepant').modal('hide');
+                            $('.modal-backdrop').remove();
+                            $('body').removeClass("modal-open");
+                        }
+                    },
+                    error: function (data) {
+                        debugger
+                        alert("error");
+                    }
+                });
+        });
+            </script>
+                @*<div class="form-group">
+                    <label></label>
+                    <h4>@Model.OccupationName</h4>
+                </div>
+                <div class="form-group">
+                    <label>AMOUNT</label>
+                    <h4>@Model.Amount</h4>
+                </div>
+            </div>
+        </div>*@
+        @*<div class="col-md-6">
+            <div class="page-form">
+                <div class="form-group">
+                    <label>OTHER NATIONALITY</label>
+                    <h4>@Model.OtherNationality</h4>
+                </div>
+                <div class="form-group">
+                    <label>MOTHER’s MAIDEN NAME </label>
+                    <h4>@Model.MotherMaidenName</h4>
+                </div>
+                <div class="form-group">
+                    <label>OTHER SOURCE OF FUNDS</label>
+                    <h4>@Model.FundSourceName</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@

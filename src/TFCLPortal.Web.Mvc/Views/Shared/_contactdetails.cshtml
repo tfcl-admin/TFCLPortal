@@ -1,0 +1,341 @@
+﻿@model TFCLPortal.ContactDetails.Dto.ContactDetailListDto
+
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (Model != null)
+{
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="detailHeading">PRESENT ADDRESS</p>
+                <p class="detailText">@(Model.PresentAddress == null || Model.PresentAddress == "" ? "--" : Model.PresentAddress) </p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PRESENT Union Council</p>
+                <p class="detailText">@(Model.PresentUCNo == null || Model.PresentUCNo == "" ? "--" : Model.PresentUCNo)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PRESENT MOUZA / TOWN</p>
+                <p class="detailText">@(Model.PresentMouzaTown == null || Model.PresentMouzaTown == "" ? "--" : Model.PresentMouzaTown)</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="detailHeading">PRESENT TEHSIL</p>
+                <p class="detailText">@(Model.PresentTehsil == null || Model.PresentTehsil == "" ? "--" : Model.PresentTehsil)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PRESENT DISTRICT</p>
+                <p class="detailText">@(Model.PresentDistrictName == null || Model.PresentDistrictName == "" ? "--" : Model.PresentDistrictName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PRESENT PROVINCE</p>
+                <p class="detailText">@(Model.PresentProvinceName == null || Model.PresentProvinceName == "" ? "--" : Model.PresentProvinceName)</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="detailHeading">PRESENT NEAREST LANDMARK</p>
+                <p class="detailText">@(Model.PresentNearestLandMark == null || Model.PresentNearestLandMark == "" ? "--" : Model.PresentNearestLandMark)</p>
+            </div>
+
+
+            <div class="col-md-3">
+                <p class="detailHeading">Residence PLACE STATUS</p>
+                <p class="detailText">@(Model.OwnershipStatusName == null || Model.OwnershipStatusName == "" ? "--" : Model.OwnershipStatusName)</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="detailHeading">Rent Agreement Signatory</p>
+                <p class="detailText">@(Model.RentAgreementSignatoryName == null || Model.RentAgreementSignatoryName == "" ? "--" : Model.RentAgreementSignatoryName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Others</p>
+                <p class="detailText">@(Model.RentAgreementSignatoryOthers == null || Model.RentAgreementSignatoryOthers == "" ? "--" : Model.RentAgreementSignatoryOthers)</p>
+            </div>
+
+
+
+            <div class="col-md-3">
+                <p class="detailHeading">Monthly Rent (Rs)</p>
+                <p class="detailText">@(Model.RentAmount == null || Model.RentAmount == "0" || Model.RentAmount == "" ? "--" : Convert.ToDecimal(Model.RentAmount).ToString("#,##0"))</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="detailHeading">Monthly Rent Sharing (%age)</p>
+                @if (Model.MonthlyRentSharingPercentage == null)
+                {<p class="detailText">N/A</p> }
+                else
+                {<p class="detailText">@(Model.MonthlyRentSharingPercentage == 0 ? "--" : (Convert.ToInt32(Model.MonthlyRentSharingPercentage)).ToString()+" %")</p>}
+            </div>
+
+            <div class="col-md-3">
+                <p class="detailHeading">Monthly Share (Rs)</p>
+                @*@if (Model.MonthlyShare == null)
+                    {<p class="detailText">N/A</p> }
+                    else if (Model.MonthlyShare == 0)
+                    {<p class="detailText">N/A</p> }
+                    else
+                    {<p class="detailText">@Convert.ToDecimal(Model.).ToString("#,##0")</p>}*@
+                <p class="detailText">@(Model.MonthlyShare == null || Model.MonthlyShare == 0 ? "--" : Convert.ToDecimal(Model.MonthlyShare).ToString("#,##0"))</p>
+
+            </div>
+
+
+            <div class="col-md-3">
+                <p class="detailHeading">Rent Agreement Expiry Date</p>
+                @{ DateTime NotNullableDT = Model.RentAgreementExpiryDate ?? DateTime.Now.Date.AddDays(1);}
+
+                <p class="detailText @( DateTime.Compare(NotNullableDT, DateTime.Now.Date)<0 ? "text-danger" : (DateTime.Compare(NotNullableDT, DateTime.Now.Date)==0 ? "text-orange" : ""))">
+                    @(Model.RentAgreementExpiryDate==null ? "--" : string.Format("{0:dd MMM yyyy}", Model.RentAgreementExpiryDate))
+                </p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">CURRENT ADDRESS SINCE</p>
+                <p class="detailText">@string.Format("{0:dd MMM yyyy}", Model.CurrentAddressSince) @(Model.currentAddressDuration==""?"":"("+Model.currentAddressDuration+")")</p>
+            </div>
+            <div class="col-md-6 fwidth">
+                <p class="detailHeading">PERMANENT ADDRESS</p>
+                <p class="detailText">@(Model.permanentAddress == null || Model.permanentAddress == "" ? "--" : Model.permanentAddress)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PERMANENT Union Council</p>
+                <p class="detailText">@(Model.permanentUCNo == null || Model.permanentUCNo == "" ? "--" : Model.permanentUCNo)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PERMANENT MOUZA / TOWN</p>
+                <p class="detailText">@(Model.permanentMouzaTown == null || Model.permanentMouzaTown == "" ? "--" : Model.permanentMouzaTown)</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="detailHeading">PERMANENT TEHSIL</p>
+                <p class="detailText">@(Model.permanentTehsil == null || Model.permanentTehsil == "" ? "--" : Model.permanentTehsil)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PERMANENT DISTRICT</p>
+                <p class="detailText">@(Model.PermanentDistrictName == null || Model.PermanentDistrictName == "" ? "--" : Model.PermanentDistrictName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">PERMANENT PROVINCE</p>
+                <p class="detailText">@(Model.PermanentProvinceName == null || Model.PermanentProvinceName == "" ? "--" : Model.PermanentProvinceName)</p>
+            </div>
+
+
+
+            <div class="col-md-3">
+                <p class="detailHeading">PERMANENT NEAREST LANDMARK</p>
+                <p class="detailText">@(Model.permanentNearestLandMark == null || Model.permanentNearestLandMark == "" ? "--" : Model.permanentNearestLandMark)</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="detailHeading">Mobile Number</p>
+                <p class="detailText">@(Model.MobileNo == null || Model.MobileNo == "" ? "--" : Model.MobileNo)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">LANDLINE Number</p>
+                <p class="detailText">@(Model.LandlineNo == null || Model.LandlineNo == "" ? "--" : Model.LandlineNo)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Fax Number</p>
+                <p class="detailText">@(Model.FaxNo == null || Model.FaxNo == "" ? "--" : Model.FaxNo)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">ALTERNATE MOBILE Number (Self)</p>
+                <p class="detailText">@(Model.AlternateMobileNoSelf == null || Model.AlternateMobileNoSelf == "" ? "--" : Model.AlternateMobileNoSelf)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">ALTERNATE MOBILE Number (Family)</p>
+                <p class="detailText">@(Model.AlternateMobileNo == null || Model.AlternateMobileNo == "" ? "--" : Model.AlternateMobileNo)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Relationship with Applicant</p>
+                <p class="detailText">@(Model.AlternateMobileNoName == null || Model.AlternateMobileNoName == "" ? "--" : Model.AlternateMobileNoName)</p>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-md-12" style="text-align: right;">
+        <a id="screenBtnCD" href="" data-toggle="modal" data-target="#_ContactDetail_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+        <a id="discrepentBtnCD" href="" data-toggle="modal" data-target="#_ContactDetail_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<!--Approved Modal -->
+<div class="modal fade" id="_ContactDetail_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Approved Confirmation</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenCD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepant Modal -->
+<div class="modal fade" id="_ContactDetail_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    discrepant Confirmation</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason??" id="commentIdCD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorCD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentCD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $('#commentIdCD').attr('required', 'required');
+
+//        $(document).ready(function(){
+//            $('[data-toggle="tooltip"]').tooltip();
+//});
+
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.ContactAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnCD').html("<i class='fa fa-check'></i>  Marked Screened");
+            //$('#screenBtnCD').click(false);
+
+
+            $('#discrepentBtnCD').html("Discrepent");
+            //$("#discrepentBtnCD").attr("data-toggle", "modal");
+            //$("#discrepentBtnCD").attr("data-target", "#_businessPlan_discrepent");
+            //$("#discrepentBtnCD").attr("href", "");
+            //$('#screenBtnCD').click(true);
+        }
+        else if (currentState == "Discrepent") {
+
+            $('#discrepentBtnCD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            //$('#discrepentBtnCD').click(false);
+
+            $('#screenBtnCD').html("Screen");
+            //$("#screenBtnCD").attr("data-toggle", "modal");
+            //$("#screenBtnCD").attr("data-target", "#_businessPlan_approved");
+            //$("#screenBtnCD").attr("href", "");
+            //$('#screenBtnCD').click(true);
+
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnCD').toggleClass("d-none");
+            $('#discrepentBtnCD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenCD').click(function () {
+        debugger;
+        var comment = $('#commentIdCD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'Contact Details'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentCD').click(function () {
+        debugger;
+        if (!$('#commentIdCD').val()) {
+            $('#comment_errorCD').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorCD').css("display", "none");
+        }
+        var comment = $('#commentIdCD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'Contact Details','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdCD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

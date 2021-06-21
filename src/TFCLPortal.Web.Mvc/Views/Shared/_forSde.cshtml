@@ -1,0 +1,220 @@
+﻿@model TFCLPortal.ForSDES.Dto.ForSDEListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <p class="detailHeading">APPLICANT’S REPUTATION</p>
+                    <p class="detailText">@(Model.applicantReputationName == null || Model.applicantReputationName == "" ? "--" : Model.applicantReputationName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">IF DOUBTFUL, COMMENT</p>
+                    <p class="detailText">@(Model.DoubtfulComment == null || Model.DoubtfulComment == "" ? "--" : Model.DoubtfulComment)</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">UTILITY BILL PAYMENT</p>
+                    <p class="detailText">@(Model.utilityName == null || Model.utilityName == "" ? "--" : Model.utilityName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">Number OF DELAYS DURRING LAST 1 YEAR</p>
+                    <p class="detailText">@(Model.Delayed == 0 ? "--" : Model.Delayed.ToString())</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">REFERENCE CHECK</p>
+                    <p class="detailText">@(Model.referenceCheckName == null || Model.referenceCheckName == "" ? "--" : Model.referenceCheckName)</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">RECOMMENDED LOAN AMOUNT</p>
+                    <p class="detailText">@(Model.RecommendedLoanAmount == 0  ? "--" : string.Format("{0:#,###}", Model.RecommendedLoanAmount))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">RECOMMENDED TENURE</p>
+                    <p class="detailText">@(Model.RecommendedTenure == null || Model.RecommendedTenure == "" ? "--" : Model.RecommendedTenure)</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">RECOMMENDED GRACE PERIOD</p>
+                    <p class="detailText">@(Model.RecommendedGracePeriod == null || Model.RecommendedGracePeriod == "" ? "--" : Model.RecommendedGracePeriod)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">UTILIZATION OF LOAN</p>
+                    <p class="detailText">@(Model.UtilizationOfLoan == null || Model.UtilizationOfLoan == "" ? "--" : Model.UtilizationOfLoan)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">COMMENTS</p>
+                    <p class="detailText">@(Model.ObservationComment == null || Model.ObservationComment == "" ? "--" : Model.ObservationComment)</p>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-12" style="text-align: right;">
+                <a id="screenBtnSDE" href="" data-toggle="modal" data-target="#_ForSDE_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                <a id="discrepentBtnSDE" href="" data-toggle="modal" data-target="#_ForSDE_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<!--Approved Modal -->
+<div class="modal fade" id="_ForSDE_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenSDE" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_ForSDE_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdSDE"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorSDE">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentSDE" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.SDEAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnSDE').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnSDE').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnSDE').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnSDE').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnSDE').toggleClass("d-none");
+            $('#discrepentBtnSDE').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenSDE').click(function () {
+        debugger;
+        var comment = $('#commentIdSDE').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'SDE RECOMMENDATIONS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentSDE').click(function () {
+        debugger;
+        if (!$('#commentIdSDE').val()) {
+            $('#comment_errorSDE').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorSDE').css("display", "none");
+        }
+        var comment = $('#commentIdSDE').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'SDE RECOMMENDATIONS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdSDE').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

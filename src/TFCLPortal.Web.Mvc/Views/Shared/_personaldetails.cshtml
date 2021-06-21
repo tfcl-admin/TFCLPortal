@@ -1,0 +1,350 @@
+﻿@model TFCLPortal.PersonalDetails.Dto.PersonalDetailDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            @*<div class="col-md-12 text-center @(ViewBag.ApplicantPicUrl=="" ? "d-none" : "" )">
+                    <img src=" @ViewBag.ApplicantPicUrl" width="300px" />
+                </div>*@
+
+            <div class="col-md-3">
+                <p class="detailHeading">
+
+                    APPLICANT NAME
+                    <a href="@ViewBag.ApplicantPicUrl" class="@(ViewBag.ApplicantPicUrl == "" ? "d-none" : "" )" style="float: right" data-toggle="tooltip" target="_blank" title="Click to Open Picture">
+                        <i class="fa fa-picture-o"></i>
+                    </a>
+                </p>
+                <p class="detailText">@(Model.ApplicantName == null ? "--" : Model.ApplicantName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">S/O D/O W/O</p>
+                <p class="detailText">@(Model.ParentName == null ? "--" : Model.ParentName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">CNIC Number</p>
+                <p class="detailText">@(Model.CNIC == null ? "--" : Model.CNIC)</p>
+            </div>
+            @*@{ Model.CNICExpiry = DateTime.Parse("12/5/2020");}*@
+
+            @{ DateTime NotNullableDT = Model.CNICExpiry ?? DateTime.Now;}
+            <div class="col-md-3">
+                <p class="detailHeading">CNIC Expiry Date</p>
+                <p class="detailText @( DateTime.Compare(NotNullableDT, DateTime.Now.Date) < 0 ? "text-danger" : (DateTime.Compare(NotNullableDT, DateTime.Now.Date) == 0 ? "text-orange" : ""))"> @string.Format("{0:dd MMM yyyy}", Model.CNICExpiry)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">DATE OF BIRTH</p>
+                <p class="detailText">@string.Format("{0:dd MMM yyyy}", Model.BirthDate)</p>
+            </div>
+            <div class="col-md-3">
+            <p class="detailHeading">Age (On Data Submission)</p>
+            <p class="detailText"><b style="font-weight:600">@(Model.Age == null||Model.Age=="" ? "--" : Model.Age.Replace("YEARS", "YEARS,").Replace("MONTHS", "MONTHS,"))</b></p>
+            @*<p class="detailText"><b style="font-weight:600">@{DateTime.Now.Date.Subtract(Convert.ToDateTime(Model.BirthDate));}</b></p>*@
+            </div>
+        <div class="col-md-3">
+            <p class="detailHeading">Age (On Application Submission) <i class="fa fa-info-circle" style="float: right" data-toggle="tooltip" title="Allowed Range : @Model.AllowedMinAge years to @Model.AllowedMaxAge years "></i></p>
+            @if (Model.CalculatedAge != null && Model.CalculatedAge != "" && Model.CalculatedAge != "--")
+            {
+                <p class="detailText @(Convert.ToInt32(Model.CalculatedAge.Substring(0, 2)) >= Convert.ToInt32(@Model.AllowedMinAge) && Convert.ToInt32(Model.CalculatedAge.Substring(0, 2))<=Convert.ToInt32(@Model.AllowedMaxAge)? "" : "text-danger") "><b style="font-weight:600">@(Model.CalculatedAge == null ? "--" : Model.CalculatedAge)</b></p>
+            }
+            else
+            {
+                <p class="detailText">--</p>
+            }
+            @*<p class="detailText"><b style="font-weight:600">@{DateTime.Now.Date.Subtract(Convert.ToDateTime(Model.BirthDate));}</b></p>*@
+        </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Age (On Application Disbursement) <i class="fa fa-info-circle" style="float: right" data-toggle="tooltip" title="Allowed Range : @Model.AllowedMinAge years to @Model.AllowedMaxAge years "></i></p>
+                @if (Model.CalculatedAgeDisbursement != null && Model.CalculatedAgeDisbursement != "" && Model.CalculatedAgeDisbursement != "--")
+                {
+                    <p class="detailText @(Convert.ToInt32(Model.CalculatedAgeDisbursement.Substring(0, 2)) >= Convert.ToInt32(@Model.AllowedMinAge) && Convert.ToInt32(Model.CalculatedAgeDisbursement.Substring(0, 2))<=Convert.ToInt32(@Model.AllowedMaxAge)? "" : "text-danger") "><b style="font-weight:600">@(Model.CalculatedAgeDisbursement == null ? "--" : Model.CalculatedAgeDisbursement)</b></p>
+                }
+                else
+                {
+                    <p class="detailText">--</p>
+                }
+               </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Age (On Loan Maturity) <i class="fa fa-info-circle" style="float: right" data-toggle="tooltip" title="Allowed Range : @Model.AllowedMinAge years to @Model.AllowedMaxAge years "></i></p>
+                @if (Model.LoanMatureDate != null && Model.LoanMatureDate != "" && Model.LoanMatureDate != "--")
+                {
+                    <p class="detailText @(Convert.ToInt32(Model.LoanMatureDate.Substring(0, 2)) >= Convert.ToInt32(@Model.AllowedMinAge) && Convert.ToInt32(Model.LoanMatureDate.Substring(0, 2))<=Convert.ToInt32(@Model.AllowedMaxAge)? "" : "text-danger") "><b style="font-weight:600">@(Model.LoanMatureDate == null ? "--" : Model.LoanMatureDate)</b></p>
+                }
+                else
+                {
+                    <p class="detailText">--</p>
+                }
+
+                @*<p class="detailText"><b style="font-weight:600">@(Model. == null ? "--" : Model.LoanMatureDate)</b></p>*@
+                @*<p class="detailText"><b style="font-weight:600">@{DateTime.Now.Date.Subtract(Convert.ToDateTime(Model.BirthDate));}</b></p>*@
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Age Approval Taken</p>
+                @if (Model.AgeApprovalTaken == null)
+                {<p class="detailText">N/A</p> }
+                else if (Model.AgeApprovalTaken == false)
+                {<p class="detailText">No</p>}
+                else if (Model.AgeApprovalTaken == true)
+                {<p class="detailText">Yes</p>}
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">GENDER</p>
+                <p class="detailText">@(Model.GenderName == null || Model.GenderName == "" ? "--" : Model.GenderName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">MARITAL STATUS</p>
+                <p class="detailText">@(Model.MaritalStatusName == null || Model.MaritalStatusName == "" ? "--" : Model.MaritalStatusName)</p>
+            </div>
+
+            <div class="col-md-3">
+                <p class="detailHeading">Spouse Status</p>
+                <p class="detailText">@(Model.SpouseStatusName == null || Model.SpouseStatusName == "" ? "--" : Model.SpouseStatusName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Number OF DEPENDENTS</p>
+                @if (Model.NumberOfDependents == 0 || Model.NumberOfDependents == 1 || Model.NumberOfDependents == 42)
+                {<p class="detailText">--</p> }
+                else
+                {<p class="detailText">@(Model.NumberOfDependents-1)</p>}
+
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Number OF School Going Dependents</p>
+                @if (Model.SchoolGoingDependants == null || Model.SchoolGoingDependants == 0 ||  Model.SchoolGoingDependants == 42)
+                {<p class="detailText">--</p> }
+                else
+                {<p class="detailText">@(Model.SchoolGoingDependants-1)</p>}
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Qualification</p>
+                <p class="detailText">@(Model.QualificationName == null || Model.QualificationName == "" ? "--" : Model.QualificationName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Others</p>
+                <p class="detailText">@(Model.OtherQualificationDD == null || Model.OtherQualificationDD=="" ? "--" : Model.OtherQualificationDD)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Specialization</p>
+                <p class="detailText">@(Model.Specialization == null || Model.Specialization == "" ? "--" : Model.Specialization)</p>
+            </div>
+            @*<div class="col-md-3">
+                    <p class="detailHeading">CNIC EXPIRY Date</p>
+                    <p class="detailText">@Model.CNICExpiry.ToString("dd MMM yyyy")</p>
+                </div>*@
+            <div class="col-md-3">
+                <p class="detailHeading">Nationality</p>
+                <p class="detailText">@(Model.Nationality == null || Model.Nationality == "" ? "--" : Model.Nationality)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Other Nationality</p>
+                <p class="detailText">@(Model.OtherNationality == null || Model.OtherNationality == "" ? "--" : Model.OtherNationality)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Mother's Maiden Name</p>
+                <p class="detailText">@(Model.MotherMaidenName == null || Model.MotherMaidenName == "" ? "--" : Model.MotherMaidenName)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Personal NTN Number</p>
+                <p class="detailText">@(Model.PersonalNTN == null || Model.PersonalNTN == "" ? "--" : Model.PersonalNTN)</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Active Tax Payer</p>
+                @if (Model.isActiveTaxPayer == null)
+                {<p class="detailText">N/A</p> }
+                else if (Model.isActiveTaxPayer == false)
+                {<p class="detailText">No</p>}
+                else if (Model.isActiveTaxPayer == true)
+                {<p class="detailText">Yes</p>}
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Sales Tax Number</p>
+                <p class="detailText">@(Model.SalesTaxNumber == null || Model.SalesTaxNumber == "" ? "--" : Model.SalesTaxNumber)</p>
+            </div>
+
+            <div class="col-md-12" style="text-align: right;">
+                <a id="screenBtnPD" href="" data-toggle="modal" data-target="#_Personal_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                <a id="discrepentBtnPD" href="" data-toggle="modal" data-target="#_Personal_discrepent" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+<!--Approved Modal -->
+<div class="modal fade" id="_Personal_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenPD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_Personal_discrepent" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdPD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorPD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentPD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $('#commentIdPD').attr('required', 'required');
+
+//        $(document).ready(function(){
+//            $('[data-toggle="tooltip"]').tooltip();
+//});
+
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.PersonalAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnPD').html("<i class='fa fa-check'></i>  Marked Screened");
+            //$('#screenBtnPD').click(false);
+
+
+            $('#discrepentBtnPD').html("Discrepent");
+            //$("#discrepentBtnPD").attr("data-toggle", "modal");
+            //$("#discrepentBtnPD").attr("data-target", "#_businessPlan_discrepent");
+            //$("#discrepentBtnPD").attr("href", "");
+            //$('#screenBtnPD').click(true);
+        }
+        else if (currentState == "Discrepent") {
+
+            $('#discrepentBtnPD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            //$('#discrepentBtnPD').click(false);
+
+            $('#screenBtnPD').html("Screen");
+            //$("#screenBtnPD").attr("data-toggle", "modal");
+            //$("#screenBtnPD").attr("data-target", "#_businessPlan_approved");
+            //$("#screenBtnPD").attr("href", "");
+            //$('#screenBtnPD').click(true);
+
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnPD').toggleClass("d-none");
+            $('#discrepentBtnPD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenPD').click(function () {
+        debugger;
+        var comment = $('#commentIdPD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'Personal Details'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentPD').click(function () {
+        debugger;
+        if (!$('#commentIdPD').val()) {
+            $('#comment_errorPD').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorPD').css("display", "none");
+        }
+        var comment = $('#commentIdPD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'Personal Details','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdPD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

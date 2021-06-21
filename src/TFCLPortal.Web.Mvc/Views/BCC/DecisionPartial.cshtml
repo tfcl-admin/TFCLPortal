@@ -1,0 +1,517 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+    @*<link href="~/Theame/css/style.css" rel="stylesheet" asp-append-version="true" />*@
+    <style>
+        .pageloader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+            opacity: .8;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" id="ApplicationId" value="@ViewBag.AppId" />
+    <input type="hidden" id="UserId" value="@ViewBag.UserId" />
+    <input type="hidden" id="BCCmember1UserId" value="@ViewBag.UserId1" />
+    <input type="hidden" id="BCCmember2UserId" value="@ViewBag.UserId2" />
+    <input type="hidden" id="BCCmember3UserId" value="@ViewBag.UserId3" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="pageloader d-none"></div>
+        <div class="row">
+
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Client ID
+                </p>
+                <p class="detailText">@ViewBag.ClientId</p>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC ID
+                </p>
+                <p class="detailText">@ViewBag.BCCNo</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    APPLICANT / RESPONDENT NAME
+                </p>
+                <p class="detailText">@ViewBag.ApplicantName</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    CLIENT / SCHOOL / BUSINESS NAME
+                </p>
+                <p class="detailText">@ViewBag.SchoolName</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    CNIC No.
+                </p>
+                <p class="detailText">@ViewBag.Cnic</p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member Name
+                </p>
+                <p class="detailText">@ViewBag.BCCMember1Name</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Recommendation
+                </p>
+                <p class="detailText">@ViewBag.BCCMember1Decision</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Reason for Recommendation
+                </p>
+                <p class="detailText">@(ViewBag.BCCMember1Reason == null || ViewBag.BCCMember1Reason == "" ? "--" : ViewBag.BCCMember1Reason )</p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member Name
+                </p>
+                <p class="detailText">@ViewBag.BCCMember2Name</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Recommendation
+                </p>
+                <p class="detailText">@ViewBag.BCCMember2Decision</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Reason for Recommendation
+                </p>
+                <p class="detailText">@(ViewBag.BCCMember2Reason == null || ViewBag.BCCMember2Reason == "" ? "--" : ViewBag.BCCMember2Reason )</p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member Name
+                </p>
+                <p class="detailText">@ViewBag.BCCMember3Name</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Recommendation
+                </p>
+                <p class="detailText">@ViewBag.BCCMember3Decision</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Reason for Recommendation
+                </p>
+                <p class="detailText">@(ViewBag.BCCMember3Reason==null || ViewBag.BCCMember3Reason == "" ? "--" : ViewBag.BCCMember3Reason )</p>
+            </div>
+
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Decision of BCC
+                </p>
+                <select class="form-control" id="Decision">
+                    <option value="">Select Decision</option>
+                    <option value="Approve">Approve</option>
+                    <option value="Decline">Decline</option>
+                    <option value="Discrepent">Discrepent</option>
+                    <option value="Under MCRC Review">Forward to MCRC</option>
+                </select>
+            </div>
+
+            <div class="col-md-8  d-none" id="reasonDiv">
+                <p class="detailHeading">
+                    If Discrepant/Decline, Reason
+                </p>
+                <input type="text" class="form-control" id="Reason" />
+            </div>
+
+        </div>
+        <div class="row d-none" id="approvalDiv">
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Loan Amount
+                </p>
+                <input type="text" class="form-control" id="txtloanAmount" value="@ViewBag.LoanAmount" disabled />
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Loan Tenure
+                </p>
+                <input type="text" class="form-control" id="txtloanTenure" value="@ViewBag.LoanTenure" disabled />
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Grace Days (First Instalment)
+                </p>
+                <input type="number" min="0" max="1000" class="form-control" id="txtGraceDays" />
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Applied Mark-up Rate
+                </p>
+                <input type="text" class="form-control" id="txtMarkup" value="@ViewBag.Mark_Up" disabled />
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Collateral Amount
+                </p>
+                <input type="text" class="form-control" id="txtCollateralAmount" value="@ViewBag.CollateralAmount" disabled />
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    LTV %
+                </p>
+                <input type="text" class="form-control" id="txtLTVpercentage" value="@ViewBag.LTVPercentage" disabled />
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Collateral Evaluation Date
+                </p>
+                <input type="text" class="form-control" id="txtCollateralEvaluationDate" value="@ViewBag.cDate" disabled />
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Deferment Applied
+                </p>
+                <select class="form-control" id="isDeferment">
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Deferment Period (Months)
+                </p>
+                <input type="number" min="0" max="1000" class="form-control" id="txtDefermentPeriod" value="" />
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Tranches Applied
+                </p>
+                <select class="form-control" id="isTranches">
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Tranches Amounts
+                </p>
+                <input type="text" class="form-control" id="txtTranchesAmounts" />
+            </div>
+            <div class="col-md-12">
+                <p class="detailHeading">
+                    Tranches Dates
+                </p>
+                <div class="form-check">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="tranchDate" value="January">
+                        <label class="form-check-label" for="inlineCheckbox1">Jan</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="tranchDate" value="February">
+                        <label class="form-check-label" for="inlineCheckbox2">Feb</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="tranchDate" value="March">
+                        <label class="form-check-label" for="inlineCheckbox3">Mar</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="tranchDate" value="April">
+                        <label class="form-check-label" for="inlineCheckbox4">Apr</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox5" name="tranchDate" value="May">
+                        <label class="form-check-label" for="inlineCheckbox5">May</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox6" name="tranchDate" value="June">
+                        <label class="form-check-label" for="inlineCheckbox6">Jun</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox7" name="tranchDate" value="July">
+                        <label class="form-check-label" for="inlineCheckbox7">Jul</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox8" name="tranchDate" value="August">
+                        <label class="form-check-label" for="inlineCheckbox8">Aug</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox9" name="tranchDate" value="September">
+                        <label class="form-check-label" for="inlineCheckbox9">Sep</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox10" name="tranchDate" value="October">
+                        <label class="form-check-label" for="inlineCheckbox10">Oct</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox11" name="tranchDate" value="November">
+                        <label class="form-check-label" for="inlineCheckbox11">Nov</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox12" name="tranchDate" value="December">
+                        <label class="form-check-label" for="inlineCheckbox12">Dec</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Cheque to be Issued in favour of
+                </p>
+                <input type="text" class="form-control" id="txtCheckName" />
+            </div>
+            <div class="col-md-8">
+                <p class="detailHeading">
+                    Comments
+                </p>
+                <input type="text" class="form-control" id="comments" />
+            </div>
+
+        </div>
+        <div class="row" style=" margin-top: 30px">
+
+            <div class="col-md-12">
+                <p class="detailHeading">
+                    Upload Decision Document
+                </p>
+                <input type="file" id="uploadingFile" />
+            </div>
+        </div>
+        <div class="row" style=" margin-top: 30px">
+            <div class="col-md-6">
+                <a id="viewapp" href="/Dashboard/ViewApplication?id=@ViewBag.AppId" target="_blank" class="btn btn-sm btn-outline-primary" title="View Application"><i class="fa fa-search"></i> View Application<span></span></a>
+            </div>
+
+            <div class="col-md-6" style="text-align: right;">
+                <a id="recommend" class="btn btn-sm btn-outline-success text-success" title="Recommend">Submit Decision<span></span></a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        $('#Decision').on('change', function () {
+            var value = this.value;
+            if (value == "Decline" || value == "Discrepent") {
+                $('#reasonDiv').removeClass('d-none');
+                $('#approvalDiv').addClass('d-none');
+            }
+            else if (value == "Approve" || value=="Under MCRC Review") {
+                $('#approvalDiv').removeClass('d-none');
+                $('#reasonDiv').addClass('d-none');
+            }
+            else {
+                $('#approvalDiv').addClass('d-none');
+                $('#reasonDiv').addClass('d-none');
+            }
+        });
+
+
+        $(document).ready(function () {
+            var mcrcDecision = '@ViewBag.McrcDecision';
+            //alert(mcrcDecision);
+            if (mcrcDecision == "Discrepent") {
+                $("#Decision option[value='Under MCRC Review']").remove();
+            }
+            else if (mcrcDecision == "Discrepent & Represent") {
+                $("#Decision option[value='Approve']").remove();
+            }
+            else if (mcrcDecision == "") {
+                $("#Decision option[value='Approve']").remove();
+            }
+        });
+
+        $('#recommend').click(function (e) {
+
+            $(".pageloader").toggleClass("d-none");
+
+
+            var ApplicationId = $('#ApplicationId').val();
+             var BccId = '@ViewBag.BCCNo';
+            var UserId = $('#UserId').val();
+            var BccMember1UserId = $('#BCCmember1UserId').val();
+            var BccMember2UserId = $('#BCCmember2UserId').val();
+            var BccMember3UserId = $('#BCCmember3UserId').val();
+
+            var BccMember1Recommendation = '@ViewBag.BCCMember1Decision';
+            var BccMember2Recommendation = '@ViewBag.BCCMember2Decision';
+            var BccMember3Recommendation = '@ViewBag.BCCMember3Decision';
+
+            var BCCMember1Reason = '@ViewBag.BCCMember1Reason';
+            var BCCMember2Reason = '@ViewBag.BCCMember2Reason';
+            var BCCMember3Reason = '@ViewBag.BCCMember3Reason';
+
+            var Decision = $('#Decision').val();
+            var Reason = $('#Reason').val();
+            var LoanAmount = $('#txtloanAmount').val();
+            var LoanTenure = $('#txtloanTenure').val();
+            var GraceDays = $('#txtGraceDays').val();
+            var AppliedMarkup = $('#txtMarkup').val();
+            var CollateralAmount = $('#txtCollateralAmount').val();
+            var LTV = $('#txtLTVpercentage').val();
+            var CollateralEvaluation = $('#txtCollateralEvaluationDate').val();
+            var isDeferment = $('#isDeferment').val();
+            var DefermentPeriod = $('#txtDefermentPeriod').val();
+            var isTranches = $('#isTranches').val();
+
+            var selected = [];
+            $('.form-check input:checked').each(function () {
+                selected.push($(this).attr('value'));
+            });
+
+            var TranchesDates = selected.join(", ");
+
+            var TranchesAmount = $('#txtTranchesAmounts').val();
+            var CheckName = $('#txtCheckName').val();
+            var Comments = $('#comments').val();
+            var myFile = $('#uploadingFile').prop('files')[0];
+
+
+
+            if (ApplicationId == "") {
+                abp.notify.error("Application Id not found.");
+            }
+            else if (BccId=="")
+            {
+                abp.notify.error("BCC Id not found.");
+            }
+            else if (UserId == "") {
+                abp.notify.error("User Id not found.");
+            }
+            else if (Decision=="")
+            {
+                abp.notify.error("Please Select Decision");
+            }
+            else if (Decision == "Approve" && GraceDays == "") {
+                abp.notify.error("Please Enter Grace Days");
+            }
+            else if (Decision == "Approve" && isDeferment=="")
+            {
+                abp.notify.error("Please Select Deferment Applied");
+            }
+            else if (Decision == "Approve" && isDeferment=="Yes" && DefermentPeriod == "") {
+                abp.notify.error("Please Enter Deferment Period");
+            }
+            else if (Decision == "Approve" && isTranches == "") {
+                abp.notify.error("Please Select Tranches Applied");
+            }
+            else if (Decision == "Approve" && isTranches == "Yes" &&  TranchesAmount == "") {
+                abp.notify.error("Please Enter Tranches Amount");
+            }
+            else if (Decision == "Approve" && isTranches == "Yes" && TranchesDates == "") {
+                abp.notify.error("Please Select Tranches Dates");
+            }
+            else if (Decision == "Approve" && CheckName == "") {
+                abp.notify.error("Please Enter 'CHEQUE TO BE ISSUED IN FAVOUR OF'");
+            }
+
+            else if (Decision == "Under MCRC Review" && GraceDays == "") {
+                abp.notify.error("Please Enter Grace Days");
+            }
+            else if (Decision == "Under MCRC Review" && isDeferment == "") {
+                abp.notify.error("Please Select Deferment Applied");
+            }
+            else if (Decision == "Under MCRC Review" && isDeferment == "Yes" && DefermentPeriod == "") {
+                abp.notify.error("Please Enter Deferment Period");
+            }
+            else if (Decision == "Under MCRC Review" && isTranches == "") {
+                abp.notify.error("Please Select Tranches Applied");
+            }
+            else if (Decision == "Under MCRC Review" && isTranches == "Yes" && TranchesAmount == "") {
+                abp.notify.error("Please Enter Tranches Amount");
+            }
+            else if (Decision == "Under MCRC Review" && isTranches == "Yes" && TranchesDates == "") {
+                abp.notify.error("Please Select Tranches Dates");
+            }
+            else if (Decision == "Under MCRC Review" && CheckName == "") {
+                abp.notify.error("Please Enter 'CHEQUE TO BE ISSUED IN FAVOUR OF'");
+            }
+            else if (Decision == "Under MCRC Review" && (myFile == null || myFile == ""))
+            {
+                abp.notify.error("Please Select Document.");
+            }
+            else {
+
+                var formData = new FormData();
+                formData.append('file', myFile);
+                formData.append('ApplicationId', ApplicationId);
+                formData.append('UserId', UserId);
+                formData.append('BccId', BccId);
+                formData.append('BccMember1UserId', BccMember1UserId);
+                formData.append('BccMember2UserId', BccMember2UserId);
+                formData.append('BccMember3UserId', BccMember3UserId);
+                formData.append('BccMember1Recommendation', BccMember1Recommendation);
+                formData.append('BccMember2Recommendation', BccMember2Recommendation);
+                formData.append('BccMember3Recommendation', BccMember3Recommendation);
+                formData.append('BCCMember1Reason', BCCMember1Reason);
+                formData.append('BCCMember2Reason', BCCMember2Reason);
+                formData.append('BCCMember3Reason', BCCMember3Reason);
+                formData.append('Decision', Decision);
+                formData.append('Reason', Reason);
+                formData.append('LoanAmount', LoanAmount);
+                formData.append('LoanTenure', LoanTenure);
+                formData.append('GraceDays', GraceDays);
+                formData.append('AppliedMarkup', AppliedMarkup);
+                formData.append('CollateralAmount', CollateralAmount);
+                formData.append('file', formData);
+                formData.append('LTV', LTV);
+                formData.append('CollateralEvaluation', CollateralEvaluation);
+                formData.append('isDeferment', isDeferment);
+                formData.append('DefermentPeriod', DefermentPeriod);
+                formData.append('TranchesDates', TranchesDates);
+                formData.append('TranchesAmount', TranchesAmount);
+                formData.append('CheckName', CheckName);
+                formData.append('Comments', Comments);
+                formData.append('isTranches', isTranches);
+
+
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                     processData: false,
+                     contentType: false,
+                    url: '@Url.Content("~/BCC/CreateBccDecision")',
+                     data: formData,
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         window.location.reload();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

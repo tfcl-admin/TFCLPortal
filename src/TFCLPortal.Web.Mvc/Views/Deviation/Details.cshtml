@@ -1,0 +1,280 @@
+﻿@model TFCLPortal.DeviationMatrices.Dto.DeviationMatrixListDto
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+
+<=-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Deviation Matrix Details
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Deviation Matrix > Deviation Matrices List > Details
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Deviation/index" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Listing </a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary bg1 eft-1" title="Edit"><i class="fa fa-edit"></i> Edit</a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Product
+                    </p>
+                    <p class="detailText">
+                        @(Model.ProductName==null || Model.ProductName == "" ? "--" : Model.ProductName)
+                    </p>
+                </div>
+
+                <div class="col-md-12">
+                    <p class="detailHeading text-center" style="border-bottom: 1px solid;margin-bottom: 30px;font-weight: bold">
+                        CATEGORY A
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Applicant Min Age
+                    </p>
+                    <p class="detailText">
+                        @(Model.ApplicantMinAge == null || Model.ApplicantMinAge == "" ? "--" : Model.ApplicantMinAge)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Applicant Max Age
+                    </p>
+                    <p class="detailText">
+                        @(Model.ApplicantMaxAge == null || Model.ApplicantMaxAge == "" ? "--" : Model.ApplicantMaxAge)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Guarantor Min Age
+                    </p>
+                    <p class="detailText">
+                        @(Model.GuarantorMinAge == null || Model.GuarantorMinAge == "" ? "--" : Model.GuarantorMinAge)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Guarantor Max Age
+                    </p>
+                    <p class="detailText">
+                        @(Model.GuarantorMaxAge == null || Model.GuarantorMaxAge == "" ? "--" : Model.GuarantorMaxAge)
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Minimum Student Enrolled at the Time of Assessment
+                    </p>
+                    <p class="detailText">
+                        @(Model.MinStudentEnrolled == null || Model.MinStudentEnrolled == "" ? "--" : Model.MinStudentEnrolled)
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Business Age Years
+                    </p>
+                    <p class="detailText">
+                        @(Model.BusinessAgeYears == null || Model.BusinessAgeYears == "" ? "--" : Model.BusinessAgeYears)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Business Age At Current Place Years
+                    </p>
+                    <p class="detailText">
+                        @(Model.BusinessAgeAtCurrentPlaceYears == null || Model.BusinessAgeAtCurrentPlaceYears == "" ? "--" : Model.BusinessAgeAtCurrentPlaceYears)
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <p class="detailHeading text-center" style="border-bottom:1px solid; margin-bottom:30px;font-weight:bold">
+                        CATEGORY B
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Min Limit For Unsecured Loan
+                    </p>
+                    <p class="detailText">
+                        @(Model.MinLimitForUnsecuredLoan == null || Model.MinLimitForUnsecuredLoan == "" ? "--" : Model.MinLimitForUnsecuredLoan)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Max Limit For Unsecured Loan
+                    </p>
+                    <p class="detailText">
+                        @(Model.MaxLimitForUnsecuredLoan == null || Model.MaxLimitForUnsecuredLoan == "" ? "--" : Model.MaxLimitForUnsecuredLoan)
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Min %age Of SA Expense against SA Income
+                    </p>
+                    <p class="detailText">
+                        @(Model.MinPercentageOfSAexpAgainstSAincome == null || Model.MinPercentageOfSAexpAgainstSAincome == "" ? "--" : Model.MinPercentageOfSAexpAgainstSAincome)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Max Percentage of NAI total School Revenue
+                    </p>
+                    <p class="detailText">
+                        @(Model.MaxPercentageOfNAItotalSchoolRevenue == null || Model.MaxPercentageOfNAItotalSchoolRevenue == "" ? "--" : Model.MaxPercentageOfNAItotalSchoolRevenue)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Min Percentage Of HHE total School Revenue
+                    </p>
+                    <p class="detailText">
+                        @(Model.MinPercentageOfHHEtotalSchoolRevenue == null || Model.MinPercentageOfHHEtotalSchoolRevenue == "" ? "--" : Model.MinPercentageOfHHEtotalSchoolRevenue)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Max Limit For Installment Ratio
+                    </p>
+                    <p class="detailText">
+                        @(Model.MaxLimitForInstallmentRatio == null || Model.MaxLimitForInstallmentRatio == "" ? "--" : Model.MaxLimitForInstallmentRatio)
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Residential Building
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForResidentialBuilding == null || Model.LTVForResidentialBuilding == "" ? "--" : Model.LTVForResidentialBuilding)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Residential Land
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForResidentialLand == null || Model.LTVForResidentialLand == "" ? "--" : Model.LTVForResidentialLand)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Commercial Building
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForCommercialBuilding == null || Model.LTVForCommercialBuilding == "" ? "--" : Model.LTVForCommercialBuilding)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Commercial Land
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForCommercialLand == null || Model.LTVForCommercialLand == "" ? "--" : Model.LTVForCommercialLand)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Agriculture Land
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForAgriculturalLand == null || Model.LTVForAgriculturalLand == "" ? "--" : Model.LTVForAgriculturalLand)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Vehicle where Age of Vehicle is  Less Than or Equal to 01 Years
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForVehicleLessThanOneYear == null || Model.LTVForVehicleLessThanOneYear == "" ? "--" : Model.LTVForVehicleLessThanOneYear)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Vehicle where Age of Vehicle is  Less Than or Equal to 05 Years
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForVehicleLessThanFiveYear == null || Model.LTVForVehicleLessThanFiveYear == "" ? "--" : Model.LTVForVehicleLessThanFiveYear)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Vehicle where Age of Vehicle is  More Than to 05 Years
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForVehicleMoreThanFiveYear == null || Model.LTVForVehicleMoreThanFiveYear == "" ? "--" : Model.LTVForVehicleMoreThanFiveYear)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for TDR (A Rated Bank)
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForTDRratedA == null || Model.LTVForTDRratedA == "" ? "--" : Model.LTVForTDRratedA)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for TDR (B Rated Bank)
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForTDRratedB == null || Model.LTVForTDRratedB == "" ? "--" : Model.LTVForTDRratedB)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Franchise Agreement
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForFranchiseAgreement == null || Model.LTVForFranchiseAgreement == "" ? "--" : Model.LTVForFranchiseAgreement)
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %age for Gold
+                    </p>
+                    <p class="detailText">
+                        @(Model.LTVForGold == null || Model.LTVForGold == "" ? "--" : Model.LTVForGold)
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Updation Reason
+                    </p>
+                    <p class="detailText">
+                        @(Model.updationReason == null || Model.updationReason == "" ? "--" : Model.updationReason)
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p class="detailHeading">
+                            Uploaded Approval File
+                        </p>
+                        <p class="detailText">
+                            <a href="@Model.approvalFileUrl" target="_blank" download><i class="fa fa-file-archive-o"></i> Click to Open</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+

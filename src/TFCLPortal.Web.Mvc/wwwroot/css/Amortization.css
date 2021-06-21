@@ -1,0 +1,52 @@
+﻿/******************Amortization report css*************/
+img {
+    width: 50%;
+    margin-top: 10px;
+}
+
+h2 {
+    margin-top: 8%;
+    font-weight: bold;
+}
+
+.table {
+    width: 80%;
+    margin-bottom: 1rem;
+    color: #212529;
+    margin-left: 11%;
+    border: 1px solid;
+}
+
+h3 {
+    font-size: 100%
+}
+
+.text-resize {
+    border: 1px solid;
+    width: 80%;
+    margin-left: 11%;
+}
+
+.text-resize_top {
+    border: 2px solid;
+    width: 80%;
+    margin-left: 11%;
+    margin-top: 1%
+}
+
+.bdr {
+    border-right: 2px solid;
+}
+
+.table-striped.table thead th {
+    border: 2px solid;
+    background-color: #bbe697;
+}
+
+.table-striped.table td, .table th {
+    border: 2px solid;
+}
+
+.table-striped tfoot {
+    background-color: #bbe697;
+}

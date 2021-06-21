@@ -1,0 +1,657 @@
+﻿@model TFCLPortal.InstallmentPayments.Dto.CreateInstallmentPayment
+
+@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<style>
+    .table-bordered td {
+        font-weight: 100;
+    }
+</style>
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Installment Collection
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Loan Recovery > Installment Collection
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Accountant/ViewSchedule?ApplicationId=@ViewBag.ApplicationId" target="_blank" class="btn btn-sm btn-outline-success bg1 eft-1" title="View Schedule"><i class="fa fa-calendar"></i> View Schedule </a>
+            <a href="~/Accountant/ActiveSchedules" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To List </a>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <form asp-action="CreateAuthorizeInstallmentPayment" method="post">
+                <div class="row">
+                    <input asp-for="ApplicationId" type="hidden" id="ApplicationId" value="@ViewBag.Applicationid" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Client ID</label>
+                            <input type="text" value="@ViewBag.ClientId" readonly="readonly" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Applicant Name</label>
+                            <input type="text" value="@ViewBag.ClientName" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nature Of Payment <font color="red">*</font></label>
+                            @Html.DropDownList("NatureOfPayment", ViewBag.NatureOfPaymentsList as SelectList, new { Name = "NatureOfPayment", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Others</label>
+                            <input asp-for="NatureOfPaymentOthers" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Installment Due Date</label>
+                            <input asp-for="InstallmentDueDate" type="text" value="@ViewBag.InstallmentDueDate" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Installment Amount</label>
+                            <input asp-for="InstallmentAmount" value="@ViewBag.InstallmentAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Installment Number (@ViewBag.RemainingInstallments Remaining)</label>
+                            <input asp-for="NoOfInstallment" value="@ViewBag.InstallmentNumber" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Account Balance</label>
+                            <input asp-for="PreviousBalance" value="@ViewBag.PreviousBalance" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Due Amount</label>
+                            <input asp-for="DueAmount" value="@ViewBag.DueAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Mode of Payment</label>
+                            <input asp-for="ModeOfPayment" value="" class="form-control d-none" />
+                            <div class="form-check">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="ModeOfPayment" value="Bank Deposit" checked>
+                                    <label class="form-check-label" for="inlineCheckbox1">Bank Deposit</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="ModeOfPayment" value="Pay Pro">
+                                    <label class="form-check-label" for="inlineCheckbox2">Pay Pro</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="ModeOfPayment" value="Online Payment">
+                                    <label class="form-check-label" for="inlineCheckbox3">Online Payment</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="ModeOfPayment" value="Others">
+                                    <label class="form-check-label" for="inlineCheckbox4">Others</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Others</label>
+                            <input asp-for="ModeOfPaymentOthers" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount (Rs) <font color="red">*</font></label>
+                            <input asp-for="Amount" value="" class="form-control" required="required" v-model="amount" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Excess Payment / Short Payment</label>
+                            <input asp-for="ExcessShortPayment" value="" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Amount in Words</label>
+                            <input asp-for="AmountWords" id="AmountWords" readonly="readonly" class="form-control" style="text-transform:capitalize" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Late Days <font color="red">*</font> <span id="lateDaysMessage" style="color:red"></span></label>
+                            <input asp-for="LateDays" value="" class="form-control" readonly="readonly" required="required" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Late Days Charges <span id="LateDaysCharges"></span></label>
+                            <input asp-for="LateDaysPenalty" value="" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label></label>
+                            <input asp-for="isLateDaysApplied" value="" class="form-control d-none" />
+                            <div class="form-check">
+                                <div class="form-check form-check-inline p-10">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox0" name="isLateDaysApplied" value="Apply Charges">
+                                    <label class="form-check-label" for="inlineCheckbox0">Apply Charges</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount Deposit Date <font color="red">*</font></label>
+                            <input asp-for="DepositDate" class="form-control" required="required" step="any" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Bank Name <font color="red">*</font></label>
+                            @Html.DropDownList("FK_CompanyBankId", ViewBag.BanksList as SelectList, new { Name = "BankName", @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div id="innerFiles">
+                        <p>No Files to show</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div id="innerAuthorizationFiles">
+                        <p>No Files to show</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+<script src="~/vendor/numwords/index.js" crossorigin="anonymous"></script>
+
+<script>
+
+    $(function () {
+
+        var holidays = [];
+        getHolidays();
+
+        $("#NatureOfPayment option[value='5']").prop('selected', true);
+
+        $("#DepositDate").val(getCurrentDate());
+
+
+        $("#DueAmount").val(numberWithCommas($("#DueAmount").val()));
+        onDepositDateUpdate();
+
+        $('#Amount').on('input', function (e) {
+
+            var amount = this.value.replaceAll(',', '');
+            $('#AmountWords').val(numWords(amount));
+            $('#ExcessShortPayment').val(numberWithCommas(Number(amount) - Number($('#DueAmount').val().replaceAll(',', ''))));
+
+            $('#Amount').val(numberWithCommas(amount));
+
+
+        });
+
+        function onDepositDateUpdate() {
+            var depositDate = moment($("#DepositDate").val());
+            var dueDate = moment($('#InstallmentDueDate').val());
+
+            var diff = depositDate.diff(dueDate, 'days');
+
+                var LateDaysList = [];
+            if (diff > 0) {
+                LateDaysList.push(dueDate.format("YYYY-MM-DD"));
+                for (var i = 0; i < diff; i++) {
+                    LateDaysList.push(dueDate.add(1, 'days').format("YYYY-MM-DD"));
+                }
+                console.log(LateDaysList);
+            }
+
+            var diffHolidays = 0;
+
+            if (holidays.length > 0) {
+                LateDaysList.forEach(function (item) {
+
+                    var depositDateToBeChecked = moment(item).startOf('day').format("YYYY-MM-DD");
+                    var weekday = moment(item).startOf('day').weekday();
+
+                    holidays.forEach(function (item) {
+
+                        var HolidayStart = moment(item.dateFrom).format("YYYY-MM-DD");
+                        var HolidayEnd = moment(item.dateTo).format("YYYY-MM-DD");
+
+                        //if (depositDateToBeChecked == HolidayStart || depositDateToBeChecked == HolidayEnd) {
+                        //    alert('Date Exactly Matched');
+                        //    diffHolidays++;
+                        //}
+                        if (depositDateToBeChecked >= HolidayStart && depositDateToBeChecked <= HolidayEnd) {
+                            //alert('Date in Between Matched');
+                            diffHolidays++;
+                        }
+                        else if (weekday == 6 || weekday == 7) {
+                            diffHolidays++;
+                        }
+
+                    });
+                });
+
+            }
+
+
+
+            // REMOVE HOLIDAYS HERE
+            if (diffHolidays > 0) {
+                $('#lateDaysMessage').html(diffHolidays + ' holiday(s) found in ' + diff + ' late day(s).');
+                diff = diff - diffHolidays;
+            }
+            else {
+                $('#lateDaysMessage').html('');
+            }
+
+
+
+            $('#LateDays').val(diff);
+
+            if (diff <= 0) {
+                $('#LateDaysPenalty').val(0);
+                $('#LateDaysCharges').html("");
+            }
+            else if (diff <= 5 && diff > 0) {
+                var r = diff * 100;
+                var c = r * 0.16;
+                $('#LateDaysPenalty').val(r + c);
+                $('#LateDaysCharges').html("["+r+" (Amount) + "+c+" (FED)]");
+
+            }
+            else {
+                $('#LateDaysPenalty').val(500 + 80);
+                $('#LateDaysCharges').html("[" +"500 (Amount) + 80 (FED)]");
+            }
+
+        }
+
+        $('#DepositDate').on('input', function (e) {
+            onDepositDateUpdate();
+        });
+
+        $('#inlineCheckbox0').change(function (e) {
+            if (this.checked) {
+                var due = Number($("#DueAmount").val().replaceAll(',', ''));
+                var ldp = Number($('#LateDaysPenalty').val());
+                $("#DueAmount").val(numberWithCommas(due + ldp));
+
+            }
+            else {
+                var due = Number($("#DueAmount").val().replaceAll(',', ''));
+                var ldp = Number($('#LateDaysPenalty').val());
+                $("#DueAmount").val(numberWithCommas(due - ldp));
+            }
+
+            var amount = $('#Amount').val();
+            $('#ExcessShortPayment').val(numberWithCommas(Number(amount.replaceAll(',', '')) - Number($('#DueAmount').val().replaceAll(',', ''))));
+        });
+        $("#ModeOfPayment").val("Bank Deposit");
+        $('#inlineCheckbox4').change(function () {
+            if (this.checked) {
+                $("#ModeOfPaymentOthers").attr("readonly", false);
+            }
+            else {
+                $("#ModeOfPaymentOthers").attr("readonly", true);
+                $("#ModeOfPaymentOthers").val("");
+            }
+
+            $("#ModeOfPayment").val("Others");
+        });
+        $('#inlineCheckbox1').change(function (e) {
+            $("#ModeOfPayment").val(this.value);
+        });
+        $('#inlineCheckbox2').change(function (e) {
+            $("#ModeOfPayment").val(this.value);
+        });
+
+        $('#inlineCheckbox3').change(function (e) {
+            $("#ModeOfPayment").val(this.value);
+        });
+
+
+        $('#uploadBtn').click(function () {
+
+            var DocType = $('#DocumentType').val();
+            var PersonName = $('#PersonName').val();
+            var myFile = $('#document').prop('files')[0];
+            var ApplicationId = $('#ApplicationId').val();
+
+            if (PersonName == "") {
+                abp.notify.error("Error", "Please Select Name");
+            }
+            else if (DocType == "") {
+                abp.notify.error("Error", "Please Select Document Type");
+            }
+            else if (myFile == null || myFile == "") {
+                abp.notify.error("Error", "Please Select Document.");
+            }
+            else {
+                var formData = new FormData();
+                formData.append('file', myFile);
+                formData.append('ApplicationId', ApplicationId);
+                formData.append('DocumentType', DocType);
+                formData.append('PersonName', PersonName);
+
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                     processData: false,
+                     contentType: false,
+                    url: '@Url.Content("~/Dashboard/UploadDataCheckFile")',
+                     data: formData,
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         getList();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+
+            }
+
+
+        })
+        getList();
+        function getList() {
+            var ApplicationId = $('#ApplicationId').val();
+            $('#innerFiles').html("<p class='text-center' ><img width='50px' src='/Theame/images/loader.gif'/> Loading ...</p>");
+            $.ajax({
+                type: 'POST',
+                datatype: "json",
+                url: '@Url.Content("~/Accountant/getAuthorizeInstallmentPayment")',
+                data: {'ApplicationId':ApplicationId},
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         console.log("ReturnData Start");
+                         console.log(returnData);
+                         console.log("ReturnData End");
+
+
+                         if (returnData.length > 0) {
+                             var i = 1;
+
+                           
+                             var content = '<h3>Paid Installments</h3>';
+                             content += '<table  class="table table-striped table-bordered text-center" cellspacing="0" width="100%">';
+                             content += '<thead>';
+                             content += '<tr>';
+                             content += '<th>Sr</th>';
+                             content += '<th>Installment #</th>';
+                             content += '<th>Installment Due Date</th>';
+                             content += '<th>Payment Date</th>';
+                             content += '<th>Installment Amount</th>';
+                             content += '<th>Paid Amount</th>';
+                             content += '<th>Excess/Short</th>';
+                             content += '</tr>';
+                             content += '</thead>';
+                             content += '<tbody>';
+                             var oldInstallment = "";
+                             var installmentAmount = "";
+                             var OldExcess = "";
+                             var PaidAmount = 0;
+                             returnData.forEach(function (item) {
+
+                                 if (oldInstallment != item.noOfInstallment) {
+
+                                     if (oldInstallment != "") {
+                                         content += '<tr > ';
+                                         content += '<td style="background: rgba(255,255,255,0.8); text-align:left" colspan="4">Total Payment for Installment # ' + oldInstallment + '</td>';
+                                         content += '<td style="background: rgba(5,140,70,0.3);">' + installmentAmount + '</td>';
+                                         content += '<td style="background: rgba(5,140,70,0.3);">' + numberWithCommas(PaidAmount) + '</td>';
+                                         content += '<td style="background: rgba(5,140,70,0.3);">' + numberWithCommas(OldExcess) + '</td>';
+                                         content += '</tr>';
+
+                                         PaidAmount = 0;
+                                     }
+                                        
+
+                                 }
+                                 installmentAmount = numberWithCommas(item.installmentAmount);
+                                 OldExcess = item.excessShortPayment;
+
+                                 PaidAmount += Number(item.amount);
+
+                                     content += '<tr>';
+                                     content += '<td>' + (i++) + '</td>';
+                                     content += '<td>' + item.noOfInstallment + '</td>';
+                                     content += '<td>' + formatDate(item.installmentDueDate) + '</td>';
+                                 content += '<td>' + formatDate(item.depositDate) + '</td>';
+                                     //content += '<td>' + formatDateAndTime(item.depositDate) + '</td>';
+                                     content += '<td>' + numberWithCommas(item.installmentAmount) + '</td>';
+                                     content += '<td>' + numberWithCommas(item.amount) + '</td>';
+                                     content += '<td>' + numberWithCommas(item.excessShortPayment) + '</td>';
+                                 content += '</tr>';
+
+                                 oldInstallment = item.noOfInstallment;
+
+                             });
+                             content += '<tbody>';
+                             content += '</table>';
+                             $('#innerFiles').html(content);
+                         }
+                         else {
+
+                             $('#innerFiles').html('<p>No Paid Installments to show</p>');
+                         }
+                         //$('#innerFiles').html('<p>No Paid Installments to show</p>');
+                         //abp.notify.success(returnData, "Success");
+                         //window.location.reload();
+                    },
+                    error: function (data) {
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+        }
+
+        getAuthorizationList();
+        function getAuthorizationList() {
+            var ApplicationId = $('#ApplicationId').val();
+            $('#innerAuthorizationFiles').html("<p class='text-center' ><img width='50px' src='/Theame/images/loader.gif'/> Loading ...</p>");
+            $.ajax({
+                type: 'POST',
+                datatype: "json",
+                url: '@Url.Content("~/Accountant/getAuthorizeInstallmentPayment")',
+                data: {'ApplicationId':ApplicationId},
+                     success: function (data) {
+
+                         var returnData = data.result;
+
+                         
+
+                         if (returnData.length > 0) {
+                             var i = 1;
+
+                             var content = '<h3>Pending / Rejected Installments</h3>';
+                             content += '<table  class="table table-striped table-bordered text-center" cellspacing="0" width="100%">';
+                             content += '<thead>';
+                             content += '<tr>';
+                             content += '<th>Sr</th>';
+                             content += '<th>Installment #</th>';
+                             content += '<th>Installment Due Date</th>';
+                             content += '<th>Payment Date</th>';
+                             content += '<th>Installment Amount</th>';
+                             content += '<th>Paid Amount</th>';
+                             content += '<th>Excess/Short</th>';
+                             content += '<th>Status</th>';
+                             content += '</tr>';
+                             content += '</thead>';
+                             content += '<tbody>';
+
+                             returnData.forEach(function (item) {
+                                 if (item.isAuthorized != true) {
+                                     content += '<tr>';
+                                     content += '<td>' + (i++) + '</td>';
+                                     content += '<td>' + item.noOfInstallment + '</td>';
+                                     content += '<td>' + formatDate(item.installmentDueDate) + '</td>';
+                                     content += '<td>' + formatDate(item.depositDate) + '</td>';
+                                     //content += '<td>' + formatDateAndTime(item.depositDate) + '</td>';
+                                     content += '<td>' + numberWithCommas(item.installmentAmount) + '</td>';
+                                     content += '<td>' + numberWithCommas(item.amount) + '</td>';
+                                     content += '<td>' + numberWithCommas(item.excessShortPayment) + '</td>';
+                                     if (item.isAuthorized == null) {
+                                         content += '<td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td>';
+                                     }
+                                     else {
+                                         content += '<td><font color="red"><i class="fa fa-times-circle"></i> Rejected due to "' + item.rejectionReason + '"</font></td>';
+                                     }
+
+                                     content += '</tr>';
+                                 }
+
+                             });
+
+                             content += '<tbody>';
+                             content += '</table>';
+                             $('#innerAuthorizationFiles').html(content);
+                         }
+                         else {
+
+                             $('#innerAuthorizationFiles').html('<p>No Pending / Rejected Installments to show</p>');
+                         }
+                         //$('#innerFiles').html('<p>No Paid Installments to show</p>');
+                         //abp.notify.success(returnData, "Success");
+                         //window.location.reload();
+                    },
+                    error: function (data) {
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+        }
+
+        function getHolidays() {
+            $.ajax({
+                type: 'POST',
+                datatype: "json",
+                url: '@Url.Content("~/Accountant/getHolidays")',
+                data: '',
+                     success: function (data) {
+                         holidays = data.result;
+                         console.log(holidays);
+                    },
+                    error: function (data) {
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+            });
+
+        }
+
+        function formatDate(loanStart) {
+            return moment(loanStart).format('DD MMM YYYY');
+        }
+        function formatDateAndTime(loanStart) {
+            return moment(loanStart).format('DD MMM YYYY hh:mm A');
+        }
+
+        function numberWithCommas(x) {
+            x = Math.round(x);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        $('#NatureOfPayment').on('change', function (e) {
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+
+            if (valueSelected == 5) {
+                $("#NatureOfPaymentOthers").attr("readonly", false);
+
+            }
+            else {
+                $("#NatureOfPaymentOthers").attr("readonly", true);
+                $("#NatureOfPaymentOthers").val("");
+            }
+
+        });
+
+        function getCurrentDate() {
+            var d = new Date().toJSON().slice(0, 19);
+
+            var cDate = new Date();
+
+            var gh = cDate.getHours();
+
+            if (gh < 10) {
+                gh = '0' + gh;
+            }
+
+            var gm = cDate.getMinutes();
+
+            if (gm < 10) {
+                gm = '0' + gm;
+            }
+
+            var gs = cDate.getSeconds();
+
+            if (gs < 10) {
+                gs = '0' + gs;
+            }
+
+            console.log(d);
+            var str = d.substr(0, 11) + gh + ":" + gm + ":" + gs
+            console.log(str);
+            return str;
+        }
+
+
+    });
+
+</script>

@@ -1,0 +1,102 @@
+﻿@model TFCLPortal.ProductMarkupRates.Dto.ProductListDto
+@{
+    ViewData["Title"] = "ProductDetaillist";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<h2>ProductDetaillist</h2>
+
+<main class='main-content bgc-grey-100'>
+    <div id='mainContent'>
+        <div class="container-fluid">
+            <input type="hidden" id="Id" value="@Model.Id" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                        @*<label for="hidden">
+                        <input type="hidden" id="@ViewBag.values" class="display-hidden" data-target=".hidden" />
+
+                    </label>*@
+                        <div class="card p-10 mB-20">
+                            <h4 class="">Product Detail list</h4>
+                            <div style="text-align: right; float: right;width: 100%;position:absolute;">
+                                <a asp-action="AddProductDetail" class="btn btn-success bg1 eft-1" title="Back">Create New<span></span></a>
+                                <a href="~/Product/Productlist" class="btn btn-primary bg1 eft-1" title="Back">Back<span></span></a>
+                            </div>
+                        </div>
+                        <div class="poit" >
+
+                            <h4>@Model.ProductName</h4>
+
+                        </div>
+                        <table id="dataTable" class="table table-striped table-bordered " cellspacing="0" style="margin-top:40px;" width="100%">
+                            <thead>
+                                <tr>
+
+                                    <th rowspan="2">Tenure</th>
+                                    <th rowspan="2">Slabs</th>
+                                    <th colspan="2">For Fresh Clients</th>
+                                    <th colspan="2">For Repeat clients</th>
+                                    <th rowspan="2">Active</th>
+                                    <th rowspan="2">Edit</th>
+                                </tr>
+                                <tr>
+                                    <th>Un-Secured Markup Rate</th>
+                                    <th>Secured Markup Rate</th>
+                                    <th>Un-Secured Markup Rate</th>
+                                    <th>Secured Markup Rate</th>
+
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model.ProductDetails)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Tenure)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Slabs)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FreshClientUnSecureMarkupRate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FreshClientSecureMarkupRate)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.RepeatClientUnSecureMarkupRate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.RepeatClientSecureMarkupRate)
+                                            </td>
+                                            <td>
+                                                @item.IsActive
+                                            </td>
+
+                                            <td>
+                                                <a asp-action="UpdateProductDetail" asp-route-id="@item.Id" class="edit-btn"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+

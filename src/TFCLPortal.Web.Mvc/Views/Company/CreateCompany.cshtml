@@ -1,0 +1,76 @@
+﻿@model  TFCLPortal.Companies.Dto.CreateCompanyDetailDto
+
+
+@{
+    ViewData["Title"] = "Create Company";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+    <main class='main-content bgc-grey-100'>
+        <div id='mainContent'>
+            <form asp-action="CreateCompany" asp-controller="Company" method="post">
+                <div class="row gap-20 masonry pos-r">
+                    <div class="masonry-sizer col-md-6"></div>
+                    <div class="masonry-item col-md-12">
+                        <div class="bgc-white p-20 bd">
+                            <div class="card p-20">
+                                <h4 class="">Create Company</h4>
+                            </div>
+                            <div class="mT-30">
+                                <div class="row">
+                                    <div class="masonry-sizer col-md-2"></div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label asp-for="Name" class="control-label"></label>
+                                            <input asp-for="Name" class="form-control" />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Address" class="control-label"></label>
+                                            <input asp-for="Address" class="form-control" />
+                                            <span asp-validation-for="Address" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="GST" class="control-label"></label>
+                                            <input asp-for="GST" class="form-control" />
+                                            <span asp-validation-for="GST" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="NTN" class="control-label"></label>
+                                            <input asp-for="NTN" class="form-control" />
+                                            <span asp-validation-for="NTN" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Email" class="control-label"></label>
+                                            <input asp-for="Email" class="form-control" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label asp-for="Contact" class="control-label"></label>
+                                            <input asp-for="Contact" class="form-control" />
+                                            <span asp-validation-for="Contact" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Active" class="control-label"></label>
+                                            <input asp-for="Active" class="form-control" />
+                                            <span asp-validation-for="Active" class="text-danger"></span>
+                                        </div>
+                                        
+
+                                        <button type="submit" class="btn-normal bg1">Create</button>
+                                    </div>
+                                    <div class="masonry-sizer col-md-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+
+

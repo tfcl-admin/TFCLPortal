@@ -1,0 +1,379 @@
+﻿@model List<TFCLPortal.GuarantorDetails.Dto.GuarantorDetailListDto>
+@{int index = 1;}
+
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+<input type="hidden" id="ApplicationId" value="@ViewBag.ApplicationId" />
+
+@if (Model != null && Model.Count > 0)
+{
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion md-accordion" id="accordionGuarantors" role="tablist" aria-multiselectable="true">
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="card">
+                                <div class="card-header" role="tab" id="headingOne-@item.Id" style="width:100%">
+                                    <a data-toggle="collapse" data-parent="#accordionGuarantors" href="#collapseOne-@item.Id" aria-expanded="true"
+                                       aria-controls="collapseOne-@item.Id">
+                                        <h5 class="mb-0">
+                                            Guarantor @index @(item.Comments==""?"":"( "+ item.Comments +" )") <i class="fa fa-angle-down rotate-icon"></i>
+                                        </h5>
+                                    </a>
+                                </div>
+                                @{index++;}
+                                <!-- Card body -->
+                                <div id="collapseOne-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOne-@item.Id"
+                                     data-parent="#accordionGuarantors">
+                                    <div class="card-body">
+                                        <input type="hidden" id="Id" value="@item.ApplicationId" />
+                                        <div class="row">
+                                            @*<div class="col-md-12 text-center @(ViewBag.GuarantorPicUrl=="" ? "d-none" : "" )">
+                                                    <img src=" @ViewBag.GuarantorPicUrl" width="300px" />
+                                                </div>*@
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+
+                                                    NAME
+                                                    <a href="@item.imageUrl" class="@(item.imageUrl==""||item.imageUrl==null ? "d-none" : "" )" style="float: right" data-toggle="tooltip" target="_blank" title="Click to Open Picture">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
+                                                </p>
+                                                <p class="detailText">@(item.FullName == null || item.FullName == "" ? "--" : item.FullName)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">S/O D/O W/O</p>
+                                                <p class="detailText">@(item.SDW == null || item.SDW == "" ? "--" : item.SDW)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">CNIC Number</p>
+                                                <p class="detailText">@(item.CNICNumber == null || item.CNICNumber == "" ? "--" : item.CNICNumber)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">CNIC Expiry Date</p>
+                                                @{ DateTime NotNullableDT = item.CnicExpiryDate ?? DateTime.Now.Date.AddDays(1);}
+                                                <p class="detailText @( DateTime.Compare(NotNullableDT, DateTime.Now.Date)<0 ? "text-danger" : (DateTime.Compare(NotNullableDT, DateTime.Now.Date)==0 ? "text-orange" : "text-success"))">@string.Format("{0:dd MMM yyyy}", item.CnicExpiryDate)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">Date of Birth</p>
+                                                <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.DateOfBirth)</p>
+                                            </div>
+                                            @*<div class="col-md-3">
+                                                    <p class="detailHeading">Age</p>
+                                                    <p class="detailText">@(item.Age == null || item.Age == "" ? "--" : item.Age)</p>
+                                                </div>*@
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">Age (On Application Submission) <i class="fa fa-info-circle" style="float: right" data-toggle="tooltip" title="Allowed Range : @item.AllowedMinAge years to @item.AllowedMaxAge years "></i></p>
+                                                @if (item.CalculatedAge != null && item.CalculatedAge != "" && item.CalculatedAge != "--")
+                                                {
+                                                    <p class="detailText @(Convert.ToInt32(item.CalculatedAge.Substring(0, 2)) >= Convert.ToInt32(item.AllowedMinAge) && Convert.ToInt32(item.CalculatedAge.Substring(0, 2))<=Convert.ToInt32(item.AllowedMaxAge)? "text-success" : "text-danger") "><b style="font-weight:600">@(item.CalculatedAge == null ? "--" : item.CalculatedAge)</b></p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="detailText">--</p>
+                                                }
+                                                @*<p class="detailText"><b style="font-weight:600">@{DateTime.Now.Date.Subtract(Convert.ToDateTime(Model.BirthDate));}</b></p>*@
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">PERMANENT ADDRESS</p>
+                                                <p class="detailText">@(item.PresentAddress == null || item.PresentAddress == "" ? "--" : item.PresentAddress)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">PROVINCE</p>
+                                                <p class="detailText">@(item.Province == null || item.Province == "" ? "--" : item.Province)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">TEHSIL</p>
+                                                <p class="detailText">@(item.Tehsil == null || item.Tehsil == "" ? "--" : item.Tehsil)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">MOUZA / TOWN</p>
+                                                <p class="detailText">@(item.MouzaOrTown == null || item.MouzaOrTown == "" ? "--" : item.MouzaOrTown)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">DISTRICT</p>
+                                                <p class="detailText">@(item.District == null || item.District == "" ? "--" : item.District)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">Union Council</p>
+                                                <p class="detailText">@(item.UCNumber == null || item.UCNumber == "" ? "--" : item.UCNumber)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">RELATION WITH APPLICANT</p>
+                                                <p class="detailText">@(item.RealtionshipWithApplicant == null || item.RealtionshipWithApplicant == "" ? "--" : item.RealtionshipWithApplicant)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">MOBILE / Phone Number</p>
+                                                <p class="detailText">@(item.MobileNumber == null || item.MobileNumber == "" ? "--" : item.MobileNumber)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">BUSINESS NAME</p>
+                                                <p class="detailText">@(item.BusinessName == null || item.BusinessName == "" ? "--" : item.BusinessName)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">BUSINESS ADDRESS</p>
+                                                <p class="detailText">@(item.BusinessAddress == null || item.BusinessAddress == "" ? "--" : item.BusinessAddress)</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    Credit Bureau Check
+                                                </p>
+                                                @if (item.CreditBureauCheck == null)
+                                                {<p class="detailText">N/A</p> }
+                                                else if (item.CreditBureauCheck == false)
+                                                {<p class="detailText">No</p>}
+                                                else if (item.CreditBureauCheck == true)
+                                                {<p class="detailText">YES</p>}
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    Credit Bureau Status
+                                                </p>
+                                                <p class="detailText">@(item.CreditBureauStatusName == null || item.CreditBureauStatusName == "" ? "--" : item.CreditBureauStatusName)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    AML/CFT Check
+                                                </p>
+                                                @if (item.AmlCftCheck == null)
+                                                {<p class="detailText">N/A</p> }
+                                                else if (item.AmlCftCheck == false)
+                                                {<p class="detailText">No</p>}
+                                                else if (item.AmlCftCheck == true)
+                                                {<p class="detailText">YES</p>}
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    AML/CFT Clearance
+                                                </p>
+                                                @if (item.AmlCftClearance == null)
+                                                {<p class="detailText">N/A</p> }
+                                                else if (item.AmlCftClearance == false)
+                                                {<p class="detailText">No</p>}
+                                                else if (item.AmlCftClearance == true)
+                                                {<p class="detailText">YES</p>}
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    Have you guaranteed loan from any FI
+                                                </p>
+                                                @if (item.guaranteedLoanFI == null)
+                                                {<p class="detailText">N/A</p> }
+                                                else if (item.guaranteedLoanFI == false)
+                                                {<p class="detailText">No</p>}
+                                                else if (item.guaranteedLoanFI == true)
+                                                {<p class="detailText">YES</p>}
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">
+                                                    Guarantee Amount
+                                                </p>
+                                                <p class="detailText">@(item.guaranteedAmount == null || item.guaranteedAmount == "" ? "--" : Convert.ToDecimal(item.guaranteedAmount).ToString("#,##0"))</p>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">PROFESSION</p>
+                                                <p class="detailText">@(item.Profession == null || item.Profession == "" ? "--" : item.Profession)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">EMPLOYER NAME</p>
+                                                <p class="detailText">@(item.EmployerName == null || item.EmployerName == "" ? "--" : item.EmployerName)</p>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <p class="detailHeading">MONTHLY INCOME</p>
+                                                <p class="detailText">@(item.MonthlyIncome == null || item.MonthlyIncome == "" ? "--" : Convert.ToDecimal(item.MonthlyIncome).ToString("#,##0"))</p>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <p class="detailHeading">NET MONTHLY INCOME AVAILABLE FOR INSTALLMENT PAYMENT (Rs)</p>
+                                                <p class="detailText">@(item.IncomeAvailableForInstallment == null || item.IncomeAvailableForInstallment == "" ? "--" : Convert.ToDecimal(item.IncomeAvailableForInstallment).ToString("#,##0"))</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12" style="text-align: right;">
+        <a id="screenBtnGD" href="" data-toggle="modal" data-target="#_Guarantor_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+        <a id="discrepentBtnGD" href="" data-toggle="modal" data-target="#_Guarantor_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+    </div>
+</div>
+
+<!--Approved Modal -->
+<div class="modal fade" id="_Guarantor_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenGD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_Guarantor_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdGD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorGD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentGD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.GuarantorDetailAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnGD').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnGD').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnGD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnGD').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnGD').toggleClass("d-none");
+            $('#discrepentBtnGD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenGD').click(function () {
+        debugger;
+        var comment = $('#commentIdGD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'GUARANTOR DETAILS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentGD').click(function () {
+        debugger;
+        if (!$('#commentIdGD').val()) {
+            $('#comment_errorGD').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorGD').css("display", "none");
+        }
+        var comment = $('#commentIdGD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'GUARANTOR DETAILS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdGD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

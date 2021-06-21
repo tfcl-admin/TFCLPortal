@@ -1,0 +1,296 @@
+﻿@model TFCLPortal.Applications.Dto.ApplicationListDto
+@{
+    ViewData["Title"] = "BCCApplicationDetail";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<h2>BCCApplicationDetail</h2>
+
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100'>
+    <div id='mainContent'>
+        <input type="hidden" id="Id" value="@Model.Id" />
+
+        <form>
+            <div class="row gap-20 masonry pos-r">
+                <div class="masonry-sizer col-md-6"></div>
+                <div class="masonry-item col-md-12">
+                    <div class="bgc-white p-20 bd">
+                        <div class="card p-10">
+                            <h4 class="">BCC Detail</h4>
+                        </div>
+                        <div class="mT-30">
+
+                            <div class="row">
+                                <div class="masonry-sizer col-md-2"></div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @if (@Model != null)
+                                    {
+
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="page-form">
+                                                    <div class="form-group">
+                                                        <label for="">Applicant name</label>
+                                                        <h4>@Model.ClientName</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Mobile #</label>
+                                                        <h4>@Model.MobileNo</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">address</label>
+                                                        <h4>@Model.Address</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">status</label>
+                                                        <h4>@Model.MobilizationStatusName</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">Next meeting</label>
+                                                        <h4>@string.Format("{0:dd MMM yyyy}", Model.NextMeeting)</h4>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="page-form">
+                                                    <div class="form-group">
+                                                        <label for="">Cnic</label>
+                                                        <h4>@Model.CNICNo</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">landline #</label>
+                                                        <h4>@Model.LandLineNo</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">school name</label>
+                                                        <h4>@Model.SchoolName</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="">product type</label>
+                                                        <h4>@Model.ProductTypeName</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="page-form">
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="page-form">
+
+
+                                                </div>
+                                            </div>
+                                            <div class="masonry-sizer col-md-2"></div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="masonry-sizer col-md-12" style="text-align: left;margin-top:20px">
+                                    <div class="">
+                                        <a href="~/BCC/BranchCreditCommitteeList" class="btn btn-normal bg1 eft-1" title="Back">Back<span></span></a>
+                                        <a href="" data-toggle="modal" data-target="#_BCC_approved" class="btn btn-success bg1 eft-1" title="Approved">Approved<span></span></a>
+                                        <a href="" data-toggle="modal" data-target="#_BCC_Decline" class="btn btn-danger bg1 eft-1" title="discrepant">Decline<span></span></a>
+                                        <a href="" data-toggle="modal" data-target="#_BCC_discrepant" class="btn btn-warning bg1 eft-1" title="discrepant">Descripent<span></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<!--Approved Modal -->
+<div class="modal fade" id="_BCC_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Bcc Approved Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to approved this item?
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Approved" id="btnapproved" class="btn btn-normal bg1 ef1" />
+                @*<button id="btnContinueDelete" type="button" class="btn btn-normal bg1 ef1">Approved</button>*@
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<!--discrepant Modal -->
+
+<div class="modal fade" id="_BCC_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Bcc discrepant Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason??" id="commentId"></textarea>
+                <span class="text-danger" style="display:none" id="comment_error">This field is required</span>
+            </div>
+            <div class="modal-footer">
+
+                <input type="submit" value="Descripent" id="btndiscrepant" class="btn btn-success bg1 ef1" />
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--Decline Modal-->
+<div class="modal fade" id="_BCC_Decline" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Bcc Decline Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason ?" id="decline_commentId"></textarea>
+                <span class="text-danger" style="display:none" id="decline_comment_error">This field is required</span>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Decline" id="btndecline" class="btn btn-normal bg1 ef1" />
+                @*<button type="button" id="btnDecline" class="btn btn-normal bg1 ef1">Decline</button>*@
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#btndiscrepant').click(function () {
+            debugger;
+            if (!$('#commentId').val()) {
+                $('#comment_error').css("display", "block");;
+                return false;
+            } else {
+                $('#comment_error').css("display", "none");
+            }
+            var comment = $('#commentId').val();
+            var Id = $('#Id').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/BCC/BCCApplicationDescripant")',
+                    data: { 'Id': Id, 'comment': comment},
+                success: function (data) {
+                    $('#_BCC_discrepant').modal('hide');
+                    $('.modal-backdrop').remove();
+                    abp.notify.success(data.result, "success");
+                    window.setTimeout(window.location.href = '/BCC/BranchCreditCommitteeList', 5000);
+                    //debugger
+                    //if (data.result == "Records Descripent Successfully") {
+                    //        abp.notify.success(data.result, "success");
+                    //        $('#commentId').val("");
+                    //        $('#_BCC_discrepant').modal('hide');
+                    //        $('.modal-backdrop').remove();
+                    //        $('body').removeClass("modal-open");
+                    //        window.setTimeout(window.location.href = '/BCC/BranchCreditCommitteeList', 5000);
+                    //    }
+                        
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error("somthing went wrong ", "error");
+                    }
+            });
+        });
+        $('#btndecline').click(function () {
+            debugger;
+            if (!$('#decline_commentId').val()) {
+                $('#decline_comment_error').css("display", "block");;
+                return false;
+            } else {
+                $('#decline_comment_error').css("display", "none");
+            }
+            var comment = $('#decline_commentId').val();
+            var Id = $('#Id').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/BCC/BCCApplicationDecline")',
+                    data: { 'Id': Id, 'comment': comment} ,
+                success: function (data) {
+                        $('#_BCC_Decline').modal('hide');
+                    $('.modal-backdrop').remove();
+                    abp.notify.success(data.result, "success");
+                    window.setTimeout(window.location.href = '/BCC/BranchCreditCommitteeList', 5000);
+                        //debugger
+                        //if (data.status == "Records Decline Successfully") {
+                        //    abp.notify.success(data.result, "success");
+                        //    $('#decline_commentId').val("");
+                        //    $('#_BCC_Decline').modal('hide');
+                        //    $('.modal-backdrop').remove();
+                        //    $('body').removeClass("modal-open");
+                        //    window.setTimeout(window.location.href = '/BCC/BranchCreditCommitteeList', 5000);
+                        //}
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error("somthing went wrong ", "error");
+                    }
+            });
+        });
+        $('#btnapproved').click(function () {
+            debugger;
+            var comment = "";
+            var Id = $('#Id').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/BCC/BCCApplicationApproved")',
+                    data: { 'Id': Id, 'comment': comment} ,
+                success: function (data) {
+                    $('#_BCC_approved').modal('hide');
+                    $('.modal-backdrop').remove();
+                    abp.notify.success(data.result, "success");
+                    window.setTimeout(window.location.href = '/BCC/BranchCreditCommitteeList', 5000);
+                        //debugger
+                        //if (data.status == "Records Approved Successfully") {
+                        //    abp.notify.success(data.result, "success");
+                        //    $('#_BCC_approved').modal('hide');
+                        //    $('.modal-backdrop').remove();
+                        //    $('body').removeClass("modal-open");
+                        //    window.setTimeout(window.location.href = '/BCC/BranchCreditCommitteeList', 5000);
+                        //}
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error("somthing went wrong ", "error");
+                    }
+            });
+        });
+    </script>
+}
+

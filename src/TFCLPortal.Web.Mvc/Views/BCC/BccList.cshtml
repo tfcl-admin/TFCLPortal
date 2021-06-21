@@ -1,0 +1,94 @@
+﻿@model IList<TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.BranchCreditCommitteeListDto>
+
+@{
+    ViewData["Title"] = "BccList";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100'>
+    <div id='mainContent'>
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                        <div class="card p-10 mB-20">
+                            <h4 class="">BCC Status Reports</h4>
+                            <div style="text-align: right; float: right;width: 100%;position:absolute;">
+                                <a asp-action="CreateBcc" class="btn btn-success bg1 eft-1" title="Back">Create New<span></span></a>
+                                <a href="~/Application/ApplicationDashboard" class="btn btn-primary bg1 eft-1" title="Back">Back<span></span></a>
+
+                            </div>
+                        </div>
+                        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Application #
+                                    </th>
+                                    <th>
+                                        Applicant Name
+                                    </th>
+                                    <th>
+                                        First SDE
+                                    </th>
+                                    <th>
+                                        2nd SDE
+                                    </th>
+                                    <th>
+                                        Active
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ApplicationId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Applications.ClientName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SDE1_User.UserName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SDE2_User.UserName)
+                                            </td>
+                                            <td>
+                                                @item.IsActive
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Status)
+                                            </td>
+
+                                            <td>
+                                                @Html.ActionLink("Edit", "UpdateBccAsync", new { Id = item.Id.ToString() })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+

@@ -1,0 +1,155 @@
+﻿@using TFCLPortal.Web.Startup
+@model TFCLPortal.Web.Models.Roles.RoleListViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Roles; // The menu item will be active for this page.
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+@section scripts
+{
+    <environment names="Development,Staging,Production">
+        <script src="~/view-resources/Views/Roles/Index.js" asp-append-version="true"></script>
+    </environment>
+
+
+}
+
+
+<style>
+    body {
+        padding: 0px !important;
+    }
+
+    .form-label {
+        font-size: 11px;
+        font-weight: bold;
+        color: #008c45;
+    }
+
+    label {
+        font-size: 11px !important;
+    }
+
+    .modal-title {
+        color: #008c45;
+    }
+</style>
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">Roles</h4>
+            <h6 class="page-title-breadcrumbs"><a href="~/Dashboard/Dashboard">Home</a> > Roles</h6>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+
+    <div class="row ">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <button type="button" class="btn btn-sm btn-outline-success bg1 eft-1 pull-right" data-toggle="modal" data-target="#RoleCreateModal" style="margin-bottom:10px">
+                <i class="fa fa-plus-circle"></i> Add Roles
+            </button>
+            <div class="body table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>@L("RoleName")</th>
+                            <th>@L("DisplayName")</th>
+                            <th>@L("Actions")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var role in Model.Roles)
+                        {
+                            <tr>
+                                <td>@role.Name</td>
+                                <td>@role.DisplayName</td>
+                                <td>
+
+                                    <a href="#RoleEditModal" class="edit-role" data-role-id="@role.Id" data-toggle="modal" data-target="#RoleEditModal"><i class="fa fa-edit"></i> @L("Edit")</a>
+                                    <a href="#" class="delete-role" data-role-id="@role.Id" data-role-name="@role.Name"><i class="fa fa-trash"></i> @L("Delete")</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="RoleCreateModal" tabindex="-1" role="dialog" aria-labelledby="RoleCreateModalLabel" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>Add New Role</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form name="roleCreateForm" role="form" novalidate class="form-validation">
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <label for="rolename" class="form-label">@L("RoleName")</label>
+                                        <input id="rolename" type="text" name="Name" required maxlength="32" minlength="2" class="validate form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <label for="displayname" class="form-label">@L("DisplayName")</label>
+                                        <input id="displayname" type="text" name="DisplayName" required maxlength="32" minlength="2" class="validate form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <label for="role-description" class="form-label">@L("RoleDescription")</label>
+                                        <textarea id="role-description" name="Description" class="validate form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <label class="form-label">Permissions</label>
+                            </div>
+
+                            @foreach (var permission in Model.Permissions)
+                            {
+                                <div class="col-sm-6">
+                                    <input type="checkbox" name="permission" value="@permission.Name" class="filled-in" id="permission-@permission.Name" checked="checked" />
+                                    <label for="permission-@permission.Name">@permission.DisplayName</label>
+                                </div>
+                            }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                            <button type="submit" class="btn btn-outline-success waves-effect">@L("Save")</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="RoleEditModal" tabindex="-1" role="dialog" aria-labelledby="RoleEditModalLabel" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+</main>

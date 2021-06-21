@@ -1,0 +1,167 @@
+﻿@model List<TFCLPortal.BranchManagerActions.Dto.BranchManagerActionListDto>  
+@{
+    ViewData["Title"] = "Applications";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<style>
+    .dropdown-item {
+        font-size: 11px;
+        color: #416a2c;
+        text-align: left;
+    }
+    #dataTable_length {
+         display: inherit; 
+    }
+    /*.dataTables_wrapper {*/
+        /*overflow: inherit !important;*/
+    /*}*/
+</style>
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Discrepencies
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Loan Applications > Discrepencies
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+            <a href="~/Dashboard/Application?id=@ViewBag.Applicationid" target="_blank" class="btn btn-sm btn-outline-success bg1 eft-1" title="Application Details"><i class="fa fa-laptop"></i> Application Details </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="padding-top: 20px; margin-bottom: 20px; background-color:#fff">
+            <table border="1" width="100%" class="text-center">
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th colspan="3">APPLICANT / RESPONDENT NAME</th>
+                        <th colspan="3">CLIENT / BUSINESS / SCHOOL NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">@ViewBag.appName</td>
+                        <td colspan="3">@ViewBag.SchoolName</td>
+                    </tr>
+                </tbody>
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th>CLIENT ID</th>
+                        <th>APPLICATION DATE</th>
+                        <th>APPLICATION TIME</th>
+                        <th>APPLICATION STATUS</th>
+                        <th>Branch</th>
+                        <th>SDE Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.ApplicationNo</td>
+                        <td>@ViewBag.appDate</td>
+                        <td>@ViewBag.appTime</td>
+                        @if (ViewBag.appStatus == "Discrepent")
+                        {
+                            <td>@ViewBag.appStatus <a id="checkDiscrepency" data-toggle="modal" data-target="#DiscrepencyModal"><i class="fa fa-info-circle"></i></a></td>
+                        }
+                        else
+                        {
+                            <td>@ViewBag.appStatus</td>
+                        }
+                        <td>@ViewBag.branch</td>
+                        <td>@ViewBag.SDE</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="card p-10 mB-20">
+        <table id="dataTable" class="table table-striped table-bordered  table-scrollable"   width="100%" >
+            <thead>
+                <tr>
+                    <th>Sr#</th>
+                    <th>Screen Name</th>
+                    <th>Action Type</th>
+                    <th>Reason</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    int i = 0;
+                    DateTime? dateTime=null;
+                    foreach (var item in Model.ToList())
+                    {
+                        i = i + 1;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.ScreenName</td>
+                            <td>@item.ActionType</td>
+                            <td>@(item.Reason==""||item.Reason==null?"OK":item.Reason)</td>
+                            <td>@item.CreationTime.ToString("dd MMM yyyy")</td>
+                            <td>@item.CreationTime.ToString("hh:mm tt")</td>
+                        </tr>
+
+                        @*@if(dateTime!=null && string.Format("{0:dd MMM yyyy}", dateTime) != string.Format("{0:dd MMM yyyy}", item.CreationTime))
+                        {
+                            <tr>
+                                <td colspan="6" style="background-color:red"></td>
+                            </tr>
+                        }
+                        dateTime = item.CreationTime;*@
+
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+     
+
+
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+
+<script>
+    $(function () {
+        
+
+        @*$('.clickingClass').click(function () {
+            var appid = $(this).attr("applicationId");
+            $('#txtAppId').val(appid);
+            $('.innerModal input:checkbox').prop('checked', false);
+            $('.innerModal input:checkbox').prop('disabled', true);
+
+              $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/getDisableScreenList")',
+                  data: { 'Id': appid} ,
+                     success: function (data) {
+                         var returnData = data.result;
+
+                         disableFields(returnData);
+
+
+                         console.log(returnData);
+                    },
+                    error: function (data) {
+                         console.log(returnData);
+                    }
+                });
+
+
+
+        });*@
+         
+    });
+</script>
+<!-- ### $App Screen Footer ### -->

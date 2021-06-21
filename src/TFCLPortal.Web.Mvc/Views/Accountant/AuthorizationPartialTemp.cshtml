@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+    @*<link href="~/Theame/css/style.css" rel="stylesheet" asp-append-version="true" />*@
+    <style>
+        .pageloader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+            opacity: .8;
+        }
+    </style>
+</head>
+<body id="loadingDiv">
+    <input type="hidden" id="ApplicationId" value="@ViewBag.AppId" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <div class="pageloader d-none"></div>
+            <div class="col-md-6">
+                <p class="detailHeading">
+                    Decision
+                </p>
+                <select class="form-control" id="Recommendation">
+                    <option value="">Select Decision</option>
+                    <option value="true">Authorize</option>
+                    <option value="false">Reject</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <p class="detailHeading">
+                    Rejection Reason
+                </p>
+                <input type="text" class="form-control" id="Reason" />
+            </div>
+
+            @*<div class="col-md-6" style="margin-top:30px">
+            <a  href="/Dashboard/ViewApplication?id=@ViewBag.AppId" target="_blank" class="btn btn-sm btn-outline-primary" title="View Application"><i class="fa fa-search"></i> View Application<span></span></a>
+        </div>*@
+
+            <div class="col-md-6" style="text-align: right; margin-top:30px">
+                <a id="recommend" class="btn btn-sm btn-outline-success" title="Submit">Submit<span></span></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#recommend').click(function (e) {
+
+            if ($('#Recommendation').val() != "") {
+
+                var Recommendation = $('#Recommendation').val();
+                var ApplicationId = $('#ApplicationId').val();
+                var Reason = $('#Reason').val();
+                $(".pageloader").toggleClass("d-none");
+                    $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Accountant/AuthorizeByBmReschedule")',
+                        data: { 'ApplicationId': ApplicationId, 'Recommendation': Recommendation, 'Reason': Reason} ,
+                     success: function (data) {
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         $(".pageloader").toggleClass("d-none");
+                         window.location.reload();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+
+
+            }
+            else {
+                alert("Please Select Decision");
+            }
+        });
+    </script>
+
+</body>
+</html>

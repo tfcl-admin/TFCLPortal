@@ -1,0 +1,935 @@
+﻿@model TFCLPortal.CollateralDetails.Dto.CollateralDetailListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <div class="tab_content active" style="padding: 15px 20px">
+        @if (Model.isNA == true)
+        {
+            <p><b>Collateral Details are not available for this Application.</b></p>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-12">
+
+                    @if (Model.createCollateralLandBuilding.Count > 0)
+                    {
+                        <p class="detailHeading">
+                            COLLATERAL : BUILDING / LAND / AGRI-LAND
+                        </p>
+                        <div class="accordion md-accordion" id="accordioncollateralLandBuildingLists" role="tablist" aria-multiselectable="true">
+                            @foreach (var item in Model.createCollateralLandBuilding)
+                            {
+                            <div class="card">
+                                <!-- Card header -->
+                                <div class="card-header" role="tab" id="headingOneCLB-@item.Id-@(item.Id+1)" style="width:100%">
+                                    <a data-toggle="collapse" data-parent="#accordioncollateralLandBuildingLists" href="#collapseOneCLB-@item.Id-@(item.Id+1)" aria-expanded="true"
+                                       aria-controls="collapseOneCLB-@item.Id-@(item.Id+1)">
+                                        <h5 class="mb-0">
+                                            BUILDING / LAND / AGRI-LAND <i class="fa fa-angle-down rotate-icon"></i>
+                                        </h5>
+                                    </a>
+                                </div>
+
+                                <!-- Card body -->
+                                <div id="collapseOneCLB-@item.Id-@(item.Id+1)" class="collapse" role="tabpanel" aria-labelledby="headingOneCLB-@item.Id-@(item.Id+1)"
+                                     data-parent="#accordioncollateralLandBuildingLists">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Date of Evaluation
+                                                </p>
+                                                <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.DateOfEvaluation)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    PROPERTY TYPE
+                                                </p>
+                                                <p class="detailText">@(item.propertyTypeName == null || item.propertyTypeName == "" ? "--" : item.propertyTypeName)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Ownership of Property
+                                                </p>
+                                                @*<p class="detailText">@(item.OwnershipName == null || item.OwnershipName == "" ? "--" : item.OwnershipName)</p>*@
+                                                <p class="detailText">@(item.OwnershipName == null || item.OwnershipName == "" ? "--" : item.OwnershipName)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Property Owner Name
+                                                </p>
+                                                @*<p class="detailText">@(item.PropertyOwnerName == null || item.PropertyOwnerName == "" ? "--" : item.PropertyOwnerName)</p>*@
+                                                <p class="detailText">@(item.PropertyOwnerName == null || item.PropertyOwnerName == "" ? "--" : item.PropertyOwnerName)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Relationship with Applicant
+                                                </p>
+                                                <p class="detailText">@(item.RelationWithApplicant == null || item.RelationWithApplicant == "" ? "--" : item.RelationWithApplicant)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Acquisition Date
+                                                </p>
+                                                <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.AcquisitionDate)</p>
+
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <p class="detailHeading">
+                                                    Property Address
+                                                </p>
+                                                <p class="detailText">@(item.PropertyAddress == null || item.PropertyAddress == "" ? "--" : item.PropertyAddress)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Total Area (Sq. Ft)
+                                                </p>
+                                                <p class="detailText">@(item.TotalArea == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.TotalArea).Replace(",",""))))</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Covered Area (Sq. Ft)
+                                                </p>
+                                                <p class="detailText">@(item.CoveredArea == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.CoveredArea).Replace(",",""))))</p>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Purchased Price (Rs)
+                                                </p>
+                                                <p class="detailText">@(item.PurchasePrice == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.PurchasePrice).Replace(",",""))))</p>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Government Price (Rs)
+                                                </p>
+                                                <p class="detailText">@(item.GovtEstimatedValue == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.GovtEstimatedValue).Replace(",",""))))</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Market Price (Rs)
+                                                </p>
+                                                <p class="detailText">@(item.LandBuildingMarketPrice == null ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.LandBuildingMarketPrice).Replace(",",""))))</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Dealer-1 Name
+                                                </p>
+                                                <p class="detailText">@(item.DealerOneName == null || item.DealerOneName == "" ? "--" : item.DealerOneName)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Dealer-1 Contact Number
+                                                </p>
+                                                <p class="detailText">@(item.DealerOneContactNumber == null || item.DealerOneContactNumber == "" ? "--" : item.DealerOneContactNumber)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Dealer-1 Business Name
+                                                </p>
+                                                <p class="detailText">@(item.DealerOneBusinessName == null || item.DealerOneBusinessName == "" ? "--" : item.DealerOneBusinessName)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Dealer-2 Name
+                                                </p>
+                                                <p class="detailText">@(item.DealerTwoName == null || item.DealerTwoName == "" ? "--" : item.DealerTwoName)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Dealer-2 Contact Number
+                                                </p>
+                                                <p class="detailText">@(item.DealerTwoContactNumber == null || item.DealerTwoContactNumber == "" ? "--" : item.DealerTwoContactNumber)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Dealer-2 Business Name
+                                                </p>
+                                                <p class="detailText">@(item.DealerTwoBusinessName == null || item.DealerTwoBusinessName == "" ? "--" : item.DealerTwoBusinessName)</p>
+                                            </div>
+
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Applied LTV %age
+                                                </p>
+                                                <p class="detailText">@(item.AppliedLtvPercentage == null || item.AppliedLtvPercentage == "" ? "--" : item.AppliedLtvPercentage)</p>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <p class="detailHeading">
+                                                    Max Financing Allowed as per LTV
+                                                </p>
+                                                <p class="detailText">@(item.MaxFinancingAllowedLTV == null || item.MaxFinancingAllowedLTV == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MaxFinancingAllowedLTV).Replace(",", ""))))</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion md-accordion" id="accordioncollateralVehicleLists" role="tablist" aria-multiselectable="true">
+
+                        @if (Model.createCollateralVehicle.Count > 0)
+                        {
+                            <p class="detailHeading">
+                                COLLATERAL : Vehicle
+                            </p>
+
+                            @foreach (var item in @Model.createCollateralVehicle)
+                            {
+
+                                <div class="card">
+                                    <!-- Card header -->
+                                    <div class="card-header" role="tab" id="headingOneCV-@item.Id" style="width:100%">
+                                        <a data-toggle="collapse" data-parent="#accordioncollateralVehicleLists" href="#collapseOneCV-@item.Id" aria-expanded="true"
+                                           aria-controls="collapseOneCV-@item.Id">
+                                            <h5 class="mb-0">
+                                                VEHICLE  <i class="fa fa-angle-down rotate-icon"></i>
+                                            </h5>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div id="collapseOneCV-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneCV-@item.Id"
+                                         data-parent="#accordioncollateralVehicleLists">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Date of Evaluation
+                                                    </p>
+                                                    <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.DateOfEvaluation)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Ownership of Vehicle
+                                                    </p>
+                                                    <p class="detailText">@(item.OwnershipName == null || item.OwnershipName == "" ? "--" : item.OwnershipName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Vehicle Owner Name
+                                                    </p>
+                                                    <p class="detailText">@(item.VehicleOwnerName == null || item.VehicleOwnerName == "" ? "--" : item.VehicleOwnerName)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Relationship with Applicant
+                                                    </p>
+                                                    <p class="detailText">@(item.RelationWithApplicant == null || item.RelationWithApplicant == "" ? "--" : item.RelationWithApplicant)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Registration Number
+                                                    </p>
+                                                    <p class="detailText">@(item.RegistrationNo == null || item.RegistrationNo == "" ? "--" : item.RegistrationNo)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Make
+                                                    </p>
+                                                    <p class="detailText">@(item.MAKE == null || item.MAKE == "" ? "--" : item.MAKE)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Model
+                                                    </p>
+                                                    <p class="detailText">@(item.ModelNo == null || item.ModelNo == "" ? "--" : item.ModelNo)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Vehicle Age
+                                                    </p>
+                                                    <p class="detailText">@(item.VehicleAgeName == null || item.VehicleAgeName == "" ? "--" : item.VehicleAgeName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Horse Power / CC:
+                                                    </p>
+                                                    <p class="detailText">@(item.HorsePowerCC == null || item.HorsePowerCC == "" ? "--" : item.HorsePowerCC)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Chassis Number
+                                                    </p>
+                                                    <p class="detailText">@(item.ChasisNo == null || item.ChasisNo == "" ? "--" : item.ChasisNo)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Engine Number
+                                                    </p>
+                                                    <p class="detailText">@(item.EngineNo == null || item.EngineNo == "" ? "--" : item.EngineNo)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Market Price
+                                                    </p>
+                                                    <p class="detailText">@(item.MarketValue == null ? "--" : item.MarketValue)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Insurance Company
+                                                    </p>
+                                                    <p class="detailText">@(item.InsuranceCompany == null || item.InsuranceCompany == "" ? "--" : item.InsuranceCompany)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Insurance Policy Number
+                                                    </p>
+                                                    <p class="detailText">@(item.InsurancePolicyNo == null || item.InsurancePolicyNo == "" ? "--" : item.InsurancePolicyNo)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Insured Value
+                                                    </p>
+                                                    <p class="detailText">@(item.InsuredValue == null ? "--" : item.InsuredValue)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Insurance Expiry Date
+                                                    </p>
+                                                    <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.InsuranceExpiryDate)</p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Evaluator Name
+                                                    </p>
+                                                    <p class="detailText">@(item.EvaluatorName == null || item.EvaluatorName == "" ? "--" : item.EvaluatorName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Evaluator's Contact Number
+                                                    </p>
+                                                    <p class="detailText">@(item.EvaluatorContactNumber == null || item.EvaluatorContactNumber == "" ? "--" : item.EvaluatorContactNumber)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Evaluator's Business Name
+                                                    </p>
+                                                    <p class="detailText">@(item.EvaluatorBusinessName == null || item.EvaluatorBusinessName == "" ? "--" : item.EvaluatorBusinessName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Applied LTV %age
+                                                    </p>
+                                                    <p class="detailText">@(item.AppliedLtvPercentage == null || item.AppliedLtvPercentage == "" ? "--" : item.AppliedLtvPercentage)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Max Financing Allowed as per LTV
+                                                    </p>
+                                                    <p class="detailText">@(item.MaxFinancingAllowedLTV == null || item.MaxFinancingAllowedLTV == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MaxFinancingAllowedLTV).Replace(",", ""))))</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion md-accordion" id="accordioncollateralTDRLists" role="tablist" aria-multiselectable="true">
+
+
+                        @if (Model.createCollateralTDR.Count > 0)
+                        {
+                            <p class="detailHeading">
+                                COLLATERAL : TDR
+                            </p>
+                            foreach (var item in @Model.createCollateralTDR)
+                            {
+
+                                <div class="card">
+                                    <!-- Card header -->
+                                    <div class="card-header" role="tab" id="headingOneTDR-@item.Id" style="width:100%">
+                                        <a data-toggle="collapse" data-parent="#accordioncollateralTDRLists" href="#collapseOneTDR-@item.Id" aria-expanded="true"
+                                           aria-controls="collapseOneTDR-@item.Id">
+                                            <h5 class="mb-0">
+                                                TDR  <i class="fa fa-angle-down rotate-icon"></i>
+                                            </h5>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div id="collapseOneTDR-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneTDR-@item.Id"
+                                         data-parent="#accordioncollateralTDRLists">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Date of Evaluation
+                                                    </p>
+                                                    <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.DateOfEvaluation)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Ownership of TDR
+                                                    </p>
+                                                    <p class="detailText">@(item.OwnershipName == null || item.OwnershipName == "" ? "--" : item.OwnershipName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        TDR Owner Name
+                                                    </p>
+                                                    <p class="detailText">@(item.TDrOwnerName == null || item.TDrOwnerName == "" ? "--" : item.TDrOwnerName)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Relationship with Applicant
+                                                    </p>
+                                                    <p class="detailText">@(item.RelationWithApplicant == null || item.RelationWithApplicant == "" ? "--" : item.RelationWithApplicant)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        TDR Number
+                                                    </p>
+                                                    <p class="detailText">@(item.TDRNo == null || item.TDRNo == "" ? "--" : item.TDRNo)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Amount of TDR
+                                                    </p>
+                                                    <p class="detailText">@(item.AmountTDR == null ? "--" : item.AmountTDR)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Bank Name
+                                                    </p>
+                                                    <p class="detailText">@(item.BankName == null || item.BankName == "" ? "--" : item.BankName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Bank Rating
+                                                    </p>
+                                                    <p class="detailText">@(item.BankRatingName == null || item.BankRatingName == "" ? "--" : item.BankRatingName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Branch Name
+                                                    </p>
+                                                    <p class="detailText">@(item.BranchName == null || item.BranchName == "" ? "--" : item.BranchName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Branch Address
+                                                    </p>
+                                                    <p class="detailText">@(item.BranchAddress == null || item.BranchAddress == "" ? "--" : item.BranchAddress)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Applied LTV %age
+                                                    </p>
+                                                    <p class="detailText">@(item.AppliedLtvPercentage == null || item.AppliedLtvPercentage == "" ? "--" : item.AppliedLtvPercentage)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Max Financing Allowed as per LTV
+                                                    </p>
+                                                    <p class="detailText">@(item.MaxFinancingAllowedLTV == null || item.MaxFinancingAllowedLTV == "" ? "--" : item.MaxFinancingAllowedLTV)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion md-accordion" id="accordioncollateralFranchiseLists" role="tablist" aria-multiselectable="true">
+
+
+
+                        @if (Model.createCollateralFranchise.Count > 0)
+                        {
+                            <p class="detailHeading">
+                                COLLATERAL : Franchise
+                            </p>
+
+                            foreach (var item in @Model.createCollateralFranchise)
+                            {
+
+                                <div class="card">
+                                    <!-- Card header -->
+                                    <div class="card-header" role="tab" id="headingOneCF-@item.Id" style="width:100%">
+                                        <a data-toggle="collapse" data-parent="#accordioncollateralFranchiseLists" href="#collapseOneCF-@item.Id" aria-expanded="true"
+                                           aria-controls="collapseOneCF-@item.Id">
+                                            <h5 class="mb-0">
+                                                FRANCHISE  <i class="fa fa-angle-down rotate-icon"></i>
+                                            </h5>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div id="collapseOneCF-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneCF-@item.Id"
+                                         data-parent="#accordioncollateralFranchiseLists">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Date of Evaluation
+                                                    </p>
+                                                    <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.DateOfEvaluation)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Ownership of Franchise
+                                                    </p>
+                                                    <p class="detailText">@(item.OwnershipName == null || item.OwnershipName == "" ? "--" : item.OwnershipName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Franchise Owner Name
+                                                    </p>
+                                                    <p class="detailText">@(item.FranchiseOwnerName == null || item.FranchiseOwnerName == "" ? "--" : item.FranchiseOwnerName)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Relationship with Applicant
+                                                    </p>
+                                                    <p class="detailText">@(item.RelationWithApplicant == null || item.RelationWithApplicant == "" ? "--" : item.RelationWithApplicant)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Franchiser Name
+                                                    </p>
+                                                    <p class="detailText">@(item.FranchiserName == null || item.FranchiserName == "" ? "--" : item.FranchiserName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Franchiser Address
+                                                    </p>
+                                                    <p class="detailText">@(item.FranchiserAddress == null || item.FranchiserAddress == "" ? "--" : item.FranchiserAddress)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Franchise (Branch / Campus) Name
+                                                    </p>
+                                                    <p class="detailText">@(item.FranchiseBranchCampusName == null || item.FranchiseBranchCampusName == "" ? "--" : item.FranchiseBranchCampusName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Franchise (Branch/Campus) Address
+                                                    </p>
+                                                    <p class="detailText">@(item.FranchiseBranchCampusAddress == null || item.FranchiseBranchCampusAddress == "" ? "--" : item.FranchiseBranchCampusAddress)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Amount of Franchise Agreement
+                                                    </p>
+                                                    <p class="detailText">@(item.AmountOfFranchiseAgreement == null ? "--" : item.AmountOfFranchiseAgreement)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Applied LTV %age
+                                                    </p>
+                                                    <p class="detailText">@(item.AppliedLtvPercentage == null || item.AppliedLtvPercentage == "" ? "--" : item.AppliedLtvPercentage)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Max Financing Allowed as per LTV
+                                                    </p>
+                                                    <p class="detailText">@(item.MaxFinancingAllowedLTV == null || item.MaxFinancingAllowedLTV == "" ? "--" : item.MaxFinancingAllowedLTV)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion md-accordion" id="accordioncollateralFranchiseLists" role="tablist" aria-multiselectable="true">
+
+
+                        @if (Model.createCollateralGold.Count > 0)
+                        {
+                            <p class="detailHeading">
+                                COLLATERAL : GOLD
+                            </p>
+
+                            foreach (var item in @Model.createCollateralGold)
+                            {
+                                <div class="card">
+                                    <!-- Card header -->
+                                    <div class="card-header" role="tab" id="headingOneCG-@item.Id" style="width:100%">
+                                        <a data-toggle="collapse" data-parent="#accordioncollateralFranchiseLists" href="#collapseOneCG-@item.Id" aria-expanded="true"
+                                           aria-controls="collapseOneCG-@item.Id">
+                                            <h5 class="mb-0">
+                                                GOLD  <i class="fa fa-angle-down rotate-icon"></i>
+                                            </h5>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div id="collapseOneCG-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneCG-@item.Id"
+                                         data-parent="#accordioncollateralFranchiseLists">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Date of Evaluation
+                                                    </p>
+                                                    <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.DateOfEvaluation)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Ownership of Franchise
+                                                    </p>
+                                                    <p class="detailText">@(item.CollateralOwnershipName == null || item.CollateralOwnershipName == "" ? "--" : item.CollateralOwnershipName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Gold Owner Name
+                                                    </p>
+                                                    <p class="detailText">@(item.GoldOwnerName == null || item.GoldOwnerName == "" ? "--" : item.GoldOwnerName)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Relationship with Applicant
+                                                    </p>
+                                                    <p class="detailText">@(item.RelationWithApplicant == null || item.RelationWithApplicant == "" ? "--" : item.RelationWithApplicant)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Number of Items
+                                                    </p>
+                                                    <p class="detailText">@(item.NoOFItemGold == null || item.NoOFItemGold == "" ? "--" : item.NoOFItemGold)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Description of Item
+                                                    </p>
+                                                    <p class="detailText">@(item.ItemDescriptionGold == null || item.ItemDescriptionGold == "" ? "--" : item.ItemDescriptionGold)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Total Gross Weight (In grams)
+                                                    </p>
+                                                    <p class="detailText">@(item.TotalGrossWeightGold == null ? "--" : item.TotalGrossWeightGold)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Total Net Weight (In grams):
+                                                    </p>
+                                                    <p class="detailText">@(item.TotalNetWeightGold == null ? "--" : item.TotalNetWeightGold)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Market value of 1 gram
+                                                    </p>
+                                                    <p class="detailText">@(item.MarketValueInGram == null ? "--" : item.MarketValueInGram)</p>
+
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Market value of total gold
+                                                    </p>
+                                                    <p class="detailText">@(item.MarketValueTotalGold == null ? "--" : item.MarketValueTotalGold)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Evaluator Name
+                                                    </p>
+                                                    <p class="detailText">@(item.GoldEvaluatorName == null || item.GoldEvaluatorName == "" ? "--" : item.GoldEvaluatorName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Applied LTV %age
+                                                    </p>
+                                                    <p class="detailText">@(item.AppliedLtvPercentage == null || item.AppliedLtvPercentage == "" ? "--" : item.AppliedLtvPercentage)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Max Financing Allowed as per LTV
+                                                    </p>
+                                                    <p class="detailText">@(item.MaxFinancingAllowedLTV == null || item.MaxFinancingAllowedLTV == "" ? "--" : item.MaxFinancingAllowedLTV)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        }
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @if (Model.CollateralTypeOthers != null && Model.CollateralTypeOthers != "")
+                    {
+                        <p class="detailHeading">
+                            COLLATERAL : Others
+                        </p>
+                        <p class="detailText">
+                            @Model.CollateralTypeOthers
+                        </p>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        All Collaterals Market Price
+                    </p>
+                    <p class="detailText">@(Model.AllCollateralMarketPrice == null || Model.AllCollateralMarketPrice == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.AllCollateralMarketPrice).Replace(",", ""))))</p>
+                </div>
+
+                <div class="col-md-5">
+                    <p class="detailHeading">
+                        Max Financing Allowed as per LTV of All Collaterals
+                    </p>
+                    <p class="detailText">@(Model.MaxFinancingAllowedLtvAllCollaterals == null || Model.MaxFinancingAllowedLtvAllCollaterals == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.MaxFinancingAllowedLtvAllCollaterals).Replace(",", ""))))</p>
+                </div>
+            </div>
+
+
+        }
+    </div>
+
+
+
+
+    @*<div class="col-md-12" style="text-align: right;">
+            <a href="" data-toggle="modal" data-target="#_Collateral_approved" class="btn btn-success bg1 eft-1" title="Approved">Approved<span></span></a>
+            <a href="" data-toggle="modal" data-target="#_Collateral_discrepant" class="btn btn-warning bg1 eft-1" title="discrepant">Discrepant<span></span></a>
+        </div>*@
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12" style="text-align: right;">
+        <a id="screenBtnColD" href="" data-toggle="modal" data-target="#_Collateral_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+        <a id="discrepentBtnColD" href="" data-toggle="modal" data-target="#_Collateral_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+    </div>
+</div>
+<!--Approved Modal -->
+<div class="modal fade" id="_Collateral_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenColD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_Collateral_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdColD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorCD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentColD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.CollateralDetailAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnColD').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnColD').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnColD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnColD').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnColD').toggleClass("d-none");
+            $('#discrepentBtnColD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenColD').click(function () {
+        debugger;
+        var comment = $('#commentIdColD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'COLLATERAL DETAILS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentColD').click(function () {
+        debugger;
+        if (!$('#commentIdColD').val()) {
+            $('#comment_errorCD').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorCD').css("display", "none");
+        }
+        var comment = $('#commentIdColD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'COLLATERAL DETAILS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdColD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

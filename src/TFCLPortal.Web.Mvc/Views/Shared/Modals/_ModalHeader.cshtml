@@ -1,0 +1,16 @@
+﻿@using TFCLPortal.Web.Models.Common.Modals
+@model ModalHeaderViewModel
+<style>
+
+    .modal-title {
+        color: #008c45;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span>@Html.Raw(Model.Title)</span>
+    </h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

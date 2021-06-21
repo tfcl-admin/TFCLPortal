@@ -1,0 +1,1119 @@
+﻿@using System.Globalization
+@using Abp.Configuration
+@using Abp.Configuration.Startup
+@using Abp.Web.Mvc.Alerts
+@using Abp.Web.Security.AntiForgery
+@using TFCLPortal
+@using TFCLPortal.Configuration
+@using TFCLPortal.Web.Resources
+@using TFCLPortal.Web.Views.Shared.Components.SideBarNav
+@using TFCLPortal.Web.Views.Shared.Components.SideBarUserArea
+@using TFCLPortal.Web.Views.Shared.Components.TopBarLanguageSwitch
+@using TFCLPortal.Web.Views.Shared.Components.RightSideBar
+@using TFCLPortal.Authorization
+@inject TFCLPortal.Timing.AppTimes AppTimes
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IMultiTenancyConfig MultiTenancyConfig
+@inject IWebResourceManager WebResourceManager
+@inject IAlertManager AlertManager
+@{
+    Layout = null;
+    AbpAntiForgeryManager.SetCookie(Context);
+    var uiTheme = await SettingManager.GetSettingValueAsync(AppSettingNames.UiTheme);
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="~/favicon.png">
+
+    <title>TFCLPortal</title>
+
+    <environment names="Development,Staging,Production">
+
+
+        @*<link href="~/Theame/css/chosen.min.css" rel="stylesheet" asp-append-version="true" />*@
+        @*<link href="~/Theame/css/colors.css" rel="stylesheet" asp-append-version="true" />*@
+        @*<link href="~/Theame/css/svg-icons.css" rel="stylesheet" asp-append-version="true" />*@
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+        <link href="~/Theame/css/prettyPhoto.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/toastr/toastr.css" rel="stylesheet" asp-append-version="true" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/materialize.css" rel="stylesheet" asp-append-version="true" />
+        @*<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" asp-append-version="true" />*@
+
+        <link href="~/fonts/material-icons/materialicons.css" rel="stylesheet" asp-append-version="true" />
+        @*<link href="~/lib/famfamfam-flags/dist/sprite/famfamfam-flags.css" rel="stylesheet" asp-append-version="true" />*@
+        <link href="~/lib/Waves/dist/waves.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/animate.css/animate.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/themes/all-themes.css" rel="stylesheet" asp-append-version="true" />
+        @*<link href="~/view-resources/Views/Shared/_Layout.css" rel="stylesheet" asp-append-version="true" />*@
+        <link href="~/Theame/css/style.css" rel="stylesheet" asp-append-version="true" />
+        @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>*@
+
+        @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>*@
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>*@
+        <script src="~/Theame/js/bootstrap.js"></script>
+
+    </environment>
+
+
+
+    <!-- View specific styles -->
+    @RenderSection("styles", required: false)
+
+    <script type="text/javascript">
+        // This is used to get the application's root path from javascript. It's useful if you're running application in a virtual directory under IIS.
+
+        var abp = abp || {};
+            abp.appPath = '@ApplicationPath';
+    </script>
+    <style>
+        .modal-body textarea {
+            height: auto !important;
+            resize: auto !important;
+        }
+
+        .sidebar-menu::-webkit-scrollbar {
+            width: 0px;
+            background: transparent; /* make scrollbar transparent */
+        }
+
+        .desk {
+            width: 400px;
+            height: 200px;
+            background: red;
+        }
+
+        .div-only-mobile {
+        }
+
+        @@media screen and (max-width : 1920px) {
+            .div-only-mobile {
+                visibility: hidden;
+            }
+        }
+
+        @@media screen and (max-width : 906px) {
+            .desk {
+                visibility: hidden;
+            }
+
+            .div-only-mobile {
+                visibility: visible;
+            }
+        }
+
+        .header .header-container .nav-right .dropdown-menu > li > a:hover {
+            background-color: #b5e6c2 !important;
+        }
+
+        .notifications:hover {
+            cursor: pointer;
+        }
+        /*   .page-container {
+            padding-left: 70px !important;
+        }*/
+    </style>
+</head>
+<body class="app">
+    <div id='loader'>
+        <div class="spinner"></div>
+    </div>
+    <script>
+        window.addEventListener('load', function load() {
+            const loader = document.getElementById('loader');
+            setTimeout(function () {
+                loader.classList.add('fadeOut');
+            }, 300);
+        });
+    </script>
+
+    <!-- Page Loader -->
+
+    <section>
+        <!-- #Left Sidebar ==================== -->
+        <div class="sidebar">
+            <div class="sidebar-inner">
+                <!-- ### $Sidebar Header ### -->
+                <div class="sidebar-logo">
+                    <div class="peers ai-c fxw-nw">
+                        <div class="peer peer-greed">
+                            <a class="sidebar-link td-n" href="">
+                                <div class="peers ai-c fxw-nw">
+                                    <div class="peer peer-greed">
+                                        <div class="logo">
+                                            <img id="Imglogo" src="~/Theame/images/bg.png" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="peer">
+                            <div class="mobile-toggle sidebar-toggle">
+                                <a href="" class="td-n">
+                                    <i class="ti-arrow-circle-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ### $Sidebar Menu ### -->
+                <ul class="sidebar-menu" style="min-height: 80%;">
+
+                    <li class="nav-item ">
+                        <a class="sidebar-link" href="~/Dashboard/Dashboard">
+                            <span class="icon-holder">
+                                <i class="ti-home"></i>
+                            </span>
+                            <span class="title">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown collapsed d-none" data-toggle="collapse" data-target="#DA">
+                        <a>
+                            <span class="icon-holder">
+                                <i class="fa fa-area-chart"></i>
+                            </span>
+                            <span class="title">Data Analytics<i class="fa fa-caret-down"></i></span>
+
+                        </a>
+                        <ul id="DA" class="collapse sidebar-menua">
+
+
+                            <li class="nav-item dropdown">
+                                <a href="#">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-bar-chart"></i>
+                                    </span>
+                                    <h6>Dashboard</h6>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="~/Dashboard/BADocumentsList">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <h6>Applications Workflow</h6>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item ">
+                        <a class='sidebar-link' href="~/Mobilization/Mobilizations">
+                            <span class="icon-holder">
+                                <i class="fa fa-users"></i>
+                            </span>
+                            <span class="title">Mobilization</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#LP">
+                        <a>
+                            <span class="icon-holder">
+                                <i class="fa fa-files-o"></i>
+                            </span>
+                            <span class="title">Loan Applications<i class="fa fa-caret-down"></i></span>
+
+                        </a>
+                        <ul id="LP" class="collapse sidebar-menua">
+
+                            <li>
+                                <a href="~/Application/Applications">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-list-alt"></i>
+                                    </span>
+                                    <h6>
+                                        Track Loan Application
+                                    </h6>
+                                </a>
+                            </li>
+
+                            <li class="d-none">
+                                <a href="~/Accountant/Index">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <h6>Loan Schedule Generation</h6>
+                                </a>
+                            </li>
+                            <li class="d-none">
+                                <a href="#">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-print"></i>
+                                    </span>
+                                    <h6>Loan Application Printing</h6>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    @if (IsGranted(PermissionNames.Pages_BM) || IsGranted(PermissionNames.Pages_VO))
+                    {
+                        <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#LO">
+                            <a>
+                                <span class="icon-holder">
+                                    <i class="fa fa-gear"></i>
+                                </span>
+                                <span class="title">Loan Operations<i class="fa fa-caret-down"></i></span>
+
+                            </a>
+                            <ul id="LO" class="collapse sidebar-menua">
+
+
+                                <li class="nav-item dropdown d-none">
+                                    <a href="#">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-upload"></i>
+                                        </span>
+                                        <h6>Loan Operations</h6>
+                                    </a>
+                                </li>
+                                <li class="d-none">
+                                    <a href="#">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <h6>
+                                            View Loan Applications
+                                        </h6>
+                                    </a>
+                                </li>
+                                <li class="d-none">
+                                    <a href="#">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-print"></i>
+                                        </span>
+                                        <h6>
+                                            Generate Schedules
+                                        </h6>
+                                    </a>
+                                </li>
+                                <li class="d-none">
+                                    <a href="">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-info-circle"></i>
+                                        </span>
+                                        <h6>
+                                            Laon Application Printing
+                                        </h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/ViewAuthorizations" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <h6>Schedule Authorizations</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/ViewAuthorizationsReschedule" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <h6>Defer Applications Authorizations</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/AuthorizationInstallmentPayment" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <h6>Installment Collection Authorizations</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/EarlySettlementAuthorizationList" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <h6>Early Settlement Authorizations</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/WriteOffAuthorizationList" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <h6>Write Off Authorizations</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/DeceasedSettlementAuthorizationList" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <h6>Deceased Settlement Authorizations</h6>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    }
+
+                    @if (User.Identity.Name == "admin")
+                    {
+
+                        <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#DM">
+                            <a>
+                                <span class="icon-holder">
+                                    <i class="fa fa-clipboard"></i>
+                                </span>
+                                <span class="title">Deviation Matrix <i class="fa fa-caret-down"></i></span>
+
+                            </a>
+                            <ul id="DM" class="collapse sidebar-menua">
+
+
+                                <li class="nav-item dropdown">
+                                    <a href="/Deviation/index">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-product-hunt"></i>
+                                        </span>
+                                        <h6>Product-Wise Deviations</h6>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Deviation/applicationwiseindex">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-file"></i>
+                                        </span>
+                                        <h6>
+                                            Applications-Wise Deviations
+                                        </h6>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    }
+
+
+
+                    @if (IsGranted(PermissionNames.Pages_BM))
+                    {
+                        <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#BCC">
+                            <a>
+                                <span class="icon-holder">
+                                    <i class="fa fa-vcard-o"></i>
+                                </span>
+                                <span class="title">Branch Credit Committee<i class="fa fa-caret-down"></i></span>
+                            </a>
+                            <ul id="BCC" class="collapse sidebar-menua">
+                                <li class="nav-item dropdown">
+                                    <a href="~/BCC/Index" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-file"></i>
+                                        </span>
+                                        <h6>Screened Applications</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/BCC/UnderReview" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-files-o"></i>
+                                        </span>
+                                        <h6>Under Review Applications</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/BCC/BCCReviewedApplications" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-files-o"></i>
+                                        </span>
+                                        <h6>Reviewed Applications</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/BCCDecisions/Index" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-comments"></i>
+                                        </span>
+                                        <h6>BCC Decisions</h6>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    }
+
+                    @if (IsGranted(PermissionNames.Pages_BM) || IsGranted(PermissionNames.Pages_MCRC))
+                    {
+                        <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#MCRC">
+                            <a>
+                                <span class="icon-holder">
+                                    <i class="fa fa-vcard-o"></i>
+                                </span>
+                                <span class="title">MCRC<i class="fa fa-caret-down"></i></span>
+                            </a>
+                            <ul id="MCRC" class="collapse sidebar-menua">
+
+                                @if (IsGranted(PermissionNames.Pages_MCRC))
+                                {
+
+                                    <li class="nav-item dropdown">
+                                        <a href="~/MCRC/Index" class="dropdown-toggle">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-files-o"></i>
+                                            </span>
+                                            <h6>Applications</h6>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a href="~/MCRC/UnderReview" class="dropdown-toggle">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-files-o"></i>
+                                            </span>
+                                            <h6>Under Review Applications</h6>
+                                        </a>
+                                    </li>
+                                }
+                                <li class="nav-item dropdown">
+                                    <a href="~/McrcDecisions/Index" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-comments"></i>
+                                        </span>
+                                        <h6>Mcrc Decisions</h6>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    }
+                    @if (IsGranted(PermissionNames.Pages_MCRC))
+                    {
+                        <li class="nav-item ">
+                            <a class='sidebar-link' href="~/ManagmentCommitteeDecisions/Index">
+                                <span class="icon-holder">
+                                    <i class="fa fa-files-o"></i>
+                                </span>
+                                <span class="title">BCC Approved Applications</span>
+                            </a>
+                        </li>
+                    }
+                    @if (IsGranted(PermissionNames.Pages_BA))
+                    {
+                        <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#BAO">
+                            <a>
+                                <span class="icon-holder">
+                                    <i class="fa fa-user-plus"></i>
+                                </span>
+                                <span class="title">Accountant Operations<i class="fa fa-caret-down"></i></span>
+                            </a>
+                            <ul id="BAO" class="collapse sidebar-menua">
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/Index" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-list"></i>
+                                        </span>
+                                        <h6>MC Authorized Applications</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/DisbursedApplications" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-edit"></i>
+                                        </span>
+                                        <h6>Defer Schedule</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Dashboard/BADocumentsList">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-upload"></i>
+                                        </span>
+                                        <h6>Upload Credit Bureau files</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/ActiveSchedules">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-credit-card"></i>
+                                        </span>
+                                        <h6>Loan Repayment Module</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Accountant/InstallmentPaymentList">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-list"></i>
+                                        </span>
+                                        <h6>Loan Installments</h6>
+                                    </a>
+                                </li>
+                                @*<li class="nav-item dropdown">
+                                    <a href="~/accountant/CheckAMLCFT">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-check-circle"></i>
+                                        </span>
+                                        <h6>AML CFT Check</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/accountant/CheckAMLCFTByCNIC">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-check-circle"></i>
+                                        </span>
+                                        <h6>AML CFT Check By CNIC</h6>
+                                    </a>
+                                </li>*@
+                            </ul>
+
+                        </li>
+                    }
+
+
+                    <li class="nav-item">
+                        <a class='sidebar-link' href="~/Search/Index">
+                            <span class="icon-holder">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </span>
+                            <span class="title">Search</span>
+                        </a>
+                    </li>
+
+                    @if (User.Identity.Name == "admin")
+                    {
+                        <li class="nav-item dropdown " data-toggle="collapse" data-target="#SS">
+                            <a>
+                                <span class="icon-holder">
+                                    <i class="fa fa-gears"></i>
+                                </span>
+                                <span class="title">System Settings<i class="fa fa-caret-down"></i></span>
+                            </a>
+                            <ul id="SS" class="collapse sidebar-menua ">
+                                <li class="nav-item dropdown">
+                                    <a href="/Company/Company" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-building-o"></i>
+                                        </span>
+                                        <h6>Define Company</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="/Company/Branch" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-industry"></i>
+                                        </span>
+                                        <h6>Define Branch</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Product/Productlist" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-product-hunt"></i>
+                                        </span>
+                                        <h6>Define Product</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Product/AddProduct" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-cog"></i>
+                                        </span>
+                                        <h6>Define Product Configuration</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown d-none">
+                                    <a href="#" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-tree"></i>
+                                        </span>
+                                        <h6>Define Deviation Matrix</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown d-none">
+                                    <a href="#" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-gavel"></i>
+                                        </span>
+                                        <h6>  Define Business Rules</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown d-none">
+                                    <a href="#" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-file-text"></i>
+                                        </span>
+                                        <h6>Status and description</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="/Holidays/Index" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                        <h6>Define Holidays</h6>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#UM">
+                            <a>
+                                <span class="icon-holder">
+                                    <i class="fa fa-users"></i>
+                                </span>
+                                <span class="title">User Management<i class="fa fa-caret-down"></i></span>
+                            </a>
+                            <ul id="UM" class="collapse sidebar-menua ">
+                                <li class="nav-item dropdown">
+                                    <a href="~/users/index" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-user-circle-o"></i>
+                                        </span>
+                                        <h6>Users</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/dashboard/GetRoles" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-lock"></i>
+                                        </span>
+                                        <h6>Roles</h6>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    <li class="nav-item dropdown collapsed d-none" data-toggle="collapse" data-target="#LTM">
+                        <a>
+                            <span class="icon-holder">
+                                <i class="ti-panel"></i>
+                            </span>
+                            <span class="title">Log Trail Management<i class="fa fa-caret-down"></i></span>
+                        </a>
+                        <ul id="LTM" class="collapse sidebar-menua ">
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-history"></i>
+                                    </span>
+                                    <h6>History of Application</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-key"></i>
+                                    </span>
+                                    <h6>Live System Changes</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <h6>Search Application Log</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-user-circle-o"></i>
+                                    </span>
+                                    <h6>Search User Wise</h6>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown collapsed d-none" data-toggle="collapse" data-target="#Rpt">
+                        <a>
+                            <span class="icon-holder">
+                                <i class="fa fa-file"></i>
+                            </span>
+                            <span class="title">Reports<i class="fa fa-caret-down"></i></span>
+                        </a>
+                        <ul id="Rpt" class="collapse sidebar-menua ">
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-info-circle"></i>
+                                    </span>
+                                    <h6> Application Status Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-users"></i>
+                                    </span>
+                                    <h6>Mobilization Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-certificate"></i>
+                                    </span>
+                                    <h6> Loan Application Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-tag"></i>
+                                    </span>
+                                    <h6>Application TAT Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-bar-chart"></i>
+                                    </span>
+                                    <h6> SDE Performance Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-briefcase"></i>
+                                    </span>
+                                    <h6>Branch Portfolio Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="ti-panel"></i>
+                                    </span>
+                                    <h6>District Wise Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-money"></i>
+                                    </span>
+                                    <h6>Loan Amount Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-file"></i>
+                                    </span>
+                                    <h6>Product Wise Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="~/Application/ApplicationWorkFlow" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-cog fa-spin"></i>
+                                    </span>
+                                    <h6>Application Workflow Report</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-university"></i>
+                                    </span>
+                                    <h6>Mapping Of Schools</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-check"></i>
+                                    </span>
+                                    <h6>CNIC Check Report</h6>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    @*
+                        <li class="nav-item">
+                            <a class='sidebar-link' href="#">
+                                <span class="icon-holder">
+                                    <i class="fa fa-bell"></i>
+                                </span>
+                                <span class="title">
+                                    PAR Monitoring & Management Reports
+                                </span>
+                            </a>
+                        </li>
+                    *@
+
+                    @if (IsGranted(PermissionNames.Pages_BA))
+                    {
+                        @*<li class="nav-item">
+                                <a class='sidebar-link' href="#">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-bell"></i>
+
+                                    </span>
+                                    <span class="title">Notifications</span>
+                                </a>
+                            </li>*@
+                    }
+
+                    @if (IsGranted(PermissionNames.Pages_BM))
+                    {
+                        <li class="nav-item d-none">
+                            <a class='sidebar-link' href="#">
+                                <span class="icon-holder">
+                                    <i class="fa fa-download"></i>
+                                </span>
+                                <span class="title">Downloads</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (IsGranted(PermissionNames.Pages_BA))
+                    {
+                        <li class="nav-item d-none">
+                            <a class='sidebar-link' href="~/Dashboard/BADocumentsList">
+                                <span class="icon-holder">
+                                    <i class="fa fa-tasks"></i>
+                                </span>
+                                <span class="title">Branch Accountant</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+
+
+
+    </section>
+
+
+    <div class="page-container">
+        <!-- ### $Topbar ### -->
+        <div class="header navbar">
+            <div class="header-container">
+                <ul class="nav-left div-only-mobile">
+                    <li>
+                        <a id='sidebar-toggle' class="sidebar-toggle">
+                            <i class="ti-menu"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="position-center"><h4>Loan Origination & Management System</h4></div>
+                @*<div class="position-center"><h4>Loan Origination & Management System</h4></div>*@
+                <ul class="nav-right">
+                    <li class="notifications dropdown" style="z-index: 1130;">
+                        @*<span class="counter bgc-red">3</span>*@
+                        <a id="NotificationButton" class="dropdown-toggle no-after" data-toggle="dropdown">
+                            <i class="ti-bell"></i>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li class="pX-20 pY-15 bdB">
+                                <i class="ti-bell pR-10"></i> Notifications
+                                <span class="fsz-sm fw-600 c-grey-900">Notifications</span>
+                            </li>
+                            <li>
+                                <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm" id="innerNotifications" style=" max-height: 300px;">
+                                    <li>
+                                        <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                                            <div class="peer mR-15">
+                                                <img class="w-3r bdrs-50p" src="~/Theame/images/1.jpg" alt="">
+                                            </div>
+                                            <div class="peer peer-greed">
+                                                <span>
+                                                    <span class="c-grey-600">
+                                                        Resieved Notifications <span class="text-dark">Mr.usman</span>
+                                                    </span>
+                                                </span>
+                                                <p class="m-0">
+                                                    <small class="fsz-xs">5 mins ago</small>
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="pX-20 pY-15 ta-c bdT">
+                                <span>
+                                    <a href="" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+                            <div class="peer mR-10">
+                                <img class="w-2r bdrs-50p" src="~/images/avatar.png.png" alt="">
+                            </div>
+                            <div class="peer">
+                                <span class="fsz-sm c-grey-900">@User.Identity.Name</span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu fsz-sm">
+                            <li>
+                                <a href="/Account/ChangePassword" class="d-b td-n pY-5">
+                                    <i class="fa fa-key"></i>
+                                    <span class="title" style="font-size: 13px;">Change Password</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Logout", "Account", new { area= string.Empty })" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                                    <i class="fa fa-sign-out"></i>
+                                    <span class="title">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        @RenderBody()
+        <!-- ### $App Screen Footer ### -->
+        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
+            <span>All rights reserved by Taleem Finance Company LTD, Powered by IT Department</span>
+        </footer>
+    </div>
+
+
+
+    <environment names="Development,Staging,Production">
+        @*<script src="~/Theame/js/jquery.js"></script>*@
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        @*<script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>*@
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+        @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>*@
+
+        @*<script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/highcharts-more.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/modules/accessibility.js"></script>*@
+        <script type="text/javascript" src="~/Theame/js/utils.js" asp-append-version="true"></script>
+        @*<script type="text/javascript" src="~/Theame/js/Chart.min.js" asp-append-version="true"></script>*@
+        <script type="text/javascript" src="~/Theame/js/vendor.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/Theame/js/style.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/Theame/js/ajax.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/Theame/js/accordain.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/Theame/js/charlist1.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/Theame/js/highcharts.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/Theame/js/custom.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/Theame/js/jquery.prettyPhoto.js" asp-append-version="true"></script>
+        <script src="~/lib/json2/json2.js" asp-append-version="true"></script>
+        <script src="~/lib/moment/min/moment-with-locales.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/lib/blockUI/jquery.blockUI.js" asp-append-version="true"></script>
+        <script src="~/lib/toastr/toastr.js" asp-append-version="true"></script>
+        <script src="~/lib/sweetalert/dist/sweetalert.min.js" asp-append-version="true"></script>
+        <script src="~/lib/spin.js/spin.js" asp-append-version="true"></script>
+        <script src="~/lib/spin.js/jquery.spin.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js" asp-append-version="true"></script>
+        @*<script src="~/lib/bootstrap-select/dist/js/bootstrap-select.js" asp-append-version="true"></script>*@
+        <script src="~/lib/jquery-slimscroll/jquery.slimscroll.js" asp-append-version="true"></script>
+        <script src="~/lib/Waves/dist/waves.js" asp-append-version="true"></script>
+        <script src="~/lib/push.js/push.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/abp.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js" asp-append-version="true"></script>
+        <script src="~/js/admin.js" asp-append-version="true"></script>
+        <script src="~/js/main.js" asp-append-version="true"></script>
+        <!-- Dynamic scripts of ABP system (They are created on runtime and can not be bundled) -->
+        <script src="~/AbpServiceProxies/GetAll?v=@(AppTimes.StartupTime.Ticks)" type="text/javascript"></script>
+        <script src="~/AbpScripts/GetScripts?v=@(AppTimes.StartupTime.Ticks)" type="text/javascript"></script>
+
+
+
+
+        <script>
+            //$(document).ready(function () {
+            //    $(document).on("click", ".nav-item a", function (e) {
+            //        e.preventDefault();
+            //        $("body").toggleClass("is-collapsed");
+            //        location.href = this.href;
+            //    });
+            //});
+
+            $('#sidebar-toggle').click(function () {
+                $("body").toggleClass("is-collapsed");
+            });
+
+
+            $('.sidebar').mouseenter(function () {
+                $("#Imglogo").attr("src", "/Theame/images/logo.png");
+                $("body").toggleClass("is-collapsed");
+            }).mouseleave(function () {
+                $("#Imglogo").attr("src", "/Theame/images/bg.png");
+                $("body").toggleClass("is-collapsed");
+                $(".sidebar-menua").removeClass("show");
+            });
+
+            $('#NotificationButton').click(function () {
+                $('#innerNotifications').html("<p class='text-center' ><img width='50px' src='/Theame/images/loader.gif'/></p>");
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/getAllNotifications")',
+                    data: {} ,
+                    success: function (data) {
+                        var response = data.result;
+                        console.log(response);
+
+
+                        var content = '';
+                        response.forEach(function (item) {
+                            content += '<li>';
+                            content += ' <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">';
+                            content += '<div class="peer mR-15">';
+                            content += '<img class="w-3r bdrs-50p" src="/images/logo.jpg" alt="">';
+                            content += '</div>';
+                            content += '<div class="peer peer-greed">';
+                            content += '<span>';
+                            content += '<span class="c-grey-600">';
+                            content += '<span class="text-dark">' + item.title +'</span><br/>';
+                            content += '<span>' + item.body +'</span>';
+                            content += '</span>';
+                            content += '</span>';
+                            content += ' <p class="m-0">';
+                            //content += '<small class="fsz-xs">5 mins ago</small>';
+                            content += '<small class="fsz-xs">' + moment(item.creationTime).format('DD MMM YYYY hh:mm:ss a')+'</small>';
+                            content += '</p>';
+                            content += ' </div>';
+                            content += ' </a>';
+                            content += '</li>';
+                        });
+
+
+                        $('#innerNotifications').html(content);
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occured while getting Notifications. Contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+            });
+        </script>
+
+    </environment>
+
+    <!-- View specific scripts -->
+    @RenderSection("scripts", required: false)
+</body>
+</html>

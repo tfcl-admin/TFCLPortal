@@ -1,0 +1,144 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <RootNamespace>TFCLPortal</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20180726102624_Upgrade_ABP_380.cs" />
+    <Compile Remove="Migrations\20180927062408_test.cs" />
+    <Compile Remove="Migrations\20190111071724_Upgraded_To_Abp_v4_1_0.cs" />
+    <Compile Remove="Migrations\20191207055902_studentgenderdropdowns.cs" />
+    <Compile Remove="Migrations\20191207055902_studentgenderdropdowns.Designer.cs" />
+    <Compile Remove="Migrations\20191207083052_studentgenderdropdowns.cs" />
+    <Compile Remove="Migrations\20191207083052_studentgenderdropdowns.Designer.cs" />
+    <Compile Remove="Migrations\20191209114208_OtherDetail.cs" />
+    <Compile Remove="Migrations\20191209114208_OtherDetail.Designer.cs" />
+    <Compile Remove="Migrations\20191209114952_OtherDetails.cs" />
+    <Compile Remove="Migrations\20191209114952_OtherDetails.Designer.cs" />
+    <Compile Remove="Migrations\20191209120230_OtherDetails.cs" />
+    <Compile Remove="Migrations\20191209120230_OtherDetails.Designer.cs" />
+    <Compile Remove="Migrations\20191210123600_BusinessPlans.cs" />
+    <Compile Remove="Migrations\20191210123600_BusinessPlans.Designer.cs" />
+    <Compile Remove="Migrations\20191210123800_BusinessPlan.cs" />
+    <Compile Remove="Migrations\20191210123800_BusinessPlan.Designer.cs" />
+    <Compile Remove="Migrations\20191210124218_BusinessPlans.cs" />
+    <Compile Remove="Migrations\20191210124218_BusinessPlans.Designer.cs" />
+    <Compile Remove="Migrations\20191210125403_BusinessPlan.cs" />
+    <Compile Remove="Migrations\20191210125403_BusinessPlan.Designer.cs" />
+    <Compile Remove="Migrations\20191210125526_BusinessPlans.cs" />
+    <Compile Remove="Migrations\20191210125526_BusinessPlans.Designer.cs" />
+    <Compile Remove="Migrations\20191210125641_businessplanings.cs" />
+    <Compile Remove="Migrations\20191210125641_businessplanings.Designer.cs" />
+    <Compile Remove="Migrations\20191210125856_businessplans.cs" />
+    <Compile Remove="Migrations\20191210125856_businessplans.Designer.cs" />
+    <Compile Remove="Migrations\20191210130144_BusinessPlans.cs" />
+    <Compile Remove="Migrations\20191210130144_BusinessPlans.Designer.cs" />
+    <Compile Remove="Migrations\20191212082250_MobilizationsApplication.cs" />
+    <Compile Remove="Migrations\20191212082250_MobilizationsApplication.Designer.cs" />
+    <Compile Remove="Migrations\20191212125055_BusinessIncomes.cs" />
+    <Compile Remove="Migrations\20191212125055_BusinessIncomes.Designer.cs" />
+    <Compile Remove="Migrations\20191215111644_ExposureDetailChilds.cs" />
+    <Compile Remove="Migrations\20191215111644_ExposureDetailChilds.Designer.cs" />
+    <Compile Remove="Migrations\20191215120130_add-migration AddAllTables.cs" />
+    <Compile Remove="Migrations\20191215120130_add-migration AddAllTables.Designer.cs" />
+    <Compile Remove="Migrations\20191219092229_PEPsAndClientExistCelBel.cs" />
+    <Compile Remove="Migrations\20191219092229_PEPsAndClientExistCelBel.Designer.cs" />
+    <Compile Remove="Migrations\20191219092428_PEPsAndClientExistCelBel.cs" />
+    <Compile Remove="Migrations\20191219092428_PEPsAndClientExistCelBel.Designer.cs" />
+    <Compile Remove="Migrations\20191219121508_LiveDB.cs" />
+    <Compile Remove="Migrations\20191219121508_LiveDB.Designer.cs" />
+    <Compile Remove="Migrations\20191219133257_Applications.cs" />
+    <Compile Remove="Migrations\20191219133257_Applications.Designer.cs" />
+    <Compile Remove="Migrations\20191219133426_Mobilization.cs" />
+    <Compile Remove="Migrations\20191219133426_Mobilization.Designer.cs" />
+    <Compile Remove="Migrations\20191219133731_Mobilizations.cs" />
+    <Compile Remove="Migrations\20191219133731_Mobilizations.Designer.cs" />
+    <Compile Remove="Migrations\20191219133944_Mobilizations.cs" />
+    <Compile Remove="Migrations\20191219133944_Mobilizations.Designer.cs" />
+    <Compile Remove="Migrations\20191219134335_Mobilizations.cs" />
+    <Compile Remove="Migrations\20191219134335_Mobilizations.Designer.cs" />
+    <Compile Remove="Migrations\20191219134720_Mobilization.cs" />
+    <Compile Remove="Migrations\20191219134720_Mobilization.Designer.cs" />
+    <Compile Remove="Migrations\20191219135123_Mobilizations.cs" />
+    <Compile Remove="Migrations\20191219135123_Mobilizations.Designer.cs" />
+    <Compile Remove="Migrations\20191219135501_Mobilizations.cs" />
+    <Compile Remove="Migrations\20191219135501_Mobilizations.Designer.cs" />
+    <Compile Remove="Migrations\20191219135911_Applications.cs" />
+    <Compile Remove="Migrations\20191219135911_Applications.Designer.cs" />
+    <Compile Remove="Migrations\20191219140012_Applications.cs" />
+    <Compile Remove="Migrations\20191219140012_Applications.Designer.cs" />
+    <Compile Remove="Migrations\20191219142137_Applications.cs" />
+    <Compile Remove="Migrations\20191219142137_Applications.Designer.cs" />
+    <Compile Remove="Migrations\20191219142921_Applications.cs" />
+    <Compile Remove="Migrations\20191219142921_Applications.Designer.cs" />
+    <Compile Remove="Migrations\20191219143428_Applications.cs" />
+    <Compile Remove="Migrations\20191219143428_Applications.Designer.cs" />
+    <Compile Remove="Migrations\20191219164647_LegalStatusDropdown.cs" />
+    <Compile Remove="Migrations\20191219164647_LegalStatusDropdown.Designer.cs" />
+    <Compile Remove="Migrations\20200101085513_updateUsers.cs" />
+    <Compile Remove="Migrations\20200101085513_updateUsers.Designer.cs" />
+    <Compile Remove="Migrations\20200101090054_updateUsersDataType.cs" />
+    <Compile Remove="Migrations\20200101090054_updateUsersDataType.Designer.cs" />
+    <Compile Remove="Migrations\20200101090152_updateUsersDataTypeV1.cs" />
+    <Compile Remove="Migrations\20200101090152_updateUsersDataTypeV1.Designer.cs" />
+    <Compile Remove="Migrations\20200101112259_Mobilizations.cs" />
+    <Compile Remove="Migrations\20200101112259_Mobilizations.Designer.cs" />
+    <Compile Remove="Migrations\20200101112415_Mobilizationzz.cs" />
+    <Compile Remove="Migrations\20200101112415_Mobilizationzz.Designer.cs" />
+    <Compile Remove="Migrations\20200101112523_MobilizationTable.cs" />
+    <Compile Remove="Migrations\20200101112523_MobilizationTable.Designer.cs" />
+    <Compile Remove="Migrations\20200101112658_MobilizationTable.cs" />
+    <Compile Remove="Migrations\20200101112658_MobilizationTable.Designer.cs" />
+    <Compile Remove="Migrations\20200427110222_branchidInMobilization.cs" />
+    <Compile Remove="Migrations\20200427110222_branchidInMobilization.Designer.cs" />
+    <Compile Remove="Migrations\20200903104553_add-final-migrations.cs" />
+    <Compile Remove="Migrations\20200903104553_add-final-migrations.Designer.cs" />
+    <Compile Remove="Migrations\20200904090720_migrationsLog.cs" />
+    <Compile Remove="Migrations\20200904090720_migrationsLog.Designer.cs" />
+    <Compile Remove="Migrations\20200904182717_migrationsLogTable.cs" />
+    <Compile Remove="Migrations\20200904182717_migrationsLogTable.Designer.cs" />
+    <Compile Remove="Migrations\20200906104255_TableReasonForNot                genericDropdownDto.ApplicantSources = applicantSourceDtos%3b.cs" />
+    <Compile Remove="Migrations\20200906104255_TableReasonForNot                genericDropdownDto.ApplicantSources = applicantSourceDtos%3b.Designer.cs" />
+    <Compile Remove="Migrations\20200906104801_TablereasonForNotBeingInterested2.cs" />
+    <Compile Remove="Migrations\20200906104801_TablereasonForNotBeingInterested2.Designer.cs" />
+    <Compile Remove="Migrations\20200906110028_TablereasonForNotBeingInterested3.cs" />
+    <Compile Remove="Migrations\20200906110028_TablereasonForNotBeingInterested3.Designer.cs" />
+    <Compile Remove="Migrations\20200907062837_SchoolBuildingStatusNameChange.cs" />
+    <Compile Remove="Migrations\20200907062837_SchoolBuildingStatusNameChange.Designer.cs" />
+    <Compile Remove="Migrations\20200909053545_updateMobilizationTable.cs" />
+    <Compile Remove="Migrations\20200909053545_updateMobilizationTable.Designer.cs" />
+    <Compile Remove="Migrations\20200909053830_updateMobilizationTable.cs" />
+    <Compile Remove="Migrations\20200909053830_updateMobilizationTable.Designer.cs" />
+    <Compile Remove="Migrations\20200914081048_AddTablesForDropdownForLRDScreen.cs" />
+    <Compile Remove="Migrations\20200914081048_AddTablesForDropdownForLRDScreen.Designer.cs" />
+    <Compile Remove="Migrations\20201015094607_addFieldsForBusinessIncomeAPi.cs" />
+    <Compile Remove="Migrations\20201015094607_addFieldsForBusinessIncomeAPi.Designer.cs" />
+    <Compile Remove="Migrations\20201015095413_addFieldsForBusinessIncomeAPi.cs" />
+    <Compile Remove="Migrations\20201015095413_addFieldsForBusinessIncomeAPi.Designer.cs" />
+    <Compile Remove="Migrations\20201016093821_updateInBusinessIncomeApi_NameChange.cs" />
+    <Compile Remove="Migrations\20201016093821_updateInBusinessIncomeApi_NameChange.Designer.cs" />
+    <Compile Remove="Migrations\20201016095003_updateInBusinessIncomeApi_NameChange.cs" />
+    <Compile Remove="Migrations\20201016095003_updateInBusinessIncomeApi_NameChange.Designer.cs" />
+    <Compile Remove="Migrations\20201016101814_updateInBusinessIncomeApi_NameChange.cs" />
+    <Compile Remove="Migrations\20201016101814_updateInBusinessIncomeApi_NameChange.Designer.cs" />
+    <Compile Remove="Migrations\20201023065840_addDropdownForAssociatedIncomeAPI.cs" />
+    <Compile Remove="Migrations\20201023065840_addDropdownForAssociatedIncomeAPI.Designer.cs" />
+    <Compile Remove="Migrations\20201103060350_updateForBusinessExpenseAPI.cs" />
+    <Compile Remove="Migrations\20201103060350_updateForBusinessExpenseAPI.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TFCLPortal.Core\TFCLPortal.Core.csproj" />
+  </ItemGroup>
+</Project>

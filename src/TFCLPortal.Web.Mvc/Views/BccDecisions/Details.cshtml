@@ -1,0 +1,273 @@
+﻿@model TFCLPortal.BccDecisions.Dto.BccDecisionListDto
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                BCC Decision Details
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Branch Credit Committee > BCC Decision Details
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/BCCDecisions/Index" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Listing </a>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div class="row">
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Client Id
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.ClientId)
+                </p>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    @Html.DisplayNameFor(model => model.BccId)
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.BccId)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    APPLICANT / RESPONDENT NAME
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.ApplicantName)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Client / School / Business Name
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.SchoolName)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    CNIC No.
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.CNIC)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member 1 Name
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.BccMember1UserName)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member 1 Recommendation
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.BccMember1Recommendation)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Recommendation Reason
+                </p>
+
+                <p class="detailText">@(Model.BccMember1Reason == null || Model.BccMember1Reason == "" ? "--" : Model.BccMember1Reason)</p>
+            </div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member 2 Name
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.BccMember2UserName)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member 2 Recommendation
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.BccMember2Recommendation)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Recommendation Reason
+                </p>
+
+                <p class="detailText">@(Model.BccMember2Reason == null || Model.BccMember2Reason == "" ? "--" : Model.BccMember2Reason)</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member 3 Name
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.BccMember3UserName)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    BCC Member 3 Recommendation
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.BccMember3Recommendation)
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Recommendation Reason
+                </p>
+
+                <p class="detailText">@(Model.BccMember3Reason == null || Model.BccMember3Reason == "" ? "--" : Model.BccMember3Reason)</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Decision
+                </p>
+                <p class="detailText">
+                    @Html.DisplayFor(model => model.Decision)
+                </p>
+            </div>
+
+            @if (Model.Decision != "Approve")
+            {
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Reason
+                    </p>
+
+                    <p class="detailText">@(Model.Reason == null || Model.Reason == "" ? "--" : Model.Reason)</p>
+                </div>
+
+            }
+
+            else
+            {
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Loan Amount
+                    </p>
+
+                    <p class="detailText">@(Model.LoanAmount == null || Model.LoanAmount == "" ? "--" : Model.LoanAmount)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Loan Tenure
+                    </p>
+
+                    <p class="detailText">@(Model.LoanTenure == null || Model.LoanTenure == "" ? "--" : Model.LoanTenure)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Grace Days
+                    </p>
+
+                    <p class="detailText">@(Model.GraceDays == null || Model.GraceDays == "" ? "--" : Model.GraceDays)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Applied Markup
+                    </p>
+
+                    <p class="detailText">@(Model.AppliedMarkup == null || Model.AppliedMarkup == "" ? "--" : Model.AppliedMarkup)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Collateral Amount
+                    </p>
+
+                    <p class="detailText">@(Model.CollateralAmount == null || Model.CollateralAmount == "" ? "--" : Model.CollateralAmount)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        LTV %
+                    </p>
+                    <p class="detailText">@(Model.LTV == null || Model.LTV == "" ? "--" : Model.LTV)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Collateral Evaluation Date
+                    </p>
+
+                    <p class="detailText">@(Model.CollateralEvaluation == null || Model.CollateralEvaluation == "" ? "--" : Model.CollateralEvaluation)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Deferment Applied
+                    </p>
+
+                    <p class="detailText">@(Model.isDeferment == null || Model.isDeferment == "" ? "--" : Model.isDeferment)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Deferment Period (Months)
+                    </p>
+                    <p class="detailText">@(Model.DefermentPeriod == null || Model.DefermentPeriod == "" ? "--" : Model.DefermentPeriod)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Tranches Applied
+                    </p>
+
+                    <p class="detailText">@(Model.isTranches == null || Model.isTranches == "" ? "--" : Model.isTranches)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Tranches Dates
+                    </p>
+
+                    <p class="detailText">@(Model.TranchesDates == null || Model.TranchesDates == "" ? "--" : Model.TranchesDates)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Tranches Amount
+                    </p>
+
+                    <p class="detailText">@(Model.TranchesAmount == null || Model.TranchesAmount == "" ? "--" : Model.TranchesAmount)</p>
+
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Cheque to be Issued in favour of
+                    </p>
+
+                    <p class="detailText">@(Model.CheckName == null || Model.CheckName == "" ? "--" : Model.CheckName)</p>
+
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Comments (If Any):
+                    </p>
+
+                    <p class="detailText">@(Model.Comments == null || Model.Comments == "" ? "--" : Model.Comments)</p>
+                </div>
+
+            }
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p class="detailHeading">
+                        Uploaded Decision File
+                    </p>
+                    <p class="detailText">
+                        <a href="@Model.DecisionFile" target="_blank" download><i class="fa fa-file-archive-o"></i> Click to Open</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>

@@ -1,0 +1,404 @@
+﻿@model TFCLPortal.ApplicationWiseDeviationVariables.Dto.ApplicationWiseDeviationVariableListDto
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<=-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Edit Application Wise Deviation Matrix
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Deviation Matrix > Deviation Matrices List > Edit
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Deviation/applicationwiseindex" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Listing </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+
+        <form asp-action="ApplicationWiseEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="ApplicationId" class="form-control" type="hidden" />
+            <input asp-for="fk_ProductId" class="form-control d-none" />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Product
+                        </label>
+                        <input asp-for="ProductName" class="form-control" disabled />
+                        <span asp-validation-for="fk_ProductId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Client ID
+                        </label>
+                        <input asp-for="ClientID" class="form-control" disabled />
+                        <span asp-validation-for="ClientID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Client Name
+                        </label>
+                        <input asp-for="ClientName" class="form-control" disabled />
+                        <span asp-validation-for="ClientName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            School Name
+                        </label>
+                        <input asp-for="SchoolName" class="form-control" disabled />
+                        <span asp-validation-for="SchoolName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <p class="detailHeading text-center" style="border-bottom: 1px solid;margin-bottom: 30px;font-weight: bold">
+                        CATEGORY A
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Applicant Min Age
+                        </label>
+                        <input asp-for="ApplicantMinAge" class="form-control" />
+                        <span asp-validation-for="ApplicantMinAge" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Applicant Max Age
+                        </label>
+                        <input asp-for="ApplicantMaxAge" class="form-control" />
+                        <span asp-validation-for="ApplicantMaxAge" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Guarantor Min Age
+                        </label>
+                        <input asp-for="GuarantorMinAge" class="form-control" />
+                        <span asp-validation-for="GuarantorMinAge" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Guarantor Max Age
+                        </label>
+                        <input asp-for="GuarantorMaxAge" class="form-control" />
+                        <span asp-validation-for="GuarantorMaxAge" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Minimum Student Enrolled at the Time of Assessment
+                        </label>
+                        <input asp-for="MinStudentEnrolled" class="form-control" />
+                        <span asp-validation-for="MinStudentEnrolled" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Business Age Years
+                        </label>
+                        <input asp-for="BusinessAgeYears" class="form-control" />
+                        <span asp-validation-for="BusinessAgeYears" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Business Age At Current Place Years
+                        </label>
+                        <input asp-for="BusinessAgeAtCurrentPlaceYears" class="form-control" />
+                        <span asp-validation-for="BusinessAgeAtCurrentPlaceYears" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <p class="detailHeading text-center" style="border-bottom: 1px solid;margin-bottom: 30px;font-weight: bold">
+                        CATEGORY B
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Min Limit For Unsecured Loan
+                        </label>
+                        <input asp-for="MinLimitForUnsecuredLoan" class="form-control" />
+                        <span asp-validation-for="MinLimitForUnsecuredLoan" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Max Limit For Unsecured Loan
+                        </label>
+                        <input asp-for="MaxLimitForUnsecuredLoan" class="form-control" />
+                        <span asp-validation-for="MaxLimitForUnsecuredLoan" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Min %age Of SA Expense against SA Income
+                        </label>
+                        <input asp-for="MinPercentageOfSAexpAgainstSAincome" class="form-control" />
+                        <span asp-validation-for="MinPercentageOfSAexpAgainstSAincome" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Max Percentage of NAI total School Revenue
+                        </label>
+                        <input asp-for="MaxPercentageOfNAItotalSchoolRevenue" class="form-control" />
+                        <span asp-validation-for="MaxPercentageOfNAItotalSchoolRevenue" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Min Percentage Of HHE total School Revenue
+                        </label>
+                        <input asp-for="MinPercentageOfHHEtotalSchoolRevenue" class="form-control" />
+                        <span asp-validation-for="MinPercentageOfHHEtotalSchoolRevenue" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Max Limit For Installment Ratio
+                        </label>
+                        <input asp-for="MaxLimitForInstallmentRatio" class="form-control" />
+                        <span asp-validation-for="MaxLimitForInstallmentRatio" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Residential Building
+                        </label>
+                        <input asp-for="LTVForResidentialBuilding" class="form-control" />
+                        <span asp-validation-for="LTVForResidentialBuilding" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Residential Land
+                        </label>
+                        <input asp-for="LTVForResidentialLand" class="form-control" />
+                        <span asp-validation-for="LTVForResidentialLand" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Commercial Building
+                        </label>
+                        <input asp-for="LTVForCommercialBuilding" class="form-control" />
+                        <span asp-validation-for="LTVForCommercialBuilding" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Commercial Land
+                        </label>
+                        <input asp-for="LTVForCommercialLand" class="form-control" />
+                        <span asp-validation-for="LTVForCommercialLand" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Agriculture Land
+                        </label>
+                        <input asp-for="LTVForAgriculturalLand" class="form-control" />
+                        <span asp-validation-for="LTVForAgriculturalLand" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Vehicle where Age of Vehicle is  Less Than or Equal to 01 Years
+                        </label>
+                        <input asp-for="LTVForVehicleLessThanOneYear" class="form-control" />
+                        <span asp-validation-for="LTVForVehicleLessThanOneYear" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Vehicle where Age of Vehicle is  Less Than or Equal to 05 Years
+                        </label>
+                        <input asp-for="LTVForVehicleLessThanFiveYear" class="form-control" />
+                        <span asp-validation-for="LTVForVehicleLessThanFiveYear" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Vehicle where Age of Vehicle is  More Than to 05 Years
+                        </label>
+                        <input asp-for="LTVForVehicleMoreThanFiveYear" class="form-control" />
+                        <span asp-validation-for="LTVForVehicleMoreThanFiveYear" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for TDR (A Rated Bank)
+                        </label>
+                        <input asp-for="LTVForTDRratedA" class="form-control" />
+                        <span asp-validation-for="LTVForTDRratedA" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for TDR (B Rated Bank)
+                        </label>
+                        <input asp-for="LTVForTDRratedB" class="form-control" />
+                        <span asp-validation-for="LTVForTDRratedB" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Franchise Agreement
+                        </label>
+                        <input asp-for="LTVForFranchiseAgreement" class="form-control" />
+                        <span asp-validation-for="LTVForFranchiseAgreement" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            LTV %age for Gold
+                        </label>
+                        <input asp-for="LTVForGold" class="form-control" />
+                        <span asp-validation-for="LTVForGold" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Loan Amount
+                        </label>
+                        <input asp-for="LoanAmount" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="LoanAmount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Loan Tenure
+                        </label>
+                        <input asp-for="LoanTenure" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="LoanTenure" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            No Of Installments
+                        </label>
+                        <input asp-for="NoOfInstallments" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="NoOfInstallments" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Markup
+                        </label>
+                        <input asp-for="Markup" class="form-control" />
+                        <span asp-validation-for="Markup" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Updation Reason
+                        </label>
+                        <input asp-for="updationReason" class="form-control" required />
+                        <span asp-validation-for="updationReason" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="detailHeading">
+                            Upload File
+                        </label>
+                        @*<p>
+                    <a href="@Model.approvalFileUrl" target="_blank"><i class="fa fa-file-archive-o"></i> Click to Open</a>
+                </p>*@
+                        <input asp-for="file" class="form-control" required />
+                        @*<span asp-validation-for="approvalFileUrl" class="text-danger"></span>*@
+                    </div>
+                </div>
+
+                <!--<div class="col-md-4">
+        <div class="form-group">
+            <label class="detailHeading">
+                Updation Reason
+            </label>
+            <input asp-for="updationReason" class="form-control" required />
+            <span asp-validation-for="updationReason" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="detailHeading">
+                Uploaded File
+            </label>
+            <p>
+                <a href="Model.approvalFileUrl" target="_blank"><i class="fa fa-file-archive-o"></i> Click to Open</a>
+            </p>-->
+                @*<input asp-for="approvalFileUrl" class="form-control" required />*@
+                @*<span asp-validation-for="approvalFileUrl" class="text-danger"></span>*@
+                <!--</div>
+    </div>-->
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Update" class="btn btn-outline-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

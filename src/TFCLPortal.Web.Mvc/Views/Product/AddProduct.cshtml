@@ -1,0 +1,78 @@
+﻿@model TFCLPortal.ProductMarkupRates.Dto.CreateProductDto
+@{
+    ViewData["Title"] = "AddProduct";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<h2>AddProduct</h2>
+
+<main class='main-content bgc-grey-100'>
+    <div id='mainContent'>
+        <form asp-action="AddProduct" asp-controller="Product" method="post">
+            <div class="row gap-20 masonry pos-r">
+                <div class="masonry-sizer col-md-6"></div>
+                <div class="masonry-item col-md-12">
+                    <div class="bgc-white p-20 bd">
+                        <div class="card p-20">
+                            <h4 class="">Add Product</h4>
+                        </div>
+                        <div class="mT-30">
+                            <div class="row">
+                                <div class="masonry-sizer col-md-2"></div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label">ProductName</label>
+                                        <input asp-for="ProductName" class="form-control" />
+                                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">SlabMin</label>
+                                        <input asp-for="SlabMin" class="form-control" />
+                                        <span asp-validation-for="SlabMin" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">AgeMin</label>
+                                        <input asp-for="AgeMin" class="form-control" />
+                                        <span asp-validation-for="AgeMin" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">ShortCode</label>
+                                        <input asp-for="ShortCode" class="form-control" />
+                                        <span asp-validation-for="ShortCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+
+                                    <div class="form-group">
+                                        <label class="control-label">ProductDetail</label>
+                                        <input asp-for="ProductDetail" class="form-control" />
+                                        <span asp-validation-for="ProductDetail" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">SlabMax</label>
+                                        <input asp-for="SlabMax" class="form-control" />
+                                        <span asp-validation-for="SlabMax" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">AgeMax</label>
+                                        <input asp-for="AgeMax" class="form-control" />
+                                        <span asp-validation-for="AgeMax" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="masonry-sizer col-md-2" style="margin-left:550px"></div>
+                                <button type="submit" class="btn btn-success bg1 eft-1" >Create<span></span></button>
+                                <a href="~/Product/Productlist" class="btn btn-primary bg1 eft-1" style="margin-left:20px">Product List<span></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+

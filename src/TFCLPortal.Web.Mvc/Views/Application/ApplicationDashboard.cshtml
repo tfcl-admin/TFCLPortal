@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "ApplicationsDashboard";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100'>
+    <div>
+        <form>
+            <div class="row gap-20 masonry pos-r">
+                <div class="masonry-sizer col-md-6"></div>
+                <div class="masonry-item col-md-12">
+                    <div class="bgc-white p-20 bd default-div">
+                        <ul class="box-buttons align-center">
+                            <li class=""><a href="~/Mobilization/Mobilizations" class="bg1 eft-1">MOBILIZATION<span></span></a></li>
+                            <li class=""><a href="~/Application/Applications" class="bg1 eft-1">IN-PROCESS FILES<span></span></a></li>
+                            <li class=""><a href="~/Application/ApplicationDescripantDetail" class="bg1 eft-1">discrepant FILES<span></span></a></li>
+                            <li class=""><a href="~/BCC/BranchCreditCommitteeList" class="bg1 eft-1">BRANCH CREDIT COMMITEE<span></span></a></li>
+                            <li class=""><a href="~/Application/ApplicationDeclineDetail" class="bg1 eft-1">DECLINED FILES<span></span></a></li>
+                            <li class=""><a href="~/Application/DisbursedFiles" class="bg1 eft-1">DISBURSED FILES<span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<!-- ### $App Screen Footer ### -->

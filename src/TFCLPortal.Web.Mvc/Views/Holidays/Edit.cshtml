@@ -1,0 +1,85 @@
+﻿@model TFCLPortal.Holidays.Holiday
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Edit Holiday
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Holidays > Edit Holiday
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+            <a href="~/Holidays/Index" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> <i class="fa fa-list"></i> Back To List</a>
+        </div>
+    </div>
+
+    <div class="card p-10 mB-20">
+        <hr />
+
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateFrom" class="control-label"></label>
+                        <input asp-for="DateFrom" type="date" class="form-control" />
+                        <span asp-validation-for="DateFrom" class="text-danger"></span>
+                    </div>
+                
+                    <div class="form-group">
+                        <label asp-for="DateTo" class="control-label"></label>
+                        <input asp-for="DateTo" type="date" class="form-control" />
+                        <span asp-validation-for="DateTo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Days" class="control-label"></label>
+                        <input asp-for="Days" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="Days" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" style="border:1px solid"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group text-right">
+                        <input type="submit" value="Save" class="btn btn-sm btn-outline-success bg1 eft-1" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+    <script>
+        $('#DateFrom, #DateTo').on('input', function (e) {
+            var DateFrom = moment($('#DateFrom').val());
+            var DateTo = moment($('#DateTo').val());
+
+            var diff = DateTo.diff(DateFrom, 'days');
+
+            diff++;
+
+            $('#Days').val(diff);
+
+        });
+    
+    </script>
+
+</main>

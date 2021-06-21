@@ -1,0 +1,349 @@
+﻿@model TFCLPortal.TdsInventoryDetails.Dto.TdsInventoryDetailListDto
+
+@{ int counter = 1; }
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+
+<div class="tab_content" style="padding: 15px 20px">
+    <div class="row">
+        @if (@Model != null)
+        {
+            <div class="col-md-12">
+                <div class="accordion md-accordion" id="accordionSchoolBranches" role="tablist" aria-multiselectable="true">
+                    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+                    @foreach (var item in Model.TdsInventoryDetailChilds)
+                    {
+
+                        <div class="card">
+
+                            <!-- Card header -->
+                            <div class="card-header" role="tab" id="headingOneID-@item.Id">
+                                <a data-toggle="collapse" data-parent="#accordionSchoolBranches" href="#collapseOneID-@item.Id" aria-expanded="true"
+                                   aria-controls="collapseOneID-@item.Id">
+                                    <h5 class="mb-0">
+                                        @item.BusinessName <i class="fa fa-angle-down rotate-icon"></i>
+                                    </h5>
+                                </a>
+                            </div>
+
+                            <!-- Card body -->
+                            <div id="collapseOneID-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneID-@item.Id"
+                                 data-parent="#accordionSchoolBranches">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Inventory Record Maintanance
+                                            </p>
+                                            <p class="detailText">@(item.InventoryRecordMaintenanceName == null || item.InventoryRecordMaintenanceName == "" ? "--" : item.InventoryRecordMaintenanceName)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Inventory Entry Source
+                                            </p>
+                                            <p class="detailText">@(item.InventoryEntrySourceName == null || item.InventoryEntrySourceName == "" ? "--" : item.InventoryEntrySourceName)</p>
+                                        </div>
+
+
+
+
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered" style="text-align:center ">
+                                                <thead>
+                                                <th>
+                                                    Sr
+                                                </th>
+                                                <th>
+                                                    Item Name
+                                                </th>
+                                                <th>
+                                                    Qty
+                                                </th>
+                                                <th>
+                                                    Purchase Price
+                                                </th>
+                                                <th>
+                                                    Total Purchase Price
+                                                </th>
+                                                <th>
+                                                    Sale price
+                                                </th>
+                                                <th>
+                                                    Total Sale Price
+                                                </th>
+                                                <th>
+                                                    Gross Margin
+                                                </th>
+                                                <th>
+                                                    Physically Verified
+                                                </th>
+                                                <th>
+                                                    Variance %age
+                                                </th>
+                                                </thead>
+                                                @if (item.TdsInventoryDetailGrandChilds != null)
+                                                {
+
+                                                    @if (item.TdsInventoryDetailGrandChilds.Count > 0)
+                                                    {
+                                                        <tbody>
+                                                            @foreach (var child in item.TdsInventoryDetailGrandChilds)
+                                                            {
+                                                                <tr>
+                                                                    <td>@(counter++)</td>
+                                                                    <td>@(child.ItemName == null || child.ItemName == "" ? "--" : child.ItemName)</td>
+                                                                    <td>@(child.qty == null || child.qty == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.qty).Replace(",", ""))))</td>
+                                                                    <td style="text-align:right">@(child.PurchasedPrice == null || child.PurchasedPrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.PurchasedPrice).Replace(",", ""))))</td>
+                                                                    <td style="text-align:right">@(child.TotalPurchasedPrice == null || child.TotalPurchasedPrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.TotalPurchasedPrice).Replace(",", ""))))</td>
+                                                                    <td style="text-align:right">@(child.SalePrice == null || child.SalePrice == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((child.SalePrice).Replace(",", ""))))</td>
+                                                                    <td style="text-align:right">@(child.TotalSalePrice == null || child.TotalSalePrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((child.TotalSalePrice).Replace(",", ""))))</td>
+                                                                    <td style="text-align:right">@(child.GrossMargin == null || child.GrossMargin == "" ? "0" : string.Format("{0:#,##0}", (child.GrossMargin).Replace(",", "")))</td>
+                                                                    <td>@(child.PhysicallyVerified == null || child.PhysicallyVerified == "" ? "0" : string.Format("{0:#,##0}",  (child.PhysicallyVerified).Replace(",", "")))</td>
+                                                                    <td>@(child.VariancePercentage == null || child.VariancePercentage == "" ? "0" : string.Format("{0:#,##0}%",  (child.VariancePercentage).Replace(",", "")))</td>
+                                                                    @*<td style="text-align:right">@(child.Salary == null || child.Salary == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((child.Salary).Replace(",", ""))))</td>*@
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+
+                                                    }
+                                                }
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="2" class="text-right">
+                                                            Total
+                                                        </td>
+                                                        <td style="text-align:center">@(item.TotalInventoryQty == null || item.TotalInventoryQty == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalInventoryQty).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.TotalInventoryPurchasePrice == null || item.TotalInventoryPurchasePrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalInventoryPurchasePrice).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.TotalInventoryTotalPurchasePrice == null || item.TotalInventoryTotalPurchasePrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalInventoryTotalPurchasePrice).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.TotalInventorySalePrice == null || item.TotalInventorySalePrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalInventorySalePrice).Replace(",", ""))))</td>
+                                                        <td style="text-align:right">@(item.TotalInventoryTotalSalePrice == null || item.TotalInventoryTotalSalePrice == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalInventoryTotalSalePrice).Replace(",", ""))))</td>
+                                                        <td></td>
+                                                        <td>ITEMS VERIFIED</td>
+                                                        <td>@(item.TotalVariancePercentage == null || item.TotalVariancePercentage == "" ? "0" : string.Format("{0:#,##0}%",  (item.TotalVariancePercentage).Replace(",", "")))</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Total Purchase Price
+                            </p>
+                            <p class="detailText">@(Model.GrandTotalPurchasePrice == null|| Model.GrandTotalPurchasePrice == "" ? "--" : string.Format("{0:#,##0}", decimal.Parse(Model.GrandTotalPurchasePrice, System.Globalization.NumberStyles.Float)))</p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Total Sale Price
+                            </p>
+                            <p class="detailText">@(Model.GrandTotalSalePrice == null || Model.GrandTotalSalePrice == "" ? "--" : string.Format("{0:#,##0}", decimal.Parse(Model.GrandTotalSalePrice,System.Globalization.NumberStyles.Float)))</p>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12" style="text-align: right;margin-top:10px">
+                        <a id="screenBtnID" href="" data-toggle="modal" data-target="#_InventoryDetail_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                        <a id="discrepentBtnID" href="" data-toggle="modal" data-target="#_InventoryDetail_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="tab_content" style="padding: 15px 20px">
+                <div class="row">
+                    <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Approved Modal -->
+<div class="modal fade" id="_InventoryDetail_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenID" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_InventoryDetail_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdID"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorID">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentID" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.InventoryAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnID').html("<i class='fa fa-check'></i>  Marked Screened");
+            //$('#screenBtnID').click(false);
+
+
+            $('#discrepentBtnID').html("Discrepent");
+            //$("#discrepentBtnID").attr("data-toggle", "modal");
+            //$("#discrepentBtnID").attr("data-target", "#_businessPlan_discrepent");
+            //$("#discrepentBtnID").attr("href", "");
+            //$('#screenBtnID').click(true);
+        }
+        else if (currentState == "Discrepent") {
+
+            $('#discrepentBtnID').html("<i class='fa fa-times'></i> Marked Discrepent");
+            //$('#discrepentBtnID').click(false);
+
+            $('#screenBtnID').html("Screen");
+            //$("#screenBtnID").attr("data-toggle", "modal");
+            //$("#screenBtnID").attr("data-target", "#_businessPlan_approved");
+            //$("#screenBtnID").attr("href", "");
+            //$('#screenBtnID').click(true);
+
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnID').toggleClass("d-none");
+            $('#discrepentBtnID').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenID').click(function () {
+        debugger;
+        var comment = $('#commentIdID').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'Inventory Details'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentID').click(function () {
+        debugger;
+        if (!$('#commentIdID').val()) {
+            $('#comment_errorID').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorID').css("display", "none");
+        }
+        var comment = $('#commentIdID').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'Inventory Details','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdID').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>
+
+
+

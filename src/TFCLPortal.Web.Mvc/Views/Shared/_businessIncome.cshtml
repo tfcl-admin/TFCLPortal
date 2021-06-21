@@ -1,0 +1,536 @@
+﻿@model TFCLPortal.BusinessIncomes.Dto.BusinessIncomeListDto
+@{int index = 1;}
+
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+
+            @if (Model.businessChildLists.Count > 0)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="accordion md-accordion" id="accordioncollateralLandBuildingLists" role="tablist" aria-multiselectable="true">
+
+                            @foreach (var item in Model.businessChildLists)
+                            {
+                                <div class="card">
+                                    <!-- Card header -->
+                                    <div class="card-header" role="tab" id="headingOneBI-@item.Id" style="width:100%">
+                                        <a data-toggle="collapse" data-parent="#accordioncollateralLandBuildingLists" href="#collapseOneBI-@item.Id" aria-expanded="true"
+                                           aria-controls="collapseOneBI-@item.Id">
+                                            <h5 class="mb-0">
+                                                @item.SchoolName <i class="fa fa-angle-down rotate-icon"></i>
+                                            </h5>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div id="collapseOneBI-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneBI-@item.Id"
+                                         data-parent="#accordioncollateralLandBuildingLists">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                @if (item.BusinessIncomeSchoolClasses != null)
+                                                {
+
+                                                    @if (item.BusinessIncomeSchoolClasses.Count > 0)
+                                                    {
+
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered table-centered" style="text-align:center">
+                                                                <thead>
+                                                                <th colspan="6">
+                                                                    Students
+                                                                </th>
+                                                                </thead>
+                                                                <thead>
+                                                                <th>
+                                                                    Class
+                                                                </th>
+                                                                <th>
+                                                                    Male
+                                                                </th>
+                                                                <th>
+                                                                    Female
+                                                                </th>
+                                                                <th>
+                                                                    Total
+                                                                </th>
+                                                                <th>
+                                                                    Avg Fee
+                                                                </th>
+                                                                <th>
+                                                                    Total Fee
+                                                                </th>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                    @foreach (var schoolClass in item.BusinessIncomeSchoolClasses)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@(schoolClass.ClassName == null || schoolClass.ClassName == "" ? "--" : schoolClass.ClassName)</td>
+                                                                            <td>@(schoolClass.MaleStudents == null || schoolClass.MaleStudents == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((schoolClass.MaleStudents).Replace(",", ""))))</td>
+                                                                            <td>@(schoolClass.FemaleStudents == null || schoolClass.FemaleStudents == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((schoolClass.FemaleStudents).Replace(",", ""))))</td>
+                                                                            <td>@(schoolClass.NoOfStudents == null || schoolClass.NoOfStudents == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((schoolClass.NoOfStudents).Replace(",", ""))))</td>
+                                                                            <td style="text-align:right">@(schoolClass.PerStudentFee == null || schoolClass.PerStudentFee == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((schoolClass.PerStudentFee).Replace(",", ""))))</td>
+                                                                            <td style="text-align:right">@(schoolClass.TotalFee == null || schoolClass.TotalFee == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((schoolClass.TotalFee).Replace(",", ""))))</td>
+                                                                        </tr>
+                                                                    }
+
+                                                                </tbody>
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        <td colspan="1" class="text-right">
+                                                                            Total
+                                                                        </td>
+                                                                        <td>@(item.TotalStudentsMale == null || item.TotalStudentsMale == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalStudentsMale).Replace(",", ""))))</td>
+                                                                        <td>@(item.TotalStudentsFemale == null || item.TotalStudentsFemale == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalStudentsFemale).Replace(",", ""))))</td>
+                                                                        <td>@(item.TotalStudentsTotal == null || item.TotalStudentsTotal == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalStudentsTotal).Replace(",", ""))))</td>
+                                                                        <td style="text-align:right">@*@(item.TotalAvgFee == null || item.TotalAvgFee == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.TotalAvgFee).Replace(",", ""))))*@</td>
+                                                                        <td style="text-align:right">@(item.totalFeeCollection == null || item.totalFeeCollection == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((item.totalFeeCollection).Replace(",", ""))))</td>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    }
+                                                }
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Total Fee Collection
+                                                    </p>
+                                                    <p class="detailText">@(item.totalFeeCollection == null || item.totalFeeCollection == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.totalFeeCollection).Replace(",",""))))</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Collection Efficiency
+                                                    </p>
+                                                    <p class="detailText">@(item.CollectionEfficiency == null || item.CollectionEfficiency == ""  ? "--" : item.CollectionEfficiency)</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Considered School Fee
+                                                    </p>
+                                                    <p class="detailText">@(item.ConsideredSchoolFee == null || item.ConsideredSchoolFee == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.ConsideredSchoolFee).Replace(",",""))))</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Gender Balance (%)
+                                                    </p>
+                                                    <p class="detailText">@(item.GenderBalance == null || item.GenderBalance == ""  ? "--" : string.Format("{0:#,##0}%", Int32.Parse((item.GenderBalance).Replace(",",""))))</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Actual Students
+                                                    </p>
+                                                    <p class="detailText">@(item.ActualStudents == null || item.ActualStudents == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.ActualStudents).Replace(",",""))))</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Students Considered
+                                                    </p>
+                                                    <p class="detailText">@(item.StudentsConsidered == null || item.StudentsConsidered == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.StudentsConsidered).Replace(",",""))))</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Difference
+                                                    </p>
+                                                    <p class="detailText">@(item.StudentsDifference == null || item.StudentsDifference == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.StudentsDifference).Replace(",",""))))</p>
+                                                </div>
+
+                                                <div class="col-md-8">
+                                                    <p class="detailHeading">
+                                                        Reason for Difference
+                                                    </p>
+                                                    <p class="detailText">@(item.ReasonForDifference == null || item.ReasonForDifference == ""  ? "--" : item.ReasonForDifference)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Student / Teacher Ratio
+                                                    </p>
+                                                    <p class="detailText">@(item.StudentTeacherRatio == null || item.StudentTeacherRatio == ""  ? "--" : string.Format("{0:#,##0.##}", Decimal.Parse((item.StudentTeacherRatio).Replace(",",""))))</p>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">
+                                                        Student / Classroom Ratio
+                                                    </p>
+                                                    <p class="detailText">@(item.StudentClassroomRatio == null || item.StudentClassroomRatio == ""  ? "--" : string.Format("{0:#,##0.##}", Decimal.Parse((item.StudentClassroomRatio).Replace(",",""))))</p>
+                                                </div>
+                                                @if (item.BusinessIncomeSchoolAcademies != null)
+                                                {
+                                                    @if (item.BusinessIncomeSchoolAcademies.Count > 0)
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="accordion md-accordion" id="accordioncollateralLandBuildingLists" role="tablist" aria-multiselectable="true">
+
+                                                                @foreach (var Academy in item.BusinessIncomeSchoolAcademies)
+                                                                {
+                                                                    <div class="card">
+                                                                        <!-- Card header -->
+                                                                        <div class="card-header" role="tab" id="headingOne-@Academy.Id" style="width:100%">
+                                                                            <a data-toggle="collapse" data-parent="#accordionAcademyLists" href="#collapseOne-@Academy.Id" aria-expanded="true"
+                                                                               aria-controls="collapseOne-@Academy.Id">
+                                                                                <h5 class="mb-0">
+                                                                                    @Academy.AcademyName <i class="fa fa-angle-down rotate-icon"></i>
+                                                                                </h5>
+                                                                            </a>
+                                                                        </div>
+
+                                                                        <!-- Card body -->
+                                                                        <div id="collapseOne-@Academy.Id" class="collapse" role="tabpanel" aria-labelledby="headingOne-@Academy.Id"
+                                                                             data-parent="#accordionAcademyLists">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    @if (Academy.BusinessIncomeSchoolAcademyClasses != null)
+                                                                                    {
+
+                                                                                        @if (Academy.BusinessIncomeSchoolAcademyClasses.Count > 0)
+                                                                                        {
+                                                                                            <div class="col-md-12">
+                                                                                                <table class="table table-bordered" style="text-align:center">
+                                                                                                    <thead>
+                                                                                                    <th colspan="6">
+                                                                                                        Students
+                                                                                                    </th>
+                                                                                                    </thead>
+                                                                                                    <thead>
+                                                                                                    <th>
+                                                                                                        Class
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                        Total
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                        Avg Fee
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                        Total Fee
+                                                                                                    </th>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+
+                                                                                                        @foreach (var academyClass in Academy.BusinessIncomeSchoolAcademyClasses)
+                                                                                                        {
+                                                                                                            <tr>
+                                                                                                                <td>@(academyClass.ClassName == null || academyClass.ClassName == "" ? "--" : academyClass.ClassName)</td>
+                                                                                                                <td>@(academyClass.NoOfStudents == null || academyClass.NoOfStudents == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((academyClass.NoOfStudents).Replace(",", ""))))</td>
+                                                                                                                <td style="text-align:right">@(academyClass.PerStudentFee == null || academyClass.PerStudentFee == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((academyClass.PerStudentFee).Replace(",", ""))))</td>
+                                                                                                                <td style="text-align:right">@(academyClass.TotalFee == null || academyClass.TotalFee == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((academyClass.TotalFee).Replace(",", ""))))</td>
+                                                                                                            </tr>
+                                                                                                        }
+
+                                                                                                    </tbody>
+                                                                                                    <tfoot>
+                                                                                                        <tr>
+                                                                                                            <td colspan="1" class="text-right">
+                                                                                                                Total
+                                                                                                            </td>
+                                                                                                            <td>@(Academy.classesTotalStudents == null || Academy.classesTotalStudents == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((Academy.classesTotalStudents).Replace(",", ""))))</td>
+                                                                                                            <td style="text-align:right">@*@(Academy.classesTotalAvgFee == null || Academy.classesTotalAvgFee == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((Academy.classesTotalAvgFee).Replace(",", ""))))*@</td>
+                                                                                                            <td style="text-align:right">@(Academy.TotalFeeCalculation == null || Academy.TotalFeeCalculation == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((Academy.TotalFeeCalculation).Replace(",", ""))))</td>
+                                                                                                        </tr>
+
+                                                                                                    </tfoot>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        }
+
+
+                                                                                    }
+                                                                                    <div class="col-md-4">
+                                                                                        <p class="detailHeading">
+                                                                                            Total Fee Collection
+                                                                                        </p>
+                                                                                        <p class="detailText">@(Academy.TotalFeeCalculation == null || Academy.TotalFeeCalculation == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Academy.TotalFeeCalculation).Replace(",",""))))</p>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <p class="detailHeading">
+                                                                                            Collection Efficiency
+                                                                                        </p>
+                                                                                        <p class="detailText">@(Academy.CollectionEfficiency == null || Academy.CollectionEfficiency == ""  ? "--" : Academy.CollectionEfficiency)</p>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-4">
+                                                                                        <p class="detailHeading">
+                                                                                            Considered School Fee
+                                                                                        </p>
+                                                                                        <p class="detailText">@(Academy.ConsideredAcademyFee == null || Academy.ConsideredAcademyFee == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Academy.ConsideredAcademyFee).Replace(",",""))))</p>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-4">
+                                                                                        <p class="detailHeading">
+                                                                                            Actual Students
+                                                                                        </p>
+                                                                                        <p class="detailText">@(Academy.ActualStudents == null || Academy.ActualStudents == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Academy.ActualStudents).Replace(",",""))))</p>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-4">
+                                                                                        <p class="detailHeading">
+                                                                                            Students Considered
+                                                                                        </p>
+                                                                                        <p class="detailText">@(Academy.ConsideredStudents == null || Academy.ConsideredStudents == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Academy.ConsideredStudents).Replace(",",""))))</p>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-4">
+                                                                                        <p class="detailHeading">
+                                                                                            Difference
+                                                                                        </p>
+                                                                                        <p class="detailText">@(Academy.StudentDifference == null || Academy.StudentDifference == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Academy.StudentDifference).Replace(",",""))))</p>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-8">
+                                                                                        <p class="detailHeading">
+                                                                                            Reason for Difference
+                                                                                        </p>
+                                                                                        <p class="detailText">@(Academy.ReasonForDifference == null || Academy.ReasonForDifference == ""  ? "--" : Academy.ReasonForDifference)</p>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                }
+
+
+
+                                                            </div>
+                                                        </div>
+
+                                                    }
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-3">
+                    <p class="detailHeading">
+                        Grand Total School Students  <i class="fa fa-info-circle" style="float: right" data-toggle="tooltip" title="Allowed Minimum Students : @Model.AllowedMinStudents "></i>
+                    </p>
+                    @if (Model.nGrandTotalSchoolStudents != null && Model.nGrandTotalSchoolStudents != "" && Model.nGrandTotalSchoolStudents != "--")
+                    {
+                        <p class="detailText @(Convert.ToInt32(Model.nGrandTotalSchoolStudents.Replace(",","")) >= Convert.ToInt32(Model.AllowedMinStudents) ? " " : "text-danger" ) "><b style="font-weight:600">@(Model.nGrandTotalSchoolStudents == null || Model.nGrandTotalSchoolStudents == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.nGrandTotalSchoolStudents).Replace(",",""))))</b></p>
+                    }
+                    else
+                    {
+                        <p class="detailText">--</p>
+                    }
+                    @*<p class="detailText">@(Model.nGrandTotalSchoolStudents == null || Model.nGrandTotalSchoolStudents == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.nGrandTotalSchoolStudents).Replace(",",""))))</p>*@
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">
+                        Total School Fee Income
+                    </p>
+                    <p class="detailText">@(Model.nGrandTotalSchoolFeeIncome == null || Model.nGrandTotalSchoolFeeIncome == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.nGrandTotalSchoolFeeIncome).Replace(",",""))))</p>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="detailHeading">
+                        Grand Total Academy Students
+                    </p>
+                    <p class="detailText">@(Model.nGrandTotalAcademyStudents == null || Model.nGrandTotalAcademyStudents == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.nGrandTotalAcademyStudents).Replace(",",""))))</p>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="detailHeading">
+                        Total Academy Fee Income
+                    </p>
+                    <p class="detailText">@(Model.nGrandTotalAcademyFeeIncome == null || Model.nGrandTotalAcademyFeeIncome == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.nGrandTotalAcademyFeeIncome).Replace(",",""))))</p>
+                </div>
+            </div>
+
+            <!--Irfan-->
+            <div class="col-md-12" style="text-align: right;">
+                <a id="screenBtnBI" href="" data-toggle="modal" data-target="#_BusinessIncome_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                <a id="discrepentBtnBI" href="" data-toggle="modal" data-target="#_BusinessIncome_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+            </div>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+<div class="modal fade" id="_BusinessIncome_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenBI" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_BusinessIncome_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdBI"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorBI">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentBI" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+ 
+ 
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.BusinessIncomeAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnBI').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnBI').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnBI').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnBI').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnBI').toggleClass("d-none");
+            $('#discrepentBtnBI').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenBI').click(function () {
+        debugger;
+        var comment = $('#commentIdBI').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'BUSINESS INCOME'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentBI').click(function () {
+        debugger;
+        if (!$('#commentIdBI').val()) {
+            $('#comment_errorBI').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorBI').css("display", "none");
+        }
+        var comment = $('#commentIdBI').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'BUSINESS INCOME','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdBI').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

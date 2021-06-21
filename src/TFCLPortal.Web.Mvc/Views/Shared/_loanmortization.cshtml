@@ -1,0 +1,353 @@
+﻿@model TFCLPortal.LoanAmortizations.Dto.CreateLoanAmortizationDto
+@using TFCLPortal.Authorization
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+
+
+<div class=''>
+    <div id=''>
+        <form asp-action="" asp-controller="" method="">
+            <div class="row gap-20 masonry pos-r">
+                <div class="masonry-item col-md-12">
+                    <div class="bgc-white bd">
+                        <div class="card p-10">
+                            <h4 style="margin-left: 11px; width: 70%;">Create Mortization</h4>
+                        </div>
+                        <div class="mT-30">
+                            <div class="row" style="margin-left: 11px;">
+                                @*<div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label asp-for="Product" class="control-label"></label>
+                                        @Html.DropDownList("ViewBag.Products")
+                                        <label class="form-label">@L("Name")</label>
+                                    </div>
+                                </div>*@
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="page-form" style=" width: 70%;">
+                                        <label>LoanAmount</label>
+                                        <input asp-for="LoanAmount" class="form-control" />
+                                        <span asp-validation-for="LoanAmount" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group" style=" width: 70%;">
+                                        <label asp-for="Tenure" class="control-label"></label>
+                                        <input asp-for="Tenure" class="form-control" />
+                                        <span asp-validation-for="Tenure" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group" style=" width: 70%;">
+                                        <label>Loan Disbursement Date  </label>
+                                        <input asp-for="LoanDisbursementDate" placeholder="mm/dd/yyyy" class="form-control" />
+                                        <span asp-validation-for="LoanDisbursementDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group" style=" width: 70%;">
+                                        <label> Loan Start Date </label>
+                                        <input asp-for="LoanStartDate" placeholder="mm/dd/yyyy" class="form-control" />
+                                        <span asp-validation-for="LoanStartDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group" style=" width: 70%;">
+                                        <label asp-for="APR" class="control-label"></label>
+                                        <input asp-for="APR" class="form-control" />
+                                        <span asp-validation-for="APR" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group" style=" width: 70%;">
+                                        <label> Interest Amount</label>
+                                        <input asp-for="IntrestAmount" class="form-control" />
+                                        <span asp-validation-for="IntrestAmount" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group" style=" width: 70%;">
+                                        <label asp-for="IRR" class="control-label"></label>
+                                        <input asp-for="IRR" class="form-control" />
+                                        <input asp-for="ApplicationId" style="display:none" class="form-control" />
+                                        <span asp-validation-for="IRR" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </form>
+        <div class="row" style="float:right; margin-right:1px">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @if (Model.ScreenCode == "Disbursed")
+                {
+                    @if (IsGranted(PermissionNames.Pages_BA))
+                    {
+                        <button type="button" id="btnAmortization" class="btn-success bg1" style="padding: 7px 10px !important;">Save Amortization</button>
+                        @*<button type="button" id="btnDisbursement" data-toggle="modal" data-target="#_BusinessIncome_approved" class="btn-warning" style="padding: 7px 10px !important;margin-top: 6px;">Loan Disbursement</button>*@
+                        <button type="button" id="btnAmortReprt" class="btn-info" style="padding: 7px 10px !important;margin-top: 6px;">Download Amortization</button>
+                    }
+                    <button type="button" id="Loanbtn" class="btn-info bg1" style="padding: 7px 10px !important;">View</button>
+                }
+                else
+                {
+                    @if (IsGranted(PermissionNames.Pages_BA))
+                    {
+                        <button type="button" id="btnAmortization" class="btn-success bg1" style="padding: 7px 10px !important;">Save Amortization</button>
+                        <button type="button" id="btnDisbursement" data-toggle="modal" data-target="#_BusinessIncome_approved" class="btn-warning" style="padding: 7px 10px !important;margin-top: 6px;">Loan Disbursement</button>
+                        <button type="button" id="btnAmortReprt" class="btn-info" style="padding: 7px 10px !important;margin-top: 6px;">Download Amortization</button>
+
+                    }
+                    <button type="button" id="Loanbtn" class="btn-primary bg1" style="padding: 7px 10px !important;">Create</button>
+                }
+
+
+
+
+                <div class="row" id="_partialView">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="_BusinessIncome_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to Disburse this application loan?
+            </div>
+            <div class="modal-footer">
+                <button id="btnContinueDelete" type="button" class="btn btn-success bg1 ef1">Approved</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+
+            $('#btnContinueDelete').click(function () {
+                debugger
+                var LoanAmount = $('#LoanAmount').val();
+                var Tenure = $('#Tenure').val();
+                var ApplicationId = $('#ApplicationId').val();
+                var LoanDisbursementDate = $('#LoanDisbursementDate').val();
+                  var LoanStartDate = $('#LoanStartDate').val();
+                var APR = $('#APR').val();
+                if  (LoanAmount == "") {
+                    alert("Loan Amount IS REQUIRED..!");
+                    return false;
+                }
+                else if (Tenure == "") {
+                    alert("Tenure IS REQUIRED..!");
+                    return false;
+                }
+                else if (LoanDisbursementDate == "") {
+                    alert("Loan Disbursemen tDate IS REQUIRED..!");
+                    return false;
+                }
+                else if (LoanStartDate == "") {
+                    alert("Loan Start Date IS REQUIRED..!");
+                    return false;
+                }
+                else if (APR == "") {
+                    alert("APR IS REQUIRED..!");
+                    return false;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/ChangeDisbursmentStatus")',
+                    data: {"ApplicationId":ApplicationId} ,
+                    success: function (data) {
+                        debugger
+
+                        if (data!=null) {
+                            abp.notify.success(data.result, "success");
+                            window.setTimeout(window.location.href = '@Url.Action("BADocumentsList", "Dashboard")', 7000);
+                             $('#_BusinessIncome_approved').modal('hide');
+                            $('.modal-backdrop').remove();
+                            $('body').removeClass("modal-open");
+                        }
+
+                    },
+                    error: function (data) {
+                        debugger
+
+                        if (data==null) {
+                            alert("Some error occure contact with admin..!");
+                        }
+                    }
+                });
+            });
+
+
+            $('#Loanbtn').click(function () {
+                debugger
+                var LoanAmount = $('#LoanAmount').val();
+                var Tenure = $('#Tenure').val();
+                var ApplicationId = $('#ApplicationId').val();
+                var LoanDisbursementDate = $('#LoanDisbursementDate').val();
+                  var LoanStartDate = $('#LoanStartDate').val();
+                var APR = $('#APR').val();
+                if  (LoanAmount == "") {
+                    alert("Loan Amount IS REQUIRED..!");
+                    return false;
+                }
+                else if (Tenure == "") {
+                    alert("Tenure IS REQUIRED..!");
+                    return false;
+                }
+                else if (LoanDisbursementDate == "") {
+                    alert("Loan Disbursemen tDate IS REQUIRED..!");
+                    return false;
+                }
+                else if (LoanStartDate == "") {
+                    alert("Loan Start Date IS REQUIRED..!");
+                    return false;
+                }
+                else if (APR == "") {
+                    alert("APR IS REQUIRED..!");
+                    return false;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/CreateMortization")',
+                    data: { 'LoanAmount': LoanAmount, 'APR': APR, 'Tenure': Tenure,"ApplicationId":ApplicationId,"LoanDisbursementDate":LoanDisbursementDate,"LoanStartDate":LoanStartDate} ,
+                    success: function (data) {
+                        debugger
+
+                        if (data!=null) {
+                            $('#_partialView').html("");
+                            $('#_partialView').html(data);
+                        }
+
+                    },
+                    error: function (data) {
+                        debugger
+
+                        if (data==null) {
+                            alert("Some error occure contact with admin..!");
+                        }
+                    }
+                });
+            });
+
+
+
+         $('#btnAmortization').click(function () {
+                debugger
+                var LoanAmount = $('#LoanAmount').val();
+                var Tenure = $('#Tenure').val();
+                var ApplicationId = $('#ApplicationId').val();
+                var LoanDisbursementDate = $('#LoanDisbursementDate').val();
+                var LoanStartDate = $('#LoanStartDate').val();
+                var APR = $('#APR').val();
+                if  (LoanAmount == "") {
+                    alert("Loan Amount IS REQUIRED..!");
+                    return false;
+                }
+                else if (Tenure == "") {
+                    alert("Tenure IS REQUIRED..!");
+                    return false;
+                }
+                else if (LoanDisbursementDate == "") {
+                    alert("Loan Disbursemen tDate IS REQUIRED..!");
+                    return false;
+                }
+                else if (LoanStartDate == "") {
+                    alert("Loan Start Date IS REQUIRED..!");
+                    return false;
+                }
+                else if (APR == "") {
+                    alert("APR IS REQUIRED..!");
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/SaveMortization")',
+                    data: { 'LoanAmount': LoanAmount, 'APR': APR, 'Tenure': Tenure,'ApplicationId':ApplicationId,"LoanDisbursementDate":LoanDisbursementDate,"LoanStartDate":LoanStartDate} ,
+                    success: function (data) {
+                        debugger
+
+                        if (data.result != null) {
+                            if (data.result == "You have already save amortization to server") {
+                                abp.notify.error(data.result, "Already Saved");
+                            }
+                            else if (data.result == "Amortization Save successfully to Server") {
+                                abp.notify.success(data.result, "Saved");
+                            }
+                            
+                         
+                        }
+
+                    },
+                    error: function (data) {
+                        debugger
+
+                        if (data==null) {
+                            alert("Some error occure contact with admin..!");
+                        }
+                    }
+                });
+         });
+
+
+     $('#btnAmortReprt').click(function () {
+         debugger
+
+         var ApplicationId = $('#ApplicationId').val();
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/IsAmortizationRecordExist")',
+                    data: { 'ApplicationId':ApplicationId} ,
+                    success: function (data) {
+                        debugger
+
+                        if (data != null) {
+                            var AmortizationId=data.result;
+                           // abp.notify.success(data.result, "success");
+                         
+                            window.location.href = "http://173.212.203.237:8882/home/AmortizationReports?applicationId="+ApplicationId+"&AmortizationId="+AmortizationId;
+                        
+                        }
+
+                    },
+                    error: function (data) {
+                        debugger
+
+                        if (data==null) {
+                            alert("Some error occure contact with admin..!");
+                        }
+                    }
+                });
+            });
+
+</script>
+
+
+
+
+
+

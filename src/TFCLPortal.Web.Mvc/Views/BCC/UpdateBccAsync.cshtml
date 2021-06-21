@@ -1,0 +1,76 @@
+﻿@model TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.BranchCreditCommitteeListDto
+
+@{
+    ViewData["Title"] = "UpdateBccAsync";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100'>
+    <div id='mainContent'>
+        <form asp-action="UpdateBccAsync">
+            <div class="row gap-20 masonry pos-r">
+                <div class="masonry-sizer col-md-6"></div>
+                <div class="masonry-item col-md-12">
+                    <div class="bgc-white p-20 bd">
+                        <div class="card p-20">
+                            <h4 class="">Update BCC</h4>
+                            <div style="text-align: right; float: right;width: 96%;position:absolute;">
+                                <a href="~/BCC/BccList" class="btn btn-primary bg1 eft-1" title="Back">Back<span></span></a>
+                            </div>
+                        </div>
+
+                        <div class="mT-30">
+                            <div class="row">
+                                <div class="masonry-sizer col-md-2"></div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label> First SDE</label>
+
+                                        @Html.DropDownListFor(m => m.SDE1_UserId, ViewBag.SDEUserList as SelectList, "Select 1st SDE", new { @class = "form-control" })
+
+                                        <span asp-validation-for="SDE1_UserId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>2nd SDE</label>
+
+                                        @Html.DropDownListFor(m => m.SDE2_UserId, ViewBag.SDEUserList as SelectList, "Select 2nd SDE", new { @class = "form-control" })
+
+                                        <span asp-validation-for="SDE2_UserId" class="text-danger"></span>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label asp-for="Status" class="control-label"></label>
+                                        <input asp-for="Status" class="form-control" />
+                                        <span asp-validation-for="Status" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp="Application #" class="control-label"></label>
+
+                                        @Html.DropDownListFor(m => m.ApplicationId, ViewBag.Application as SelectList, "Select Application", new { @class = "form-control" })
+
+                                        <span asp-validation-for="ApplicationId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="IsActive" class="control-label"></label>
+                                        <input asp-for="IsActive" class="" style="width:200px;height:13px;margin-top:30px" />
+                                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input type="submit" value="Update" class="btn btn-success bg1 eft-1" />
+
+                                    </div>
+                                </div>
+
+                                <div class="masonry-sizer col-md-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</main>

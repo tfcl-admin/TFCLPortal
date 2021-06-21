@@ -1,0 +1,186 @@
+﻿@model TFCLPortal.WriteOffs.Dto.WriteOffListDto
+
+@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Write Off Authorization
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Loan Operations > Write Off Authorization
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <form asp-action="CreateWriteOff" method="post">
+                <div class="row">
+                    <input asp-for="Id" type="hidden" id="Id" value="@Model.Id" />
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Client ID</label>
+                            <input type="text" value="@Model.ClientID" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Applicant Name</label>
+                            <input type="text" value="@Model.ClientName" readonly="readonly" class="form-control text-uppercase" />
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>O/S Principal Amount</label>
+                            <input asp-for="OsPrincipalAmount" value="@(string.Format("{0:#,##0}",Model.OsPrincipalAmount))" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>O/S Markup Amount</label>
+                            <input asp-for="OsMarkupAmount" value="@(string.Format("{0:#,##0}",Model.OsMarkupAmount))" readonly="readonly" class="form-control" />
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Total Amount Payable (Rs)</label>
+                            <input asp-for="TotalAmountPayable" readonly="readonly" value="@(string.Format("{0:#,##0}", Model.TotalAmountPayable))" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Recovery Status</label>
+                            <input asp-for="RecoveryStatus" value="@Model.RecoveryStatus" class="form-control"  readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Rebate (%)</label>
+                            <input asp-for="RebatePercentage" value="@Model.RebatePercentage" min="0" max="100" maxlength="3" readonly="readonly"  class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Total Amount Payable After Rebate (Rs)</label>
+                            <input asp-for="TotalAmountPayableRebate" value="@(string.Format("{0:#,##0}", Model.TotalAmountPayableRebate))" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount Deposited (Rs)</label>
+                            <input asp-for="AmountDeposited" value="@(string.Format("{0:#,##0}", Model.AmountDeposited))" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 text-right">
+                        <input id="RejectionReason" type="text" style="width:25%;" class="form-control d-inline" placeholder="Reason For Rejection" />
+                        <a class="btn btn-outline-danger d-inline" style="color: red !important;padding:8px" id="rejectBtn"><i class="fa fa-times"></i> Reject Entry</a>
+                        <a class="btn btn-outline-success d-inline" style="color: green !important;padding:8px" id="uploadBtn"><i class="fa fa-upload"></i> Authorize Entry</a>
+                    </div>
+                    @*<div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
+        </div>*@
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+<script src="~/vendor/numwords/index.js" crossorigin="anonymous"></script>
+
+<script>
+
+    $(function () {
+
+           $('#rejectBtn').click(function () {
+
+            var RejectionReason = $('#RejectionReason').val();
+               var Id = $('#Id').val();
+
+            if (RejectionReason == "") {
+                abp.notify.error("Error", "Please Enter Rejection Reason");
+            }
+            else {
+                var formData = new FormData();
+                formData.append('Id', Id);
+                formData.append('Decision', 'Reject');
+                formData.append('Reason', RejectionReason);
+
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    processData: false,
+                    contentType: false,
+                    url: '@Url.Content("~/Accountant/AuthorizeWriteOff")',
+                    data: formData,
+                    success: function (data) {
+
+                        var returnData = data.result;
+                        abp.notify.success(returnData, "Success");
+                        window.location = '/Accountant/WriteOffAuthorizationList';
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+
+            }
+
+
+           });
+
+        $('#uploadBtn').click(function () {
+
+            var Id = $('#Id').val();
+
+           
+                var formData = new FormData();
+                formData.append('Id', Id);
+                formData.append('Decision', 'Authorize');
+                formData.append('Reason', '');
+
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    processData: false,
+                    contentType: false,
+                    url: '@Url.Content("~/Accountant/AuthorizeWriteOff")',
+                    data: formData,
+                    success: function (data) {
+
+                        var returnData = data.result;
+                        abp.notify.success(returnData, "Success");
+                        window.location = '/Accountant/WriteOffAuthorizationList';
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+
+        });
+
+    });
+
+</script>

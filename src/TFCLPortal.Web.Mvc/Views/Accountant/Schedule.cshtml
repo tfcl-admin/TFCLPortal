@@ -1,0 +1,503 @@
+﻿@model TFCLPortal.LoanSchedules.Dto.GetFromFormDto
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Create Schedule
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Create Schedule
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Accountant/Index" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Listing </a>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+
+        <div class="card mB-20">
+            <div class="card-header text-white">Auto Parameters</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <p class="detailHeading">
+                            Client Id
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.Decision.ClientId
+                        </p>
+                    </div>
+                    <div class="col-md-5">
+                        <p class="detailHeading">
+                            APPLICANT / RESPONDENT NAME
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.Decision.ApplicantName
+                        </p>
+                    </div>
+                    <div class="col-md-5">
+                        <p class="detailHeading">
+                            Client / School / Business Name
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.Decision.SchoolName
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="detailHeading">
+                            CNIC Number
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.Decision.CNIC
+                        </p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <p class="detailHeading">
+                            Product Name
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.Application.ProductTypeName
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="detailHeading">
+                            Payment Frequency
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.LoanRequisitionDetails.PaymentName
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="detailHeading">
+                            Loan Amount
+                        </p>
+                        <p class="detailText">@(ViewBag.LoanRequisitionDetails.LoanAmountRecommended == "" || ViewBag.LoanRequisitionDetails.LoanAmountRecommended == null ? "0" : Convert.ToDecimal(ViewBag.LoanRequisitionDetails.LoanAmountRecommended).ToString("#,###")) </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="detailHeading">
+                            Tenure (Months)
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.LoanRequisitionDetails.LoanTenureRequestedName
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="detailHeading">
+                            Mark-up Rate
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.LoanEligibility.Mark_Up %
+                        </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            TFCL Branch Name
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.Branch.BranchName
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Branch Manager Name
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.BranchManager
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            SDE Name
+                        </p>
+                        <p class="detailText">
+                            @ViewBag.SdeName
+                        </p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <p class="detailHeading">
+                            A/C Title
+                        </p>
+                        <p class="detailText">
+                            Taleem Finance Company @*@ViewBag.BankAccount.AccountTitle*@
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="detailHeading">
+                            Repayment A/C No
+                        </p>
+                        <p class="detailText">
+                            1087643581000566 @*@ViewBag.BankAccount.AccountNumber*@
+                        </p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <p class="detailHeading">
+                            Bank Name
+                        </p>
+                        <p class="detailText">
+                            MCB @* @ViewBag.BankAccount.BankFullName*@
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="detailHeading">
+                            Branch Name
+                        </p>
+                        <p class="detailText">
+                            Falcon Complex Br @*  @ViewBag.BankAccount.BranchName*@
+                        </p>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Schedule No.
+                        </p>
+                        <p class="detailText">
+                            -- @*@ViewBag.Decision.CNIC*@
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Revision No.
+                        </p>
+                        <p class="detailText">
+                            -- @*@ViewBag.Decision.CNIC*@
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Revision Date
+                        </p>
+                        <p class="detailText">
+                            -- @*@ViewBag.Decision.CNIC*@
+                        </p>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                        <p class="detailHeading" style="border-bottom:1px solid; margin-bottom:30px">BCC Decision</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            All Collaterals Amount
+                        </p>
+
+                        <p class="detailText">@(ViewBag.Decision.CollateralAmount == "" || ViewBag.Decision.CollateralAmount == null ? "--" : ViewBag.Decision.CollateralAmount) </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            LTV %
+                        </p>
+
+                        <p class="detailText">@(ViewBag.Decision.LTV == "" || ViewBag.Decision.LTV == null ? "--" : ViewBag.Decision.LTV) </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Collateral Evaluation Date
+                        </p>
+
+                        <p class="detailText">@(ViewBag.Decision.CollateralEvaluation == "" || ViewBag.Decision.CollateralEvaluation == null ? "--" : ViewBag.Decision.CollateralEvaluation) </p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Deferment Period
+                        </p>
+
+                        <p class="detailText">@(ViewBag.Decision.DefermentPeriod == "" || ViewBag.Decision.DefermentPeriod == null ? "--" : ViewBag.Decision.DefermentPeriod) </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Tranches Dates
+                        </p>
+
+                        <p class="detailText">@(ViewBag.Decision.TranchesDates == "" || ViewBag.Decision.TranchesDates == null ? "--" : ViewBag.Decision.TranchesDates) </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Tranches Amount
+                        </p>
+
+                        <p class="detailText">@(ViewBag.Decision.TranchesAmount == "" || ViewBag.Decision.TranchesAmount == null ? "--" : ViewBag.Decision.TranchesAmount) </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Cheque to be Issued in favour of
+                        </p>
+
+                        <p class="detailText">@(ViewBag.Decision.CheckName == "" || ViewBag.Decision.CheckName == null ? "--" : ViewBag.Decision.CheckName) </p>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="detailHeading">
+                            Comments
+                        </p>
+
+                        <p class="detailText">@(ViewBag.Decision.Comments == "" || ViewBag.Decision.Comments == null ? "--" : ViewBag.Decision.Comments) </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header text-white">Selection Parameters</div>
+            <div class="card-body">
+                <form asp-action="ScheduleResult" method="post">
+                    <input type="hidden" asp-for="ApplicationId" value="@ViewBag.ApplicationId" />
+                    <input type="hidden" asp-for="ScheduleNo" value="" />
+                    <input type="hidden" asp-for="RevisionNo" value="" />
+                    <input type="hidden" asp-for="BranchManagerId" value="@ViewBag.BranchManagerId" />
+                    <input type="hidden" asp-for="SdeId" value="@ViewBag.SdeId" />
+                    <input type="hidden" asp-for="BranchName" value="@ViewBag.Branch.BranchName" />
+                    <input type="hidden" asp-for="Markup" value="@ViewBag.LoanEligibility.Mark_Up" />
+                    <input type="hidden" asp-for="IRR_Full" value="@ViewBag.IRR_full" />
+                    <input type="hidden" asp-for="LoanAmount" value="@ViewBag.LoanRequisitionDetails.LoanAmountRecommended" />
+                    <input type="hidden" asp-for="Tenure" value="@ViewBag.LoanRequisitionDetails.LoanTenureRequestedName" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Schedule Type
+                            </p>
+                            <select class="form-control" asp-for="ScheduleType">
+                                <option value="">Select Schedule Type</option>
+                                <option value="Standard">Standard</option>
+                                <option value="Tranches">Tranches</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Disbursement Date
+                            </p>
+                            <input asp-for="DisbursmentDate" type="date" class="form-control" />
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Grace Days
+                            </p>
+                            <input asp-for="GraceDays" type="number" min="0" max="20" maxlength="2" class="form-control" value="0" onKeyUp="if(this.value>20){this.value='20';}else if(this.value<0){this.value='0';}" />
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                IRR %
+                            </p>
+                            <input asp-for="IRR" type="text" class="form-control disabled" readonly="readonly" value="@ViewBag.IRR" />
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Installment Amount
+                            </p>
+                            <input asp-for="InstallmentAmount" class="form-control disabled" readonly="readonly" value="@(ViewBag.InstallmentAmount == null ? "0" : Convert.ToDecimal(ViewBag.InstallmentAmount).ToString("#,###.##"))" />
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Loan Start Date
+                            </p>
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input asp-for="LoanStartDate" type="date" class="form-control" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Last Installment Date
+                            </p>
+                            <input asp-for="LastInstallmentDate" type="date" class="form-control" value="" readonly="readonly" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Yearly Mark-up
+                            </p>
+                            <input asp-for="YearlyMarkup" class="form-control disabled" readonly="readonly" value="@(ViewBag.YearlyMarkup == null ? "0" : Convert.ToDecimal(ViewBag.YearlyMarkup).ToString("#,###.##"))" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Per Day Mark-up
+                            </p>
+                            <input asp-for="PerDayMarkup" class="form-control disabled" readonly="readonly" value="@(ViewBag.DailyMarkup == null ? "0" : Convert.ToDecimal(ViewBag.DailyMarkup).ToString("#,###.##"))" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <p class="detailHeading">Deferment</p>
+                            <select asp-for="isDeferrment" class="form-control">
+                                <option value="false" selected>No</option>
+                                <option value="true">Yes</option>
+                            </select>
+                        </div>
+                        <wdiv class="col-md-8">
+                        </wdiv>
+                        <div class="col-md-4">
+                            <p class="detailHeading">Deferment Start Date</p>
+                            <input asp-for="DefermentStartDate" type="date" class="form-control"  readonly="readonly" />
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">Deferred Months</p>
+                            <input asp-for="DefermentMonths" type="number" max="10" min="0" value="0" class="form-control"  readonly="readonly" />
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">Deferment End Date</p>
+                            <input asp-for="DefermentEndDate" type="date" readonly="readonly" class="form-control" />
+                        </div>
+
+
+                        <div class="col-md-12">
+
+                            <div class="tranchInner d-none row">
+                                <div class="col-md-4">
+                                    <p class="detailHeading">Tranch ID</p>
+                                    <input asp-for="listForTranches[0].tranchId" value="1" class="form-control" readonly="readonly" />
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="detailHeading">Date</p>
+                                    <input asp-for="listForTranches[0].StartDate" type="date" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="detailHeading">Amount</p>
+                                    <input asp-for="listForTranches[0].Amount" type="number" class="form-control" />
+                                </div>
+                            </div>
+                            <a id="addRow" class="btn btn-sm btn-add btn-outline-success bg1 eft-1 d-none" style="margin-top:10px"><i class="fa fa-plus-circle"></i> Add Tranche</a>
+                        </div>
+
+                        <div class="col-md-12 text-right" style="margin-top:30px">
+                            <input type="submit" value="Create Schedule" class="btn btn-sm btn-outline-success bg1 eft-1" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+
+<script>
+
+    $('#isDeferrment').on('change', function () {
+        if ($('#isDeferrment').val() == "false") {
+            $('#DefermentStartDate').val('');
+            $('#DefermentMonths').val('0');
+            $('#DefermentEndDate').val('');
+            $("#DefermentStartDate").prop("readonly", true);
+            $("#DefermentMonths").prop("readonly", true);
+        }
+        else if ($('#isDeferrment').val() == "true") {
+            $('#DefermentStartDate').val('');
+            $('#DefermentMonths').val('0');
+            $('#DefermentEndDate').val('');
+            $("#DefermentStartDate").prop("readonly", false);
+            $("#DefermentMonths").prop("readonly", false);
+
+            var date = $('#LoanStartDate').val();
+
+
+            $('#DefermentStartDate').val(moment(date).add(1, 'M').format('YYYY-MM-DD'));
+        }
+    });
+
+    $('#DisbursmentDate').on('input',function () {
+        var date = $(this).val();
+        var gDays = Number($('#GraceDays').val());
+        var tenure = Number($('#Tenure').val());
+        var d = moment(date).add(gDays, 'd');
+        var Months = Number($('#DefermentMonths').val()) - 1;
+
+        $('#LoanStartDate').val(moment(d).format('YYYY-MM-DD'));
+
+        var ld = moment(d).add((tenure + Months+1), 'M');
+        $('#LastInstallmentDate').val(moment(ld).format('YYYY-MM-DD'));
+    });
+
+    $('#DefermentStartDate').on('input',function () {
+        var date = $('#DefermentStartDate').val();
+        var Months = Number($('#DefermentMonths').val()) - 1;
+        var d = moment(date).add(Months, 'M');
+        var tenure = Number($('#Tenure').val());
+
+        $('#DefermentEndDate').val(moment(d).format('YYYY-MM-DD'));
+        var ld = moment($('#LoanStartDate').val()).add(Months+1, 'M').add(tenure, 'M');
+
+        $('#LastInstallmentDate').val(moment(ld).format('YYYY-MM-DD'));
+    });
+
+    $('#DefermentMonths').on('input',function () {
+        var date = $('#DefermentStartDate').val();
+        var Months = Number($('#DefermentMonths').val()) - 1;
+        var d = moment(date).add(Months, 'M');
+        var tenure = Number($('#Tenure').val());
+
+        $('#DefermentEndDate').val(moment(d).format('YYYY-MM-DD'));
+
+        var ld = moment($('#LoanStartDate').val()).add(Months+1, 'M').add(tenure, 'M');
+        $('#LastInstallmentDate').val(moment(ld).format('YYYY-MM-DD'));
+    });
+
+    $('#GraceDays').on('input',function () {
+        var date = $('#DisbursmentDate').val();
+        var gDays = Number($('#GraceDays').val());
+        var tenure = Number($('#Tenure').val());
+        var Months = Number($('#DefermentMonths').val()) - 1;
+        var d = moment(date).add(gDays, 'd');
+
+        $('#LoanStartDate').val(moment(d).format('YYYY-MM-DD'));
+
+        var ld = moment(d).add((tenure + Months+1), 'M');
+        $('#LastInstallmentDate').val(moment(ld).format('YYYY-MM-DD'));
+    });
+
+    $('#ScheduleType').change(function () {
+        var text = $(this).val();
+        if (text == "Tranches") {
+            $('.tranchInner').removeClass('d-none');
+            $('.btn-add').removeClass('d-none');
+        }
+        else {
+            $('.tranchInner').addClass('d-none');
+            $('.btn-add').addClass('d-none');
+        }
+    });
+
+    //<input type="date" class="form-control" data-val="true" data-val-required="The StartDate field is required." id="listForTranches_0__StartDate" name="listForTranches[0].StartDate" value="">
+    var i = 1;
+    $('#addRow').click(function () {
+        var html = '<div class="col-md-4">';
+        html += '<p class="detailHeading">Tranch ID</p>';
+        html += '<input asp-for="listForTranches[' + i + '].tranchId"  id="listForTranches_' + i + '__tranchId"   name="listForTranches[' + i + '].tranchId" value="' + (i + 1) + '" class="form-control" readonly="readonly" />';
+        html += '</div>';
+        html += '<div class="col-md-4">';
+        html += '<p class="detailHeading">Date</p>';
+        html += '<input asp-for="listForTranches[' + i + '].StartDate"  id="listForTranches_' + i + '__StartDate"   name="listForTranches[' + i + '].StartDate" type="date" class="form-control" />';
+        html += '</div>';
+        html += '<div class="col-md-4">';
+        html += '<p class="detailHeading">Amount</p>';
+        html += '<input asp-for="listForTranches[' + i + '].Amount"  id="listForTranches_' + i + '__Amount"   name="listForTranches[' + i + '].Amount" type="number" class="form-control" />';
+        html += '</div>';
+        i++;
+        $('.tranchInner').append(html);
+
+    });
+
+
+
+
+
+
+
+
+
+
+</script>

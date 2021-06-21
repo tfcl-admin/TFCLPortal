@@ -1,0 +1,52 @@
+﻿@model TFCLPortal.Web.Models.Search.SearchModel
+@{
+    ViewData["Title"] = "Application";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<style>
+    .centeredDiv {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+    }
+</style>
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">Search</h4>
+            <h6 class="page-title-breadcrumbs"><a href="~/Dashboard/Dashboard">Home</a> > Search</h6>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="row " >
+        <div class="col-md-6 centeredDiv text-center">
+            @using (Html.BeginForm("Search", "Search"))
+            {
+                    <div class="form-group">
+                        <i class="fa fa-search fa-5x" style="margin-bottom: 30px"></i>
+                        <input asp-for="SearchQuery" type="text" name="Query" class="form-control" placeholder="Search Here">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="SearchType" id="appNo" value="Application Number" checked>
+                        <label class="form-check-label" for="appNo">Application Number</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="SearchType" id="SeqNo" value="Sequence Number">
+                        <label class="form-check-label" for="SeqNo">Sequence Number</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" asp-for="SearchType" id="CnicNo" value="CNIC Number">
+                        <label class="form-check-label" for="AppName">CNIC Number</label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-success">Search</button>
+                    </div>
+            }
+        </div>
+    </div>
+</main>

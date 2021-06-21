@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <VersionPrefix>1.0.0.0</VersionPrefix>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>TFCLPortal.Core</AssemblyName>
+    <PackageId>TFCLPortal.Core</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <UserSecretsId>AbpCompanyName-TFCLPortal-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId>
+    <RootNamespace>TFCLPortal</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\SourceFiles\*.xml" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="BusinessExpenseSchoolAcademyClasses\BusinessIncomeSchoolAcademyClass.cs\**" />
+    <Compile Remove="DynamicDropdowns\RespondantDesignations\RespondantDesignation.cs\**" />
+    <EmbeddedResource Remove="BusinessExpenseSchoolAcademyClasses\BusinessIncomeSchoolAcademyClass.cs\**" />
+    <EmbeddedResource Remove="DynamicDropdowns\RespondantDesignations\RespondantDesignation.cs\**" />
+    <None Remove="BusinessExpenseSchoolAcademyClasses\BusinessIncomeSchoolAcademyClass.cs\**" />
+    <None Remove="DynamicDropdowns\RespondantDesignations\RespondantDesignation.cs\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Abp.AutoMapper" Version="4.9.0" />
+    <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="4.9.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.2.0" />
+    <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="3.3.1" />
+  </ItemGroup>
+</Project>

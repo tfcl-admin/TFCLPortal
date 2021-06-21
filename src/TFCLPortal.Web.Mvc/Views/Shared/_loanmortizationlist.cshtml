@@ -1,0 +1,53 @@
+﻿@model TFCLPortal.LoanAmortizations.Dto.CreateLoanAmortizationDto
+@using System.Globalization
+
+<div class="col-md-12">
+    <div class="bgc-white bd bdrs-3 p-20 mB-20" id="content1" style="border:none !important;">
+        <div class="card p-10 mB-20">
+            <h4 class="">Amortization list</h4>
+           
+        </div>
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
+            <thead>
+                <tr>
+                    <th style="width:10%;">Installment</th>
+                    <th style="width:70px;">Due date</th>
+                    <th style="width:70px;">Principal</th>
+                    <th style="width:70px;">Interest</th>
+                    <th style="width:70px;">Total Installment</th>
+                    <th style="width:70px;">Paid Date</th>
+                    <th style="width:20%;">Outstanding Principal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model.LoanAmortizationChilds.ToList())
+                    {
+                        <tr>
+                            <td>@item.InstallmentSerial</td>
+                            <td>@item.InstallmentDueDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.PrincipalAmount.ToString("#,##")</td>
+                            <td>@item.InterestAmount.ToString("#,##")</td>
+                            <td>@item.TotalInstallment.ToString("#,##")</td>
+                            <td>@item.InstallmentPaidDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.RemainingBalance.ToString("#,##")</td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        @*<button type="button" id="exportButton" onclick="demoFromHTML();" class="btn btn-info clearfix"><span class="fa fa-file-pdf-o"></span> Export to PDF</button>*@
+        
+
+
+    </div>
+</div>
+
+
+
+
+
+

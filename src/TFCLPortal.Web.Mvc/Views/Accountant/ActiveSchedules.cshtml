@@ -1,0 +1,227 @@
+﻿@model List<TFCLPortal.Applications.ApplicationDto>
+@{ int i = 0;}
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+    .select2-selection__rendered {
+        text-transform: uppercase;
+    }
+    .select2-results__option {
+        text-transform: uppercase;
+    }
+</style>
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Loan Repayment Module
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Loan Repayment Module
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20 mT-20">
+        @*<p>
+                <a asp-action="Create">Create New</a>
+            </p>*@
+        <div class="row">
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Client ID
+                </p>
+                <select id="ClientId" class="form-control select2 ">
+                    <option value="">Select Client ID</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.ClientID">@item.ClientID</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    CNIC number
+                </p>
+                <select id="CNICNo" class="form-control select2">
+                    <option value="">Select CNIC</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.CNICNo">@item.CNICNo</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Applicant Name
+                </p>
+                <select id="ApplicantName" class="form-control select2">
+                    <option value="">Select Applicant Name</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.ApplicantName" >@item.ApplicantName</option>
+                        }
+                    }
+                </select>
+            </div>
+            @*<div class="col-md-3 pt-4">
+                <a class="btn btn-outline-warning btn-sm dis-inline" onClick="window.location.reload();" style="width:100%">Clear Filter</a>
+            </div>*@
+
+        </div>
+
+        <div class="row resultDiv d-none" style=" margin-top: 20px; ">
+            <div class="col-md-4">
+                <p class="detailHeading">Client ID</p>
+                <p class="detailText" id="selectedClientId">--</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">CNIC</p>
+                <p class="detailText" id="selectedCnic">--</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">Applicant Name</p>
+                <p class="detailText" id="selectedApplicant">--</p>
+            </div>
+
+
+            <div class="col-md-4">
+                <a id="LoanRecoveryUrl" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px">Installment Collection</a>
+            </div>
+            <div class="col-md-4">
+                <a id="EarlySettlementUrl" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px">Early Settlement</a>
+            </div>
+            <div class="col-md-4">
+                <a id="WriteOffUrl" class="btn text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px; background-color:lightgray">Write Off Loan</a>
+            </div>
+            <div class="col-md-4">
+                <a id="DeceasedUrl" class="btn  text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px; background-color:lightgray">Deceased Applicant Settlement</a>
+            </div>
+            <div class="col-md-4">
+                <a id="ScheduleUrl" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px">View Schedule</a>
+            </div>
+            <div class="col-md-4">
+                <a id="ApplicationDetailsUrl" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px">View Application Details</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<script>
+    $('.select2').select2();
+
+    $('#ApplicantName').on('change', function () {
+        if (this.value!="") {
+            search("ApplicantName", this.value);
+          
+        }
+    });
+    $('#CNICNo').on('change', function () {
+        if (this.value != "") {
+            search("CNICNo", this.value);
+         
+        }
+    });
+    $('#ClientId').on('change', function () {
+        if (this.value != "") {
+            search("ClientId", this.value);
+           
+        }
+    });
+
+    function search(filter, value) {
+
+        var items = @Html.Raw(Json.Serialize(Model));
+
+        var ApplicationID=0;
+        var CNIC="";
+        var ApplicantName="";
+        var ClientId="";
+
+        if (filter == "ClientId") {
+            items.forEach(function (item, index) {
+                if (item.clientID == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                }
+            });
+        }
+        else if (filter == "CNICNo") {
+            items.forEach(function (item, index) {
+                if (item.cnicNo == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                }
+            });
+        }
+        else if (filter == "ApplicantName") {
+            items.forEach(function (item, index) {
+                if (item.applicantName == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                }
+            });
+        }
+        else {
+            ApplicationID = 0;
+            CNIC = "--";
+            ClientId = "--";
+            ApplicantName = "--";
+        }
+
+        //$(".select2").prop('selectedIndex',0);
+
+        $("#selectedClientId").text(ClientId);
+        $("#selectedCnic").text(CNIC);
+        $("#selectedApplicant").text(ApplicantName);
+
+        if (ApplicationID != 0) {
+            $("#LoanRecoveryUrl").attr("href", "../Accountant/InstallmentPayment?Applicationid="+ApplicationID);
+            $("#EarlySettlementUrl").attr("href", "../Accountant/EarlySettlement?Applicationid="+ApplicationID);
+            //$("#WriteOffUrl").attr("href", "../Accountant/WriteOff?Applicationid="+ApplicationID);
+            //$("#DeceasedUrl").attr("href", "../Accountant/DeceasedSettlement?Applicationid="+ApplicationID);
+            $("#ScheduleUrl").attr("href", "../Accountant/ViewSchedule?ApplicationId="+ApplicationID);
+            $("#ApplicationDetailsUrl").attr("href", "../Dashboard/Application?id="+ApplicationID);
+        }
+
+
+
+        $(".resultDiv").removeClass('d-none');
+
+
+    }
+
+
+
+
+</script>

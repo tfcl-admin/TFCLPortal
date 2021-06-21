@@ -1,0 +1,214 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+    @*<link href="~/Theame/css/style.css" rel="stylesheet" asp-append-version="true" />*@
+
+</head>
+<body>
+    <input type="hidden" id="Id" value="@ViewBag.Id" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+
+            @*<div class="col-md-6">
+                    <div class="form-group">
+                        <p class="detailHeading">Client ID</p>
+                        <p class="detailText">@ViewBag.IP.ClientID</p>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p class="detailHeading">Applicant Name</p>
+                        <p class="detailText">@ViewBag.IP.ClientName</p>
+                    </div>
+                </div>*@
+            @*<div class="col-md-6">
+                    <div class="form-group">
+                        <p class="detailHeading">Nature Of Payment <font color="red">*</font></p>
+                        <p class="detailText">@ViewBag.IP.NatureOfPayment</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p class="detailHeading">Others</p>
+                        <p class="detailText">@ViewBag.IP.NatureOfPaymentOthers</p>
+                    </div>
+                </div>*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p class="detailHeading">Mode of Payment</p>
+                    <p class="detailText">@ViewBag.IP.ModeOfPayment</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p class="detailHeading">Others</p>
+                    <p class="detailText">@ViewBag.IP.ModeOfPaymentOthers</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p class="detailHeading">Installment Due Date</p>
+                    <p class="detailText">@ViewBag.IP.InstallmentDueDate.ToString("dd MMM yyyy")</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p class="detailHeading">Amount Deposit Date <font color="red">*</font></p>
+                    <p class="detailText">@ViewBag.IP.DepositDate.ToString("dd MMM yyyy")</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p class="detailHeading">Installment Number</p>
+                    <p class="detailText">@ViewBag.IP.NoOfInstallment</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p class="detailHeading">Installment Amount</p>
+                    <p class="detailText">  @(string.Format("{0:#,##0}", ViewBag.IP.InstallmentAmount))</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p class="detailHeading">Previous Balance</p>
+                    <p class="detailText">  @(string.Format("{0:#,##0}", ViewBag.IP.PreviousBalance))</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p class="detailHeading">Due Amount</p>
+                    <p class="detailText">  @(string.Format("{0:#,##0}", ViewBag.IP.DueAmount))</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p class="detailHeading">Amount Paid (Rs) <font color="red">*</font></p>
+                    <p class="detailText">  @(string.Format("{0:#,##0}", ViewBag.IP.Amount))</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <p class="detailHeading">Amount in Words</p>
+                    <p class="detailText">@ViewBag.IP.AmountWords</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p class="detailHeading">Excess Payment / Short Payment</p>
+                    <p class="detailText">  @(string.Format("{0:#,##0}", ViewBag.IP.ExcessShortPayment))</p>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p class="detailHeading">Late Days <font color="red">*</font> <span id="lateDaysMessage" style="color:red"></span></p>
+                    <p class="detailText">@ViewBag.IP.LateDays</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p class="detailHeading">Late Days Charges</p>
+                    <p class="detailText">@ViewBag.IP.LateDaysPenalty</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <p class="detailHeading">LPC Applied</p>
+                    @if (ViewBag.IP.isLateDaysApplied == true)
+                    {
+                        <p class="detailText">YES</p>
+                    }
+                    else
+                    {
+                        <p class="detailText">No</p>
+                    }
+                </div>
+            </div>
+
+
+
+
+            <div class="col-md-6">
+                <p class="detailHeading">
+                    Decision
+                </p>
+                <select class="form-control" id="Recommendation">
+                    <option value="">Select Decision</option>
+                    <option value="true">Authorize</option>
+                    <option value="false">Reject</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <p class="detailHeading">
+                    Rejection Reason
+                </p>
+                <input type="text" class="form-control" id="Reason" />
+            </div>
+
+            @*<div class="col-md-6" style="margin-top:30px">
+                    <a  href="/Dashboard/ViewApplication?id=@ViewBag.AppId" target="_blank" class="btn btn-sm btn-outline-primary" title="View Application"><i class="fa fa-search"></i> View Application<span></span></a>
+                </div>*@
+
+            <div class="col-md-6" style="text-align: right; margin-top:30px">
+                <a id="recommend" class="btn btn-sm btn-outline-success" title="Submit">Submit<span></span></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#recommend').click(function (e) {
+
+            if ($('#Recommendation').val() != "") {
+
+                var Recommendation = $('#Recommendation').val();
+                var Id = $('#Id').val();
+                var Reason = $('#Reason').val();
+
+                    $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Accountant/RejectInstallmentPayment")',
+                        data: { 'Id': Id, 'Recommendation': Recommendation, 'Reason': Reason} ,
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         window.location.reload();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+
+
+            }
+            else {
+                alert("Please Select Decision");
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,293 @@
+﻿@model List<TFCLPortal.BankAccountDetails.Dto.BankAccountListDto>
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (Model.Count > 0)
+{
+    <input type="hidden" id="ApplicationId" value="@Model[0].ApplicationId" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <div class="tab_content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="accordion md-accordion" id="accordionSchoolBranches" role="tablist" aria-multiselectable="true">
+
+                            @foreach (var items in Model)
+                            {
+                                <div class="card">
+
+                                    <!-- Card header -->
+                                    <div class="card-header" role="tab" id="headingOneBAD-@items.Id">
+                                        <a data-toggle="collapse" data-parent="#accordionSchoolBranches" href="#collapseOneBAD-@items.Id" aria-expanded="true"
+                                           aria-controls="collapseOneBAD-@items.Id">
+                                            <h5 class="mb-0">
+                                                @items.BankFullName <i class="fa fa-angle-down rotate-icon"></i>
+                                            </h5>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card body -->
+                                    <div id="collapseOneBAD-@items.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneBAD-@items.Id"
+                                         data-parent="#accordionSchoolBranches">
+                                        <div class="card-body">
+
+                                            <input type="hidden" id="Id" value="@items.ApplicationId" />
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">BANK NAME</p>
+                                                    <p class="detailText">@(items.BankFullName == null || items.BankFullName == "" ? "--" : items.BankFullName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">BRANCH NAME</p>
+                                                    <p class="detailText">@(items.BranchName == null || items.BranchName == "" ? "--" : items.BranchName)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">ACCOUNT TITLE</p>
+                                                    <p class="detailText">@(items.AccountTitle == null || items.AccountTitle == "" ? "--" : items.AccountTitle)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">ACCOUNT NUMBER</p>
+                                                    <p class="detailText">@(items.AccountNumber == null || items.AccountNumber == "" ? "--" : items.AccountNumber)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">Account Maintained</p>
+                                                    <p class="detailText">@string.Format("{0:MMM yyyy}", items.AccountMaintained)</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="detailHeading">Analysis Month</p>
+                                                    <p class="detailText">@string.Format("{0:MMM yyyy}", items.AnalysisMonth)</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                @foreach (var item in items.BankAccountChilds)
+                                                {
+                                                    <div class="col-md-4">
+                                                        <table class="table table-bordered text-center">
+                                                            <thead>
+                                                            <th colspan="2" style="font-weight:bold">@item.MonthName</th>
+                                                            </thead>
+                                                            <thead>
+                                                            <th>Date</th>
+                                                            <th>Balance</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr><td colspan="2">Lowest Balance</td></tr>
+                                                                <tr>
+                                                                    <td>@(item.LowestBalanceDate1 == null ? "--" : string.Format("{0:dd MMM yyyy}", item.LowestBalanceDate1))</td>
+                                                                    <td style="text-align:right">@(item.LowestBalance1 == null || item.LowestBalance1 == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.LowestBalance1)))</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>@(item.LowestBalanceDate2 == null ? "--" : string.Format("{0:dd MMM yyyy}", item.LowestBalanceDate2))</td>
+                                                                    <td style="text-align:right">@(item.LowestBalance2 == null || item.LowestBalance2 == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.LowestBalance2)))</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>@(item.LowestBalanceDate3 == null ? "--" : string.Format("{0:dd MMM yyyy}", item.LowestBalanceDate3))</td>
+                                                                    <td style="text-align:right">@(item.LowestBalance3 == null || item.LowestBalance3 == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.LowestBalance3)))</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Avg. Balance</td>
+                                                                    <td style="text-align:right">@(item.avgLowestBalance == null || item.avgLowestBalance == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.avgLowestBalance)))</td>
+                                                                </tr>
+                                                                <tr><td colspan="2">Highest Balance</td></tr>
+                                                                <tr>
+                                                                    <td>@(item.HighestBalanceDate1 == null ? "--" : string.Format("{0:dd MMM yyyy}", item.HighestBalanceDate1))</td>
+                                                                    <td style="text-align:right">@(item.HighestBalance1 == null || item.HighestBalance1 == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.HighestBalance1)))</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>@(item.HighestBalanceDate2 == null ? "--" : string.Format("{0:dd MMM yyyy}", item.HighestBalanceDate2))</td>
+                                                                    <td style="text-align:right">@(item.HighestBalance2 == null || item.HighestBalance2 == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.HighestBalance2)))</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>@(item.HighestBalanceDate3 == null ? "--" : string.Format("{0:dd MMM yyyy}", item.HighestBalanceDate3))</td>
+                                                                    <td style="text-align:right">@(item.HighestBalance3 == null || item.HighestBalance3 == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.HighestBalance3)))</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Avg. Balance</td>
+                                                                    <td style="text-align: right">@(item.avgHighestBalance == null || item.avgHighestBalance == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.avgHighestBalance)))</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Overall Avg. Balance</td>
+                                                                    <td style="text-align:right">@(item.OverallAvgBalance == null || item.OverallAvgBalance == "" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.OverallAvgBalance)))</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>ABB to EMI</td>
+                                                                    <td>@(item.AbbToEMI == null || item.AbbToEMI == "" ? "--" : string.Format("{0:#,###}%", Decimal.Parse(item.AbbToEMI)))</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: right; margin-top:20px">
+                    <a id="screenBtnBAD" href="" data-toggle="modal" data-target="#_BankAccount_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                    <a id="discrepentBtnBAD" href="" data-toggle="modal" data-target="#_BankAccount_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<!--Approved Modal -->
+<div class="modal fade" id="_BankAccount_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenBAD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_BankAccount_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdBAD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorBAD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentBAD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.BankAccountDetailAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnBAD').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnBAD').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnBAD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnBAD').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnBAD').toggleClass("d-none");
+            $('#discrepentBtnBAD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenBAD').click(function () {
+        debugger;
+        var comment = $('#commentIdBAD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'BANK ACCOUNT DETAILS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentBAD').click(function () {
+        debugger;
+        if (!$('#commentIdBAD').val()) {
+            $('#comment_errorBAD').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorBAD').css("display", "none");
+        }
+        var comment = $('#commentIdBAD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'BANK ACCOUNT DETAILS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdBAD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

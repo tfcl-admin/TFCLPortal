@@ -1,0 +1,130 @@
+﻿@model List<TFCLPortal.DeviationMatrices.Dto.DeviationMatrixListDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Deviation Matrix
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Deviation Matrix > Deviation Matrices List
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        @*<p>
+            <a asp-action="Create">Create New</a>
+        </p>*@
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        Product Name
+                    </th>
+                    @*<th>
+                        Min Limit for Unsecured Loan
+                    </th>
+                    <th>
+                        Max Limit for Unsecured Loan
+                    </th>
+                    <th>
+                        Applicant Min Age
+                    </th>
+                    <th>
+                        Applicant Max Age
+                    </th>
+                    <th>
+                        Business Age (Years)
+                    </th>
+                    <th>
+                        Business Age at Current Place (Years)
+                    </th>
+                    <th>
+                        Min %age of SA Expense against SA Income
+                    </th>
+                    <th>
+                        Max %age of NAI Total School Revenue
+                    </th>
+                    <th>
+                        Min %age of HHE Total School Revenue
+                    </th>
+                    <th>
+                        Max Limit For Installment Ratio
+                    </th>
+                    <th>
+                        Guarantor Min Age
+                    </th>
+                    <th>
+                        Guarantor Max Age
+                    </th>*@
+                    <th colspan="2">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.ProductName
+                        </td>
+                        @*<td>
+                            @item.MinLimitForUnsecuredLoan
+                        </td>
+                        <td>
+                            @item.MaxLimitForUnsecuredLoan
+                        </td>
+                        <td>
+                            @item.ApplicantMinAge
+                        </td>
+                        <td>
+                            @item.ApplicantMaxAge
+                        </td>
+                        <td>
+                            @item.BusinessAgeYears
+                        </td>
+                        <td>
+                            @item.BusinessAgeAtCurrentPlaceYears
+                        </td>
+                        <td>
+                            @item.MinPercentageOfSAexpAgainstSAincome
+                        </td>
+                        <td>
+                            @item.MaxPercentageOfNAItotalSchoolRevenue
+                        </td>
+                        <td>
+                            @item.MinPercentageOfHHEtotalSchoolRevenue
+                        </td>
+                        <td>
+                            @item.MaxLimitForInstallmentRatio
+                        </td>
+                        <td>
+                            @item.GuarantorMinAge
+                        </td>
+                        <td>
+                            @item.GuarantorMaxAge
+                        </td>*@
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i> Edit</a>
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i> Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</main>

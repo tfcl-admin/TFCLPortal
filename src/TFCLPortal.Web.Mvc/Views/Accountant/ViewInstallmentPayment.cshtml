@@ -1,0 +1,271 @@
+﻿@model TFCLPortal.InstallmentPayments.Dto.CreateInstallmentPayment
+
+@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<style>
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
+</style>
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Installment Collection Authorization Details
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Loan Operations > Installment Collection Authorization Details
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Accountant/ViewSchedule?ApplicationId=@ViewBag.ApplicationId" target="_blank" class="btn btn-sm btn-outline-success bg1 eft-1" title="View Schedule"><i class="fa fa-calendar"></i> View Schedule </a>
+            <a href="~/Accountant/AuthorizationInstallmentPayment" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-list"></i> Back To List </a>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <div class="pageloader d-none"></div>
+            <form asp-action="CreateInstallmentPayment" method="post">
+                <div class="row">
+                    <input asp-for="ApplicationId" type="hidden" id="ApplicationId" value="@ViewBag.Applicationid" />
+                    <input asp-for="AuthorizationId" type="hidden" value="@ViewBag.Id" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Client ID</label>
+                            <input type="text" value="@ViewBag.ClientId" readonly="readonly" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Applicant Name</label>
+                            <input type="text" value="@ViewBag.ClientName" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nature Of Payment <font color="red">*</font></label>
+                            <input type="text" asp-for="NatureOfPayment" value="@ViewBag.ClientName" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Others</label>
+                            <input asp-for="NatureOfPaymentOthers" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Installment Due Date</label>
+                            <input asp-for="InstallmentDueDate" type="text" value="@ViewBag.InstallmentDueDate.ToString("dd MMM yyyy")" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Installment Amount</label>
+                            <input asp-for="InstallmentAmount" value="@ViewBag.InstallmentAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Installment Number</label>
+                            <input asp-for="NoOfInstallment" value="@ViewBag.InstallmentNumber" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Account Balance</label>
+                            <input asp-for="PreviousBalance" value="@ViewBag.PreviousBalance" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Due Amount</label>
+                            <input asp-for="DueAmount" value="@ViewBag.DueAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Mode of Payment</label>
+                            <input asp-for="ModeOfPayment" value="@ViewBag.ModeOfPayment" class="form-control" readonly="readonly" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Others</label>
+                            <input asp-for="ModeOfPaymentOthers" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount (Rs) <font color="red">*</font></label>
+                            <input asp-for="Amount" value="@ViewBag.Amount" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Excess Payment / Short Payment</label>
+                            <input asp-for="ExcessShortPayment" value="@ViewBag.ExcessShortPayment" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Amount in Words</label>
+                            <input asp-for="AmountWords" value="@ViewBag.AmountWords" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Late Days <font color="red">*</font> <span id="lateDaysMessage" style="color:red"></span></label>
+                            <input asp-for="LateDays" value="@ViewBag.LateDays" class="form-control" readonly="readonly" required="required" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Late Days Charges</label>
+                            <input asp-for="LateDaysPenalty" value="@ViewBag.LateDaysPenalty" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Late Days Applied</label>
+                            <input asp-for="isLateDaysApplied" type="checkbox" checked="@ViewBag.isLateDaysApplied" class="form-control" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount Deposit Date <font color="red">*</font></label>
+                            <input asp-for="DepositDate" value="@ViewBag.DepositDate" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Bank Name <font color="red">*</font></label>
+                            <input type="text" value="@ViewBag.BanksList" class="form-control" readonly="readonly" />
+
+                            <input asp-for="FK_CompanyBankId" value="@ViewBag.BankId" class="form-control d-none" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 text-right">
+                        <input asp-for="RejectionReason" style="width:25%;" class="form-control d-inline" placeholder="Reason For Rejection" />
+                        <a class="btn btn-outline-danger d-inline" style="color: red !important;padding:8px" id="rejectBtn"><i class="fa fa-times"></i> Reject Entry</a>
+                        <button type="submit" class="btn btn-outline-success d-inline" id="uploadBtn"><i class="fa fa-upload"></i> Authorize Entry</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+<script src="~/vendor/numwords/index.js" crossorigin="anonymous"></script>
+
+<script>
+
+    $(function () {
+
+        $('#uploadBtn').click(function () {
+            $(".pageloader").toggleClass("d-none");
+        });
+
+        $('#rejectBtn').click(function () {
+
+            var RejectionReason = $('#RejectionReason').val();
+            var Id = $('#AuthorizationId').val();
+
+            if (RejectionReason == "") {
+                abp.notify.error("Error", "Please Enter Rejection Reason");
+            }
+            else {
+                var formData = new FormData();
+                formData.append('Id', Id);
+                formData.append('Reason', RejectionReason);
+
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    processData: false,
+                    contentType: false,
+                    url: '@Url.Content("~/Accountant/RejectInstallmentPayment")',
+                    data: formData,
+                    success: function (data) {
+
+                        var returnData = data.result;
+                        abp.notify.success(returnData, "Success");
+                        window.location = '/Accountant/AuthorizationInstallmentPayment';
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+
+            }
+
+
+        });
+
+
+        $("#DepositDate").val(moment('@ViewBag.DepositDate').format("YYYY-MM-DDTkk:mm"));
+
+        function getDate() {
+
+
+            var d = new Date().toJSON().slice(0, 19);
+
+            var cDate = new Date('@ViewBag.DepositDate');
+
+            var gh = cDate.getHours();
+
+            if (gh < 10) {
+                gh = '0' + gh;
+            }
+
+            var gm = cDate.getMinutes();
+
+            if (gm < 10) {
+                gm = '0' + gm;
+            }
+
+            var gs = cDate.getSeconds();
+
+            if (gs < 10) {
+                gs = '0' + gs;
+            }
+
+            console.log(d);
+            var str = d.substr(0, 11) + gh + ":" + gm + ":" + gs
+            console.log(str);
+            return str;
+        }
+
+    });
+
+</script>

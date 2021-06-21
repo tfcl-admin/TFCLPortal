@@ -1,0 +1,98 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>TFCLPortal.Web.Mvc</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>TFCLPortal.Web.Mvc</PackageId>
+    <UserSecretsId>AbpCompanyName-TFCLPortal-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId>
+    <RootNamespace>TFCLPortal.Web</RootNamespace>
+    <ApplicationInsightsResourceId>/subscriptions/d5b5bce6-a53e-4306-9204-80427e80cb57/resourceGroups/TFCL-App/providers/microsoft.insights/components/tfclapp</ApplicationInsightsResourceId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup> 
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="wwwroot\Theame\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\Theame\fonts\icomoon.svg" />
+    <None Include="wwwroot\Theame\fonts\icomoon.zip" />
+    <None Include="wwwroot\Theame\fonts\icomoon\demo-files\demo.js" />
+    <None Include="wwwroot\Theame\fonts\icomoon\fonts\icomoon.svg" />
+    <None Include="wwwroot\Theame\js\accordain.js" />
+    <None Include="wwwroot\Theame\js\ajax.js" />
+    <None Include="wwwroot\Theame\js\bootstrap.js" />
+    <None Include="wwwroot\Theame\js\bootstrap.js.map" />
+    <None Include="wwwroot\Theame\js\charlist1.js" />
+    <None Include="wwwroot\Theame\js\chartist.min.js" />
+    <None Include="wwwroot\Theame\js\chosen.jquery.min.js" />
+    <None Include="wwwroot\Theame\js\custom.js" />
+    <None Include="wwwroot\Theame\js\jquery.js" />
+    <None Include="wwwroot\Theame\js\material-dashboard.min.js" />
+    <None Include="wwwroot\Theame\js\material-design.js" />
+    <None Include="wwwroot\Theame\js\perfect-scrollbar.jquery.min.js" />
+    <None Include="wwwroot\Theame\js\pie-chart.js" />
+    <None Include="wwwroot\Theame\js\style.js" />
+    <None Include="wwwroot\Theame\js\vendor.js" />
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Update="wwwroot\**\*;Views\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TFCLPortal.Web.Core\TFCLPortal.Web.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="GemBox.Spreadsheet" Version="45.0.0.1084" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.14.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="AspNet.Security.OpenIdConnect.Server" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+    <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.1" />
+    <PackageReference Include="Castle.LoggingFacility.MsLogging" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Abp.HangFire" Version="4.9.0" />
+    <PackageReference Include="Abp.RedisCache" Version="4.9.0" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="4.9.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.ViewCompilation" Version="2.2.0" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\Logs\" />
+    <Folder Include="wwwroot\Theame\fonts\fonts\" />
+    <Folder Include="wwwroot\view-resources\Views\_Bundles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\Theame\css\style.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.2.0" />
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+</Project>

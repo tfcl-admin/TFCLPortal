@@ -1,0 +1,458 @@
+﻿@model TFCLPortal.Applications.DashboardDataDto
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<style>
+
+    .card {
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-color: #3bb44a;
+    }
+
+    .card-header {
+        font-size: 11px;
+        margin-bottom: 0px;
+    }
+
+    .card-footer {
+        font-size: 11px;
+        margin-bottom: 0px;
+    }
+
+    .card-text {
+        font-size: 26px;
+        color: #3bb44a;
+    }
+
+    .main-content {
+        padding: 50px 20px 20px;
+    }
+
+    .card {
+        width: 100%;
+        text-align: center
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<main class='main-content bgc-grey-100' id="widget">
+
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">Dashboard</h4>
+        </div>
+        <div class="col-md-6 text-right">
+            <p id="demo" class="btn btn-sm btn-outline-success bg1 eft-1" style="font-size: 11px;"></p>
+            <p id="timeDiv" class="btn btn-sm btn-outline-success bg1 eft-1" style="font-size: 11px;"></p>
+        </div>
+    </div>
+
+
+    <div class="row ">
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                    <div class="card">
+                        <div class="card-header card-header-success ">Mobilizations</div>
+                        <div class="card-body">
+                            <p class="card-text">@Model.MobilizationCount</p>
+                        </div>
+                        @*<div class="card-footer">Files</div>*@
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                    <div class="card">
+                        <div class="card-header card-header-success ">In Process</div>
+                        <div class="card-body">
+                            <p class="card-text">@Model.InprocessfileCount</p>
+                        </div>
+                        @*<div class="card-footer">Files</div>*@
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                    <div class="card">
+                        <div class="card-header card-header-success ">Submitted</div>
+                        <div class="card-body">
+                            <p class="card-text">@Model.SubmittedfileCount</p>
+                        </div>
+                        @*<div class="card-footer">Files</div>*@
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                    <div class="card">
+                        <div class="card-header card-header-success ">BCC Approved</div>
+                        <div class="card-body">
+                            <p class="card-text">@Model.BCCapprovedfileCoun</p>
+                        </div>
+                        @*<div class="card-footer">Files</div>*@
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                    <div class="card">
+                        <div class="card-header card-header-success ">Disbursed</div>
+                        <div class="card-body">
+                            <p class="card-text">@Model.DisbursedfileCount</p>
+                        </div>
+                        @*<div class="card-footer">Files</div>*@
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                    <div class="card">
+                        <div class="card-header card-header-success ">Declined</div>
+                        <div class="card-body">
+                            <p class="card-text">@Model.DeclinefileCount</p>
+                        </div>
+                        @*<div class="card-footer">Files</div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-header card-header-success ">Lending Amount</div>
+                <div class="card-body">
+                    <p class="card-text">@Model.LendingAmountCount M</p>
+                </div>
+                @*<div class="card-footer">PKR</div>*@
+            </div>
+        </div>
+
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div id="container">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div id="branch"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div id="canvas"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div id="bankprt"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+    <script>
+     $(document).ready(function () {
+         $.ajax({
+             type: 'POST',
+             datatype: "json",
+           contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Dashboard/GetPieChartProductWiseAmounts")',
+             success: function (dt) {
+
+                 console.log(dt)
+                 var productwiseData = [];
+                 var resultArray = [];
+                 resultArray = dt.result;
+                  for (var item = 0; item < resultArray.length; item++) {
+
+                var obj = {
+
+                    'name': resultArray[item].name,
+                    'y': parseFloat( resultArray[item].loanAmount)
+                      }
+                       console.log(obj)
+
+                productwiseData.push(obj);
+            }
+
+    Highcharts.chart('bankprt', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    colors: [
+        '#3D76C3',
+        '#EE7D2F',
+        '#A5A5A5',
+        '#FFC003',
+
+    ],
+    title: {
+        text: 'Bank Portfolio'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}M</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.y}M'
+            }
+        }
+    },
+    series: [{
+        name: '',
+        colorByPoint: true,
+        data: productwiseData
+    }]
+    });
+                  },
+            error: function (httpResponse,err,txt) {
+                alert("error");
+            },
+        });
+
+ });
+    </script>
+    <script>
+      var d = new Date().toDateString()
+    document.getElementById("demo").innerHTML = d
+
+    $(document).ready(function () {
+         $.ajax({
+             type: 'POST',
+             datatype: "json",
+           contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Dashboard/HighChartDataWeekly")',
+             success: function (dt) {
+             console.log(dt.result)
+
+             Highcharts.chart('container', {
+            chart: { type: 'column' },
+
+        colors: [
+            '#3D76C3',
+            '#EE7D2F',
+            '#A5A5A5',
+        ],
+        title: {
+            text: 'Weekwise Mobilization Report '
+        },
+        subtitle: {
+            text: '(Week wise, Branch Code and Value)'
+        },
+        xAxis: {
+            categories: [
+                '1st Week',
+                '2nd week',
+                '3rd week',
+                '4th week'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.1,
+                borderWidth: 0
+            }
+        },
+               series: dt.result
+    });
+            },
+            error: function (httpResponse,err,txt) {
+                alert("error");
+            },
+        });
+
+ });
+    </script>
+
+    <script>
+     $(document).ready(function () {
+         $.ajax({
+             type: 'POST',
+             datatype: "json",
+           contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Dashboard/GetBranchPortfolioGraphData")',
+             success: function (dt) {
+             console.log(dt.result)
+
+             Highcharts.chart('branch', {
+        chart: {
+            type: 'column'
+        },
+        colors: [
+            '#3D76C3',
+            '#EE7D2F',
+            '#A5A5A5',
+
+        ],
+        title: {
+            text: 'Branches Portfolio'
+        },
+        subtitle: {
+            text: '(Applications, Total Amount, Branch Code)'
+        },
+        xAxis: {
+            categories: [
+                'Total Record'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} </b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.1,
+                borderWidth: 0
+            }
+        },
+        series: dt.result
+    });
+            },
+            error: function (httpResponse,err,txt) {
+                alert("error");
+            },
+        });
+
+ });
+    </script>
+    <script>
+     $(document).ready(function () {
+         $.ajax({
+             type: 'POST',
+             datatype: "json",
+             contenttype: 'application/json; charset=utf-8',
+             url: '@Url.Content("~/Dashboard/GetMonthlyGraphDataa")',
+             success: function (dt) {
+                 console.log(dt.result)
+
+                 Highcharts.chart('canvas', {
+
+                     chart: {type: 'column' },
+                     colors: [
+                         '#3D76C3',
+                         '#EE7D2F',
+                         '#A5A5A5',
+
+                     ],
+                     title: {
+                         text: 'Month Wise Disbursed Files and Total Amount'
+                     },
+
+                     xAxis: {
+                         categories: [
+                             'january',
+                             'Febraury',
+                             'March',
+                             'April',
+                             'May',
+                             'June',
+                             'July',
+                             'August',
+                             'September',
+                             'October',
+                             'November',
+                             'December'
+                         ],
+                         crosshair: true
+                     },
+
+                     yAxis: {
+
+                         min: 0,
+                         title: {
+                             text: ''
+                         }
+                     },
+
+                      tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} </b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.1,
+                borderWidth: 0
+            }
+        },
+                     series: dt.result
+                  });
+            },
+            error: function (httpResponse,err,txt) {
+                alert("error");
+            },
+        });
+
+     });
+        startTime();
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('timeDiv').innerHTML =
+                h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+            return i;
+        }
+      
+
+    </script>
+</main>

@@ -1,0 +1,493 @@
+﻿@model TFCLPortal.BusinessDetailsTDS.Dto.ParentBusinessDetailTDSListDto
+
+@{ int campusSum = 0; }
+@{ int branchesSum = 0; }
+@{ int institutesSum = 0;}
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+
+<div class="tab_content" style="padding: 15px 20px">
+    <!---->
+    <div class="row">
+        @if (@Model != null)
+        {
+            <div class="col-md-12">
+                <div class="accordion md-accordion" id="accordionSchoolBranches" role="tablist" aria-multiselectable="true">
+                    @foreach (var item in Model.businessDetailTds)
+                    {
+                        <input type="hidden" id="ApplicationId" value="@item.ApplicationId" />
+
+                        <div class="card">
+
+                            <!-- Card header -->
+                            <div class="card-header" role="tab" id="headingOneBD-@item.Id">
+                                <a data-toggle="collapse" data-parent="#accordionSchoolBranches" href="#collapseOneBD-@item.Id" aria-expanded="true"
+                                   aria-controls="collapseOneBD-@item.Id">
+                                    <h5 class="mb-0">
+                                        @item.BusinessName <i class="fa fa-angle-down rotate-icon"></i>
+                                    </h5>
+                                </a>
+                            </div>
+
+                            <!-- Card body -->
+                            <div id="collapseOneBD-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneBD-@item.Id"
+                                 data-parent="#accordionSchoolBranches">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="detailHeading">
+                                                Client/Business Name
+                                            </p>
+                                            <p class="detailText">@(item.BusinessName == null || item.BusinessName == "" ? "--" : item.BusinessName)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Business Type
+                                            </p>
+                                            <p class="detailText">@(item.BusinessType == null || item.BusinessType == "" ? "--" : item.BusinessType)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Others
+                                            </p>
+                                            <p class="detailText">@(item.BusinessTypeOthers == null || item.BusinessTypeOthers == "" ? "--" : item.BusinessTypeOthers)</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="detailHeading">
+                                                Address
+                                            </p>
+                                            <p class="detailText">@(item.BusinessAddress == null || item.BusinessAddress == "" ? "--" : item.BusinessAddress)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Mouza/Town
+                                            </p>
+                                            <p class="detailText">@(item.MouzaTown == null || item.MouzaTown == "" ? "--" : item.MouzaTown)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Union Council
+                                            </p>
+                                            <p class="detailText">@(item.UnionCouncil == null || item.UnionCouncil == "" ? "--" : item.UnionCouncil)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Tehsil
+                                            </p>
+                                            <p class="detailText">@(item.Tehsil == null || item.Tehsil == "" ? "--" : item.Tehsil)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                District
+                                            </p>
+                                            <p class="detailText">@(item.District == null || item.District == "" ? "--" : item.District)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Province
+                                            </p>
+                                            <p class="detailText">@(item.Province == null || item.Province == "" ? "--" : item.Province)</p>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Nearest Landmark
+                                            </p>
+                                            <p class="detailText">@(item.NearestLandMark == null || item.NearestLandMark == "" ? "--" : item.NearestLandMark)</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="detailHeading">
+                                                Location
+                                            </p>
+                                            <p class="detailText">
+                                                <a href="https://www.google.com/maps/search/?api=1&query=@item.Latitude,@item.Longitude" target="_blank">Click here to point the location</a>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Legal Status
+                                            </p>
+                                            <p class="detailText">@(item.LegalStatusName == null || item.LegalStatusName == "" ? "--" : item.LegalStatusName)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Others
+                                            </p>
+                                            <p class="detailText">@(item.LegalStatusOthers == null || item.LegalStatusOthers == "" ? "--" : item.LegalStatusOthers)</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="detailHeading">
+                                                No of Partner(s) / Investor(s) / Director(s)
+                                            </p>
+                                            <p class="detailText">@item.NoOfPartnersInvestorsDirectors</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="detailHeading">
+                                                Name of Partner(S) / Investor(S) / Director(S)
+                                            </p>
+                                            <p class="detailText">@(item.NameOfPartnerInvestorDirector == null || item.NameOfPartnerInvestorDirector == "" ? "--" : item.NameOfPartnerInvestorDirector)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                %age of Profit Share (Applicant)
+                                            </p>
+                                            <p class="detailText">@(item.PercentageOfProfitSharedApplicant == "" ? "--" : (Convert.ToDecimal(item.PercentageOfProfitSharedApplicant)).ToString() + " %")</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Business Profit Considered (%)
+                                            </p>
+                                            <p class="detailText">@(item.PercentageOfProfitConsidered == null || item.PercentageOfProfitConsidered == "" ? "--" : item.PercentageOfProfitConsidered+" %")</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Business Nature
+                                            </p>
+                                            <p class="detailText">@(item.BusinessNature == null || item.BusinessNature == "" ? "--" : item.BusinessNature)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Others
+                                            </p>
+                                            <p class="detailText">@(item.NatureOfBusinessOthers == null || item.NatureOfBusinessOthers == "" ? "--" : item.NatureOfBusinessOthers)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Established Since
+                                            </p>
+                                            <p class="detailText">@(item.EstablishedSince == null ? "--" : string.Format("{0:dd MMM yyyy}", item.EstablishedSince))</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Business Age <i class="fa fa-info-circle" style="float: right" data-toggle="tooltip" title="Allowed Minimum Years : @item.AllowedMinBusinessAge years"></i>
+                                            </p>
+                                            @if (item.CalculatedBusinessAge != null && item.CalculatedBusinessAge != "" && item.CalculatedBusinessAge != "--")
+                                            {
+                                                <p class="detailText @(Convert.ToInt32(item.CalculatedBusinessAge.Substring(0, 2)) >= Convert.ToInt32(item.AllowedMinBusinessAge) ? "" : "text-danger") "><b style="font-weight:600">@(item.CalculatedBusinessAge == null || item.CalculatedBusinessAge == "" ? "--" : item.CalculatedBusinessAge)</b></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="detailText">--</p>
+                                            }
+                                            @*<p class="detailText"><b style="font-weight:600">@(item.BusinessAge == null || item.BusinessAge == "" ? "--" : item.BusinessAge)</b></p>*@
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Business Place Status
+                                            </p>
+                                            <p class="detailText">@(item.OwnershipStatusName == null || item.OwnershipStatusName == "" ? "--" : item.OwnershipStatusName)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Rent Agreement Signatory
+                                            </p>
+                                            <p class="detailText">@(item.RentAgreementSignatoryName == null || item.RentAgreementSignatoryName == "" ? "--" : item.RentAgreementSignatoryName)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Others
+                                            </p>
+                                            <p class="detailText">@(item.rentAgreementSignatoryOthers == null || item.rentAgreementSignatoryOthers == "" ? "--" : item.rentAgreementSignatoryOthers)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Monthly Rent (Rs)
+                                            </p>
+                                            <p class="detailText">@(item.MonthlyRent == null || item.MonthlyRent == "" ? "--" : string.Format("{0:#,###}", Convert.ToDecimal(item.MonthlyRent)))</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Monthly Rent Sharing (%age)
+                                            </p>
+                                            <p class="detailText">@(item.MonthlyRentSharingPercentage == null || item.MonthlyRentSharingPercentage == "" ? "--" : (Convert.ToDecimal(item.MonthlyRentSharingPercentage)).ToString() + " %")</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Monthly Share (Rs)
+                                            </p>
+                                            <p class="detailText">@(item.MonthlyShare == null || item.MonthlyShare == "" ? "--" : string.Format("{0:#,##0}", Convert.ToDecimal(item.MonthlyShare)))</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Rent Agreement Expiry Date
+                                            </p>
+                                            @*@{ item.RentAgreementExpiryDate = DateTime.Parse("12/8/2020");}*@
+                                            @{ DateTime NotNullableDT = item.RentAgreementExpiryDate ?? DateTime.Now.Date.AddDays(1);}
+
+                                            <p class="detailText @( DateTime.Compare(NotNullableDT, DateTime.Now.Date) < 0 ? "text-danger" : (DateTime.Compare(NotNullableDT, DateTime.Now.Date) == 0 ? "text-orange" : ""))">@(item.RentAgreementExpiryDate == null ? "--" : string.Format("{0:dd MMM yyyy}", item.RentAgreementExpiryDate))</p>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Current Address Since
+                                            </p>
+                                            <p class="detailText">@(item.CurrentAddressSince == null ? "--" : string.Format("{0:dd MMM yyyy}", item.CurrentAddressSince))</p>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Time at current Address <i class="fa fa-info-circle" style="float: right" data-toggle="tooltip" title="Allowed Minimum Years : @item.AllowedMinTimeAtCurrentAddress years"></i>
+                                            </p>
+                                            @if (item.CalculatedTimeAtCurrentAddress != null && item.CalculatedTimeAtCurrentAddress != "" && item.CalculatedTimeAtCurrentAddress != "--")
+                                            {
+                                                <p class="detailText @(Convert.ToInt32(item.CalculatedTimeAtCurrentAddress.Substring(0, 2)) >= Convert.ToInt32(item.AllowedMinTimeAtCurrentAddress)? "" : "text-danger") "><b style="font-weight:600">@(item.CalculatedTimeAtCurrentAddress == null || item.CalculatedTimeAtCurrentAddress == "" ? "--" : item.CalculatedTimeAtCurrentAddress)</b></p>
+                                            }
+                                            else
+                                            {
+                                                <p class="detailText">--</p>
+                                            }
+                                        </div>
+                                        @*<p class="detailText"><b style="font-weight:600">@(item.TimeAtCurrentAddress == null || item.TimeAtCurrentAddress == "" ? "--" : item.TimeAtCurrentAddress)</b></p>*@
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Business Phone No
+                                            </p>
+                                            <p class="detailText">@(item.BusinessPhoneNumber == null || item.BusinessPhoneNumber == "" ? "--" : item.BusinessPhoneNumber)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Email
+                                            </p>
+                                            <p class="detailText" style="text-transform:lowercase">@(item.Email == null || item.Email == "" ? "--" : item.Email)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                NTN No.
+                                            </p>
+                                            <p class="detailText">@(item.NtnNo == null || item.NtnNo == "" ? "--" : item.NtnNo)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Sales Tax No.
+                                            </p>
+                                            <p class="detailText" style="text-transform:lowercase">@(item.SalesTaxNo == null || item.SalesTaxNo == "" ? "--" : item.SalesTaxNo)</p>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Other Businesses
+                                            </p>
+                                            @if (item.isAnyOtherBusiness == null)
+                                            {<p class="detailText">N/A</p> }
+                                            else if (item.isAnyOtherBusiness == false)
+                                            {<p class="detailText">No</p>}
+                                            else if (item.isAnyOtherBusiness == true)
+                                            {<p class="detailText">Yes</p>}
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Number of Businesses
+                                            </p>
+                                            <p class="detailText">@(item.NumberofBusiness == null || item.NumberofBusiness == "" ? "--" : item.NumberofBusiness)</p>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    }
+
+
+
+                    <div class="col-md-12" style="text-align: right;">
+                        <a id="screenBtnBD" href="" data-toggle="modal" data-target="#_BusinessDetail_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                        <a id="discrepentBtnBD" href="" data-toggle="modal" data-target="#_BusinessDetail_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="tab_content" style="padding: 15px 20px">
+                <div class="row">
+                    <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Approved Modal -->
+<div class="modal fade" id="_BusinessDetail_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenBD" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_BusinessDetail_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdBD"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorBD">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentBD" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.BusinessDetailAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnBD').html("<i class='fa fa-check'></i>  Marked Screened");
+            //$('#screenBtnBD').click(false);
+
+
+            $('#discrepentBtnBD').html("Discrepent");
+            //$("#discrepentBtnBD").attr("data-toggle", "modal");
+            //$("#discrepentBtnBD").attr("data-target", "#_businessPlan_discrepent");
+            //$("#discrepentBtnBD").attr("href", "");
+            //$('#screenBtnBD').click(true);
+        }
+        else if (currentState == "Discrepent") {
+
+            $('#discrepentBtnBD').html("<i class='fa fa-times'></i> Marked Discrepent");
+            //$('#discrepentBtnBD').click(false);
+
+            $('#screenBtnBD').html("Screen");
+            //$("#screenBtnBD").attr("data-toggle", "modal");
+            //$("#screenBtnBD").attr("data-target", "#_businessPlan_approved");
+            //$("#screenBtnBD").attr("href", "");
+            //$('#screenBtnBD').click(true);
+
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnBD').toggleClass("d-none");
+            $('#discrepentBtnBD').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenBD').click(function () {
+        debugger;
+        var comment = $('#commentIdBD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'Business Details'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentBD').click(function () {
+        debugger;
+        if (!$('#commentIdBD').val()) {
+            $('#comment_errorBD').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorBD').css("display", "none");
+        }
+        var comment = $('#commentIdBD').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'Business Details','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdBD').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>
+
+
+

@@ -1,0 +1,176 @@
+﻿@model IEnumerable<TFCLPortal.Schedules.Dto.ScheduleListDto>
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<h2>View</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduleType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoanAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Markup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisbursmentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GraceDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deferment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepaymentACnumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BankBranchName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TFCL_Branch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BranchManager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SDE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeffermentStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeffermentEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IRR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Installment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoanStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastInstallmentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearlyMarkup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerDayMarkup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isAuthorizedByBM)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduleType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoanAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Markup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisbursmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GraceDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deferment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepaymentACnumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankBranchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TFCL_Branch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BranchManager)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SDE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeffermentStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeffermentEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IRR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Installment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoanStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastInstallmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearlyMarkup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerDayMarkup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isAuthorizedByBM)
+            </td>
+  
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

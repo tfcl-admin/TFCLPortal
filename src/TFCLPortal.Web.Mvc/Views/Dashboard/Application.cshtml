@@ -1,0 +1,1555 @@
+﻿@using TFCLPortal.Authorization
+
+@{
+    ViewData["Title"] = "Application";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<style>
+    .main-content {
+        padding: 85px 20px 20px;
+        min-height: calc(110vh - 61px);
+    }
+
+    .sticky-top {
+        top: 3.4em;
+    }
+
+    .subnavbar {
+        width: 100%;
+    }
+
+    .disableHeader {
+        background-color: #bbbbbb !important;
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .disableHeaderButOpen {
+        background-color: #bbbbbb !important;
+    }
+
+    .mb-0 {
+        text-transform: uppercase;
+    }
+</style>
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-4 text-left">
+            <h4 class="page-title-text">Application Detail</h4>
+            <h6 class="page-title-breadcrumbs"><a href="~/Dashboard/Dashboard">Home</a> > Track Loan Application > Application Detail</h6>
+        </div>
+        <div class="col-md-4 text-right">
+
+            @*<a href="" class="btn btn-sm btn-outline-success bg1 eft-1" title="Approve File"><i class="fa fa-check"></i></a>*@
+            @*<a href="" class="btn btn-sm btn-outline-danger bg1 eft-1" title="Reject File"><i class="fa fa-times-circle-o"></i> Reject File</a>*@
+        </div>
+        <div class="col-md-4 text-right">
+            @if (ViewBag.appStatus == "Submitted")
+            {
+                <a onclick="$('#ActionBar').toggleClass('d-none')" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back To Listing"> <i class="fa fa-gears"></i></a>
+            }
+            <a href="~/Application/ApplicationDiscrepencies?id=@ViewBag.AppId" target="_blank" class="btn btn-sm btn-outline-success bg1 eft-1" title="Discrepencies"><i class="fa fa-warning"></i> <i class="fa fa-file"></i></a>
+            <a href="~/accountant/UploadedDocuments?applicationid=@ViewBag.AppId" target="_blank" class="btn btn-sm btn-outline-success bg1 eft-1" title="Credit Bureau Files"><i class="fa fa-upload"></i> <i class="fa fa-file"></i></a>
+            <a href="~/Application/Applications" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back To Listing"><i class="fa fa-bold fa-angle-double-left"></i> <i class="fa fa-list"></i></a>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back To Home"><i class="fa fa-bold fa-angle-double-left"></i> <i class="fa fa-home"></i></a>
+        </div>
+    </div>
+
+    <div class="row d-none" id="ActionBar" style="padding-top: 20px;">
+        <div class="col-md-12 text-right">
+            <a href="" class="btn btn-sm btn-outline-success bg1 eft-1" title="Decline Application"><i class="fa fa-print"></i> Print Application</a>
+            <a id="pushApplication" data-toggle="modal" data-target="#PushApplicationModal" class="btn btn-sm btn-outline-success bg1 eft-1" title="Decline Application"><i class="fa fa-forward"></i> Send Application</a>
+            <a id="DeclineApplication" class="btn btn-sm btn-outline-danger bg1 eft-1" style="color:red" title="Decline Application"><i class="fa fa-times"></i> Decline Application</a>
+
+        </div>
+
+    </div>
+
+
+
+    @*<div class="card p-10">
+            <h4 class="">Applications</h4>
+            <div style="text-align: right; float: right;width: 100%;position:absolute;">
+                @if (IsGranted(PermissionNames.Pages_BM) || IsGranted(PermissionNames.Pages_VO))
+
+                {
+                    <a href="~/Application/Applications" class="btn btn-primary bg1 eft-1" title="Back">Back<span></span></a>
+                }
+                else if (IsGranted(PermissionNames.Pages_BA))
+                {
+                    <a href="~/Dashboard/BADocumentsList" class="btn btn-primary bg1 eft-1" title="Back">Back<span></span></a>
+
+                }
+            </div>
+
+        </div>*@
+    <div class="row sticky-top">
+        <div class="col-md-12" style="padding-top: 20px; margin-bottom: 20px; background-color:#fff">
+            <table border="1" width="100%" class="text-center">
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th colspan="3">APPLICANT / RESPONDENT NAME</th>
+                        <th colspan="3">CLIENT / BUSINESS / SCHOOL NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">@ViewBag.appName</td>
+                        <td colspan="3">@ViewBag.SchoolName</td>
+                    </tr>
+                </tbody>
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th>CLIENT ID</th>
+                        <th>APPLICATION DATE</th>
+                        <th>APPLICATION TIME</th>
+                        <th>APPLICATION STATUS</th>
+                        <th>Branch</th>
+                        <th>SDE Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.ApplicationNo</td>
+                        <td>@ViewBag.appDate</td>
+                        <td>@ViewBag.appTime</td>
+                        @if (ViewBag.appStatus == "Discrepent")
+                        {
+                            <td>@ViewBag.appStatus <a id="checkDiscrepency" data-toggle="modal" data-target="#DiscrepencyModal"><i class="fa fa-info-circle"></i></a></td>
+                        }
+                        else
+                        {
+                            <td>@ViewBag.appStatus</td>
+                        }
+                        <td>@ViewBag.branch</td>
+                        <td>@ViewBag.SDE</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+
+
+            <!--Accordion wrapper-->
+            <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header @Html.Raw(ViewBag.isExistLRD == 0 ? "disableHeader" : "")" role="tab" id="headingOne1">
+
+                        <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
+                            <div class="row">
+                                <div class="col-md-10 ">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        1. LOAN REQUISITION DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-2 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+
+                        </a>
+                        @*<div class="col-md-3">
+                                <a href="" class="btn btn-sm btn-outline-success bg1 eft-1" title="Mark Screened"><i class="fa fa-check-circle"></i></a>
+                                <a href="" class="btn btn-sm btn-outline-danger bg1 eft-1" title="Decline Application"><i class="fa fa-times-circle"></i></a>
+                            </div>*@
+
+
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseOne1" class="collapse" role="tabpanel" aria-labelledby="headingOne1"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+
+                            <div id="PartialViewLOANREQUISITIONDETAILS" class="subnavbar"></div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header @Html.Raw(ViewBag.isExistPD == 0 ? "disableHeader" : "")" role="tab" id="headingTwo2">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo2"
+                           aria-expanded="false" aria-controls="collapseTwo2">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        2. PERSONAL DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseTwo2" class="collapse" role="tabpanel" aria-labelledby="headingTwo2"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewPERSONALDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistCD == 0 ? "disableHeader" : "")" role="tab" id="headingThree3">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
+                           aria-expanded="false" aria-controls="collapseThree3">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        3. CONTACT DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewCONTACTDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistBD == 0 ? "disableHeader" : "")" role="tab" id="headingFour4">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFour4"
+                           aria-expanded="false" aria-controls="collapseFour4">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        4. BUSINESS DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseFour4" class="collapse" role="tabpanel" aria-labelledby="headingFour4"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewBUSINESSDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistColD == 0 ? "disableHeader" : "")" role="tab" id="headingFive5">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFive5"
+                           aria-expanded="false" aria-controls="collapseFive5">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        5. COLLATERAL DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseFive5" class="collapse" role="tabpanel" aria-labelledby="headingFive5"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewCOLLATERALDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistED == 0 ? "disableHeader" : "")" role="tab" id="headingSix6">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseSix6"
+                           aria-expanded="false" aria-controls="collapseSix6">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        6. EXPOSURE DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseSix6" class="collapse" role="tabpanel" aria-labelledby="headingSix6"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewEXPOSUREDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistALD == 0 ? "disableHeader" : "")" role="tab" id="headingSeven7">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseSeven7"
+                           aria-expanded="false" aria-controls="collapseSeven7">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        7. ASSET LIABILITY DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseSeven7" class="collapse" role="tabpanel" aria-labelledby="headingSeven7"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewASSETLIABILITYDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistBI == 0 ? "disableHeader" : "")" role="tab" id="headingEight8">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseEight8"
+                           aria-expanded="false" aria-controls="collapseEight8">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        8. BUSINESS INCOME
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseEight8" class="collapse" role="tabpanel" aria-labelledby="headingEight8"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewBUSINESSINCOME" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistAI == 0 ? "disableHeader" : "")" role="tab" id="headingNine9">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseNine9"
+                           aria-expanded="false" aria-controls="collapseNine9">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        9. ASSOCIATED INCOME
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Card body -->
+                    <div id="collapseNine9" class="collapse" role="tabpanel" aria-labelledby="headingNine9"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewASSOCIATEDINCOME" class="subnavbar"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistNAI == 0 ? "disableHeader" : "")" role="tab" id="headingTen10">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTen10"
+                           aria-expanded="false" aria-controls="collapseTen10">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        10. NON ASSOCIATED INCOME
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseTen10" class="collapse" role="tabpanel" aria-labelledby="headingTen10"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewNONASSOCIATEDINCOME" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistBE == 0 ? "disableHeader" : "")" role="tab" id="headingTwelve12">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwelve12"
+                           aria-expanded="false" aria-controls="collapseTwelve12">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        11. BUSINESS EXPENSES
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseTwelve12" class="collapse" role="tabpanel" aria-labelledby="headingTwelve12"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewBUSINESSEXPENSES" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistHHIE == 0 ? "disableHeader" : "")" role="tab" id="headingThirteen13">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThirteen13"
+                           aria-expanded="false" aria-controls="collapseThirteen13">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        12. HOUSEHOLD EXPENSES
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseThirteen13" class="collapse" role="tabpanel" aria-labelledby="headingThirteen13"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewHOUSEHOLDEXPENSES" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistLO == 0 ? "disableHeader" : "")" role="tab" id="headingFourteen14">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFourteen14"
+                           aria-expanded="false" aria-controls="collapseFourteen14">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        13. LOAN ELIGIBILITY
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseFourteen14" class="collapse" role="tabpanel" aria-labelledby="headingFourteen14"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewLOANELIGIBILITY" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistBAD == 0 ? "disableHeader" : "")" role="tab" id="headingFifteen15">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseFifteen15"
+                           aria-expanded="false" aria-controls="collapseFifteen15">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        14. BANK ACCOUNT DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseFifteen15" class="collapse" role="tabpanel" aria-labelledby="headingFifteen15"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewBANKACCOUNTDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistCAD == 0 ? "disableHeaderButOpen" : "")" role="tab" id="headingSixteen16">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseSixteen16"
+                           aria-expanded="false" aria-controls="collapseSixteen16">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        15. CO-APPLICANT DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseSixteen16" class="collapse" role="tabpanel" aria-labelledby="headingSixteen16"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewCO-APPLICANTDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistGD == 0 ? "disableHeaderButOpen" : "")" role="tab" id="headingSeventeen17">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseSeventeen17"
+                           aria-expanded="false" aria-controls="collapseSeventeen17">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        16. GUARANTOR DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseSeventeen17" class="collapse" role="tabpanel" aria-labelledby="headingSeventeen17"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewGUARANTORDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistRD == 0 ? "disableHeader" : "")" role="tab" id="headingEighteen18">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseEighteen18"
+                           aria-expanded="false" aria-controls="collapseEighteen18">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        17. REFERENCES DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseEighteen18" class="collapse" role="tabpanel" aria-labelledby="headingEighteen18"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewREFERENCESDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistSR == 0 ? "disableHeader" : "")" role="tab" id="headingNineteen19">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseNineteen19"
+                           aria-expanded="false" aria-controls="collapseNineteen19">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        18. SDE RECOMMENDATIONS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseNineteen19" class="collapse" role="tabpanel" aria-labelledby="headingNineteen19"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewSDERECOMMENDATIONS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistUD == 0 ? "disableHeader" : "")" role="tab" id="headingTwenty20">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwenty20"
+                           aria-expanded="false" aria-controls="collapseTwenty20">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        19. Uploaded Documents
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseTwenty20" class="collapse" role="tabpanel" aria-labelledby="headingTwenty20"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewUploadedDocuments" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <!--<div class="card">-->
+                <!-- Card header -->
+                <!--<div class="card-header disableHeader" role="tab" id="headingTwentyOne21">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwentyOne21"
+                       aria-expanded="false" aria-controls="collapseTwentyOne21">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="mb-0 _ClickPartialView">
+                                    20. BRANCH CREDIT COMMITTEE DECISION
+                                </h5>
+                            </div>
+                            <div class="col-md-4 text-right icon">
+                                <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>-->
+                <!-- Card body -->
+                <!--<div id="collapseTwentyOne21" class="collapse" role="tabpanel" aria-labelledby="headingTwentyOne21"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewBRANCHCREDITCOMMITTEEDECISION" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>-->
+                <!-- Accordion card -->
+
+            </div>
+
+
+            <!-- Accordion wrapper -->
+
+
+            <div class="bgc-white default-div" style="display:none;">
+                <div class="tab_wrapper filter_tab">
+                    <ul class="tab_list sidebar-menu scrollable pos-r subnavbarul" style="min-height:617px !important; font-size: 12px;">
+                        <li class="active" id="_ClickPartialView">BUSINESS PLAN</li>
+                        <li id="">PERSONAL DETAILS</li>
+                        <li id="_ClickPartialView2">CONTACT DETAILS</li>
+                        <li id="_ClickPartialView">BUSINESS DETAILS</li>
+                        <li id="_ClickPartialView4">OTHER DETAILS</li>
+                        <li id="_ClickPartialView5">BANK A/C DETAILS</li>
+                        <li id="_ClickPartialView">COLLATERAL VALUATION DETAILS</li>
+                        <li id="_ClickPartialView7">EXPOSURE DETAILS</li>
+                        <li id="_ClickPartialView8">ASSET/LIABILITY DETAILS</li>
+                        <li id="_ClickPartialView9">BUSINESS INCOME</li>
+                        <li id="_ClickPartialView10">BUSINESS EXPENSES</li>
+                        <li id="_ClickPartialView11">MONTHLY HOUSEHOLD INCOMES/EXPENSES</li>
+                        <li id="_ClickPartialView12">CO-APPLICANT DETAILS</li>
+                        <li id="_ClickPartialView13">GUARANTOR DETAILS</li>
+                        <li id="_ClickPartialView14">REFERENCES</li>
+                        <li id="_ClickPartialView15">SDE RECOMMENDATIONS</li>
+                        <li id="_ClickPartialView16">Attach Documents</li>
+                        <li id="_ClickPartialView17">LOAN ELIGIBILITY</li>
+                        <li id="_ClickPartialView18">LOAN MORTIZATION SCHEDULE</li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!--Approved Modal -->
+    <div class="modal fade" id="PushApplicationModal" tabindex="-1" role="dialog" style="z-index: 1100;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Send Application</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="InnerContent"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSendToBCC" type="button" class="btn btn-success bg1 ef1">Send to BCC / MCRC</button>
+                    <button id="btnSendToSDE" type="button" class="btn btn-success bg1 ef1">Send to SDE <font class="text-capitalize">(@ViewBag.SDE)</font></button>
+                    <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <!--Approved Modal -->
+    <div class="modal fade" id="DiscrepencyModal" tabindex="-1" role="dialog" style="z-index: 1100;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Discrepency</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="DiscrepencyInnerContent"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+</main>
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+
+
+          $('#pushApplication').click(function () {
+
+              var AppId = '@ViewBag.AppId';
+              $('#InnerContent').html("<p class='text-center' ><img width='50px' src='/Theame/images/loader.gif'/> Loading ...</p>");
+
+              $('#btnSendToBCC').prop('disabled', false);
+              $('#btnSendToSDE').prop('disabled', false);
+
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/getFormWiseStatus")',
+                    data: {'ApplicationId':AppId} ,
+                     success: function (data) {
+
+                        $('#btnSendToBCC').prop('disabled', true);
+                        $('#btnSendToSDE').prop('disabled', true);
+
+                        if (data.result != null && data.result != "") {
+
+
+                            var returnData = data.result;
+
+                            var content = "<table class='table table-striped'>";
+                            content += '<thead class="text-white"><th>Sr.</th><th>Form Name</th><th>Status</th><th>Reason</th></thead>';
+                            content += '<tr><td>1</td><td>Loan Requisition Details</td>' + getStatus('LRD', returnData) + '</tr>';
+                            content += '<tr><td>2</td><td>Personal Details</td>' + getStatus('PD', returnData) + '</tr>';
+                            content += '<tr><td>3</td><td>Contact Details</td>' + getStatus('CD', returnData) + '</tr>';
+                            content += '<tr><td>4</td><td>Business Details</td>' + getStatus('BD', returnData) + '</tr>';
+                            content += '<tr><td>5</td><td>Collateral Details</td>' + getStatus('ColD', returnData) + '</tr>';
+                            content += '<tr><td>6</td><td>Exposure Details</td>' + getStatus('ED', returnData) + '</tr>';
+                            content += '<tr><td>7</td><td>Asset Liability Details</td>' + getStatus('ALD', returnData) + '</tr>';
+                            content += '<tr><td>8</td><td>Business Income</td>' + getStatus('BI', returnData) + '</tr>';
+                            content += '<tr><td>9</td><td>Associated Income</td>' + getStatus('AI', returnData) + '</tr>';
+                            content += '<tr><td>10</td><td>Non-Associated Income</td>' + getStatus('NAI', returnData) + '</tr>';
+                            content += '<tr><td>11</td><td>Business Expenses</td>' + getStatus('BE', returnData) + '</tr>';
+                            content += '<tr><td>12</td><td>Household Expenses</td>' + getStatus('HE', returnData) + '</tr>';
+                            content += '<tr><td>13</td><td>Loan Eligibility</td>' + getStatus('LE', returnData) + '</tr>';
+                            content += '<tr><td>14</td><td>Bank Account Details</td>' + getStatus('BAD', returnData) + '</tr>';
+                            content += '<tr><td>15</td><td>Co-Applicant Details</td>' + getStatus('CAD', returnData) + '</tr>';
+                            content += '<tr><td>16</td><td>Guarantor Details</td>' + getStatus('GD', returnData) + '</tr>';
+                            content += '<tr><td>17</td><td>References Details</td>' + getStatus('RD', returnData) + '</tr>';
+                            content += '<tr><td>18</td><td>SDE Recommendations</td>' + getStatus('SDE', returnData) + '</tr>';
+                            content += '<tr><td>19</td><td>Uploaded Documents</td>' + getStatus('UD', returnData) + '</tr>';
+
+                            content += "</table>";
+
+                            $('#InnerContent').html(content);
+
+                            if (returnData.length > 16) { //Number Of screens to Check must
+
+
+                                //enabling SDE button Start
+                                var discrepentCounter = 0;
+
+                                returnData.forEach(function (item) {
+                                    if (item.actionType == 'Discrepent') {
+                                        discrepentCounter++;
+                                    }
+                                });
+
+
+                                if (discrepentCounter > 0) {
+                                    $('#btnSendToSDE').prop('disabled', false);
+                                }
+                                //enabling SDE button End
+
+                                //enabling BCC button Start
+                                else if (discrepentCounter == 0) {
+                                    $('#btnSendToBCC').prop('disabled', false);
+
+                                }
+                                //enabling BCC button End
+
+
+                            }
+                            else {
+                                $('#btnSendToBCC').prop('disabled', true);
+                                $('#btnSendToSDE').prop('disabled', true);
+
+                            }
+
+                        }
+                        else {
+                            var content = "<table class='table table-striped'>";
+                            content += '<thead class="text-white"><th>Sr.</th><th>Form Name</th><th>Status</th><th>Reason</th></thead>';
+                            content += '<tr><td>1</td><td>Loan Requisition Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>2</td><td>Personal Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>3</td><td>Contact Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>4</td><td>Business Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>5</td><td>Collateral Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>6</td><td>Exposure Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>7</td><td>Asset Liability Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>8</td><td>Business Income</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>9</td><td>Associated Income</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>10</td><td>Non-Associated Income</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>11</td><td>Business Expenses</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>12</td><td>Household Expenses</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>13</td><td>Loan Eligibility</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>14</td><td>Bank Account Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>15</td><td>Co-Applicant Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>16</td><td>Guarantor Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>17</td><td>References Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>18</td><td>SDE Recommendations</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>19</td><td>Uploaded Documents</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+
+                            content += "</table>";
+
+                            console.log(content);
+                            $('#InnerContent').html(content);
+
+                        }
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        //console.log(data);
+                    }
+                });
+
+
+            });
+
+
+
+            function getStatus(str, arr) {
+
+                switch (str) {
+                    case 'LRD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'loanrequisitiondetails') {
+                                //abp.notify.success('loanrequisitiondetails', "Success");
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'PD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'personaldetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'CD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'contactdetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'BD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'businessdetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'ColD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'collateraldetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'ED':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'exposuredetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'ALD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'assetliabilitydetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'BI':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'businessincome') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'AI':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'associatedincome') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'NAI':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'nonassociatedincome') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'BE':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'businessexpenses') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'HE':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'householdexpenses') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'LE':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'loaneligibility') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'BAD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'bankaccountdetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'CAD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'co-applicantdetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'GD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'guarantordetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'RD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'referencesdetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'SDE':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'sderecommendations') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'UD':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'uploadeddocuments') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+
+
+
+                    default:
+                        return "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                }
+            }
+
+            function getAction(str) {
+
+                switch (str) {
+                    case 'Screened': return '<font color="green"><i class="fa fa-check-circle"></i> Screened</font>'; break;
+                    case 'Discrepent': return '<font color="red"><i class="fa fa-times-circle"></i> Discrepent</font>'; break;
+                }
+
+            }
+
+            function getReason(str) {
+
+                if (str != null) {
+                    return str;
+                }
+                else {
+                    return '--';
+                }
+
+            }
+
+
+
+            $('#btnSendToSDE').click(function () {
+
+                //abp.notify.success("success", "success");
+                var AppId = '@ViewBag.AppId';
+
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/PushDiscrepentFormsToSDE")',
+                    data: {'ApplicationId':AppId} ,
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         window.location.reload();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        //console.log(data);
+                    }
+                });
+
+            });
+
+            $('#btnSendToBCC').click(function (e) {
+
+                $('#btnSendToBCC').html("Loading ...");
+                $('#InnerContent').html("<div class='col-md-12 text-center'><img width='60px' src='/Theame/images/loader.gif'/></div>");
+                e.preventDefault();
+                //abp.notify.success("success", "success");
+                var AppId = '@ViewBag.AppId';
+
+
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/PushToBCC")',
+                    data: {'ApplicationId':AppId} ,
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         window.location.reload();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        //console.log(data);
+                    }
+                });
+
+
+            });
+
+            $('#checkDiscrepency').click(function () {
+
+
+                //abp.notify.success("success", "success");
+                var AppId = '@ViewBag.AppId';
+
+                $('#DiscrepencyInnerContent').html("<p class='text-center' ><img width='50px' src='/Theame/images/loader.gif'/> Loading ...</p>");
+
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/ListDiscrepencies")',
+                    data: {'ApplicationId':AppId} ,
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         if (data.result != null && data.result != "") {
+
+
+                             var returnData = data.result;
+
+                             var content = "<table class='table table-striped'>";
+                             content += '<thead class="text-white"><th>Sr.</th><th>Form Name</th><th style="width: 400px">Reason</th><th>Marked On</th></thead>';
+                             var i = 1;
+                             returnData.forEach(function (item) {
+                                 content += '<tr><td>' + (i++) + '</td><td>' + getScreenNameByCode(item.screenName) + '</td><td>' + item.reason + '</td><td>' + getDate(item.dateOfDiscrepency) + '</td></tr>';
+                             });
+
+                             content += "</table>";
+
+                             $('#DiscrepencyInnerContent').html(content);
+
+
+                         }
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        //console.log(data);
+                    }
+                });
+
+
+
+
+            });
+
+            function getScreenNameByCode(str) {
+                console.log(str);
+                switch (str) {
+                    case 'loanrequisitiondetails':
+                        return 'Loan Requisition Details'; break;
+                    case 'personaldetails':
+                        return 'Personal Details'; break;
+                    case 'contactdetails':
+                        return 'Contact Details'; break;
+                    case 'businessdetails':
+                        return 'Business Details'; break;
+                    case 'collateraldetails':
+                        return 'Collateral Details'; break;
+                    case 'assetliabilitydetails':
+                        return 'Asset Liability Details'; break;
+                    case 'businessincome':
+                        return 'Business Income'; break;
+                    case 'associatedincome':
+                        return 'Associated Income'; break;
+                    case 'nonassociatedincome':
+                        return 'Non Associated Income'; break;
+                    case 'businessexpenses':
+                        return 'Business Expenses'; break;
+                    case 'householdexpenses':
+                        return 'Household Expenses'; break;
+                    case 'loaneligibility':
+                        return 'Loan Eligibility'; break;
+                    case 'bankaccountdetails':
+                        return 'Bank Account Details'; break;
+                    case 'co-applicantdetails':
+                        return 'Co-Applicant Details'; break;
+                    case 'guarantordetails':
+                        return 'Guarantor Details'; break;
+                    case 'referencesdetails':
+                        return 'Reference Details'; break;
+                    case 'sderecommendations':
+                        return 'SDE Recommendations'; break;
+                    case 'dependentseducationdetails':
+                        return 'Dependents Education Details'; break;
+                    case 'inventorydetails':
+                        return 'Inventory Details'; break;
+                    case 'salesdetails':
+                        return 'Sales Details'; break;
+                    case 'purchasedetails':
+                        return 'Purchase Details'; break;
+                     case 'uploadeddocuments':
+                        return 'Upload Documents'; break;
+                    default:
+                        return 'Error : Screen Name Not Found'; break;
+                }
+            }
+
+            function getDate(str) {
+
+                var date = new Date(str);
+
+                var month = new Array();
+                month[0] = "Jan";
+                month[1] = "Feb";
+                month[2] = "Mar";
+                month[3] = "Apr";
+                month[4] = "May";
+                month[5] = "Jun";
+                month[6] = "Jul";
+                month[7] = "Aug";
+                month[8] = "Sep";
+                month[9] = "Oct";
+                month[10] = "Nov";
+                month[11] = "Dec";
+
+                var year = date.getFullYear(),
+                    monthName = month[date.getMonth()],
+                    day = date.getDate(),
+                    hour = date.getHours(),
+                    minute = date.getMinutes(),
+                    second = date.getSeconds(),
+                    hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
+                    minuteFormatted = minute < 10 ? "0" + minute : minute,
+                    morning = hour < 12 ? "am" : "pm";
+
+                return day + " " +monthName + " " + year + " " + hourFormatted + ":" +
+                    minuteFormatted +" "+ morning;
+            }
+
+            @*var AppId = '@ViewBag.AppId';
+            console.log(AppId);
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/ReturnPartialView")',
+                    data: { 'viewName': 'LOAN REQUISITION DETAILS','ApplicationId':AppId} ,
+                    success: function (data) {
+
+                        if (data!=null) {
+                            $('#PartialViewBUSINESSPLAN').html("");
+                            $('#PartialViewBUSINESSPLAN').html(data);
+                        }
+                        else
+                            abp.notify.error("Some error occure contact with admin..!", "error");
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });*@
+
+
+
+            $('._ClickPartialView').click(function () {
+
+                var row = $(this).closest('.row');
+                var Divhtml = row.find('.icon').html();
+
+                if (Divhtml.includes('fa-angle-down')) {
+                    Divhtml = Divhtml.replace('fa-angle-down', 'fa-angle-up');
+                }
+                else if (Divhtml.includes('fa-angle-up')) {
+                    Divhtml = Divhtml.replace('fa-angle-up', 'fa-angle-down');
+                }
+                row.find('.icon').html(Divhtml);
+
+
+                var value = $(this).text().trim();
+                value = value.replace(/[0-9]+./g, '');
+                value = value.trim();
+
+                var AppId = '@ViewBag.AppId';
+                var value2 = value.replace(/\s/g, '');
+                $('#PartialView' + value2.trim()).html("<p class='text-center' ><img width='50px' src='/Theame/images/loader.gif'/> Loading ...</p>");
+
+
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/ReturnPartialView")',
+                    data: { 'viewName': value,'ApplicationId':AppId} ,
+                    success: function (data) {
+
+
+                        if (data != null) {
+
+                            value = value.replace(/\s/g, '');
+                            $('#PartialView' + value.trim()).html("");
+                            $('#PartialView' + value.trim()).html(data);
+                            document.getElementById('PartialView' + value.trim()).scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+
+
+
+                        }
+                        else
+                            abp.notify.error("Some error occure contact with admin..!", "error");
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        //console.log(data);
+                    }
+                });
+            });
+
+
+        });
+
+
+
+                $('#DeclineApplication').click(function () {
+
+                var AppId = '@ViewBag.AppId';
+            var clientid = '@ViewBag.ApplicationNo';
+            if (confirm('Proceed to Decline Application : ' + clientid)) {
+                window.location = '/Dashboard/DeclineApplication?ApplicationId=' + AppId;
+            }
+
+        });
+
+    </script>
+
+}

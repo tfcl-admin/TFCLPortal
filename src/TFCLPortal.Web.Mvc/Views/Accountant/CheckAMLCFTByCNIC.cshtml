@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Search CNIC number
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > AML CFT Check
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div class="row" style="margin-top:100px;margin-bottom:200px">
+            <div class="col-md-3 text-right">
+                <h4>Search CNIC :</h4>
+            </div>
+            <div class="col-md-6">
+                <input type="number" id="cnicText" placeholder="CNIC without - (3754815465445)" maxlength="13" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-outline-success" id="search" ><i class="fa fa-search"></i> Search</a>
+            </div>
+            <div class="col-md-12 text-center" id="result" style="margin-top:50px">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/js/printThis-master/printThis.js"></script>
+
+<script>
+
+    var getJson = @Html.Raw(Json.Serialize(ViewBag.JsonData));
+    var allResults = getJson.value;
+
+    function result() {
+        alert('tst');
+        var cnicVal = $('#cnicText').val();
+        if (cnicVal.length != 13) {
+            alert('Please Enter Valid CNIC number');
+        }
+        else {
+            var found = allResults.filter(x => x.cnic == cnicVal).length;
+            if (found > 0) {
+                $('#result').html('<span class="text-danger"><i class="fa fa-check fa-5x "></i> <h2>Found</h2></span> <a class="btn btn-outline-success" id="printLink" onclick="printDiv();">Print Details</a>');
+                var result = allResults.filter(x => x.cnic == cnicVal);
+
+                var content = '<table width="100%" border="1" class="tbl" style="margin-top:20px">';
+                content += '<thead class="text-white">';
+                content += '<tr>';
+                content += '<th>Name</th>';
+                content += '<th>Father Name</th>';
+                content += '<th>CNIC</th>';
+                content += '<th>Province</th>';
+                content += '<th>District</th>';
+                content += '</tr>';
+                content += '</thead>';
+                content += '<tbody>';
+                content += '<tr>';
+                content += '<td>' + result[0].name + '</td>';
+                content += '<td>' + result[0].fatherName + '</td>';
+                content += '<td>' + result[0].cnic + '</td>';
+                content += '<td>' + result[0].province + '</td>';
+                content += '<td>' + result[0].district + '</td>';
+                content += '</tr>';
+                content += '</tbody>';
+                content += '</table>';
+
+                $('#result').append(content);
+            }
+            else {
+                $('#result').html('<span class="text-success"><i class="fa fa-times fa-5x "></i> <h2>Not Found</h2></span> <a class="btn btn-outline-success" id="printLink" onclick="printDiv();">Print Details</a>');
+            }
+
+
+            var today = new Date();
+
+            $('#result').append("Searched at " + today.toString().substr(0, 24));
+        }
+
+    }
+       
+
+
+    function printDiv() {
+        alert('tst');
+        $("#printLink").addClass("d-none");
+        $("#result").printThis();
+    }
+
+
+
+</script>

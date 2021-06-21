@@ -1,0 +1,335 @@
+﻿@model TFCLPortal.ExposureDetails.Dto.ExposureDetailListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .striped-border {
+        border: 2px dashed #000;
+        width: 85%;
+        margin: auto;
+        margin-top: 1%;
+        margin-bottom: 2%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Existing exposure as on
+                    </p>
+                    <p class="detailText">@(Model.ExistingExposureAsOn == null ? "--" : string.Format("{0:MMM yyyy}", Model.ExistingExposureAsOn))</p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Existing Exposure
+                    </p>
+                    <p class="detailText">@(Model.ExistingBankExposure == null || Model.ExistingBankExposure == "" ? "--" : Model.ExistingBankExposure)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Credit Bureau Generation
+                    </p>
+                    <p class="detailText">@(Model.CreditBureauGeneration == null ? "--" : string.Format("{0:dd MMM yyyy}", Model.CreditBureauGeneration))</p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Have you guaranteed loan from FI
+                    </p>
+                    <p class="detailText">@(Model.GuaranteedFiLoan == null || Model.GuaranteedFiLoan == "" ? "--" : Model.GuaranteedFiLoan)</p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Guarantee Amount (FI)
+                    </p>
+                    @*<p class="detailText">@(Model.guaranteedAmountFI == null || Model.TotalAmount == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse(Model.guaranteedAmountFI)))</p>*@
+                    <p class="detailText">@(Model.guaranteedAmountFI == null || Model.guaranteedAmountFI == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.guaranteedAmountFI).Replace(",",""))))</p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Have you guaranteed TFCL loan?
+                    </p>
+                    <p class="detailText">@(Model.GuaranteedTFCLLoan == null || Model.GuaranteedTFCLLoan == "" ? "--" : Model.GuaranteedTFCLLoan)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Guarantee Amount (TFCL)
+                    </p>
+                    <p class="detailText">@(Model.GuaranteeTFCLAmount == null || Model.GuaranteeTFCLAmount == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((Model.GuaranteeTFCLAmount).Replace(",",""))))</p>
+                </div>
+
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Application Number Guarantee Given
+                    </p>
+                    <p class="detailText">@(Model.AppNoTfclLoanGuarantee == null || Model.AppNoTfclLoanGuarantee == "" ? "--" : Model.AppNoTfclLoanGuarantee)</p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Applicant Name Guarantee Given
+                    </p>
+                    <p class="detailText">@(Model.ApplicantNameTfclLoanGuarantee == null || Model.ApplicantNameTfclLoanGuarantee == "" ? "--" : Model.ApplicantNameTfclLoanGuarantee)</p>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>
+                            Name of Bank / Financial Institution
+                        </th>
+                        <th>
+                            Others
+                        </th>
+                        <th>
+                            Credit Bureau Reported
+                        </th>
+                        <th>
+                            Type of Facility
+                        </th>
+                        <th>
+                            Expiry Date
+                        </th>
+                        <th>
+                            Loan Amount
+                        </th>
+                        <th>
+                            Outstanding Amount
+                        </th>
+                        <th>
+                            Instalment / Min. Payment
+                        </th>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in @Model.exposureDetailsList)
+                            {
+                                <tr>
+                                    <td>@(item.BankNameString == null || item.BankNameString == "" ? "--" : item.BankNameString)</td>
+                                    <td>@(item.Others == null || item.Others == "" ? "--" : item.Others)</td>
+                                    <td>@(item.CreditBureauReported == null || item.CreditBureauReported == "" ? "--" : item.CreditBureauReported)</td>
+                                    <td>@(item.TypeOfFacilityTE == null || item.TypeOfFacilityTE == "" ? "--" : item.TypeOfFacilityTE)</td>
+                                    <td>@(item.ExpiryDate == null ? "--" : string.Format("{0:dd MMM yyyy}", item.ExpiryDate))</td>
+                                    <td>@(item.LoanAmount == 0 ? "0" : string.Format("{0:#,##0}", item.LoanAmount))</td>
+                                    <td>@(item.OutstandingAmount == 0 ? "0" : string.Format("{0:#,##0}", item.OutstandingAmount))</td>
+                                    <td>@(item.MonthlyInstallmentPayment == 0 ? "0" : string.Format("{0:#,##0}", item.MonthlyInstallmentPayment))</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6" class="text-right">
+                                    Total
+                                </td>
+                                <td>@(Model.TotalAmount == null || Model.TotalAmount=="" ? "0" : string.Format("{0:#,##0}", Int32.Parse((Model.TotalAmount).Replace(",", ""))))</td>
+                                <td>@( Model.TotalInstallmentpayment == 0 ? "0" : string.Format("{0:#,##0}", Model.TotalInstallmentpayment))</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+
+            @*<div class="row">
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Total Outstanding Amount
+                        </p>
+                        <p class="detailText">@(Model.TotalAmount == null ? "--" : string.Format("{0:#,##0}", Model.TotalAmount))</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Total MOnthly Installment Payment
+                        </p>
+                        <p class="detailText">@(Model.TotalInstallmentpayment == 0 ? "--" : string.Format("{0:#,##0}", Model.TotalInstallmentpayment))</p>
+                    </div>
+
+                </div>*@
+
+
+        </div>
+
+        <div class="col-md-12" style="text-align: right;">
+            <a id="screenBtnED" href="" data-toggle="modal" data-target="#_ExposureDetail_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+            <a id="discrepentBtnED" href="" data-toggle="modal" data-target="#_ExposureDetail_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+        </div>
+
+        <!--Irfan-->
+        @*<div class="col-md-12" style="text-align: right; display:none">
+                <a href="" data-toggle="modal" data-target="#_ExposureDetail_approved" class="btn btn-success bg1 eft-1" title="Approved">Approved</a>
+                <a href="" data-toggle="modal" data-target="#_ExposureDetail_discrepant" class="btn btn-warning bg1 eft-1" title="discrepant">Discrepant</a>
+            </div>*@
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+<!--Approved Modal -->
+<div class="modal fade" id="_ExposureDetail_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenED" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_ExposureDetail_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdED"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorED">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentED" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.ExposureAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnED').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnED').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnED').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnED').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnED').toggleClass("d-none");
+            $('#discrepentBtnED').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenED').click(function () {
+        debugger;
+        var comment = $('#commentIdED').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'Exposure Details'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentED').click(function () {
+        debugger;
+        if (!$('#commentIdED').val()) {
+            $('#comment_errorED').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorED').css("display", "none");
+        }
+        var comment = $('#commentIdED').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'Exposure Details','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdED').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

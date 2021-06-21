@@ -1,0 +1,132 @@
+﻿@model TFCLPortal.WriteOffs.Dto.CreateWriteOff
+
+@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Write Off Loan
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Loan Recovery > Write Off Loan
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <form asp-action="CreateWriteOff" method="post">
+                <div class="row">
+                    <input asp-for="ApplicationId" type="hidden" id="ApplicationId" value="@ViewBag.Applicationid" />
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Client ID</label>
+                            <input type="text" value="@ViewBag.ClientId" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Applicant Name</label>
+                            <input type="text" value="@ViewBag.ClientName" readonly="readonly" class="form-control text-uppercase" />
+                        </div>
+
+                    </div>
+                 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Write Off O/S Principal Amount</label>
+                            <input asp-for="OsPrincipalAmount" value="@ViewBag.OsPrincipalAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Write Off O/S Markup Amount</label>
+                            <input asp-for="OsMarkupAmount" value="@ViewBag.OsMarkupAmount" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Total Amount Payable (Rs)</label>
+                            <input asp-for="TotalAmountPayable" readonly="readonly" value="@(string.Format("{0:#,##0}", ViewBag.TotalPayable))"  class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Recovery Status</label>
+                            @Html.DropDownList("RecoveryStatus", new List<SelectListItem> { new SelectListItem { Text = "Partial Recovery" },new SelectListItem { Text = "Full Settlement" },new SelectListItem { Text = "Settlement With Rebate" } }, "Select Recovery Status", htmlAttributes: new { @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Rebate (%)</label>
+                            <input asp-for="RebatePercentage" min="0" max="100" maxlength="3" value="0" class="form-control"   />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Total Amount Payable After Rebate (Rs)</label>
+                            <input asp-for="TotalAmountPayableRebate" value="@(string.Format("{0:#,##0}", ViewBag.TotalPayable))" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount Deposited (Rs)</label>
+                            <input asp-for="AmountDeposited" class="form-control" />
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
+                    </div>
+                </div>
+</form>
+        </div>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+
+<script>
+
+    $(function () {
+
+            $('#RebatePercentage').on('input', function (e) {
+            var rebate = Number(this.value);
+
+            if (rebate > 100) {
+                abp.notify.error("Rebate Percentage Value Should be less than 100%", "error");
+            }
+            else {
+
+                var payable = Number($('#TotalAmountPayable').val().replaceAll(",",""));
+
+                var afterRebate = payable - (payable * (rebate / 100));
+
+                $('#TotalAmountPayableRebate').val(numberWithCommas(afterRebate));
+            }
+
+
+        });
+
+        function numberWithCommas(x) {
+            x = Math.round(x);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+    });
+
+</script>

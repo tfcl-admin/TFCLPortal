@@ -1,0 +1,501 @@
+﻿@model TFCLPortal.LoanEligibilities.Dto.LoanEligibilityListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+
+    .text-bold {
+        font-weight: 600;
+    }
+
+    .text-red {
+        color: red !important;
+        border-top: 1px solid #008c45;
+    }
+
+    .text-green {
+        color: green !important;
+        border-top: 1px solid #008c45;
+    }
+</style>
+@if (@Model != null)
+{
+<div class="tab_content">
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+
+    <div class="row">
+        <div class="col-md-3">
+            <p class="detailHeading">loan amount requried</p>
+            <p class="detailText">@(Model.LoanAmountRequried == null || Model.LoanAmountRequried == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.LoanAmountRequried)))</p>
+        </div>
+        <div class="col-md-3">
+            <p class="detailHeading">loan Tenure requested</p>
+            <p class="detailText">@(Model.LoanTenureRequested == null || Model.LoanTenureRequested == ""  ? "--" : string.Format("{0:#,##0}", decimal.Parse(Model.LoanTenureRequested)))</p>
+        </div>
+        <div class="col-md-3">
+            <p class="detailHeading">number of installment(s) per year</p>
+            <p class="detailText">@(Model.NuOfInstallmentPerYear == null || Model.NuOfInstallmentPerYear == ""  ? "--" : string.Format("{0:#,##0}", decimal.Parse(Model.NuOfInstallmentPerYear)))</p>
+        </div>
+        <div class="col-md-3">
+            <p class="detailHeading">mark-up (%)</p>
+            <p class="detailText">@(Model.Mark_Up == null || Model.Mark_Up == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.Mark_Up)))</p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Monthly School Fee Income
+            </p>
+            <p class="detailText">@(Model.MonthlySchoolFeeIncome == null || Model.MonthlySchoolFeeIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlySchoolFeeIncome)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Monthly School Expenses
+            </p>
+            <p class="detailText">@(Model.MonthlySchoolExpenses == null || Model.MonthlySchoolExpenses == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlySchoolExpenses)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Sharing %age
+            </p>
+            @*@{ Model.SchoolSharingPercentage = "50";}*@
+            <p class="detailText">@(Model.SchoolSharingPercentage == null || Model.SchoolSharingPercentage == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.SchoolSharingPercentage)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Considered Monthly School Fee Income
+            </p>
+            <p class="detailText">@(Model.MonthlySchoolFeeIncome == null || Model.MonthlySchoolFeeIncome == "" || Model.SchoolSharingPercentage == null || Model.SchoolSharingPercentage == "" ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlySchoolFeeIncome.Replace(",",""))* (decimal.Parse(Model.SchoolSharingPercentage.Replace("%", "")) /100)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Considered Monthly School Expenses
+            </p>
+            <p class="detailText">@(Model.MonthlySchoolExpenses == null || Model.MonthlySchoolExpenses == "" || Model.SchoolSharingPercentage == null || Model.SchoolSharingPercentage == "" ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlySchoolExpenses.Replace(",",""))* (decimal.Parse(Model.SchoolSharingPercentage.Replace("%", "")) /100)))</p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Monthly Academy Fee Income
+            </p>
+            <p class="detailText">@(Model.MonthlyAcademyFeeIncome == null || Model.MonthlyAcademyFeeIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlyAcademyFeeIncome)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Monthly Academy Expenses
+            </p>
+            <p class="detailText">@(Model.MonthlyAcademyExpenses == null || Model.MonthlyAcademyExpenses == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlyAcademyExpenses)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Sharing %age
+            </p>
+            @*@{ Model.AcademySharingPercentage = "50";}*@
+            <p class="detailText">@(Model.AcademySharingPercentage == null || Model.AcademySharingPercentage == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.AcademySharingPercentage)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Considered Monthly Academy Fee Income
+            </p>
+            <p class="detailText">@(Model.MonthlyAcademyFeeIncome == null || Model.MonthlyAcademyFeeIncome == "" || Model.AcademySharingPercentage == null || Model.AcademySharingPercentage == "" ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlyAcademyFeeIncome.Replace(",",""))* (decimal.Parse(Model.AcademySharingPercentage.Replace("%", "")) /100)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Considered Monthly Academy Expenses
+            </p>
+            <p class="detailText">@(Model.MonthlyAcademyExpenses == null || Model.MonthlyAcademyExpenses == "" || Model.AcademySharingPercentage == null || Model.AcademySharingPercentage == "" ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlyAcademyExpenses.Replace(",",""))* (decimal.Parse(Model.AcademySharingPercentage.Replace("%", "")) /100)))</p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Total Associated Income
+            </p>
+            <p class="detailText">@(Model.TotalAssociatedIncome == null || Model.TotalAssociatedIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.TotalAssociatedIncome)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Sharing %age
+            </p>
+            <p class="detailText">@(Model.AssociatedSharingPercentage == null || Model.AssociatedSharingPercentage == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.AssociatedSharingPercentage)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Net Associated Income
+            </p>
+            <p class="detailText ">@(Model.NetAssociatedIncome == null || Model.NetAssociatedIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.NetAssociatedIncome)))</p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Total School & Academy Income Before Expenses
+            </p>
+            <p class="detailText">@(Model.TotalSchoolnAssociatedIncomeBeforeExpenses == null || Model.TotalSchoolnAssociatedIncomeBeforeExpenses == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.TotalSchoolnAssociatedIncomeBeforeExpenses)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Total School & Academy Expenses
+            </p>
+            <p class="detailText">@(Model.TotalSchoolnAcademyExpenses == null || Model.TotalSchoolnAcademyExpenses == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.TotalSchoolnAcademyExpenses)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                %age of S&A Expenses against S&A Income
+            </p>
+            <p class="detailText">@(Model.PercentageSAExpenseAgainstSAIncome == null || Model.PercentageSAExpenseAgainstSAIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.PercentageSAExpenseAgainstSAIncome)))</p>
+        </div>
+
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Minimum Considered %age
+            </p>
+            <p class="detailText">@(Model.MinConsideredPercentage == null || Model.MinConsideredPercentage == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.MinConsideredPercentage)))</p>
+        </div>
+
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Considered School & Academy Expenses
+            </p>
+            <p class="detailText">@(Model.ConsideredSnAExpenses == null || Model.ConsideredSnAExpenses == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.ConsideredSnAExpenses)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Total School & Associated Income Net of Expenses
+            </p>
+            <p class="detailText">@(Model.TotalSchoolnAssociatedNetExpense == null || Model.TotalSchoolnAssociatedNetExpense == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.TotalSchoolnAssociatedNetExpense)))</p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Total Non-Associated Income
+            </p>
+            <p class="detailText">@(Model.TotalNonAssociatedIncome == null || Model.TotalNonAssociatedIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.TotalNonAssociatedIncome)))</p>
+        </div>
+
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Sharing %age
+            </p>
+            <p class="detailText">@(Model.NonAssociatedSharingPercentage == null || Model.NonAssociatedSharingPercentage == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.NonAssociatedSharingPercentage)))</p>
+        </div>
+
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Net Non-Associated Income
+            </p>
+            <p class="detailText">@(Model.NetNonAssociatedIncome == null || Model.NetNonAssociatedIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.NetNonAssociatedIncome)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                %age of NAI against Total School Revenue
+            </p>
+            <p class="detailText">@(Model.PercentageOfNAIAgainstTotalSchRevenue == null || Model.PercentageOfNAIAgainstTotalSchRevenue == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.PercentageOfNAIAgainstTotalSchRevenue)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Maximum Considered %age
+            </p>
+            <p class="detailText">@(Model.NonAssociatedMaxConsideredPercentage == null || Model.NonAssociatedMaxConsideredPercentage == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.NonAssociatedMaxConsideredPercentage)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Considered Non-Associated Income
+            </p>
+            <p class="detailText">@(Model.ConsideredNonAssociatedIncome == null || Model.ConsideredNonAssociatedIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.ConsideredNonAssociatedIncome)))</p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Gross Total Income
+            </p>
+            <p class="detailText">@(Model.GrossIncome == null || Model.GrossIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.GrossIncome)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Monthly Exposure
+            </p>
+            <p class="detailText">@(Model.MonthlyExposure == null || Model.MonthlyExposure == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlyExposure)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Net Income Before HH Exp
+            </p>
+            <p class="detailText">@(Model.NetIncomeBeforeHHexp == null || Model.NetIncomeBeforeHHexp == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.NetIncomeBeforeHHexp)))</p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Monthly Household Expenses
+            </p>
+            <p class="detailText">@(Model.MonthlyHouseHoldExpense == null || Model.MonthlyHouseHoldExpense == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlyHouseHoldExpense)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                %age of HHE against Net Business Income
+            </p>
+            <p class="detailText">@(Model.PercentageOfHHEAgainstNetBusinessIncome == null || Model.PercentageOfHHEAgainstNetBusinessIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.PercentageOfHHEAgainstNetBusinessIncome)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Minimum Considered %age
+            </p>
+            <p class="detailText">@(Model.MinConsideredPercentageOfHHE == null || Model.MinConsideredPercentageOfHHE == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.MinConsideredPercentageOfHHE)))</p>
+        </div>
+
+        <div class="col-md-4">
+            <p class="detailHeading">
+                HHE Considered Amount
+            </p>
+            <p class="detailText">@(Model.ConsideredAmountHHE == null || Model.ConsideredAmountHHE == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.ConsideredAmountHHE)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Max Income for TFCL Payment
+            </p>
+            <p class="detailText">@(Model.MaxIncomeForTFCL == null || Model.MaxIncomeForTFCL == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MaxIncomeForTFCL)))</p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                TFCL EMI Payment
+            </p>
+            <p class="detailText">@(Model.MonthlyPaymentEmi == null || Model.MonthlyPaymentEmi == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MonthlyPaymentEmi)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Instalment Ratio (%)
+            </p>
+            <p class="detailText">@(Model.InstallmentRatio == null || Model.InstallmentRatio == ""  ? "--" : string.Format("{0:#,##0.##}%", decimal.Parse(Model.InstallmentRatio)))</p>
+        </div>
+    </div>
+
+
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                All Collaterals Market Price
+            </p>
+            <p class="detailText">@(Model.AllCollateralMarketValue == null || Model.AllCollateralMarketValue == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.AllCollateralMarketValue)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Max Financing Allowed as per LTV of All Collaterals
+            </p>
+            <p class="detailText">@(Model.MaxAllowedLTVAllCollateral == null || Model.MaxAllowedLTVAllCollateral == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(Model.MaxAllowedLTVAllCollateral)))</p>
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading">
+                Actual LTV %age
+            </p>
+            <p class="detailText">@(Model.ActualLTVPercentageAllCollateral == null || Model.ActualLTVPercentageAllCollateral == ""  ? "--" : string.Format("{0:#,##0.##} %", decimal.Parse(Model.ActualLTVPercentageAllCollateral)))</p>
+        </div>
+    </div>
+
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Loan Eligibility Status On EMI
+            </p>
+
+            @if (Model.StatusEmi == null || Model.StatusEmi == "")
+            {
+                <p class="detailText">N/A</p>
+            }
+            else if (Model.StatusEmi == "Eligible")
+            {
+                <p class="detailText text-green"> &#10004; ELIGIBLE</p>
+            }
+            else if (Model.StatusEmi == "Not Eligible")
+            {
+                <p class="detailText text-red"> &#10008; NOT ELIGIBLE</p>
+            }
+        </div>
+        <div class="col-md-4">
+            <p class="detailHeading text-bold">
+                Loan Eligibility Status On LTV
+            </p>
+
+            @if (Model.StatusLTV == null || Model.StatusLTV == "")
+            {
+                <p class="detailText">N/A</p>
+            }
+            else if (Model.StatusLTV == "Eligible")
+            {
+                <p class="detailText text-green"> &#10004; ELIGIBLE</p>
+            }
+            else if (Model.StatusLTV == "Not Eligible")
+            {
+                <p class="detailText text-red"> &#10006; NOT ELIGIBLE</p>
+            }
+        </div>
+    </div>
+
+
+    <div class="col-md-12" style="text-align: right;">
+        <a id="screenBtnLE" href="" data-toggle="modal" data-target="#_LoanEligibility_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+        <a id="discrepentBtnLE" href="" data-toggle="modal" data-target="#_LoanEligibility_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+    </div>
+
+</div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">Sorry, No Loan Eligiblity is found againt this application.</span>
+        </div>
+    </div>
+}
+
+
+<!--Approved Modal -->
+<div class="modal fade" id="_LoanEligibility_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenLE" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_LoanEligibility_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdLE"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorLE">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentLE" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.LoanEligibiltyAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnLE').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnLE').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnLE').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnLE').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnLE').toggleClass("d-none");
+            $('#discrepentBtnLE').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenLE').click(function () {
+        debugger;
+        var comment = $('#commentIdLE').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'LOAN ELIGIBILITY'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentLE').click(function () {
+        debugger;
+        if (!$('#commentIdLE').val()) {
+            $('#comment_errorLE').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorLE').css("display", "none");
+        }
+        var comment = $('#commentIdLE').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'LOAN ELIGIBILITY','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdLE').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

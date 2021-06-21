@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+    @*<link href="~/Theame/css/style.css" rel="stylesheet" asp-append-version="true" />*@
+    <style>
+        .pageloader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+            opacity: .8;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" id="Id" value="@ViewBag.Id" />
+    <input type="hidden" id="ApplicationId" value="@ViewBag.AppId" />
+
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <div class="pageloader d-none"></div>
+
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Decision of Mcrc
+                </p>
+                <p class="detailText">@(ViewBag.Decision == null || ViewBag.Decision == "" ? "--" : ViewBag.Decision)</p>
+            </div>
+
+            <div class="col-md-8 ">
+                <p class="detailHeading">
+                    If Discrepant/Decline, Reason
+                </p>
+                <p class="detailText">@(ViewBag.Reason == null || ViewBag.Reason == "" ? "--" : ViewBag.Reason)</p>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6" style="text-align: right; margin-top:30px">
+                <a id="recommend" class="btn btn-sm btn-outline-success" title="Apply Action">Apply Action<span></span></a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        $('#Decision').on('change', function () {
+            var value = this.value;
+            if (value == "Decline" || value == "Discrepent" || value == "Discrepent & Represent") {
+                $('#reasonDiv').removeClass('d-none');
+                $('#approvalDiv').addClass('d-none');
+            }
+            else if (value == "Approve" ) {
+                $('#approvalDiv').removeClass('d-none');
+                $('#reasonDiv').addClass('d-none');
+            }
+            else {
+                $('#approvalDiv').addClass('d-none');
+                $('#reasonDiv').addClass('d-none');
+            }
+
+
+        });
+
+        $('#recommend').click(function (e) {
+            $(".pageloader").toggleClass("d-none");
+
+            var ApplicationId = $('#ApplicationId').val();
+            var Id = $('#Id').val();
+
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Mcrc/SaveAppliedDecision")',
+                     data: {
+                         'ApplicationId': ApplicationId,
+                         'Id': Id
+                     },
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         window.location.reload();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿@model List<TFCLPortal.ApplicationWorkFlows.BADataChecks.Dto.BADataCheckListDto>
+@{
+    Layout = null;
+    int i = 1;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UploadedDocuments</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top:50px">
+            <div class="col-md-12 text-center">
+                @if (Model != null && Model.Count > 0)
+                {
+                    <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">Sr</th>
+                                <th style="text-align:center">Name</th>
+                                <th style="text-align:center">Document Type</th>
+                                <th style="text-align:center">Document</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(i++)</td>
+                                    <td>@item.DocumentName</td>
+                                    <td>@item.DocumentKey</td>
+                                    <td><a href="@item.BaseUrl" target="_blank" download> <i class="fa fa-download"></i> Download File</a></td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+
+                    <p>Files are not uploaded!</p>
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+﻿@model TFCLPortal.ScheduleTemps.Dto.ScheduleTempListDto
+
+@{
+    Layout = null;
+    int totalPrincipal = 0;
+    int totalInterest = 0;
+    int totalInstallment = 0;
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+<style>
+    .tbl {
+        border: 2px solid;
+        font-size: 11px
+    }
+
+        .tbl td {
+            border: 2px solid;
+            padding: 5px;
+            text-transform: uppercase
+        }
+
+        .tbl th {
+            border: 2px solid;
+            padding: 5px;
+            text-transform: uppercase
+        }
+</style>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-3 text-right">
+            <img id="Imglogo" src="~/Theame/images/bg.png" width="50px">
+        </div>
+        <div class="col-md-9" style="padding-top:30px">
+            <h1>Taleem Finance Company Limited</h1>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:30px">
+        <div class="col-md-12">
+            <table border="1" width="100%" class="tbl">
+                <tr>
+                    <td>
+                        <b>School Name</b>
+                    </td>
+                    <td colspan="3">
+                        @ViewBag.SchoolName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Product Name</b>
+                    </td>
+                    <td>
+                        @ViewBag.Product
+                    </td>
+                    <td>
+                        <b>Applicant Name</b>
+                    </td>
+                    <td>
+                        @ViewBag.ApplicantName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Loan Amount</b>
+                    </td>
+                    <td>
+                        @Model.LoanAmount
+                    </td>
+                    <td>
+                        <b>Client ID</b>
+                    </td>
+                    <td>
+                        @ViewBag.AppNo
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Tenure</b>
+                    </td>
+                    <td>
+                        @Model.Tenure
+                    </td>
+                    <td>
+                        <b>Loan Disbursement Date</b>
+                    </td>
+                    <td>
+                        @ViewBag.DisbursmentDate
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>APR</b>
+                    </td>
+                    <td>
+                        @Model.Markup
+                    </td>
+                    <td>
+                        <b>Current Status</b>
+                    </td>
+                    <td>
+                        @ViewBag.ScreenStatus
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:30px;padding-bottom:30px">
+        <div class="col-md-12">
+            <table border="1" width="100%" class="tbl">
+
+                <thead>
+                    <tr>
+                        <th style="text-align:center">Installment No</th>
+                        <th style="text-align:center">Due Date</th>
+                        <th style="text-align:center">Tranche</th>
+                        <th style="text-align:center">Principal</th>
+                        <th style="text-align:center">Interest</th>
+                        <th style="text-align:center">Total Installment</th>
+                        <th style="text-align:center">Paid Date</th>
+                        <th style="text-align:center">Late Days (DPD)</th>
+                        <th style="text-align:center">Outstanding Principal</th>
+                    </tr>
+                </thead>
+
+                @foreach (var item in Model.installmentList)
+                {
+                    <tr>
+                        <td style="text-align:center">
+                            @item.InstNumber
+                        </td>
+                        <td style="text-align:center">
+                            @item.InstallmentDueDate
+                        </td>
+                        <td style="text-align:right">
+                            @item.AdditionalTranche
+                        </td>
+                        <td style="text-align:right">
+                            @item.principal
+                        </td>
+                        <td style="text-align:right">
+                            @item.markup
+                        </td>
+                        <td style="text-align:right">
+                            @item.installmentAmount
+                        </td>
+                        <td style="text-align:center">
+                            -- @*@item.PaymentDate*@
+                        </td>
+                        <td style="text-align:center">
+                            -- @*@item.InstNumber*@
+                        </td>
+                        <td style="text-align:right">
+                            @item.OsPrincipal_Closing
+                        </td>
+                    </tr>
+                    @if (item.principal == "--" || item.principal == "" || item.principal == null)
+                    {
+                        totalPrincipal += 0;
+                    }
+                    else
+                    {
+                        totalPrincipal += int.Parse(item.principal.Replace(",", ""));
+                    }
+
+                    @if (item.markup == "--" || item.markup == "" || item.markup == null)
+                    {
+                        totalInterest += 0;
+                    }
+                    else
+                    {
+                        totalInterest += int.Parse(item.markup.Replace(",", ""));
+                    }
+
+                    @if (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null)
+                    {
+                        totalInstallment += 0;
+                    }
+                    else
+                    {
+                        totalInstallment += int.Parse(item.installmentAmount.Replace(",", ""));
+                    }
+
+                    @*@{
+                        totalPrincipal = totalPrincipal + (item.principal == "--" || item.principal == "" || item.principal == null ? 0 : int.Parse(item.principal.Replace(",", "")));
+                        totalInterest = totalInterest + (item.markup == "--" || item.markup == "" || item.markup == null ? 0 : int.Parse(item.markup.Replace(",", "")));
+                        totalInstallment = totalInstallment + (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null ? 0 : int.Parse(item.installmentAmount.Replace(",", "")));
+                    }*@
+
+
+                }
+
+                <tfoot>
+                    <tr>
+                        <th style="text-align:center" colspan="3">Grand Total</th>
+                        <th style="text-align:right">@string.Format("{0:#,##0}", totalPrincipal)</th>
+                        <th style="text-align:right">@string.Format("{0:#,##0}", totalInterest)</th>
+                        <th style="text-align:right">@string.Format("{0:#,##0}", totalInstallment)</th>
+                        <th style="text-align:right"></th>
+                        <th style="text-align:right"></th>
+                        <th style="text-align:right"></th>
+                    </tr>
+                </tfoot>
+
+
+
+            </table>
+        </div>
+    </div>
+
+</div>

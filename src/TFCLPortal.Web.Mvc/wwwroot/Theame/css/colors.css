@@ -1,0 +1,63 @@
+/*
+=======================================
+	Develope by shahzadali.eu5.org
+=======================================
+*/
+/*.box-buttons li a,*/
+.tab_wrapper > ul li.active,
+.logo-screen h2,
+.chosen-container-multi .chosen-drop .result-selected,
+.chosen-container .chosen-results li.active-result,
+.chosen-container .chosen-results li.highlighted{
+	background: #3bb54a;
+	color: #fff;
+
+}
+.tab_wrapper.left_side > ul li:after,
+.tab_wrapper.right_side > ul li.active:after,
+.tab_wrapper.right_side > ul li:after,
+.tab_wrapper.left_side > ul li.active:before,
+.tab_wrapper.left_side > ul li.active:after{
+	background: #3bb54a;
+}
+
+table.dataTable thead th{
+		border-color: #fff;
+	}
+
+
+.dataTables_wrapper .dataTables_filter input,	
+table.dataTable thead td,
+.tab_wrapper > ul li.active,
+.tab_wrapper > ul li,
+.tab_wrapper.right_side > ul li.active,
+.tab_wrapper.right_side > ul,
+.tab_wrapper.left_side > ul li.active{
+	border-color: #3bb54a;
+}
+
+
+
+.edit-btn,
+.dataTables_wrapper .dataTables_filter,
+.tab_wrapper > ul li {
+	color: #3bb54a;
+	font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+.eft-1 span,
+.bg2,
+.login-form{
+	background:#2d3e50;
+}
+.login-btn span a{
+	color: #2d3e50;
+}

@@ -1,0 +1,560 @@
+﻿@model TFCLPortal.Web.Models.MobilizationSearch.MobilizationSearchViewModel
+@{
+    ViewData["Title"] = "Mobilizations";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<style>
+    .pagination li {
+        margin: 3px;
+    }
+
+    .modal-backdrop {
+        opacity: 0.5 !important;
+    }
+
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #dbffdf;
+        opacity: 0.5 !important;
+        font-weight: bold;
+        color: #000000 !important;
+    }
+
+        .table-hover tbody tr:hover td a {
+            color: #008c45 !important;
+        }
+
+    .detailHeading {
+        text-transform: uppercase;
+    }
+
+    .detailText {
+        text-transform: uppercase;
+        color: #000;
+    }
+
+    body {
+        padding: 0px !important;
+    }
+</style>
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+
+    @*<div class="card p-10 mB-20">
+        <div style="text-align: right; float: right; width: 100%;position: absolute;">
+        </div>
+        </div>*@
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">Mobilizations</h4>
+            <h6 class="page-title-breadcrumbs"><a href="~/Dashboard/Dashboard">Home</a> > Mobilizations</h6>
+        </div>
+        <div class="col-md-6 text-right">
+            <button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+
+        @******************advance search start********@
+
+        @using (Html.BeginForm("Mobilizations", "Mobilization"))
+        {
+            <div class="row" id="filterForm" style="display:none">
+                <div class="col-md-6 ">
+                    <div class="row">
+                        <div class="col-md-4 ">
+                            <div class="text-felid">
+                                <label>Start Date</label>
+                                <input asp-for="mobilizationSearch.startdate" type="date" name="startdate" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-4 ">
+                            <div class="text-felid">
+                                <label>End Date</label>
+                                <input asp-for="mobilizationSearch.enddate" type="date" name="enddate" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-felid">
+                                <label>Next Meeting Date</label>
+                                <input asp-for="mobilizationSearch.nextmeeting" type="date" name="nextmeeting" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4 ">
+                            <div class="text-felid">
+                                <label>SDE</label>
+                                @Html.DropDownList("SDEUserId", ViewBag.SDEUserList as SelectList, "Select SDE", new { Name = "SDEUserId", @class = "" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 ">
+
+                            <div class="text-felid">
+                                <label>Mobilization Status</label>
+                                @Html.DropDownList("MobilizationStatusId", ViewBag.ApplicationStatuslist as SelectList, "Select Moblization Status", htmlAttributes: new { Name = "MobilizationStatusId", @class = "" })
+
+                                @* @Html.DropDownList("Status", ViewBag.ApplicationStatuslist as List<SelectListItem>)*@
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 ">
+                            <div class="text-felid">
+                                <label>Product</label>
+                                @Html.DropDownList("ProductId", ViewBag.ProductList as SelectList, "Select Product", new { Name = "ProductId", @class = "" })
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <div class=" btn-spc">
+                        <button type="submit" class="btn btn-sm btn-outline-success">Filter <i class="fa fa-filter"></i></button>
+                        <a id="btnRefresh" href="~/Mobilization/Mobilizations" class="btn btn-sm btn-outline-success">Refresh <i class="fa fa-refresh"></i></a>
+                        @*<button id="btnpdf" onclick="DownloadPdf()" class="btn btn-sm btn-outline-success" tooltip="text">Download (PDF) <i class="fa fa-download"></i></button>*@
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+
+        @******************advance search end********@
+        @*</div>
+            </div>
+                            </div>
+                                </div>
+
+        *@
+        <!-- pager -->
+        @if (Model.Pager.EndPage > 0)
+        {
+
+            @if (Model.Pager.CurrentPage <= Model.Pager.TotalPages)
+            {
+                <div class="pt-3">
+                    <table id="table_id" class="table table-striped table-hover table-bordered" cellspacing="0">
+                        <thead>
+                            <tr style="font-size:11px">
+                                <th>Sr.</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Applicant / Respondent Name</th>
+
+                                <th>
+                                    Client / School / Business Name
+                                </th>
+                                <th>Address</th>
+                                <th>SDE Name</th>
+                                <th>Product</th>
+                                <th>Mobilization Status</th>
+
+                                <th>Next meeting </th>
+                                <th>View Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                int i = 0;
+                                foreach (var item in Model.MobilizationList)
+                                {
+                                    i = i + 1;
+                                    <tr>
+                                        <td>@i</td>
+                                        <td style="width: 8%">@(item.CreationTime==DateTime.Parse("0001-01-01") ? "--" : item.CreationTime.ToString("dd MMM yyyy"))</td>
+                                        <td style="width: 6%">@item.CreationTime.ToString("hh:mm tt")</td>
+                                        <td>@item.ClientName</td>
+                                        <td>@item.SchoolName</td>
+                                        <td><a href="https://www.google.com/maps/search/?api=1&query=@item.Latitude,@item.Longitude" target="_blank" title="Click to View Location"><i class="fa fa-map-marker"></i> @item.Address</a> </td>
+                                        <td>@item.SDE_Name</td>
+                                        <td>@item.ProductTypeName</td>
+                                        <td>@item.MobStatusName</td>
+                                        <td style="width: 8%">@(item.NextMeeting == DateTime.Parse("0001-01-01") ? "--" : item.NextMeeting.ToString("dd MMM yyyy"))</td>
+                                        <td class="text-center" style="color:#3bb44a;width: 3%">
+                                            @*<a href="~/Mobilization/MobilizationDetail/@item.Id" class="edit-btn"><i class="fa fa-edit" aria-hidden="true"></i></a>*@
+                                            <a onclick="nullifyFeilds(); getMobilizationData(@item.Id);" data-toggle="modal" data-target="#myModalmodal" class="edit-btn"><i class="fa fa-file-text-o" aria-hidden="true" style="width:100%; height:100%"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+
+        }
+        @*<div class="row  text-center">
+                <div class="col-md-12">
+                    <ul class="pagination">
+                        @if (Model.Pager.CurrentPage > 1)
+                        {
+                            <li>
+                                <a href="~/Mobilization/Mobilizations" class="btn btn-sm btn-outline-success">First</a>
+                            </li>
+                            <li>
+                                <a href="~/Mobilization/Mobilizations?page=@(Model.Pager.CurrentPage - 1)" class="btn btn-sm btn-outline-success">Previous</a>
+                            </li>
+                        }
+
+                        @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                        {
+                            <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
+                                <a href="~/Mobilization/Mobilizations?page=@(page)" class="btn btn-sm btn-outline-success"> @(page) </a>
+                            </li>
+                        }
+
+                        @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                        {
+                            <li>
+                                <a href="~/Mobilization/Mobilizations?page=@(Model.Pager.CurrentPage + 1)" class="btn btn-sm btn-outline-success">Next</a>
+                            </li>
+                            <li>
+                                <a href="~/Mobilization/Mobilizations?page=@(Model.Pager.TotalPages)" class="btn btn-sm btn-outline-success">Last</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>*@
+    </div>
+
+    <div class="modal " id="myModalmodal" role="dialog">
+        <div class="modal-dialog-centered modal-dialog-scrollable text-center modal-lg" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); min-width:1100px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title page-title-text">Mobilization Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-left">
+                        <div class="col-md-3">
+                            <p class="detailHeading">Interaction Number</p>
+                            <p class="detailText" id="intNoTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Applicant Source</p>
+                            <p class="detailText" id="appSource"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Applicant Source (Others)</p>
+                            <p class="detailText" id="appSourceOthers"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Applicant / Respondent Name</p>
+                            <p class="detailText" id="appName"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Respondent Designation</p>
+                            <p class="detailText" id="respondantDesignationTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Respondent Designation (Others)</p>
+                            <p class="detailText" id="respondantDesignationOthersTxt"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">Mobile Number</p>
+                            <p class="detailText" id="mobileNo"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Landline Number</p>
+                            <p class="detailText" id="landlineNo"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Applicant CNIC</p>
+                            <p class="detailText" id="cnicNo"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Client/School/Business Address</p>
+                            <p class="detailText" id="address"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Client/School/Business Name</p>
+                            <p class="detailText" id="schoolName"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Franchise</p>
+                            <p class="detailText" id="isFranchiseTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Franchiser Name</p>
+                            <p class="detailText" id="franchiserNameTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Product Type</p>
+                            <p class="detailText" id="productType"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Business Nature</p>
+                            <p class="detailText" id="businessNature"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Status</p>
+                            <p class="detailText" id="status"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Reason For Not Being Interested</p>
+                            <p class="detailText" id="mentionProviderInterestTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Reason For Not Being Interested (Others)</p>
+                            <p class="detailText" id="mentionProviderInterestTxtOthers"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Interested in any other Product/Provider</p>
+                            <p class="detailText" id="personNotInterestedTxt"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">Preferred Product</p>
+                            <p class="detailText" id="prefferedProductTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Preferred Provider</p>
+                            <p class="detailText" id="prefferedProviderTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Academic Session</p>
+                            <p class="detailText" id="AcademicSessionTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Financial Decision Months</p>
+                            <p class="detailText" id="financialDecision"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">Other Source Of Income</p>
+                            <p class="detailText" id="OtherSourceIncomeTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Other Source Of Income (Others)</p>
+                            <p class="detailText" id="OtherSourceIncomeOthersTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Any Other Business</p>
+                            <p class="detailText" id="anyOtherBusinessTxt"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">Next Meeting</p>
+                            <p class="detailText" id="nextMeeting"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">CURRENTLY AVAILED A LOAN FOR THIS BUSINESS</p>
+                            <p class="detailText" id="availedALoanTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Average Fee</p>
+                            <p class="detailText" id="averageFeeTxt"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">Number Of Student(s)</p>
+                            <p class="detailText" id="noOfStudentTxt"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">School Building Status</p>
+                            <p class="detailText" id="schoolBuildingStatusTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">School Building Status (Others)</p>
+                            <p class="detailText" id="schoolBuildingStatusOthersTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">School Category</p>
+                            <p class="detailText" id="schoolCategoryTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Number Of Staff</p>
+                            <p class="detailText" id="noOfStaffTxt"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">Area Of School (Sq. Ft)</p>
+                            <p class="detailText" id="areaOfSchoolMarlaTxt"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="detailHeading">Longitude</p>
+                            <p class="detailText" id="longTxt"></p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <p class="detailHeading">Latitude</p>
+                            <p class="detailText" id="latTxt"></p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="detailHeading">
+                                Location
+                            </p>
+                            <p class="detailText" id="location">
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-outline-success" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+
+    $(document).ready(function () {
+        $('#table_id').DataTable({
+            //dom: 'Bfrtip',
+            //buttons: [
+            //    'copyHtml5',
+            //    'excelHtml5',
+            //    'csvHtml5',
+            //    'pdfHtml5'
+            //]
+        });
+    });
+
+
+
+
+    function DownloadPdf() {
+
+        var startDate = $('#startDate').val();
+        var enddate = $('#enddate').val();
+        var nextmeeting = $('#nextmeeting').val();
+        var SDEUserId = $('#SDEUserId').val();
+        var MobilizationStatusId = $('#MobilizationStatusId').val();
+        var ProductId = $('#ProductId').val();
+        debugger;
+        if (startDate == undefined && enddate == undefined && nextmeeting == undefined && SDEUserId == "" && MobilizationStatusId == "" && ProductId == "") {
+            alert("Please select atleast one field to download report");
+            return;
+        }
+        window.open("http://173.212.203.237:8882/home/MobilizationSearchReports?startDate=" + startDate + "&enddate=" + enddate + "&nextmeeting=" + nextmeeting + "&SDEUserId=" + SDEUserId + "&MobilizationStatusId=" + MobilizationStatusId + "&ProductId=" + ProductId, '_blank');
+
+
+
+    }
+    function Refresh() {
+
+        window.location.reload();
+    }
+    function getMobilizationData(mobId) {
+
+        $.ajax({
+            type: 'POST',
+            datatype: "json",
+            contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Mobilization/MobilizationDetailNew")',
+            data: { 'id': mobId} ,
+            success: function (data) {
+                var d = data.result;
+                console.log(d[0]);
+                $("#intNoTxt").text(naIFnull(d[0].interactionNumber));
+                $("#appName").text(naIFnull(d[0].clientName));
+                $("#AcademicSessionTxt").text(naIFnull(d[0].academicSession));
+                $("#cnicNo").text(naIFnull(d[0].cnicNo));
+                $("#appSource").text(naIFnull(d[0].applicantSource));
+                $("#appSourceOthers").text(naIFnull(d[0].otherApplicantSource));
+                $("#mobileNo").text(naIFnull(d[0].mobileNo));
+                $("#landlineNo").text(naIFnull(d[0].landLineNo));
+                $("#address").text(naIFnull(d[0].address));
+                $("#schoolName").text(naIFnull(d[0].schoolName));
+                $("#status").text(naIFnull(d[0].mobStatusName));
+                $("#productType").text(naIFnull(d[0].productTypeName));
+                $("#nextMeeting").text(naIFnull(d[0].nextMeetingstr));
+
+                $("#AcademicSessionTxt").text(naIFnull(d[0].academicSessionName));
+                $("#anyOtherBusinessTxt").text(naIFnullBool(d[0].anyOtherBusiness));
+                $("#areaOfSchoolMarlaTxt").text(naIFnull(d[0].areaOfSchoolMarla));
+                $("#averageFeeTxt").text(naIFnull(d[0].averageFee));
+                $("#isFranchiseTxt").text(naIFnullBool(d[0].isFranchise));
+                $("#franchiserNameTxt").text(naIFnull(d[0].franchiserName));
+
+
+
+                var otherNotBeingInterested = naIFnull(d[0].mentionProviderInterest);
+                if (otherNotBeingInterested == "null") { $("#mentionProviderInterestTxt").text("N/A"); }
+                else { $("#mentionProviderInterestTxt").text(otherNotBeingInterested); }
+
+                $("#mentionProviderInterestTxtOthers").text(naIFnull(d[0].otherNotbeingIntersted));
+                $("#financialDecision").text(naIFnull(d[0].decesionMonth));
+                $("#availedALoanTxt").text(naIFnullBool(d[0].isAvailedLoan));
+
+
+                $("#noOfStaffTxt").text(naIFnull(d[0].noOfStaff));
+                $("#noOfStudentTxt").text(naIFnull(d[0].noOfStudent));
+                $("#personNotInterestedTxt").text(naIFnull(d[0].personNotInterested));
+                $("#prefferedProductTxt").text(naIFnull(d[0].prefferedProduct));
+                $("#prefferedProviderTxt").text(naIFnull(d[0].prefferedProvider));
+                $("#respondantDesignationTxt").text(naIFnull(d[0].respondantDesignation));
+                $("#respondantDesignationOthersTxt").text(naIFnull(d[0].respondantDesignationOthers));
+                $("#OtherSourceIncomeTxt").text(naIFnull(d[0].otherSourceIncome));
+                $("#OtherSourceIncomeOthersTxt").text(naIFnull(d[0].otherSourceIncomeOthers));
+                $("#schoolCategoryTxt").text(naIFnull(d[0].schoolCategoryName));
+                $("#businessNature").text(naIFnull(d[0].TDSBusinessNatureName));
+                $("#latTxt").text(naIFnull(d[0].latitude));
+                $("#longTxt").text(naIFnull(d[0].longitude));
+
+                $("#schoolBuildingStatusTxt").text(naIFnull(d[0].buildingStatus));
+                $("#schoolBuildingStatusOthersTxt").text(naIFnull(d[0].otherSchoolBuildingStatus));
+
+                $('#location').html('<a href="https://www.google.com/maps/search/?api=1&query=' + naIFnull(d[0].latitude) + ',' + naIFnull(d[0].longitude)+'" target="_blank">Click here to point the location</a>')
+            },
+            error: function (data) {
+
+                alert("Error Occured while getting details");
+                return;
+
+            }
+        });
+
+    }
+
+    function nullifyFeilds(){
+        $(".detailText").html("<img width='20px' src='/Theame/images/loader.gif'/>");
+    }
+
+    function naIFnull(str) {
+        if (str == null) {
+            return "N/A";
+
+        }
+        else if (str){
+            return str;
+        }
+        else {
+            return "N/A";
+        }
+    }
+    function naIFnullBool(str) {
+        if (str) {
+            return "Yes";
+
+        }
+        else {
+            return "No";
+        }
+    }
+
+
+</script>
+
+<!-- ### $App Screen Footer ### -->

@@ -1,0 +1,181 @@
+﻿@using System.Globalization
+@using Abp.Authorization.Users
+@using Abp.Extensions
+@using Abp.MultiTenancy
+@model TFCLPortal.Web.Models.Account.LoginFormViewModel
+@using Abp.Web.Security.AntiForgery
+@using TFCLPortal.Configuration
+@using TFCLPortal.Web.Resources
+@using Abp.Configuration.Startup
+@using Abp.Web.Mvc.Alerts
+@inject TFCLPortal.Timing.AppTimes AppTimes
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IMultiTenancyConfig MultiTenancyConfig
+@inject IWebResourceManager WebResourceManager
+@inject IAlertManager AlertManager
+
+@section Styles
+{
+    <environment names="Development">
+        @*<link rel="stylesheet" href="~/view-resources/Views/Account/Login.css" asp-append-version="true" />*@
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/css/util.css">
+        <link rel="stylesheet" type="text/css" href="~/css/main.css">
+        <link href="~/view-resources/Views/_Bundles/account-layout.min.css" rel="stylesheet" asp-append-version="true" />
+
+        <!--===============================================================================================-->
+    </environment>
+
+    <environment names="Staging,Production">
+        @*<link rel="stylesheet" href="~/view-resources/Views/Account/Login.min.css" asp-append-version="true" />*@
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="~/css/util.css">
+        <link rel="stylesheet" type="text/css" href="~/css/main.css">
+        <link href="~/view-resources/Views/_Bundles/account-layout.min.css" rel="stylesheet" asp-append-version="true" />
+
+        <!--===============================================================================================-->
+    </environment>
+
+}
+@*<link rel="stylesheet" href="~/view-resources/Views/Account/new_login.min.css" asp-append-version="true" />*@
+
+@section Scripts
+{
+    <environment names="Development">
+        <!--===============================================================================================-->
+        <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/bootstrap/js/popper.js"></script>
+        <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/tilt/tilt.jquery.min.js"></script>
+        <script>
+            $('.js-tilt').tilt({
+                scale: 1.1
+            })
+        </script>
+        <!--===============================================================================================-->
+        <script src="~/js/main-login.js"></script>
+        <script src="~/view-resources/Views/_Bundles/shared-layout.min.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js" asp-append-version="true"></script>
+        <script src="~/view-resources/Views/Account/Login.js" asp-append-version="true"></script>
+
+    </environment>
+
+    <environment names="Staging,Production">
+        <!--===============================================================================================-->
+        <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/bootstrap/js/popper.js"></script>
+        <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/tilt/tilt.jquery.min.js"></script>
+        <script src="~/view-resources/Views/Account/Login.min.js" asp-append-version="true"></script>
+
+        <script>
+            $('.js-tilt').tilt({
+                scale: 1.1
+            });
+
+        </script>
+        <!--===============================================================================================-->
+        <script src="~/js/main-login.js"></script>
+        <script src="~/view-resources/Views/_Bundles/shared-layout.min.js" asp-append-version="true"></script>
+        <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js" asp-append-version="true"></script>
+
+    </environment>
+}
+
+<style>
+    .login100-form {
+        width: 350px;
+    }
+</style>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+
+            <div class="login100-pic js-tilt" data-tilt style="text-align:center">
+                <img src="/Theame/images/bg.png" width="180px" alt="IMG">
+                @*<img src="/images/img-01.png" alt="IMG">*@
+                <h4 style="margin-top:20px;">TALEEM FINANCE COMPANY LIMITED</h4>
+            </div>
+
+            <form class="login100-form validate-form" id="LoginForm" asp-action="Login" method="post">
+                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                <input type="hidden" name="returnUrlHash" />
+                <span class="login100-form-title">
+                    <br />
+                    <b>Loan Origination</b><br />
+                    <b style="color: #57b846; font-size:40px"> & </b><br />
+                    <b>Management System</b><br />
+                    <a href="~/About/VersionControl" target="_blank"><b style="color: #57b846; font-size:10px">( v2.1.16 )</b></a>
+                </span>
+
+                <div class="wrap-input100 validate-input" data-validate="Username is required">
+                    <input class="input100" type="text" name="usernameOrEmailAddress" placeholder="@L("UserNameOrEmail")" required autofocus maxlength="@AbpUserBase.MaxEmailAddressLength">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Password is required">
+                    <input class="input100" type="password" name="Password" placeholder="@L("Password")" required maxlength="@AbpUserBase.MaxPlainPasswordLength">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button id="LoginButton" class="login100-form-btn" type="submit">
+                        @L("LogIn")
+                    </button>
+                </div>
+
+                <div class="text-center p-t-12">
+                    <span class="txt1">
+                        Forgot
+                    </span>
+                    <a class="txt2" href="~/Account/ForgetPassword">
+                        Username / Password?
+                    </a>
+                </div>
+
+                @*<div class="text-center p-t-136">
+                        <a class="txt2" href="#">
+                            Create your Account
+                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                        </a>
+                    </div>*@
+            </form>
+
+        </div>
+    </div>
+</div>

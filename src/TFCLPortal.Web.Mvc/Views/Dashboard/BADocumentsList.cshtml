@@ -1,0 +1,77 @@
+﻿@model List<TFCLPortal.Applications.ApplicationDto>
+@{
+    ViewData["Title"] = "BADocumentsList";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Upload Credit Bureau Files
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Upload Credit Bureau Files
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Sr#</th>
+                    <th>Acquired Date</th>
+                    <th>Client ID</th>
+                    <th>CNIC</th>
+                    <th>Applicant Name</th>
+                    <th>Branch Name</th>
+                    <th>School Name</th>
+                    <th>product</th>
+                    @*<th>Status</th>*@
+
+                    <th>State </th>
+                    @*<th>view</th>*@
+                    <th>Upload CB Files</th>
+                    <th>Detail</th>
+                    @*<th>Download Report</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    int i = 0;
+                    foreach (var item in Model.ToList())
+                    {
+                        i = i + 1;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.AppDate.ToString("dd MMM yyyy hh:mm tt")</td>
+                            <td>@item.ClientID</td>
+                            <td>@item.CNICNo</td>
+                            <td>@item.ApplicantName</td>
+                            <td>@item.BranchName</td>
+                            <td>@item.SchoolName</td>
+                            <td>@item.Product</td>
+                            @*<td>@item.MobilizationStatus</td>*@
+
+                            <td>@item.AppStatus</td>
+                            @*<td><a href="~/Dashboard/BADocumentsDetail/@item.Id" target="_blank" class="edit-btn"><i class="fa fa-file" aria-hidden="true"></i></a></td>*@
+                            <td><a href="~/Dashboard/BADocumentUpload/@item.Id" target="_blank" class="edit-btn"><i class="fa fa-files-o" aria-hidden="true"></i></a></td>
+
+                            <td><a href="~/Dashboard/Application?id=@item.Id" target="_blank" class="edit-btn"><i class="fa fa-desktop" aria-hidden="true"></i></a></td>
+
+                            @*<td><a target="_blank" href="http://173.212.203.237:8882/home/TFCLReports?applicationId=@item.Id" class="edit-btn"><i class="fa fa-file" aria-hidden="true"></i></a></td>*@
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- ### $App Screen Footer ### -->

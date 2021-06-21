@@ -1,0 +1,79 @@
+﻿@model TFCLPortal.Holidays.Holiday
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Are you sure you want to delete this Holiday?
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Holidays > Delete
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+            <a href="~/Holidays/Index" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> <i class="fa fa-list"></i> Back To List</a>
+        </div>
+    </div>
+
+    <div class="card p-10 mB-20">
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Title
+                    </p>
+                    <p class="detailText">
+                        @(Model.Title)
+                    </p>
+                </div>
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Start Date
+                    </p>
+                    <p class="detailText">
+                        @(Model.DateFrom.ToString("dd MMM yyyy"))
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        End Date
+                    </p>
+                    <p class="detailText">
+                        @(Model.DateTo.ToString("dd MMM yyyy"))
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">
+                        Day(s)
+                    </p>
+                    <p class="detailText">
+                        @(Model.Days)
+                    </p>
+                </div>
+                <div class="col-md-12">
+                    <p class="detailHeading">
+                        Description
+                    </p>
+                    <p class="detailText">
+                        @(Model.Description)
+                    </p>
+                </div>
+            </div>
+
+
+
+            <form asp-action="Delete" class="text-right">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" class="btn btn-sm btn-outline-danger bg1 eft-1"  value="Delete" />
+            </form>
+        </div>
+    </main>

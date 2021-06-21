@@ -1,0 +1,159 @@
+﻿@model TFCLPortal.Applications.DashboardDataDto
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<style>
+    .centeredDiv {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    .state {
+        text-transform: uppercase;
+        color: #008c45;
+        font-size: 24px !important;
+        font-weight: bold;
+    }
+
+    .timelineDateTime {
+        font-size: 12px !important;
+    }
+
+    .User {
+        font-size: 12px !important;
+        text-transform: uppercase;
+    }
+
+    .timeline__content p {
+        line-height: 1;
+    }
+</style>
+<link href="~/vendor/timeline/timeline-master/dist/css/timeline.min.css" rel="stylesheet" />
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+
+    <div class="row">
+        <div class="col-md-12" style="padding-top: 20px; margin-bottom: 20px; background-color:#fff">
+            <table border="1" width="100%" class="text-center">
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th colspan="3">APPLICANT / RESPONDENT NAME</th>
+                        <th colspan="3">CLIENT / BUSINESS / SCHOOL NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">@ViewBag.appName</td>
+                        <td colspan="3">@ViewBag.SchoolName</td>
+                    </tr>
+                </tbody>
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th>CLIENT ID</th>
+                        <th>APPLICATION DATE</th>
+                        <th>APPLICATION TIME</th>
+                        <th>APPLICATION STATUS</th>
+                        <th>Branch</th>
+                        <th>SDE Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.ApplicationNo</td>
+                        <td>@ViewBag.appDate</td>
+                        <td>@ViewBag.appTime</td>
+                        @if (ViewBag.appStatus == "Discrepent")
+                        {
+                            <td>@ViewBag.appStatus <a id="checkDiscrepency" data-toggle="modal" data-target="#DiscrepencyModal"><i class="fa fa-info-circle"></i></a></td>
+                        }
+                        else
+                        {
+                            <td>@ViewBag.appStatus</td>
+                        }
+                        <td>@ViewBag.branch</td>
+                        <td>@ViewBag.SDE</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:50px">
+        <div class="col-md-12">
+
+            <div class="timeline">
+                <div class="timeline__wrap">
+                    <div class="timeline__items">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+<script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+<script src="~/vendor/timeline/timeline-master/dist/js/timeline.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+<script>
+
+    $(document).ready(function () {
+    $('.timeline__items').html("<p class='text-center' ><img width='50px' src='/Theame/images/loader.gif'/> Loading Timeline...</p>");
+
+    var AppId = '@ViewBag.AppId';
+
+       $.ajax({
+            type: 'POST',
+            datatype: "json",
+            contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Dashboard/ListFinalWorkflows")',
+            data: { 'ApplicationId':AppId} ,
+            success: function (data) {
+                console.log(data);
+                if (data != null) {
+
+                    var d = data.result;
+                    $('.timeline__items').html("");
+
+                    var content = '';
+                    d.forEach(function (item) {
+                        content += ' <div class="timeline__item">';
+                        content += '<div class="timeline__content">';
+                        //content += '<p class="User"><i class="fa fa-user"></i> ' + item.userFullName +'<p>';
+                        content += '<p class="state">' + item.action +'<p>';
+                        content += '<p class="timelineDateTime"><i class="fa fa-clock-o"></i> ' + moment(item.creationTime).format('DD MMM YYYY hh:mm:ss a') +'<p>';
+                        content += '</div>';
+                        content += '</div>';
+                    });
+
+                    $('.timeline__items').html(content);
+
+                    timeline(document.querySelectorAll('.timeline'), {
+                        verticalStartPosition: 'right',
+                        verticalTrigger: '150px'
+                    });
+
+                    console.log(data);
+                }
+                else
+                    abp.notify.error("Some error occure contact with admin..!", "error");
+
+            },
+            error: function (data) {
+
+                abp.notify.error("Some error occure contact with admin..!", "error");
+                console.log(data);
+            }
+       });
+
+
+
+    });
+</script>

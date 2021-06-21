@@ -1,0 +1,137 @@
+﻿@model TFCLPortal.Branches.Dto.CreateBranchDetail
+
+@{
+    ViewData["Title"] = "Create Branch";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<main class='main-content bgc-grey-100'>
+    <div id='mainContent'>
+        <form asp-action="CreateBranch" asp-controller="Company" method="post">
+            <div class="row gap-20 masonry pos-r">
+                <div class="masonry-sizer col-md-6"></div>
+                <div class="masonry-item col-md-12">
+                    <div class="bgc-white p-20 bd">
+                        <div class="card p-20">
+                            <h4 class="">Create Branch</h4>
+                        </div>
+                        <div class="mT-30">
+                            <div class="row">
+                                <div class="masonry-sizer col-md-2"></div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label >Branch Code</label>
+                                        <input asp-for="BranchCode" class="form-control" />
+                                        <span asp-validation-for="BranchCode" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Branch Name</label>
+                                        <input asp-for="BranchName" class="form-control" />
+                                        <span asp-validation-for="BranchName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contact Person</label>
+                                        <input asp-for="ContactPerson" class="form-control" />
+                                        <span asp-validation-for="ContactPerson" class="text-danger"></span>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label asp-for="Email" class="control-label"></label>
+                                        <input asp-for="Email" class="form-control" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phone No</label>
+                                        <input asp-for="TelNo" class="form-control" />
+                                        <span asp-validation-for="TelNo" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <label asp-for="Active" class="control-label"></label>
+                                        <input asp-for="Active" class="form-control" />
+                                        <span asp-validation-for="Active" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Address" class="control-label"></label>
+                                        <input asp-for="Address" class="form-control" />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Company</label> 
+                                        @Html.DropDownListFor(m => m.FK_companyid, ViewBag.Company as SelectList, "Select Company", new { @class = "form-control" })
+
+                                        <span asp-validation-for="FK_companyid" class="text-danger"></span>
+                                    </div>
+
+                                    <button type="submit" class="btn-normal bg1">Create</button>
+                                </div>
+                                <div class="masonry-sizer col-md-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+
+
+@*<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateBranch" asp-controller="Company" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BranchCode" class="control-label"></label>
+                <input asp-for="BranchCode" class="form-control" />
+                <span asp-validation-for="BranchCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BranchName" class="control-label"></label>
+                <input asp-for="BranchName" class="form-control" />
+                <span asp-validation-for="BranchName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContactPerson" class="control-label"></label>
+                <input asp-for="ContactPerson" class="form-control" />
+                <span asp-validation-for="ContactPerson" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TelNo" class="control-label"></label>
+                <input asp-for="TelNo" class="form-control" />
+                <span asp-validation-for="TelNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Active" class="control-label"></label>
+                <input asp-for="Active" class="form-control" />
+                <span asp-validation-for="Active" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FK_companyid" class="control-label"></label>
+                <input asp-for="FK_companyid" class="form-control" />
+                <span asp-validation-for="FK_companyid" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+

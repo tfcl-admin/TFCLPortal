@@ -1,0 +1,229 @@
+﻿@{
+    Layout = null;
+}
+
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
+    <style>
+        .pageloader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+            opacity: .8;
+        }
+
+        table {
+            page-break-inside: auto
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+        .count{
+            font-size:30px
+        }
+    </style>
+</head>
+<body>
+    <div class="pageloader d-none"></div>
+    <div class="container" id="PrintDiv">
+        <!--<div class="row">
+            <div class="col-md-4 text-left">
+                <img id="Imglogo" src="~/images/TFCLNoBg.png" width="100px">-->
+                @*<img id="Imglogo" src="~/Theame/images/bg.png" width="100px">*@
+            <!--</div>
+            <div class="col-md-4 text-center" style="padding-top:30px">
+                <h3 style="text-transform:uppercase">AML CFT Search Report</h3>
+            </div>
+        </div>-->
+
+        <table style="margin-bottom:30px;width:100%">
+            <tr>
+                <td ><img id="Imglogo" src="~/images/TFCLNoBg.png" width="100px"></td>
+                <td width="83%" style="padding-top: 30px;text-transform: uppercase;padding-left:16%">
+                    <h3 style="font-weight:bold">AML CFT Search Report</h3>
+                </td>
+            </tr>
+        </table>
+        <div class="row">
+            <div class="col-md-12" style="margin-top:10px">
+                <a class="btn btn-primary" style="width:100%" onclick="check()">Click to Check</a>
+            </div>
+            <div class="col-md-12 text-center" style="margin-top:10px">
+                <table border="1" class="text-center" width="100%">
+                    <tr>
+                        <td style="padding:10px">
+                            <h3 id="NactaCount" class="count">0</h3>
+                            <h6 class="text-center">NACTA List</h6>
+                        </td>
+                        <td>
+                            <h3 id="ApplicantsCount" class="count">0</h3>
+                            <h6 class="text-center">Applicants</h6>
+                        </td>
+                        <td>
+                            <h3 id="GuarantorsCount" class="count">0</h3>
+                            <h6 class="text-center">Guarantors</h6>
+                        </td>
+                        <td>
+                            <h3 id="CoApplicantsCount" class="count">0</h3>
+                            <h6 class="text-center">Co-Applicants</h6>
+                        </td>
+                        <td>
+                            <h3 id="FoundCount" class="count">0</h3>
+                            <h6 class="text-center">CNIC Found</h6>
+                        </td>
+                        <td>
+                            <h3 id="CheckedCount" class="count">0</span>
+                            <h6 class="text-center">Total Checked</h6>
+                        </td>
+                    </tr>
+                </table>
+            
+                <span id="results"></span>
+            </div>
+            <div class="col-md-12 text-center" style="margin-top:10px">
+                <div class="row">
+                    <span id="progressBar" style="width:100%"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="~/js/printThis-master/printThis.js"></script>
+    <script>
+        var allResults = [];
+        var ClientCNICs = [];
+        var FoundCNICs = [];
+
+        function check() {
+            $(".pageloader").toggleClass("d-none");
+
+            var getJson = @Html.Raw(Json.Serialize(ViewBag.JsonData));
+            allResults = getJson.value;
+            //console.log(allResults);
+            $("#NactaCount").html(allResults.length);
+
+            $.ajax({
+                type: 'GET',
+                datatype: "json",
+                contenttype: 'application/json; charset=utf-8',
+                url: '@Url.Content("~/Accountant/GetApplicationsJson")',
+                data: {} ,
+                    success: function (data) {
+                        ClientCNICs = data.result;
+                        $("#ApplicantsCount").html(ClientCNICs.filter(x => x.type == 'Applicant').length);
+                        $("#GuarantorsCount").html(ClientCNICs.filter(x => x.type == 'Guarantor').length);
+                        $("#CoApplicantsCount").html(ClientCNICs.filter(x => x.type == 'Co-Applicant').length);
+                        setResults('<a class="btn btn-success" style="margin-top:10px" onclick="compare();">Compare</a>');
+                        $(".pageloader").toggleClass("d-none");
+                },
+                error: function (data) {
+                }
+            });
+        }
+
+        function compare() {
+            $(".pageloader").toggleClass("d-none");
+            var i = 1;
+            console.log(ClientCNICs);
+            var today = new Date();
+
+            var content = "<table border='1' width='100%'>";
+            content += "<thead><tr><th colspan='4' class='text-center'>Searched at " + today.toString().substr(0, 24)+"</th></tr><thead><tbody>";
+            var trCounter = 0;
+            var foundCount = 0;
+            ClientCNICs.forEach(function (item) {
+
+                var cnicNumber = item.cnic.replaceAll('-', '');
+                var foundArr = allResults.filter(x => x.cnic == cnicNumber);
+
+                if (trCounter == 0) {
+                content += "<tr>";
+                }
+                if (foundArr.length == 0) {
+                    content += "<td><i class='fa fa-times text-success'></i> " + cnicNumber + " (" + item.type + ")" + "</td>";
+                }
+                else {
+                    foundCount++;
+                    content += "<td class='bg-warning'><i class='fa fa-check text-danger'></i> " + cnicNumber + " (" + item.type + ")" + "</td>";
+                }
+                if (trCounter == 3) {
+                    content += "</tr>";
+                    trCounter = 0;
+                }
+                else {
+                trCounter++;
+                }
+                i++;
+            });
+
+            if (i % 4 > 0) {
+                for (var n = 1; n < (i % 4); n++) {
+                    content += "<td></td>";
+                }
+                content += "</tr>";
+            }
+
+            content += "</tbody></table>";
+            $('#progressBar').append(content);
+
+            $(".pageloader").toggleClass("d-none");
+            setResults('<br/><br/><a class="btn btn-primary" onclick="print();"><i class="fa fa-print"></i> Print</a>');
+
+            $("#CheckedCount").html(ClientCNICs.length);
+            $("#FoundCount").html(foundCount);
+
+        }
+
+        //function compare() {
+        //    $(".pageloader").toggleClass("d-none");
+        //    var i = 1;
+        //    console.log(ClientCNICs);
+        //    var content = "<div class='row'>";
+        //    ClientCNICs.forEach(function (item) {
+        //        var cnicNumber = item.cnic.replaceAll('-', '');
+        //        var foundArr = allResults.filter(x => x.cnic == cnicNumber);
+        //        content += "<div class='col-md-3'>";
+        //        if (foundArr.length == 0) {
+        //            content += "<p><i class='fa fa-times text-success'></i> " + cnicNumber + " (" + item.type + ")" + "</p>";
+        //        }
+        //        else {
+        //            content += "<p><i class='fa fa-check text-danger'></i> " + cnicNumber + " (" + item.type + ")" + "</p>";
+        //        }
+        //        content += "</div>";
+        //        i++;
+        //    });
+        //    content += "</div>";
+        //    $('#progressBar').append(content);
+
+        //    $(".pageloader").toggleClass("d-none");
+        //    setResults('<br/><br/><a class="btn btn-primary" onclick="print();"><i class="fa fa-print"></i> Print</a>');
+
+        //}
+
+
+        function setResults(text) {
+            $('#results').append(text);
+        }
+
+        function print() {
+            $(".btn").addClass("d-none");
+            $("#PrintDiv").printThis();
+        }
+
+
+    </script>
+</body>
+</html>
