@@ -1020,6 +1020,8 @@ namespace TFCLPortal.Migrations
 
                     b.Property<string>("NoOfInstallments");
 
+                    b.Property<string>("Security");
+
                     b.Property<string>("approvalFileUrl");
 
                     b.Property<int>("fk_ProductId");

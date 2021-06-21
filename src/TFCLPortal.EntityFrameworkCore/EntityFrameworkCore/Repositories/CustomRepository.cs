@@ -154,6 +154,7 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
                             mbo.AcademicSessionName = Convert.ToString(dataReader["AcademicSessionName"]);
                             mbo.TDSBusinessNature = Convert.ToInt32(dataReader["TDSBusinessNature"]);
                             mbo.TDSBusinessNatureName = Convert.ToString(dataReader["TDSBusinessNatureName"]);
+                            mbo.ContactSourceName = Convert.ToString(dataReader["ContactSourceName"]);
 
                             obj.Add(mbo);
                         }

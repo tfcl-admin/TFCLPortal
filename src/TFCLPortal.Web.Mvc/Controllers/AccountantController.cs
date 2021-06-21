@@ -1623,7 +1623,7 @@ namespace TFCLPortal.Web.Controllers
 
                 if (ViewBag.PaymentDate == null)
                 {
-                    ViewBag.PaymentDate = string.Format("{0:yyyy-MM-dd}", schedule.DisbursmentDate.Substring(0, 10));
+                    ViewBag.PaymentDate = string.Format("{0:yyyy-MM-dd}", schedule.DisbursmentDate.Substring(0, 11));
                 }
 
                 //OutstandingMarkup

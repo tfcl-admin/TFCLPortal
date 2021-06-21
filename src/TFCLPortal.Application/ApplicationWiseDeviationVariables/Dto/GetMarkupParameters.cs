@@ -11,6 +11,7 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables.Dto
         public string NoOfInstallments { get; set; }
         public string ProductId { get; set; }
         public int ApplicationId { get; set; }
+        public string Security { get; set; }
 
     }
 }

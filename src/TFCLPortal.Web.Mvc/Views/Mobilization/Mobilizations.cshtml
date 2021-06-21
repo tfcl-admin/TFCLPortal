@@ -9,8 +9,7 @@
     .pagination li {
         margin: 3px;
     }
-    .test {
-    }
+   
     .modal-backdrop {
         opacity: 0.5 !important;
     }
@@ -242,6 +241,10 @@
                 <div class="modal-body">
                     <div class="row text-left">
                         <div class="col-md-3">
+                            <p class="detailHeading">Contact Source</p>
+                            <p class="detailText" id="contactSourceTxt"></p>
+                        </div>
+                        <div class="col-md-3">
                             <p class="detailHeading">Interaction Number</p>
                             <p class="detailText" id="intNoTxt"></p>
                         </div>
@@ -468,6 +471,7 @@
             success: function (data) {
                 var d = data.result;
                 console.log(d[0]);
+                $("#contactSourceTxt").text(naIFnull(d[0].contactSourceName));
                 $("#intNoTxt").text(naIFnull(d[0].interactionNumber));
                 $("#appName").text(naIFnull(d[0].clientName));
                 $("#AcademicSessionTxt").text(naIFnull(d[0].academicSession));

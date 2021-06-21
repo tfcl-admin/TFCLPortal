@@ -183,7 +183,7 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables
 
                 if(applicationWiseVariables!=null)
                 {
-                    if (input.LoanAmount==applicationWiseVariables.LoanAmount && input.LoanTenure==applicationWiseVariables.LoanTenure && input.NoOfInstallments == applicationWiseVariables.NoOfInstallments)
+                    if (input.LoanAmount==applicationWiseVariables.LoanAmount && input.LoanTenure==applicationWiseVariables.LoanTenure && input.NoOfInstallments == applicationWiseVariables.NoOfInstallments && input.Security == applicationWiseVariables.Security)
                     {
                         Markup = applicationWiseVariables.Markup;
                     }
@@ -298,6 +298,9 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables
                         updateObj.NoOfInstallments = input.NoOfInstallments;
                         updateObj.LoanTenure = input.LoanTenure;
                         updateObj.Markup = Markup;
+                        updateObj.Security = input.Security;
+
+
                         await UpdateApplicationWiseDeviationVariable(updateObj);
                     }
                 }

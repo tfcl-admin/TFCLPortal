@@ -73,6 +73,7 @@ namespace TFCLPortal.Mobilizations
         public int ApplicantType { get; set; }
         public string FiName { get; set; }
         public string Designation { get; set; }
+        public string ContactSourceName { get; set; }
         public string MonthlySalary { get; set; }
         public string JobTenure { get; set; }
         public int SchoolGoingDependants { get; set; }

@@ -47,6 +47,7 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables
         public string NoOfInstallments { get; set; }
         public string approvalFileUrl { get; set; }
         public string updationReason { get; set; }
+        public string Security { get; set; }
 
 
     }

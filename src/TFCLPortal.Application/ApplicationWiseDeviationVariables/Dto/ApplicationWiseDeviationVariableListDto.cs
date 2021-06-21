@@ -52,6 +52,7 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables.Dto
         public string LoanAmount { get; set; }
         public string LoanTenure { get; set; }
         public string NoOfInstallments { get; set; }
+        public string Security { get; set; }
 
         public string updationReason { get; set; }
         public IFormFile file { get; set; }
