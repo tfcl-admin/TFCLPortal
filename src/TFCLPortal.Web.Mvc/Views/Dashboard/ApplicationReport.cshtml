@@ -162,7 +162,7 @@
         </table>
         @*<div class="col-md-3 text-right">
 
-            </div>*@
+        </div>*@
 
         @if (ViewBag.LRD != null)
         {
@@ -285,18 +285,18 @@
                         <td class="text">@(ViewBag.PD.BirthDate == null   ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.PD.BirthDate))</td>
 
                         @*<td class="title">Age Approval Taken</td>
-                            @if (ViewBag.PD.AgeApprovalTaken == null)
-                            {
-                                <td class="text">--</td>
-                            }
-                            else if (ViewBag.PD.AgeApprovalTaken == false)
-                            {
-                                <td class="text">No</td>
-                            }
-                            else if (ViewBag.PD.AgeApprovalTaken == true)
-                            {
-                                <td class="text">Yes</td>
-                            }*@
+                        @if (ViewBag.PD.AgeApprovalTaken == null)
+                        {
+                            <td class="text">--</td>
+                        }
+                        else if (ViewBag.PD.AgeApprovalTaken == false)
+                        {
+                            <td class="text">No</td>
+                        }
+                        else if (ViewBag.PD.AgeApprovalTaken == true)
+                        {
+                            <td class="text">Yes</td>
+                        }*@
                         <td class="title">GENDER</td>
                         <td class="text">@(ViewBag.PD.GenderName == null || ViewBag.PD.GenderName == "" ? "--" : ViewBag.PD.GenderName)</td>
 
@@ -313,9 +313,13 @@
 
                         <td class="title">DEPENDENTS</td>
                         @if (ViewBag.PD.NumberOfDependents == 0 || ViewBag.PD.NumberOfDependents == 1 || ViewBag.PD.NumberOfDependents == 42)
-                        {<td class="text">--</td> }
+                        {
+                            <td class="text">--</td>
+ }
                         else
-                        {<td class="text">@(ViewBag.PD.NumberOfDependents - 1)</td>}
+                        {
+                            <td class="text">@(ViewBag.PD.NumberOfDependents - 1)</td>
+}
 
                         <td class="title">School Going Dependents</td>
                         @if (ViewBag.PD.SchoolGoingDependants == null || ViewBag.PD.SchoolGoingDependants == 0 || ViewBag.PD.SchoolGoingDependants == 42)
@@ -2614,7 +2618,7 @@
                             </tr>
 
                             @*@{item.AdditionalFieldLabel1 = "Hidden Expenses";}
-                                @{item.AdditionalFieldValue1 = "15545";}*@
+                            @{item.AdditionalFieldValue1 = "15545";}*@
 
                             <tr class="@(item.AdditionalFieldLabel1 == "" || item.AdditionalFieldLabel1 == null ? "d-none" : "")">
                                 <td class="title">
@@ -2766,7 +2770,7 @@
                                         <td class="text">@(Academy.OtherExpenses == null || Academy.OtherExpenses == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Academy.OtherExpenses).Replace(",",""))))</td>
                                     </tr>
                                     @*@{Academy.AdditionalFieldLabel1 = "Hidden Expenses";}
-                                        @{Academy.AdditionalFieldValue1 = "15545";}*@
+                                    @{Academy.AdditionalFieldValue1 = "15545";}*@
 
                                     <tr class="@(Academy.AdditionalFieldLabel1 == "" || Academy.AdditionalFieldLabel1 == null ? "d-none" : "")">
                                         <td class="title">
@@ -2854,13 +2858,8 @@
                     @if (ViewBag.HE.CreateHouseholdIncomes != null)
                     {
 
-
-
                         @foreach (var item in ViewBag.HE.CreateHouseholdIncomes)
                         {
-
-
-
                             <tr>
                                 <td class="title">HOUSEHold Owner Name</td>
                                 <td class="text">@(item.HouseholdOwnerName == null || item.HouseholdOwnerName == "0" ? "--" : item.HouseholdOwnerName)</td>
@@ -2888,17 +2887,33 @@
                             </tr>
 
                             <tr>
-                                <td class="title">EDUCATIONAL Expense</td>
-                                <td class="text">@(item.Educational == "" || item.Educational == null || item.Educational == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Educational).Replace(",", ""))))</td>
+                                <td class="title">Monthly EI Fee</td>
+                                <td class="text">@(item.MonthlyEIfee== null || item.MonthlyEIfee == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyEIfee).Replace(",", ""))))</td>
 
-                                <td class="title">COMMITTEE</td>
-                                <td class="text">@(item.CommitteeInstallment == null || item.CommitteeInstallment == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.CommitteeInstallment).Replace(",", ""))))</td>
+                                <td class="title">Monthly Tution Fee</td>
+                                <td class="text">@(item.MonthlyTuitionfee== null || item.MonthlyTuitionfee == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyTuitionfee).Replace(",", ""))))</td>
                             </tr>
                             <tr>
-                                <td class="title">
-                                    Transportation
-                                </td>
-                                <td class="text">@(item.LoanInstallment == null || item.LoanInstallment == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.LoanInstallment).Replace(",", ""))))</td>
+                                <td class="title">Monthly Qari Fee</td>
+                                <td class="text">@(item.MonthlyQarifee== null || item.MonthlyQarifee == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyQarifee).Replace(",", ""))))</td>
+
+                                <td class="title">Van/Transportation of Dependents</td>
+                                <td class="text">@(item.VanTransportationOfDependents== null || item.VanTransportationOfDependents == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.VanTransportationOfDependents).Replace(",", ""))))</td>
+                            </tr>
+                            @*<tr>
+                                <td class="title">EDUCATIONAL Expense</td>
+                                <td class="text">@(item.Educational == null || item.Educational == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Educational).Replace(",", ""))))</td>
+                            </tr>*@
+                            <tr>
+                                <td class="title">Other Educational Expenses</td>
+                                <td class="text">@(item.OtherEducationalExpenses== null || item.OtherEducationalExpenses == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherEducationalExpenses).Replace(",", ""))))</td>
+
+                                <td class="title">Household Transportation</td>
+                                <td class="text">@(item.HouseHoldTransportation== null || item.HouseHoldTransportation == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.HouseHoldTransportation).Replace(",", ""))))</td>
+                            </tr>
+                            <tr>
+                                <td class="title">COMMITTEE</td>
+                                <td class="text">@(item.CommitteeInstallment == null || item.CommitteeInstallment == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.CommitteeInstallment).Replace(",", ""))))</td>
 
                                 <td class="title">REPAIR & MAINTENANCE</td>
                                 <td class="text">@(item.RepairAndMentinence == null || item.RepairAndMentinence == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.RepairAndMentinence).Replace(",", ""))))</td>
@@ -2909,9 +2924,39 @@
                                 </td>
                                 <td class="text">@(item.Internet == null || item.Internet == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Internet).Replace(",", ""))))</td>
 
+                                <td class="title">
+                                    Loan Installment
+                                </td>
+                                <td class="text">@(item.LoanInstallment == null || item.LoanInstallment == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.LoanInstallment).Replace(",", ""))))</td>
+                            </tr>
+                            <tr>
                                 <td class="title">OTHER EXPENSES</td>
                                 <td class="text">@(item.OtherHouseholdExpenses == null || item.OtherHouseholdExpenses == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherHouseholdExpenses).Replace(",", ""))))</td>
+                                <td></td>
+                                <td></td>
                             </tr>
+
+                            <tr class="@(item.AdditionalFieldLabel1 == "" || item.AdditionalFieldLabel1 == null ? "d-none" : "")">
+                                <td class="title">
+                                    @item.AdditionalFieldLabel1
+                                </td>
+                                <td class="text">@(item.AdditionalFieldValue1 == null || item.AdditionalFieldValue1 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue1).Replace(",",""))))</td>
+                            </tr>
+
+                            <tr class="@(item.AdditionalFieldLabel2 == "" || item.AdditionalFieldLabel2 == null ? "d-none" : "" )">
+                                <td class="title">
+                                    @item.AdditionalFieldLabel2
+                                </td>
+                                <td class="text">@(item.AdditionalFieldValue2 == null || item.AdditionalFieldValue2 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue2).Replace(",",""))))</td>
+                            </tr>
+
+                            <tr class="@(item.AdditionalFieldLabel3 == "" || item.AdditionalFieldLabel3 == null ? "d-none" : "" )">
+                                <td class="title">
+                                    @item.AdditionalFieldLabel3
+                                </td>
+                                <td class="text">@(item.AdditionalFieldValue3 == null || item.AdditionalFieldValue3 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue3).Replace(",",""))))</td>
+                            </tr>
+
                             <tr>
                                 <td class="title">Total Monthly Expense</td>
                                 <td class="text">@(item.TotalHouseHoldExpense == null || item.TotalHouseHoldExpense == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.TotalHouseHoldExpense).Replace(",", ""))))</td>
@@ -2922,36 +2967,11 @@
                             <tr>
                                 <td class="title">Net Monthly Expense</td>
                                 <td class="text">@(item.NetTotal == null || item.NetTotal == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.NetTotal).Replace(",", ""))))</td>
-                                <td></td>
-                                <td></td>
                             </tr>
-
-                            <tr class=" @(item.AdditionalFieldLabel1 == "" || item.AdditionalFieldLabel1 == null ? "d-none" : "")">
-                                <td class="title">
-                                    @item.AdditionalFieldLabel1
-                                </td>
-                                <td class="text" colspan="3">@(item.AdditionalFieldValue1 == null || item.AdditionalFieldValue1 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue1).Replace(",",""))))</td>
-                            </tr>
-
-                            <tr class="  @(item.AdditionalFieldLabel2 == "" || item.AdditionalFieldLabel2 == null ? "d-none" : "" )">
-                                <td class="title">
-                                    @item.AdditionalFieldLabel2
-                                </td>
-                                <td class="text" colspan="3">@(item.AdditionalFieldValue2 == null || item.AdditionalFieldValue2 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue2).Replace(",",""))))</td>
-                            </tr>
-
-                            <tr class="  @(item.AdditionalFieldLabel3 == "" || item.AdditionalFieldLabel3 == null ? "d-none" : "" )">
-                                <td class="title">
-                                    @item.AdditionalFieldLabel3
-                                </td>
-                                <td class="text" colspan="3">@(item.AdditionalFieldValue3 == null || item.AdditionalFieldValue3 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue3).Replace(",",""))))</td>
-                            </tr>
-
 
                             <tr>
                                 <td class="title text-left bg-gray" colspan="4"></td>
                             </tr>
-
                         }
 
 
@@ -2975,20 +2995,20 @@
                 </thead>
                 <tbody>
                     @*<tr>
-                            <td class="text" colspan="4">I am applying for the loan as per details given below:</td>
-                        </tr>
-                        <tr>
-                            <td class="title">
-                                PURPOSE OF LOAN
-                            </td>
-                            <td class="text" colspan="3">@(ViewBag.LRD.LoanpurposeName == null || ViewBag.LRD.LoanpurposeName == "" ? "--" : ViewBag.LRD.LoanpurposeName)</td>
-                        </tr>
-                        <tr>
-                            <td class="title">
-                                Loan Purpose Details
-                            </td>
-                            <td class="text" colspan="3">@(ViewBag.LRD.PurposeOfLoanUtilization == null || ViewBag.LRD.PurposeOfLoanUtilization == "" ? "--" : ViewBag.LRD.PurposeOfLoanUtilization)</td>
-                        </tr>*@
+                        <td class="text" colspan="4">I am applying for the loan as per details given below:</td>
+                    </tr>
+                    <tr>
+                        <td class="title">
+                            PURPOSE OF LOAN
+                        </td>
+                        <td class="text" colspan="3">@(ViewBag.LRD.LoanpurposeName == null || ViewBag.LRD.LoanpurposeName == "" ? "--" : ViewBag.LRD.LoanpurposeName)</td>
+                    </tr>
+                    <tr>
+                        <td class="title">
+                            Loan Purpose Details
+                        </td>
+                        <td class="text" colspan="3">@(ViewBag.LRD.PurposeOfLoanUtilization == null || ViewBag.LRD.PurposeOfLoanUtilization == "" ? "--" : ViewBag.LRD.PurposeOfLoanUtilization)</td>
+                    </tr>*@
 
                     <tr>
                         <td class="title" width="30%">loan amount requried</td>
@@ -3864,7 +3884,7 @@
                         I am aware that TFCL will charge a fine of Rs. __________ + FED per day for  delay in repayment of loan / instalment after due date.
                     </td>
                 </tr>
-          
+
                 <tr> <td style="text-align:center">5</td><td>I authorize TFCL to share my personal data with  those who provide services to TFCL under non-disclosure agreement with such service providers.</td></tr>
                 <tr> <td style="text-align:center">6</td><td>TFCL shall have the right to share any information related to my personal data with Credit Bureaus any other related department, agency &/or authority under binding laws without my permission.</td></tr>
                 <tr> <td style="text-align:center">7</td><td>I am aware that the loan restructuring / rescheduling can be done as per applicable policy of TFCL on specific and special reasons investigated by TFCL. I am also aware that the reporting in eCIB will remain as per prudential regulations.</td></tr>

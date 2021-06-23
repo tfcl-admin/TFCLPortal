@@ -114,7 +114,7 @@
             </tr>
             <tr>
                 <td class="title">
-                    Client / School / Business Name
+                    Business Name
                 </td>
                 <td colspan="3" class="title">@(ViewBag.Application.SchoolName == null || ViewBag.Application.SchoolName == "" ? "--" : ViewBag.Application.SchoolName)</td>
             </tr>
@@ -162,7 +162,7 @@
         </table>
         @*<div class="col-md-3 text-right">
 
-        </div>*@
+        </tr>*@
 
         @if (ViewBag.LRD != null)
         {
@@ -2311,13 +2311,8 @@
                     @if (ViewBag.HE.CreateHouseholdIncomes != null)
                     {
 
-
-
                         @foreach (var item in ViewBag.HE.CreateHouseholdIncomes)
                         {
-
-
-
                             <tr>
                                 <td class="title">HOUSEHold Owner Name</td>
                                 <td class="text">@(item.HouseholdOwnerName == null || item.HouseholdOwnerName == "0" ? "--" : item.HouseholdOwnerName)</td>
@@ -2345,17 +2340,33 @@
                             </tr>
 
                             <tr>
-                                <td class="title">EDUCATIONAL Expense</td>
-                                <td class="text">@(item.Educational == "" || item.Educational == null || item.Educational == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Educational).Replace(",", ""))))</td>
+                                <td class="title">Monthly EI Fee</td>
+                                <td class="text">@(item.MonthlyEIfee== null || item.MonthlyEIfee == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyEIfee).Replace(",", ""))))</td>
 
-                                <td class="title">COMMITTEE</td>
-                                <td class="text">@(item.CommitteeInstallment == null || item.CommitteeInstallment == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.CommitteeInstallment).Replace(",", ""))))</td>
+                                <td class="title">Monthly Tution Fee</td>
+                                <td class="text">@(item.MonthlyTuitionfee== null || item.MonthlyTuitionfee == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyTuitionfee).Replace(",", ""))))</td>
                             </tr>
                             <tr>
-                                <td class="title">
-                                    Transportation
-                                </td>
-                                <td class="text">@(item.LoanInstallment == null || item.LoanInstallment == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.LoanInstallment).Replace(",", ""))))</td>
+                                <td class="title">Monthly Qari Fee</td>
+                                <td class="text">@(item.MonthlyQarifee== null || item.MonthlyQarifee == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyQarifee).Replace(",", ""))))</td>
+
+                                <td class="title">Van/Transportation of Dependents</td>
+                                <td class="text">@(item.VanTransportationOfDependents== null || item.VanTransportationOfDependents == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.VanTransportationOfDependents).Replace(",", ""))))</td>
+                            </tr>
+                            @*<tr>
+                    <td class="title">EDUCATIONAL Expense</td>
+                    <td class="text">@(item.Educational == null || item.Educational == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Educational).Replace(",", ""))))</td>
+                </tr>*@
+                            <tr>
+                                <td class="title">Other Educational Expenses</td>
+                                <td class="text">@(item.OtherEducationalExpenses== null || item.OtherEducationalExpenses == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherEducationalExpenses).Replace(",", ""))))</td>
+
+                                <td class="title">Household Transportation</td>
+                                <td class="text">@(item.HouseHoldTransportation== null || item.HouseHoldTransportation == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.HouseHoldTransportation).Replace(",", ""))))</td>
+                            </tr>
+                            <tr>
+                                <td class="title">COMMITTEE</td>
+                                <td class="text">@(item.CommitteeInstallment == null || item.CommitteeInstallment == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.CommitteeInstallment).Replace(",", ""))))</td>
 
                                 <td class="title">REPAIR & MAINTENANCE</td>
                                 <td class="text">@(item.RepairAndMentinence == null || item.RepairAndMentinence == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.RepairAndMentinence).Replace(",", ""))))</td>
@@ -2366,49 +2377,54 @@
                                 </td>
                                 <td class="text">@(item.Internet == null || item.Internet == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Internet).Replace(",", ""))))</td>
 
+                                <td class="title">
+                                    Loan Installment
+                                </td>
+                                <td class="text">@(item.LoanInstallment == null || item.LoanInstallment == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.LoanInstallment).Replace(",", ""))))</td>
+                            </tr>
+                            <tr>
                                 <td class="title">OTHER EXPENSES</td>
                                 <td class="text">@(item.OtherHouseholdExpenses == null || item.OtherHouseholdExpenses == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherHouseholdExpenses).Replace(",", ""))))</td>
+                                <td></td>
+                                <td></td>
                             </tr>
+
+                            <tr class="@(item.AdditionalFieldLabel1 == "" || item.AdditionalFieldLabel1 == null ? "d-none" : "")">
+                                <td class="title">
+                                    @item.AdditionalFieldLabel1
+                                </td>
+                                <td class="text">@(item.AdditionalFieldValue1 == null || item.AdditionalFieldValue1 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue1).Replace(",",""))))</td>
+                            </tr>
+
+                            <tr class="@(item.AdditionalFieldLabel2 == "" || item.AdditionalFieldLabel2 == null ? "d-none" : "" )">
+                                <td class="title">
+                                    @item.AdditionalFieldLabel2
+                                </td>
+                                <td class="text">@(item.AdditionalFieldValue2 == null || item.AdditionalFieldValue2 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue2).Replace(",",""))))</td>
+                            </tr>
+
+                            <tr class="@(item.AdditionalFieldLabel3 == "" || item.AdditionalFieldLabel3 == null ? "d-none" : "" )">
+                                <td class="title">
+                                    @item.AdditionalFieldLabel3
+                                </td>
+                                <td class="text">@(item.AdditionalFieldValue3 == null || item.AdditionalFieldValue3 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue3).Replace(",",""))))</td>
+                            </tr>
+
                             <tr>
                                 <td class="title">Total Monthly Expense</td>
                                 <td class="text">@(item.TotalHouseHoldExpense == null || item.TotalHouseHoldExpense == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.TotalHouseHoldExpense).Replace(",", ""))))</td>
-
+                          
                                 <td class="title">PROVISIONAL of EXPENSES (10%)</td>
                                 <td class="text">@(item.ProvisionalHouseholdExpenses == null || item.ProvisionalHouseholdExpenses == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.ProvisionalHouseholdExpenses).Replace(",", ""))))</td>
                             </tr>
                             <tr>
                                 <td class="title">Net Monthly Expense</td>
                                 <td class="text">@(item.NetTotal == null || item.NetTotal == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.NetTotal).Replace(",", ""))))</td>
-                                <td></td>
-                                <td></td>
                             </tr>
-
-                            <tr class=" @(item.AdditionalFieldLabel1 == "" || item.AdditionalFieldLabel1 == null ? "d-none" : "")">
-                                <td class="title">
-                                    @item.AdditionalFieldLabel1
-                                </td>
-                                <td class="text" colspan="3">@(item.AdditionalFieldValue1 == null || item.AdditionalFieldValue1 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue1).Replace(",",""))))</td>
-                            </tr>
-
-                            <tr class="  @(item.AdditionalFieldLabel2 == "" || item.AdditionalFieldLabel2 == null ? "d-none" : "" )">
-                                <td class="title">
-                                    @item.AdditionalFieldLabel2
-                                </td>
-                                <td class="text" colspan="3">@(item.AdditionalFieldValue2 == null || item.AdditionalFieldValue2 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue2).Replace(",",""))))</td>
-                            </tr>
-
-                            <tr class="  @(item.AdditionalFieldLabel3 == "" || item.AdditionalFieldLabel3 == null ? "d-none" : "" )">
-                                <td class="title">
-                                    @item.AdditionalFieldLabel3
-                                </td>
-                                <td class="text" colspan="3">@(item.AdditionalFieldValue3 == null || item.AdditionalFieldValue3 == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.AdditionalFieldValue3).Replace(",",""))))</td>
-                            </tr>
-
 
                             <tr>
                                 <td class="title text-left bg-gray" colspan="4"></td>
                             </tr>
-
                         }
 
 
@@ -3268,8 +3284,8 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     This is the text that goes at the bottom of every page.
-                </div>
-            </div>
+                </tr>
+            </tr>
         </footer>*@
     @*<script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>*@
 
@@ -3277,7 +3293,7 @@
         $(function () {
             //$('#printablediv').kinziPrint({
             //    header: "",
-            //    footer: "<p>test</p>",
+            //    footer: "<td>test</td>",
             //    importCSS: true,
             //    importStyle: false,
             //    loadCSS: 'padding-bottom:50px'
