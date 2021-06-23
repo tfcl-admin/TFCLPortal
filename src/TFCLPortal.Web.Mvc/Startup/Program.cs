@@ -10,36 +10,39 @@ namespace TFCLPortal.Web.Startup
     {
         public static void Main(string[] args)
         {
-            var webHost = new WebHostBuilder()
-              .UseKestrel()
-              .UseContentRoot(Directory.GetCurrentDirectory())
-              .ConfigureAppConfiguration((hostingContext, config) =>
-              {
-                  var env = hostingContext.HostingEnvironment;
-                  config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
-                            optional: true, reloadOnChange: true);
-                  config.AddEnvironmentVariables();
-              })
-              .ConfigureLogging((hostingContext, logging) =>
-              {
-                  // Requires `using Microsoft.Extensions.Logging;`
-                  logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                  logging.AddConsole();
-                  logging.AddDebug();
-                  logging.AddEventSourceLogger();
-              })
-              .UseStartup<Program>()
-              .Build();
+           
 
             BuildWebHost(args).Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+            var webHost = new WebHostBuilder()
+             .UseKestrel()
+             .UseContentRoot(Directory.GetCurrentDirectory())
+             .ConfigureAppConfiguration((hostingContext, config) =>
+             {
+                 var env = hostingContext.HostingEnvironment;
+                 config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                       .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
+                           optional: true, reloadOnChange: true);
+                 config.AddEnvironmentVariables();
+             })
+             .ConfigureLogging((hostingContext, logging) =>
+             {
+                  // Requires `using Microsoft.Extensions.Logging;`
+                  logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                 logging.AddConsole();
+                 logging.AddDebug();
+                 logging.AddEventSourceLogger();
+             })
+             .UseStartup<Startup>()
+             .Build();
+
+            return webHost;
+            //return WebHost.CreateDefaultBuilder(args)
+            //    .UseStartup<Startup>()
+            //    .Build();
         }
     }
 }
