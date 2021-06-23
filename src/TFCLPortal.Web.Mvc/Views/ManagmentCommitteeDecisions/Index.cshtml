@@ -70,7 +70,14 @@
                         @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
                     </td>
                     <td>
-                        <a href="/Dashboard/Application?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                        @if (item.ProductType == 1 || item.ProductType == 2)
+                        {
+                            <a href="/Dashboard/Application?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                        }
+                        else if (item.ProductType == 8 || item.ProductType == 9)
+                        {
+                            <a href="/Dashboard/TdsApplication?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                        }
                     </td>
                     <td>
                         <a href="/McrcDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
