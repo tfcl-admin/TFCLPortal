@@ -29,7 +29,7 @@ namespace TFCLPortal.Web.Startup
                   logging.AddDebug();
                   logging.AddEventSourceLogger();
               })
-              .UseStartup<Startup>()
+              .UseStartup<Program>()
               .Build();
 
             BuildWebHost(args).Run();
