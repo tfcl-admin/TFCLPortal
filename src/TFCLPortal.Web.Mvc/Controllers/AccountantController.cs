@@ -864,9 +864,20 @@ namespace TFCLPortal.Web.Controllers
                 {
                     var sameInstallmentPaymentsList = paidInstallments.Result.Where(x => x.NoOfInstallment == lastPaidInstallment.NoOfInstallment);
                     decimal sumOfAllPaymentsForOneInstallment = 0;
+
+                    int count = 0;
                     foreach (var payments in sameInstallmentPaymentsList)
                     {
+                        if(count>0)
+                        {
+                            sumOfAllPaymentsForOneInstallment += (payments.Amount);
+                        }
+                        else
+                        {
                         sumOfAllPaymentsForOneInstallment += (payments.Amount + payments.PreviousBalance);
+                        }
+
+                        count++;
                     }
 
                     ViewBag.PreviousBalance = sumOfAllPaymentsForOneInstallment;
