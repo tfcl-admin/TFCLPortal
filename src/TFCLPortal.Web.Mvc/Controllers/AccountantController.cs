@@ -136,7 +136,6 @@ namespace TFCLPortal.Web.Controllers
 
         public IActionResult Index()
         {
-
             var Applications = _applicationAppService.GetShortApplicationList(ApplicationState.MC_Authorized, Branchid());
             if (Applications != null)
             {
@@ -354,8 +353,6 @@ namespace TFCLPortal.Web.Controllers
                         if (filterType == 1)
                         {
                             installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
-
-
                         }
                         else if (filterType == 2)
                         {

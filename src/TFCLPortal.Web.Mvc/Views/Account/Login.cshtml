@@ -154,7 +154,7 @@
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button id="LoginButton" class="login100-form-btn" type="submit">
+                    <button id="LoginButton" onclick="processing()" class="login100-form-btn" type="submit">
                         @L("LogIn")
                     </button>
                 </div>
@@ -179,3 +179,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    function processing() {
+        var btn = document.getElementById("LoginButton");
+        btn.innerHTML = "<i class='fa fa-spinner fa-spin'></i> &nbsp; Processing...";
+    }
+</script>

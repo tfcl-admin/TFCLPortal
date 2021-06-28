@@ -19,6 +19,7 @@ using TFCLPortal.Applications;
 using TFCLPortal.ApiCallLogs.Dto;
 using Newtonsoft.Json;
 using TFCLPortal.DynamicDropdowns.RelationshipWithApplicants;
+using TFCLPortal.DynamicDropdowns.CollateralOwnerships;
 
 namespace TFCLPortal.CollateralDetails
 {
@@ -33,6 +34,7 @@ namespace TFCLPortal.CollateralDetails
         private readonly IRepository<OwnershipStatus> _ownershipStatusRepository;
         private readonly IRepository<RelationshipWithApplicant> _relationshipWithApplicantRepository;
         private readonly IRepository<PropertyType> _propertyTyperepo;
+        private readonly IRepository<CollateralOwnership> _collateralOwnershipDto;
         private readonly IApiCallLogAppService _apiCallLogAppService;
         private readonly IApplicationAppService _applicationAppService;
         private readonly IRepository<CollateralType> _collateralType;
@@ -45,6 +47,7 @@ namespace TFCLPortal.CollateralDetails
             IRepository<CollateralLandBuilding, Int32> collateralLandBuildingRepository,
             IRepository<CollateralTDR, Int32> collateralTDRRepository,
             IApiCallLogAppService apiCallLogAppService,
+            IRepository<CollateralOwnership> collateralOwnershipDto,
             IRepository<OwnershipStatus> ownershipStatusRepository,
             IRepository<PropertyType> PropertyTyperepo,
             IApplicationAppService applicationAppService,
@@ -58,6 +61,7 @@ namespace TFCLPortal.CollateralDetails
             _collateralTDRRepository = collateralTDRRepository;
             _ownershipStatusRepository = ownershipStatusRepository;
             _apiCallLogAppService = apiCallLogAppService;
+            _collateralOwnershipDto = collateralOwnershipDto;
             _propertyTyperepo = PropertyTyperepo;
             _collateralType = collateralType;
             _collateralFranchiseRepository = collateralFranchiseRepository;
@@ -486,7 +490,7 @@ namespace TFCLPortal.CollateralDetails
 
                         foreach (CollateralLandBuildingListDto collateralLandBuilding in collateralLandBuildings)
                         {
-                            var ownership = _ownershipStatusRepository.Get(collateralLandBuilding.CollateralOwnership);
+                            var ownership = _collateralOwnershipDto.Get(collateralLandBuilding.CollateralOwnership);
                             if (ownership != null)
                             {
                                 collateralLandBuilding.OwnershipName = ownership.Name;
@@ -509,7 +513,7 @@ namespace TFCLPortal.CollateralDetails
 
                         foreach (CollateralVehicleListDto collateralVehicle in collateralVehicles)
                         {
-                            var ownership = _ownershipStatusRepository.Get(collateralVehicle.CollateralOwnership);
+                            var ownership = _collateralOwnershipDto.Get(collateralVehicle.CollateralOwnership);
                             if (ownership != null)
                             {
                                 collateralVehicle.VehicleOwnerName = ownership.Name;
@@ -562,7 +566,7 @@ namespace TFCLPortal.CollateralDetails
 
                         foreach (CollateralGoldListDto collateralgold in collateralgolds)
                         {
-                            var ownership = _ownershipStatusRepository.Get(collateralgold.CollateralOwnership);
+                            var ownership = _collateralOwnershipDto.Get(collateralgold.CollateralOwnership);
                             if (ownership != null)
                             {
                                 collateralgold.CollateralOwnershipName = ownership.Name;
@@ -588,7 +592,7 @@ namespace TFCLPortal.CollateralDetails
 
                         foreach (CollateralFranchiseListDto collateralFranchise in collateralFranchises)
                         {
-                            var ownership = _ownershipStatusRepository.Get(collateralFranchise.CollateralOwnership);
+                            var ownership = _collateralOwnershipDto.Get(collateralFranchise.CollateralOwnership);
                             if(ownership!=null)
                             {
                                 collateralFranchise.OwnershipName = ownership.Name;

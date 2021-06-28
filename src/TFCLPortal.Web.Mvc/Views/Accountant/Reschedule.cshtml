@@ -445,7 +445,8 @@
             var Months = Number($('#DefermentMonths').val());
             $('#DefermentMonths').val('1');
 
-            var Markup = Number($("#txtMarkup").text())/100;
+            var Markup = Number($("#txtMarkup").text()) / 100;
+
 
             if (StartDate != "" && Months > 0) {
 
@@ -465,9 +466,18 @@
                     previousDate = item.installmentDueDate;
                 });
                 var previousInstallment = installments[indexOfInstallment - 1];
+                debugger
                 var previousPrincipal_op = Number(previousInstallment.osPrincipal_op.replaceAll(",", ""));
-                var previousPrincipal = Number(previousInstallment.principal.replaceAll(",", ""));
-                openingPrincipalAmount = previousPrincipal_op - previousPrincipal;
+                if (previousInstallment.principal != '--') {
+                    var previousPrincipal = Number(previousInstallment.principal.replaceAll(",", ""));
+                    openingPrincipalAmount = previousPrincipal_op - previousPrincipal;
+
+                }
+                else{
+                    var previousPrincipal = Number(previousInstallment.osPrincipal_Closing.replaceAll(",", ""));
+                    openingPrincipalAmount = previousPrincipal;
+                }
+
 
                 var defferedInstallments = [];
                 for (var i = 0; i < Months; i++) {
