@@ -58,7 +58,6 @@ namespace TFCLPortal.ExposureDetails
             var IsexposureDetailExist = _exposureDetailRepository.GetAllList().Where(x => x.ApplicationId == input.ApplicationId).FirstOrDefault();
             try
             {
-
                 if (IsexposureDetailExist != null)
                 {
                     var IsExposureChildExist = _childRepository.GetAllList().Where(x => x.Fk_ExpoDetailID == IsexposureDetailExist.Id).ToList();
@@ -66,15 +65,15 @@ namespace TFCLPortal.ExposureDetails
                     await _exposureDetailRepository.DeleteAsync(exposureDetail1);
                     var exposureDetail = ObjectMapper.Map<ExposureDetail>(input);
                     var result = await _exposureDetailRepository.InsertAsync(exposureDetail);
-                    CurrentUnitOfWork.SaveChanges();
+                    await CurrentUnitOfWork.SaveChangesAsync();
                     if (IsExposureChildExist.Count > 0)
                     {
                         foreach (var child in IsExposureChildExist)
                         {
-                            child.Fk_ExpoDetailID = result.Id;
+                            //child.Fk_ExpoDetailID = result.Id;
                             var expoChild = ObjectMapper.Map<ExposureDetailChild>(child);
                             await _childRepository.DeleteAsync(expoChild);
-                            CurrentUnitOfWork.SaveChanges();
+                            await CurrentUnitOfWork.SaveChangesAsync();
                         }
                         List<UpdateExposureChildDto> exposureDetailAddDtos = input.exposureDetailsList;
                         foreach (var exposureDetailAddDto in exposureDetailAddDtos)
@@ -82,7 +81,7 @@ namespace TFCLPortal.ExposureDetails
                             exposureDetailAddDto.Fk_ExpoDetailID = result.Id;
                             var exposureDetailchild = ObjectMapper.Map<ExposureDetailChild>(exposureDetailAddDto);
                             await _childRepository.InsertAsync(exposureDetailchild);
-                            CurrentUnitOfWork.SaveChanges();
+                            await CurrentUnitOfWork.SaveChangesAsync();
                         }
                     }
                     else
@@ -95,46 +94,16 @@ namespace TFCLPortal.ExposureDetails
                                 exposureDetailAddDto.Fk_ExpoDetailID = result.Id;
                                 var exposureDetailchild = ObjectMapper.Map<ExposureDetailChild>(exposureDetailAddDto);
                                 await _childRepository.InsertAsync(exposureDetailchild);
-                                CurrentUnitOfWork.SaveChanges();
+                                await CurrentUnitOfWork.SaveChangesAsync();
                             }
                         }
-                        CurrentUnitOfWork.SaveChanges();
+                        await CurrentUnitOfWork.SaveChangesAsync();
                     }
 
                 }
                 else
                 {
                     var exposureDetail = ObjectMapper.Map<ExposureDetail>(input);
-
-                    //CHECKING IF CNIC EXISTS AS GUARANTOR START
-                    //var application = _applicationAppService.GetApplicationById(input.ApplicationId);
-                    //GuarantorDetail guarantor = _guarantorDetailAppService.GetAllList().Where(x => x.CNICNumber != null && x.CNICNumber.Trim() == application.CNICNo.Trim()).FirstOrDefault();
-                    //if (guarantor != null && guarantor.ApplicationId > 0)
-                    //{
-                    //    var GuarantorApplication = _applicationAppService.GetApplicationById(guarantor.ApplicationId);
-                    //    if (GuarantorApplication != null && GuarantorApplication.ApplicationId > 0)
-                    //    {
-                    //        exposureDetail.GuaranteedTFCLLoan = "YES";
-                    //        exposureDetail.AppNoTfclLoanGuarantee = GuarantorApplication.ApplicationNumber.ToString();
-                    //        exposureDetail.ApplicantNameTfclLoanGuarantee = GuarantorApplication.ClientName;
-
-                    //        var GuarantorBusinessPlan = _BusinessPlanAppService.GetAllList().Where(x => x.ApplicationId == guarantor.ApplicationId).SingleOrDefault();
-                    //        if (GuarantorApplication != null && GuarantorApplication.ApplicationId > 0)
-                    //        {
-                    //            exposureDetail.GuaranteeTFCLAmount = GuarantorBusinessPlan.LoanAmountRequired;
-                    //            response = "Applicant \"" + application.ClientName + "\" is already a guarantor of \"" + GuarantorApplication.ClientName + "\" who applied Loan for " + GuarantorBusinessPlan.LoanAmountRequired + " Rs";
-                    //        }
-                    //        else
-                    //        {
-                    //            response = "CNIC exists in Guarantor Lists But Loan Requisition Details are not available";
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        response = "CNIC exists in Guarantor Lists But Application Not Available";
-                    //    }
-                    //}
-                    //CHECKING IF CNIC EXISTS AS GUARANTOR END
 
                     var result = await _exposureDetailRepository.InsertAsync(exposureDetail);
                     CurrentUnitOfWork.SaveChanges();
@@ -146,7 +115,7 @@ namespace TFCLPortal.ExposureDetails
                             exposureDetailAddDto.Fk_ExpoDetailID = result.Id;
                             var exposureDetailchild = ObjectMapper.Map<ExposureDetailChild>(exposureDetailAddDto);
                             await _childRepository.InsertAsync(exposureDetailchild);
-                            CurrentUnitOfWork.SaveChanges();
+                            await CurrentUnitOfWork.SaveChangesAsync();
                         }
                     }
                 }
