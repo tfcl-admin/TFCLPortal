@@ -857,8 +857,26 @@ namespace TFCLPortal.Web.Controllers
                 }
                 else if (lastPaidInstallment.NoOfInstallment.ToString() == "0")
                 {
-                    ViewBag.PreviousBalance = lastPaidInstallment.ExcessShortPayment;
-                    previous = lastPaidInstallment.ExcessShortPayment;
+                    var sameInstallmentPaymentsList = paidInstallments.Result.Where(x => x.InstallmentDueDate == lastPaidInstallment.InstallmentDueDate);
+                    decimal sumOfAllPaymentsForOneInstallment = 0;
+
+                    int count = 0;
+                    foreach (var payments in sameInstallmentPaymentsList)
+                    {
+                        if (count > 0)
+                        {
+                            sumOfAllPaymentsForOneInstallment += (payments.Amount);
+                        }
+                        else
+                        {
+                            sumOfAllPaymentsForOneInstallment += (payments.Amount + payments.PreviousBalance);
+                        }
+
+                        count++;
+                    }
+
+                    ViewBag.PreviousBalance = sumOfAllPaymentsForOneInstallment;
+                    previous = sumOfAllPaymentsForOneInstallment;
                 }
                 else
                 {
@@ -874,7 +892,7 @@ namespace TFCLPortal.Web.Controllers
                         }
                         else
                         {
-                        sumOfAllPaymentsForOneInstallment += (payments.Amount + payments.PreviousBalance);
+                            sumOfAllPaymentsForOneInstallment += (payments.Amount + payments.PreviousBalance);
                         }
 
                         count++;
