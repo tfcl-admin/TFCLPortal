@@ -50,7 +50,7 @@ namespace TFCLPortal.Web.Startup
                     f => f.UseAbpLog4Net().WithConfig("log4net.config")
                 )
             );
-            services.AddApplicationInsightsTelemetry();
+            //services.AddApplicationInsightsTelemetry();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
