@@ -347,7 +347,7 @@
                     content += '<td style="text-align: right">--</td>';
                     content += '<td style="text-align: right">' + numberWithCommas(deffermentMarkup + graceDaysMarkup) + '</td>';
                     graceDaysMarkup = 0;
-                    content += '<td style="text-align: right">' + numberWithCommas(LoanAmount) + '</td>';
+                    content += '<td style="text-align: right">s' + numberWithCommas(LoanAmount) + '</td>';
                     content += '</tr>';
 
                     oldLoanDate = LoanStartDate;
@@ -475,6 +475,7 @@
                 content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
                 content += '</tr>';
             }
+            var tranch = null;
 
             var deffermentMarkup = 0;
             if (DefermentMonths != 0) {
@@ -486,32 +487,55 @@
                     content += '<td style="text-align: center">0</td>';
                     content += '<td style="text-align: center">--</td>';
                     content += '<td style="text-align: center">' + LoanStartDate + '</td>';
-                    content += '<td style="text-align: right">' + numberWithCommas(tranches[0].amount) + '</td>';
-                    content += '<td style="text-align: right">--</td>';
-                    content += '<td style="text-align: right">' + numberWithCommas(tranches[0].amount) + '</td>';
+                    content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+
+                    if (tranch == null) {
+                        tranch = tranches[0];
+                    }
+
+
+
+                    var tAmount = getTranchAmount(LoanStartDate);
+
+                    if (tAmount != "--") {
+                        content += '<td style="text-align: right">' + numberWithCommas(tAmount) + '</td>';
+                        osPrincipalAmount = Number(osPrincipalAmount) + Number(tAmount);
+                    }
+                    else {
+                        content += '<td  style="text-align: right">--</td>';
+
+                    }
+
+                    //content += '<td style="text-align: right">--</td>';
+                    content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
 
                     var oldLoanDate;
                     if (x == 0) {
                         var oldLoanDate = new Date('@ViewBag.Input.LoanStartDate');
                     }
-                    var days = moment(LoanStartDate).diff(moment(oldLoanDate), 'days')
-                    deffermentMarkup = removeNaN(days * tranches[0].dailyMarkup);
-
+                    var days = moment(LoanStartDate).diff(moment(oldLoanDate), 'days');
+                    if (tranches[0].dailyMarkup != tranch.dailyMarkup) {
+                        deffermentMarkup = removeNaN(days * PerDayMarkup);
+                    } else {
+                        deffermentMarkup = removeNaN(days * tranch.dailyMarkup);
+                    }
 
                     content += '<td style="text-align: right">' + numberWithCommas(deffermentMarkup) + '</td>';
                     content += '<td style="text-align: right">--</td>';
                     content += '<td style="text-align: right">' + numberWithCommas(deffermentMarkup + graceDaysMarkup) + '</td>';
                     graceDaysMarkup = 0;
-                    content += '<td style="text-align: right">' + numberWithCommas(tranches[0].amount) + '</td>';
+                    content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
                     content += '</tr>';
 
                     oldLoanDate = LoanStartDate;
 
+                    if (getTranch(LoanStartDate) != "--") {
+                        tranch = getTranch(LoanStartDate);
+                    }
+                    instCalculationAmount = osPrincipalAmount;
                 }
             }
 
-
-            var tranch = null;
 
             for (i = 1, j = (Installments - 1); i <= Installments; i++, j--) {
 
@@ -528,15 +552,14 @@
                     tranch = tranches[0];
                 }
 
-
                 var inst = getInstallment(tranch, instCalculationAmount) + graceDaysMarkup;
-
+                //console.log(instCalculationAmount+  " : " + inst);
+                //console.log(tranch);
 
                 var resGetMarkup = getMarkup(osPrincipalAmount, tranch.irr);
 
                 var principal = (inst - resGetMarkup - graceDaysMarkup).toFixed(2);
-                console.log(inst + '-' + resGetMarkup + " = " + principal);
-
+                //console.log(inst + '-' + resGetMarkup + " = " + principal);
 
                 resGetMarkup = resGetMarkup.toFixed(2);
 
@@ -561,16 +584,10 @@
                 }
                 content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
 
-
-
                 content += '<td style="text-align: right">' + numberWithCommas(resGetMarkup) + '</td>';
 
                 // var resgetmarkup = getmarkup(osprincipalamount, tranch.irr).tofixed(2); OLD Markup
                 //content += '<td>' + numberwithcommas(resgetmarkup) + '</td>';
-
-
-
-
 
                 content += '<td style="text-align: right">' + numberWithCommas(principal) + '</td>';
 
@@ -585,8 +602,6 @@
                 }
 
                 content += '<td style="text-align: right">' + numberWithCommas(inst) + '</td>';
-
-
 
 
                 if (j == 0 && osPrincipalClosing <= 10) {
@@ -658,7 +673,7 @@
 
         }
         function getMarkup(pa, irr) {
-            console.log(pa + "*" + irr + "/12/100 = " + ((pa * irr) / 12) / 100);
+            //console.log(pa + "*" + irr + "/12/100 = " + ((pa * irr) / 12) / 100);
             return ((pa * irr) / 12) / 100;
         }
 
@@ -698,7 +713,7 @@
         }
 
         function getInstallment(tranch, osPrincipalAmount) {
-
+            debugger
             var installment = pmt(tranch.irr / 12 / 100, tranch.tranchTenure, osPrincipalAmount, 0, 0);
             return installment;
             //return Math.round(installment);

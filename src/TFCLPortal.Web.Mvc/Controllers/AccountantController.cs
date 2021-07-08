@@ -1422,7 +1422,7 @@ namespace TFCLPortal.Web.Controllers
 
                         tranchTenure = Installments - MonthDifference(a, b);
                     }
-                    tranchTenure += Schedule.DefermentMonths;
+                    //tranchTenure += Schedule.DefermentMonths;
                     item.tranchTenure = tranchTenure;
 
                     sumOfAmounts += Int32.Parse(item.Amount);
