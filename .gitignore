@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/src/TFCLPortal.Web.Host/Properties
+/src/TFCLPortal.Web.Mvc/Properties
