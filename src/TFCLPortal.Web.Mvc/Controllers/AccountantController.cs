@@ -773,22 +773,61 @@ namespace TFCLPortal.Web.Controllers
                     }
                     else
                     {
+                        //Due To Ahsan Habib Display Issue
+                        //var AllDefferedInstallments = getSchedule.installmentList.Where(x => x.InstNumber == installment.InstNumber).ToList();
+                        //var indexOfThisInstallment = AllDefferedInstallments.IndexOf(installment);
+
+                        //var paidDeferredInstallments = paidInstallments.Where(x => x.NoOfInstallment.ToString() == "0").ToList();
+
+                        //try
+                        //{
+                        //    var paidDeferredInstallmentOnThisIndex = paidDeferredInstallments[indexOfThisInstallment];
+                        //    installment.PaidAmount = paidDeferredInstallmentOnThisIndex.Amount.ToString();
+                        //    installment.ExcessShort = paidDeferredInstallmentOnThisIndex.ExcessShortPayment.ToString();
+
+                        //}
+                        //catch
+                        //{
+
+                        //}
+
                         var AllDefferedInstallments = getSchedule.installmentList.Where(x => x.InstNumber == installment.InstNumber).ToList();
                         var indexOfThisInstallment = AllDefferedInstallments.IndexOf(installment);
 
-                        var paidDeferredInstallments = paidInstallments.Where(x => x.NoOfInstallment.ToString() == "0").ToList();
+                        var paidDeferredInstallments = paidInstallments.Where(x => x.NoOfInstallment.ToString() == "0"&&x.InstallmentDueDate==DateTime.Parse(installment.InstallmentDueDate)).ToList();
+
                         try
                         {
-                            var paidDeferredInstallmentOnThisIndex = paidDeferredInstallments[indexOfThisInstallment];
-                            installment.PaidAmount = paidDeferredInstallmentOnThisIndex.Amount.ToString();
-                            installment.ExcessShort = paidDeferredInstallmentOnThisIndex.ExcessShortPayment.ToString();
+                            if(paidDeferredInstallments.Count>1)
+                            {
+                                foreach(var paidDeferment in paidDeferredInstallments)
+                                {
+                                    decimal a = 0;
+                                    if (installment.PaidAmount != null && installment.PaidAmount!="")
+                                    {
+                                       a = Decimal.Parse(installment.PaidAmount);
+                                    }
+
+                                    decimal b = paidDeferment.Amount;
+
+                                    installment.PaidAmount = (a+b).ToString();
+                                    installment.ExcessShort = paidDeferment.ExcessShortPayment.ToString();
+                                }
+
+                            }
+                            else
+                            {
+                                //var paidDeferredInstallmentOnThisIndex = paidDeferredInstallments[indexOfThisInstallment];
+                                installment.PaidAmount = paidDeferredInstallments[0].Amount.ToString();
+                                installment.ExcessShort = paidDeferredInstallments[0].ExcessShortPayment.ToString();
+
+                            }
 
                         }
-                        catch
+                        catch (Exception ex)
                         {
-
+                            string a = ex.ToString();
                         }
-
                     }
                 }
             }
@@ -857,7 +896,9 @@ namespace TFCLPortal.Web.Controllers
                 }
                 else if (lastPaidInstallment.NoOfInstallment.ToString() == "0")
                 {
-                    var sameInstallmentPaymentsList = paidInstallments.Result.Where(x => x.InstallmentDueDate == lastPaidInstallment.InstallmentDueDate);
+                    //Changed due to Asif Iqbal's Previous Balance Issue
+                    //var sameInstallmentPaymentsList = paidInstallments.Result.Where(x => x.InstallmentDueDate == DateTime.Parse(lastPaidInstallment.InstallmentDueDate));
+                    var sameInstallmentPaymentsList = paidInstallments.Result.Where(x => x.InstallmentDueDate == DateTime.Parse(firstUnpaidInstallment.InstallmentDueDate));
                     decimal sumOfAllPaymentsForOneInstallment = 0;
 
                     int count = 0;

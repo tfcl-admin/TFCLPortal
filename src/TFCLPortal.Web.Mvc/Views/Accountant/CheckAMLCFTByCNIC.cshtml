@@ -28,7 +28,10 @@
                 <input type="number" id="cnicText" placeholder="CNIC without - (3754815465445)" maxlength="13" class="form-control" />
             </div>
             <div class="col-md-3">
-                <a class="btn btn-outline-success" id="search" ><i class="fa fa-search"></i> Search</a>
+                <a class="btn btn-outline-success" onclick="searchCNIC()" ><i class="fa fa-search"></i> Search</a>
+            </div>
+            <div class="col-md-12 text-center" style="margin-top:50px">
+                <p id="LoadedCNICs"></p>
             </div>
             <div class="col-md-12 text-center" id="result" style="margin-top:50px">
 
@@ -44,63 +47,49 @@
 <script>
 
     var getJson = @Html.Raw(Json.Serialize(ViewBag.JsonData));
-    var allResults = getJson.value;
+    var allResults = JSON.stringify(getJson.value);
+    console.table(allResults);
+    $('#LoadedCNICs').text(getJson.value.length + ' CNICs Loaded.');
 
-    function result() {
-        alert('tst');
-        var cnicVal = $('#cnicText').val();
-        if (cnicVal.length != 13) {
-            alert('Please Enter Valid CNIC number');
-        }
-        else {
-            var found = allResults.filter(x => x.cnic == cnicVal).length;
-            if (found > 0) {
-                $('#result').html('<span class="text-danger"><i class="fa fa-check fa-5x "></i> <h2>Found</h2></span> <a class="btn btn-outline-success" id="printLink" onclick="printDiv();">Print Details</a>');
-                var result = allResults.filter(x => x.cnic == cnicVal);
 
-                var content = '<table width="100%" border="1" class="tbl" style="margin-top:20px">';
-                content += '<thead class="text-white">';
-                content += '<tr>';
-                content += '<th>Name</th>';
-                content += '<th>Father Name</th>';
-                content += '<th>CNIC</th>';
-                content += '<th>Province</th>';
-                content += '<th>District</th>';
-                content += '</tr>';
-                content += '</thead>';
-                content += '<tbody>';
-                content += '<tr>';
-                content += '<td>' + result[0].name + '</td>';
-                content += '<td>' + result[0].fatherName + '</td>';
-                content += '<td>' + result[0].cnic + '</td>';
-                content += '<td>' + result[0].province + '</td>';
-                content += '<td>' + result[0].district + '</td>';
-                content += '</tr>';
-                content += '</tbody>';
-                content += '</table>';
-
-                $('#result').append(content);
+    function searchCNIC() {
+        var cnic = $('#cnicText').val();
+        if (cnic != "" && cnic.length==13) {
+            if (allResults.indexOf(cnic) > -1) {
+                printDiv(1);
             }
             else {
-                $('#result').html('<span class="text-success"><i class="fa fa-times fa-5x "></i> <h2>Not Found</h2></span> <a class="btn btn-outline-success" id="printLink" onclick="printDiv();">Print Details</a>');
+                printDiv(0);
             }
-
-
-            var today = new Date();
-
-            $('#result').append("Searched at " + today.toString().substr(0, 24));
+        }
+        else {
+            abp.notify.error("Please Enter Valid CNIC number", "Error");
         }
 
-    }
-       
 
-
-    function printDiv() {
-        alert('tst');
-        $("#printLink").addClass("d-none");
-        $("#result").printThis();
     }
 
+    function printDiv(present) {
+        if (present == 1) {
+            abp.notify.error("CNIC found in AML/CFT", "");
+
+            $.get("/template/AmlCftReport.html", function (html_string) {
+                printResult(html_string);
+            }, 'html'); 
+
+        }
+        else if (present == 0) {
+            abp.notify.success("CNIC Not found in AML/CFT", "");
+        }
+    }
+
+    function printResult(html) {
+        myWindow = window.open('', '', 'width=800,height=700');
+        myWindow.document.write(html);
+        myWindow.document.close(); //missing code
+        myWindow.focus();
+
+    }
 
 
 </script>

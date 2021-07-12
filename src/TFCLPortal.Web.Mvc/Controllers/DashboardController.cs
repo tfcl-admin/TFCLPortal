@@ -273,6 +273,11 @@ namespace TFCLPortal.Web.Mvc.Controllers
             //return View();
         }
 
+        public IActionResult Analytics()
+        {
+            return View();
+        }
+
         public IActionResult Timeline(int ApplicationId)
         {
             var applicationDetail = _applicationAppService.GetApplicationById(ApplicationId);
