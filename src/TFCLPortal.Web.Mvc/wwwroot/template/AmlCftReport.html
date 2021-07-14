@@ -11,7 +11,13 @@ body{
     background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url(/Theame/images/bg.png);
     /* background-repeat: no-repeat; */
     /* background-position: center center; */
-    background-size: 30px 10px;
+    background-size: 10px 30px;
+}
+@print{
+
+    body{
+  -webkit-print-color-adjust:exact;
+}
 }
 </style>
     </head>
@@ -19,13 +25,46 @@ body{
 <body>
     <div class="row" style="margin-top: 150px;">
         <div class="col-md-12 text-center">
-            <i class="fa fa-check-circle text-danger fa-5x"></i>
+            <i class="fa fa-{icon}-circle text-{color} fa-5x"></i>
         </div>
-        <div class="col-md-12 text-center  text-danger" style="margin-top: 50px;">
-            <h1>CNIC found in NACTA AML/CFT Proscribed Persons List</h1>
+        <div class="col-md-12 text-center  text-{color}" style="margin-top: 50px;">
+            <h1>CNIC {isfound} in NACTA AML/CFT Proscribed Persons List</h1>
         </div>
         <div class="col-md-12 text-center" style="margin-top: 50px;">
-            <h1>3830187839633</h1>
+            <h1>{CNIC}</h1>
+        </div>
+     
+        <div class="col-md-12 text-center {display}" style="margin-top: 50px;">
+            <table class="table text-center" >
+                    <tr>
+                        <td><b>Name</b></td>
+                        <td>{name}</td>
+                    </tr>
+                    <tr>
+                        <td><b> Father Name</b></td>
+                        <td>{father}</td>
+                    </tr>
+                    <tr>
+                        <td><b> CNIC</b></td>
+                        <td>{CNIC}</td>
+                    </tr>
+                    <tr>
+                        <td><b> Province</b></td>
+                        <td>{province}</td>
+                    </tr>
+                    <tr>
+                        <td><b>District</b></td>
+                        <td>{district}</td>
+                    </tr>
+            </table>
+        </div>
+
+        <div class="col-md-12 text-center" style="margin-top: 50px;">
+            <h3>Checked on 14 May 2021 12:30pm</h3>
+        </div>
+
+        <div class="col-md-12 text-center text-gray" style="margin-top: 50px;">
+            <h6>All rights reserved by Taleem Finance Company LTD, Powered by IT Department</h6>
         </div>
     </div>
 </body>

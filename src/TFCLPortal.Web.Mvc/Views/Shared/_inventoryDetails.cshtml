@@ -39,7 +39,7 @@
                             </div>
 
                             <!-- Card body -->
-                            <div id="collapseOneID-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneID-@item.Id"
+                            <div id="collapseOneID-@item.Id" class="collapse  @(Model.TdsInventoryDetailChilds.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneID-@item.Id"
                                  data-parent="#accordionSchoolBranches">
                                 <div class="card-body">
                                     <div class="row">

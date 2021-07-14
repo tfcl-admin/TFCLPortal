@@ -54,32 +54,48 @@
 
     function searchCNIC() {
         var cnic = $('#cnicText').val();
-        if (cnic != "" && cnic.length==13) {
+        if (cnic != "" && cnic.length == 13) {
             if (allResults.indexOf(cnic) > -1) {
-                printDiv(1);
+                printDiv(1, getJson.value.find(x=>x.cnic==cnic));
             }
             else {
-                printDiv(0);
+                printDiv(0, cnic);
             }
         }
         else {
             abp.notify.error("Please Enter Valid CNIC number", "Error");
         }
 
-
     }
 
-    function printDiv(present) {
+    function printDiv(present,item) {
         if (present == 1) {
             abp.notify.error("CNIC found in AML/CFT", "");
 
             $.get("/template/AmlCftReport.html", function (html_string) {
+                html_string = html_string.replace("{display}", "");
+                html_string = html_string.replace("{icon}", "check");
+                html_string = html_string.replaceAll("{color}", "danger");
+                html_string = html_string.replace("{isfound}", "found");
+                html_string = html_string.replaceAll("{CNIC}", item.cnic);
+                html_string = html_string.replace("{name}", item.name);
+                html_string = html_string.replace("{father}", item.fatherName);
+                html_string = html_string.replace("{province}", item.province);
+                html_string = html_string.replace("{district}", item.district);
                 printResult(html_string);
             }, 'html'); 
 
         }
         else if (present == 0) {
             abp.notify.success("CNIC Not found in AML/CFT", "");
+            $.get("/template/AmlCftReport.html", function (html_string) {
+                html_string = html_string.replace("{display}", "d-none");
+                html_string = html_string.replace("{icon}", "times");
+                html_string = html_string.replaceAll("{color}", "success");
+                html_string = html_string.replace("{isfound}", "not found");
+                html_string = html_string.replaceAll("{CNIC}", item);
+                printResult(html_string);
+            }, 'html'); 
         }
     }
 

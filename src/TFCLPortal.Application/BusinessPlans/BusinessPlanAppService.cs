@@ -120,7 +120,11 @@ namespace TFCLPortal.BusinessPlans
 
                 }
 
+                var app = _applicationsRepository.GetAllList(x => x.Id == input.ApplicationId).FirstOrDefault();
+                app.SchoolName = input.SchoolName;
+                _applicationsRepository.Update(app);
                 CurrentUnitOfWork.SaveChanges();
+
                 return ResponseString = "Success";
             }
             catch (Exception ex)

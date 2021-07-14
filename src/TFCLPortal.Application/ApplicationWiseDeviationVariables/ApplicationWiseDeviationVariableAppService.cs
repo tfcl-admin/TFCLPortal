@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TFCLPortal.ApiCallLogs.Dto;
 using TFCLPortal.Applications;
+using TFCLPortal.Applications.Dto;
 using TFCLPortal.ApplicationWiseDeviationVariables.Dto;
 using TFCLPortal.BusinessPlans;
 using TFCLPortal.DynamicDropdowns.ProductTypes;
@@ -205,7 +206,7 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables
                         var checkApplications = _applicationRepository.GetAllList().Where(x => x.Id == input.ApplicationId).FirstOrDefault();
                         if (checkApplications != null)
                         {
-                            var checkCNICs = _applicationRepository.GetAllList().Where(x => x.CNICNo == checkApplications.CNICNo).ToList();
+                            var checkCNICs = _applicationRepository.GetAllList().Where(x => x.CNICNo == checkApplications.CNICNo && x.ScreenStatus != ApplicationState.Decline).ToList();
                             if (checkCNICs.Count > 1)
                             {
                                 isFresh = false;

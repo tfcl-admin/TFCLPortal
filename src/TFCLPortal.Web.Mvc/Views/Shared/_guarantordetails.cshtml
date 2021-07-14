@@ -29,16 +29,16 @@
                                         </h5>
                                     </a>
                                 </div>
-                                @{index++;}
                                 <!-- Card body -->
-                                <div id="collapseOne-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOne-@item.Id"
+                                <div id="collapseOne-@item.Id" class="collapse  @(index==1?"show":"")" role="tabpanel" aria-labelledby="headingOne-@item.Id"
                                      data-parent="#accordionGuarantors">
                                     <div class="card-body">
+                                        @{index++;}
                                         <input type="hidden" id="Id" value="@item.ApplicationId" />
                                         <div class="row">
                                             @*<div class="col-md-12 text-center @(ViewBag.GuarantorPicUrl=="" ? "d-none" : "" )">
-                                                    <img src=" @ViewBag.GuarantorPicUrl" width="300px" />
-                                                </div>*@
+                <img src=" @ViewBag.GuarantorPicUrl" width="300px" />
+            </div>*@
                                             <div class="col-md-3">
                                                 <p class="detailHeading">
 
@@ -67,9 +67,9 @@
                                                 <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.DateOfBirth)</p>
                                             </div>
                                             @*<div class="col-md-3">
-                                                    <p class="detailHeading">Age</p>
-                                                    <p class="detailText">@(item.Age == null || item.Age == "" ? "--" : item.Age)</p>
-                                                </div>*@
+                <p class="detailHeading">Age</p>
+                <p class="detailText">@(item.Age == null || item.Age == "" ? "--" : item.Age)</p>
+            </div>*@
                                             <div class="col-md-3">
                                                 <p class="detailHeading">Age (On Application Submission) <i class="fa fa-info-circle" style="float: right" data-toggle="tooltip" title="Allowed Range : @item.AllowedMinAge years to @item.AllowedMaxAge years "></i></p>
                                                 @if (item.CalculatedAge != null && item.CalculatedAge != "" && item.CalculatedAge != "--")

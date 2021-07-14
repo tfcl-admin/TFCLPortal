@@ -31,7 +31,7 @@
                                 </div>
 
                                 <!-- Card body -->
-                                <div id="collapseOneBE-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneBE-@item.Id"
+                                <div id="collapseOneBE-@item.Id" class="collapse  @(Model.TDSBusinessExpenseChild.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneBE-@item.Id"
                                      data-parent="#accordionSchoolsLists">
                                     <div class="card-body">
                                         <div class="row">

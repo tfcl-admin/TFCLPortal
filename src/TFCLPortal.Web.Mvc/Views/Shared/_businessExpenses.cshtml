@@ -34,7 +34,7 @@
                                 </div>
 
                                 <!-- Card body -->
-                                <div id="collapseOneBE-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneBE-@item.Id"
+                                <div id="collapseOneBE-@item.Id" class="collapse @(Model.businessExpenseSchool.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneBE-@item.Id"
                                      data-parent="#accordionSchoolsLists">
                                     <div class="card-body">
                                         <div class="row">
@@ -233,7 +233,7 @@
                                                                     </div>
 
                                                                     <!-- Card body -->
-                                                                    <div id="collapseOne-Accademy-@Academy.Id" class="collapse" role="tabpanel" aria-labelledby="headingOne-Accademy-@Academy.Id"
+                                                                    <div id="collapseOne-Accademy-@Academy.Id" class="collapse @(item.businessExpenseSchoolAcademies.IndexOf(Academy)==0?"show":"")" role="tabpanel" aria-labelledby="headingOne-Accademy-@Academy.Id"
                                                                          data-parent="#accordionAcademyLists">
                                                                         <div class="card-body">
                                                                             <div class="row">
@@ -257,7 +257,7 @@
                                                                                                     Designation
                                                                                                 </th>
                                                                                                 <th>
-                                                                                                    Avg Fee
+                                                                                                    Gender
                                                                                                 </th>
                                                                                                 <th>
                                                                                                     Total Fee

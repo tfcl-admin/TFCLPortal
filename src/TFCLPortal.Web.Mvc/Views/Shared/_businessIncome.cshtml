@@ -42,7 +42,7 @@
                                     </div>
 
                                     <!-- Card body -->
-                                    <div id="collapseOneBI-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneBI-@item.Id"
+                                    <div id="collapseOneBI-@item.Id" class="collapse @(Model.businessChildLists.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneBI-@item.Id"
                                          data-parent="#accordioncollateralLandBuildingLists">
                                         <div class="card-body">
                                             <div class="row">
@@ -198,7 +198,7 @@
                                                                         </div>
 
                                                                         <!-- Card body -->
-                                                                        <div id="collapseOne-@Academy.Id" class="collapse" role="tabpanel" aria-labelledby="headingOne-@Academy.Id"
+                                                                        <div id="collapseOne-@Academy.Id" class="collapse @(item.BusinessIncomeSchoolAcademies.IndexOf(Academy)==0?"show":"")" role="tabpanel" aria-labelledby="headingOne-@Academy.Id"
                                                                              data-parent="#accordionAcademyLists">
                                                                             <div class="card-body">
                                                                                 <div class="row">

@@ -41,7 +41,7 @@
                                     </div>
 
                                     <!-- Card body -->
-                                    <div id="collapseOneAI-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneAI-@item.Id"
+                                    <div id="collapseOneAI-@item.Id" class="collapse @(@Model.dependentEducationDetailChild.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneAI-@item.Id"
                                          data-parent="#accordionAssociatedChildLists">
                                         <div class="card-body">
 

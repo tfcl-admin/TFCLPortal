@@ -47,7 +47,7 @@
                                 </div>
 
                                 <!-- Card body -->
-                                <div id="collapseOneCLB-@item.Id-@(item.Id+1)" class="collapse" role="tabpanel" aria-labelledby="headingOneCLB-@item.Id-@(item.Id+1)"
+                                <div id="collapseOneCLB-@item.Id-@(item.Id+1)" class="collapse  @(Model.createCollateralLandBuilding.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneCLB-@item.Id-@(item.Id+1)"
                                      data-parent="#accordioncollateralLandBuildingLists">
                                     <div class="card-body">
                                         <div class="row">
@@ -235,7 +235,7 @@
                                     </div>
 
                                     <!-- Card body -->
-                                    <div id="collapseOneCV-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneCV-@item.Id"
+                                    <div id="collapseOneCV-@item.Id" class="collapse @(Model.createCollateralVehicle.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneCV-@item.Id"
                                          data-parent="#accordioncollateralVehicleLists">
                                         <div class="card-body">
                                             <div class="row">
@@ -406,7 +406,7 @@
                                     </div>
 
                                     <!-- Card body -->
-                                    <div id="collapseOneTDR-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneTDR-@item.Id"
+                                    <div id="collapseOneTDR-@item.Id" class="collapse @(Model.createCollateralTDR.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneTDR-@item.Id"
                                          data-parent="#accordioncollateralTDRLists">
                                         <div class="card-body">
                                             <div class="row">

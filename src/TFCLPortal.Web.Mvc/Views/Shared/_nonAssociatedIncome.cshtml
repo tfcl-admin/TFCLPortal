@@ -39,7 +39,7 @@
                                     </div>
 
                                     <!-- Card body -->
-                                    <div id="collapseOneNAI-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneNAI-@item.Id"
+                                    <div id="collapseOneNAI-@item.Id" class="collapse @(@Model.NonAssociatedIncomeChilds.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneNAI-@item.Id"
                                          data-parent="#accordioncollateralLandBuildingLists">
                                         <div class="card-body">
                                             <div class="row">

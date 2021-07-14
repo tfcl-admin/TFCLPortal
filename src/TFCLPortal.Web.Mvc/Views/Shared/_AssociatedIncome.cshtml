@@ -41,7 +41,7 @@
                                     </div>
 
                                     <!-- Card body -->
-                                    <div id="collapseOneAI-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneAI-@item.Id"
+                                    <div id="collapseOneAI-@item.Id" class="collapse @(@Model.AssociatedIncomeChilds.IndexOf(item)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneAI-@item.Id"
                                          data-parent="#accordionAssociatedChildLists">
                                         <div class="card-body">
                                             <div class="row">
@@ -51,7 +51,7 @@
 
                                                         <div class="accordion md-accordion" id="accordionAssociatedGrandChildLists" role="tablist" aria-multiselectable="true">
 
-                                                            @foreach (var school in @item.associatedIncomeGrandChilds)
+                                                            @foreach (var school in item.associatedIncomeGrandChilds)
                                                             {
                                                                 <div class="card">
                                                                     <!-- Card header -->
@@ -65,7 +65,7 @@
                                                                     </div>
 
                                                                     <!-- Card body -->
-                                                                    <div id="collapseOne-schoolAII-@school.Id" class="collapse" role="tabpanel" aria-labelledby="headingOne-schoolAII-@school.Id"
+                                                                    <div id="collapseOne-schoolAII-@school.Id" class="collapse @(item.associatedIncomeGrandChilds.IndexOf(school)==0?"show":"")" role="tabpanel" aria-labelledby="headingOne-schoolAII-@school.Id"
                                                                          data-parent="#accordionAssociatedGrandChildLists">
                                                                         <div class="card-body">
                                                                             <div class="row">

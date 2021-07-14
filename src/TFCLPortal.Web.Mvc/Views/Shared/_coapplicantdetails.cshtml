@@ -28,17 +28,17 @@
                                         </h5>
                                     </a>
                                 </div>
-                                @{index++;}
                                 <!-- Card body -->
-                                <div id="collapseOneCOD-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneCOD-@item.Id"
+                                <div id="collapseOneCOD-@item.Id" class="collapse @(index==1?"show":"")" role="tabpanel" aria-labelledby="headingOneCOD-@item.Id"
                                      data-parent="#accordioncollateralLandBuildingLists">
                                     <div class="card-body">
                                         <input type="hidden" id="Id" value="@item.ApplicationId" />
                                         <div class="row">
+                                            @{index++;}
 
                                             @*<div class="col-md-12 text-center @(ViewBag.CoApplicantPicUrl=="" ? "d-none" : "" )">
-                                                    <img src=" @ViewBag.CoApplicantPicUrl" width="300px" />
-                                                </div>*@
+            <img src=" @ViewBag.CoApplicantPicUrl" width="300px" />
+        </div>*@
 
                                             <div class="col-md-4">
                                                 <p class="detailHeading">

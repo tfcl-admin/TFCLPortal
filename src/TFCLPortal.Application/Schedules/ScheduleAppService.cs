@@ -13,6 +13,8 @@ using TFCLPortal.DynamicDropdowns.FundSources;
 using TFCLPortal.DynamicDropdowns.Occupations;
 using TFCLPortal.Schedules.Dto;
 using TFCLPortal.GuarantorDetails;
+using TFCLPortal.Applications.Dto;
+using TFCLPortal.InstallmentPayments;
 
 namespace TFCLPortal.Schedules
 {
@@ -22,6 +24,8 @@ namespace TFCLPortal.Schedules
         private readonly IRepository<ScheduleInstallment, Int32> _childRepository;
         private readonly IApplicationAppService _applicationAppService;
         private readonly IApiCallLogAppService _apiCallLogAppService;
+        private readonly IRepository<Applicationz, Int32> _applicationRepository;
+        private readonly IInstallmentPaymentAppService _installmentPaymentAppService;
 
         private string Schedules = "Schedules";
         public ScheduleAppService(IRepository<Schedule, Int32> ScheduleRepository,
@@ -29,14 +33,18 @@ namespace TFCLPortal.Schedules
             IApplicationAppService applicationAppService,
             IApiCallLogAppService apiCallLogAppService,
             IRepository<BusinessPlan, Int32> BusinessPlanAppService,
+            IInstallmentPaymentAppService installmentPaymentAppService,
+            IRepository<Applicationz, Int32> applicationRepository,
             IRepository<ScheduleInstallment, Int32> childRepository)
         {
+            _applicationRepository = applicationRepository;
             _ScheduleRepository = ScheduleRepository;
             _childRepository = childRepository;
+            _installmentPaymentAppService = installmentPaymentAppService;
             _applicationAppService = applicationAppService;
             _apiCallLogAppService = apiCallLogAppService;
         }
-        
+
         public async Task<string> CreateSchedule(CreateScheduleDto input)
         {
             CreateApiCallLogDto callLog = new CreateApiCallLogDto();
@@ -94,7 +102,7 @@ namespace TFCLPortal.Schedules
                 else
                 {
                     var Schedule = ObjectMapper.Map<Schedule>(input);
-                    
+
                     var result = await _ScheduleRepository.InsertAsync(Schedule);
                     CurrentUnitOfWork.SaveChanges();
                     if (input.installmentList.Count > 0)
@@ -184,7 +192,7 @@ namespace TFCLPortal.Schedules
                 var result = ObjectMapper.Map<ScheduleListDto>(Schedule);
                 if (result != null)
                 {
-                    var ScheduleInstallment = _childRepository.GetAllList(i => i.FK_ScheduleId == result.Id).OrderBy(x=>x.Id);
+                    var ScheduleInstallment = _childRepository.GetAllList(i => i.FK_ScheduleId == result.Id).OrderBy(x => x.Id);
                     var MapScheduleAddDto = ObjectMapper.Map<List<ScheduleInstallmenttListDto>>(ScheduleInstallment);
                     result.installmentList = MapScheduleAddDto;
                 }
@@ -224,6 +232,98 @@ namespace TFCLPortal.Schedules
                 {
                     return false;
                 }
+
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", Schedules));
+            }
+        }
+
+        public async Task<List<ScheduleInstallmenttListDto>> GetInstallmentPaymentsByUserId(int UserId)
+        {
+            try
+            {
+                List<ScheduleInstallmenttListDto> scheduleInstallments = new List<ScheduleInstallmenttListDto>();
+
+                int month = DateTime.Now.Month;
+                int year = DateTime.Now.Year;
+
+                var getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed && x.CreatorUserId==UserId).ToList();
+                if (getDisbursedApplications.Count > 0)
+                {
+                    foreach (var app in getDisbursedApplications)
+                    {
+                        var schedule = GetScheduleByApplicationId(app.Id).Result;
+                        if (schedule != null)
+                        {
+                            List<ScheduleInstallmenttListDto> installments = new List<ScheduleInstallmenttListDto>();
+
+                            installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
+
+                            var paidInstallments = _installmentPaymentAppService.GetInstallmentPaymentByApplicationId(schedule.ApplicationId).Result;
+
+                            if (paidInstallments != null)
+                            {
+                                foreach (var installment in installments)
+                                {
+
+                                    if (installment.InstNumber != "0")
+                                    {
+                                        var paidInstByInstNo = paidInstallments.Where(x => x.NoOfInstallment.ToString() == installment.InstNumber);
+
+                                        decimal sumOfAmountsPerInstallment = 0;
+                                        decimal excessShort = 0;
+                                        foreach (var paidInstallment in paidInstByInstNo)
+                                        {
+                                            sumOfAmountsPerInstallment += paidInstallment.Amount;
+                                            excessShort = paidInstallment.ExcessShortPayment;
+                                        }
+                                        installment.PaidAmount = sumOfAmountsPerInstallment.ToString();
+                                        installment.ExcessShort = excessShort.ToString();
+
+                                        sumOfAmountsPerInstallment = 0;
+                                    }
+                                    else
+                                    {
+                                        var AllDefferedInstallments = schedule.installmentList.Where(x => x.InstNumber == installment.InstNumber).ToList();
+                                        var indexOfThisInstallment = AllDefferedInstallments.IndexOf(installment);
+
+                                        var paidDeferredInstallments = paidInstallments.Where(x => x.NoOfInstallment.ToString() == "0").ToList();
+                                        try
+                                        {
+                                            var paidDeferredInstallmentOnThisIndex = paidDeferredInstallments[indexOfThisInstallment];
+                                            installment.PaidAmount = paidDeferredInstallmentOnThisIndex.Amount.ToString();
+                                            installment.ExcessShort = paidDeferredInstallmentOnThisIndex.ExcessShortPayment.ToString();
+
+                                        }
+                                        catch
+                                        {
+
+                                        }
+
+                                    }
+                                }
+                            }
+
+
+
+                            if (installments.Count > 0)
+                            {
+                                foreach (var inst in installments)
+                                {
+                                    inst.ClientId = app.ClientID;
+                                    inst.ClientName = app.ClientName;
+                                    inst.BusinessName = app.SchoolName;
+                                    inst.Applicationid = app.Id;
+                                    scheduleInstallments.Add(inst);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return scheduleInstallments;
 
             }
             catch (Exception ex)

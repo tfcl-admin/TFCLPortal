@@ -31,7 +31,7 @@
                                     </div>
 
                                     <!-- Card body -->
-                                    <div id="collapseOneBAD-@items.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneBAD-@items.Id"
+                                    <div id="collapseOneBAD-@items.Id" class="collapse @(Model.IndexOf(items)==0?"show":"")" role="tabpanel" aria-labelledby="headingOneBAD-@items.Id"
                                          data-parent="#accordionSchoolBranches">
                                         <div class="card-body">
 

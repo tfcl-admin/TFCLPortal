@@ -26,12 +26,12 @@
                                     </h5>
                                 </a>
                             </div>
-                            @{index++;}
                             <!-- Card body -->
-                            <div id="collapseOneHE-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneHE-@item.Id"
+                            <div id="collapseOneHE-@item.Id" class="collapse @(index==1?"show":"")" role="tabpanel" aria-labelledby="headingOneHE-@item.Id"
                                  data-parent="#accordionReferences">
                                 <div class="card-body">
                                     <div class="row">
+                                        @{index++;}
                                         <div class="col-md-4">
                                             <p class="detailHeading">HOUSEHold Owner Name</p>
                                             <p class="detailText">@(item.HouseholdOwnerName == null || item.HouseholdOwnerName == "0" ? "--" : item.HouseholdOwnerName)</p>

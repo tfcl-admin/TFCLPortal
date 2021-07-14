@@ -34,12 +34,12 @@
                                         </h5>
                                     </a>
                                 </div>
-                                @{index++;}
                                 <!-- Card body -->
-                                <div id="collapseOneRD-@item.Id" class="collapse" role="tabpanel" aria-labelledby="headingOneRD-@item.Id"
+                                <div id="collapseOneRD-@item.Id" class="collapse @(index==1?"show":"")" role="tabpanel" aria-labelledby="headingOneRD-@item.Id"
                                      data-parent="#accordionReferences">
                                     <div class="card-body">
                                         <input type="hidden" id="Id" value="@item.ApplicationId" />
+                                        @{index++;}
 
                                         <div class="row">
                                             <div class="col-md-3">
