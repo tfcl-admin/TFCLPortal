@@ -496,13 +496,13 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item dropdown">
-                        <a href="~/Accountant/InstallmentPaymentList">
-                            <span class="icon-holder">
-                                <i class="fa fa-list"></i>
-                            </span>
-                            <h6>Loan Installments</h6>
-                        </a>
-                    </li>*@
+                                        <a href="~/Accountant/InstallmentPaymentList">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-list"></i>
+                                            </span>
+                                            <h6>Loan Installments</h6>
+                                        </a>
+                                    </li>*@
                             </ul>
                         </li>
                     }
@@ -559,7 +559,7 @@
                                         <h6>Loan Repayment Module</h6>
                                     </a>
                                 </li>
-                                @* <li class="nav-item dropdown">
+                                <li class="nav-item dropdown">
                                     <a href="~/Accountant/InstallmentPaymentList">
                                         <span class="icon-holder">
                                             <i class="fa fa-list"></i>
@@ -567,22 +567,30 @@
                                         <h6>Loan Installments</h6>
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
-                        <a href="~/accountant/CheckAMLCFT">
-                            <span class="icon-holder">
-                                <i class="fa fa-check-circle"></i>
-                            </span>
-                            <h6>AML CFT Check</h6>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="~/accountant/CheckAMLCFTByCNIC">
-                            <span class="icon-holder">
-                                <i class="fa fa-check-circle"></i>
-                            </span>
-                            <h6>AML CFT Check By CNIC</h6>
-                        </a>
-                    </li>*@
+                                @* <li class="nav-item dropdown">
+                                                    <a href="~/Accountant/InstallmentPaymentList">
+                                                        <span class="icon-holder">
+                                                            <i class="fa fa-list"></i>
+                                                        </span>
+                                                        <h6>Loan Installments</h6>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item dropdown">
+                                        <a href="~/accountant/CheckAMLCFT">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-check-circle"></i>
+                                            </span>
+                                            <h6>AML CFT Check</h6>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a href="~/accountant/CheckAMLCFTByCNIC">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-check-circle"></i>
+                                            </span>
+                                            <h6>AML CFT Check By CNIC</h6>
+                                        </a>
+                                    </li>*@
                             </ul>
 
                         </li>
@@ -618,13 +626,13 @@
 
 
                     @*<li class="nav-item">
-            <a class='sidebar-link' href="~/Search/Index">
-                <span class="icon-holder">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </span>
-                <span class="title">Search</span>
-            </a>
-        </li>*@
+                            <a class='sidebar-link' href="~/Search/Index">
+                                <span class="icon-holder">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </span>
+                                <span class="title">Search</span>
+                            </a>
+                        </li>*@
                     @if (IsGranted(PermissionNames.Pages_MCRC))
                     {
                         <li class="nav-item">
@@ -891,29 +899,29 @@
                     </li>
 
                     @*
-        <li class="nav-item">
-            <a class='sidebar-link' href="#">
-                <span class="icon-holder">
-                    <i class="fa fa-bell"></i>
-                </span>
-                <span class="title">
-                    PAR Monitoring & Management Reports
-                </span>
-            </a>
-        </li>
+                        <li class="nav-item">
+                            <a class='sidebar-link' href="#">
+                                <span class="icon-holder">
+                                    <i class="fa fa-bell"></i>
+                                </span>
+                                <span class="title">
+                                    PAR Monitoring & Management Reports
+                                </span>
+                            </a>
+                        </li>
                     *@
 
                     @if (IsGranted(PermissionNames.Pages_BA))
                     {
                         @*<li class="nav-item">
-                <a class='sidebar-link' href="#">
-                    <span class="icon-holder">
-                        <i class="fa fa-bell"></i>
+                                <a class='sidebar-link' href="#">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-bell"></i>
 
-                    </span>
-                    <span class="title">Notifications</span>
-                </a>
-            </li>*@
+                                    </span>
+                                    <span class="title">Notifications</span>
+                                </a>
+                            </li>*@
                     }
 
                     @if (IsGranted(PermissionNames.Pages_BM))

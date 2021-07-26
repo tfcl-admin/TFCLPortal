@@ -203,7 +203,7 @@
                     @Html.DisplayFor(model => model.Decision)
                 </p>
             </div>
-            @if (Model.Decision != "Approve")
+            @if (Model.Decision != "Approve" && Model.Decision != "Discrepent")
             {
                 <div class="col-md-4">
                     <p class="detailHeading">
@@ -212,9 +212,7 @@
 
                     <p class="detailText">@(Model.Reason == null || Model.Reason == "" ? "--" : Model.Reason)</p>
                 </div>
-
             }
-
             else
             {
 

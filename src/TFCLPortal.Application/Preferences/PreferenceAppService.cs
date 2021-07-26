@@ -41,6 +41,12 @@ namespace TFCLPortal.Preferences
                 callLog.Input = JsonConvert.SerializeObject(createPreferenceInput);
                 var returnStr = _apiCallLogAppService.CreateApplication(callLog);
 
+
+                if (applicationId == 0 && createPreferenceInput.Preferences.Count > 0)
+                {
+                    applicationId = createPreferenceInput.Preferences[0].ApplicationId;
+                }
+
                 var IsExist = _preferenceRepository.GetAllList().Where(x => x.ApplicationId == applicationId).ToList();
                 if (IsExist.Count > 0)
                 {
@@ -68,7 +74,6 @@ namespace TFCLPortal.Preferences
                 }
 
                 _applicationAppService.UpdateApplicationLastScreen("Reference Detail", applicationId);
-
 
             }
 

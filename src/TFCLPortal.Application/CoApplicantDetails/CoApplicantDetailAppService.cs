@@ -55,7 +55,16 @@ namespace TFCLPortal.CoApplicantDetails
                 callLog.Input = JsonConvert.SerializeObject(createCoApplicantDetailInpt);
                 var returnStr = _apiCallLogAppService.CreateApplication(callLog);
 
-                applicationId = createCoApplicantDetailInpt.Id;
+                if (applicationId == 0)
+                {
+                    applicationId = createCoApplicantDetailInpt.Id;
+                }
+
+                if (applicationId == 0 && createCoApplicantDetailInpt.createCoApplicantDetailInput.Count > 0)
+                {
+                    applicationId = createCoApplicantDetailInpt.createCoApplicantDetailInput[0].ApplicationId;
+                }
+
 
                 var IsExist = _coApplicantDetailRepository.GetAllList().Where(x => x.ApplicationId == applicationId).ToList();
                 if (IsExist.Count > 0)

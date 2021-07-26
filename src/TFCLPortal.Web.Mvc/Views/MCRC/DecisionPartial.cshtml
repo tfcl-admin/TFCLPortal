@@ -400,13 +400,18 @@
 
         $('#Decision').on('change', function () {
             var value = this.value;
-            if (value == "Decline" || value == "Discrepent" || value == "Discrepent & Represent") {
+            if (value == "Decline"  || value == "Discrepent & Represent") {
                 $('#reasonDiv').removeClass('d-none');
                 $('#approvalDiv').addClass('d-none');
             }
-            else if (value == "Approve" ) {
+            else if (value == "Approve") {
                 $('#approvalDiv').removeClass('d-none');
                 $('#reasonDiv').addClass('d-none');
+            }
+            else if (value == "Discrepent") {
+                $('#approvalDiv').removeClass('d-none');
+                $('#reasonDiv').removeClass('d-none');
+                //$('#reasonDiv').addClass('d-none');
             }
             else {
                 $('#approvalDiv').addClass('d-none');
