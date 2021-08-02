@@ -18,6 +18,7 @@ using TFCLPortal.ManagmentCommitteeDecisions;
 using TFCLPortal.ManagmentCommitteeDecisions.Dto;
 using TFCLPortal.NotificationLogs;
 using TFCLPortal.Users;
+using TFCLPortal.Web.Models.McModels;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -112,7 +113,16 @@ namespace TFCLPortal.Web.Controllers
 
             }
 
-            return View(returnList);
+
+
+
+            var mcs = _managmentCommitteeDecisionAppService.GetManagmentCommitteeDecisionList();
+
+            McModel mc = new McModel();
+            mc.applications = returnList;
+            mc.decisions = mcs;
+
+            return View(mc);
         }
         public async Task<IActionResult> CreateMC(int Id)
         {

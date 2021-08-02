@@ -9,9 +9,11 @@
     table.dataTable tbody th, table.dataTable tbody td {
         padding: 10px 0px;
     }
+
     #dataTable_length {
         display: inherit;
     }
+
     .pageloader {
         position: fixed;
         left: 0px;
@@ -22,7 +24,6 @@
         background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
         opacity: .8;
     }
-
 </style>
 <!-- ### $App Screen Content ### -->
 <main class='main-content bgc-grey-100' style="padding-top:50px">
@@ -45,14 +46,55 @@
         @using (Html.BeginForm("InstallmentPaymentList", "Accountant", FormMethod.Get))
         {
             <div class="row pt-3" id="filterForm">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select class="form-control" id="filterType" name="filterType">
                         <option value="">Select Filter Type</option>
                         <option value="1">Due Date</option>
                         <option value="2">Payment Date</option>
+                        <option value="3">Over Due</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    @Html.DropDownList("branchFilter", ViewBag.McrcUserList as SelectList, "Select Branch", new { @class = "form-control text-capitalize" })
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" id="day" name="day">
+                        <option value="">Select Day</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+
+                    </select>
+                </div>
+                <div class="col-md-2">
                     <select class="form-control" id="month" name="month">
                         <option value="">Select Month</option>
                         <option value="1">January</option>
@@ -69,7 +111,7 @@
                         <option value="12">December</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select class="form-control" id="year" name="year">
                         <option value="">Select Year</option>
                         <option value="2020">2020</option>
@@ -86,7 +128,8 @@
                         <option value="2031">2031</option>
                     </select>
                 </div>
-                <div class="col-md-3 text-right">
+
+                <div class="col-md-2 text-right">
                     <input type="submit" value="Filter" id="filter" class="btn btn-outline-success btn-block" />
                 </div>
             </div>
@@ -95,7 +138,7 @@
     <div class="card p-10 mB-20" style="border:0px">
         <div class="row text-center">
             <div class="col-md-3 text-success">
-                <h3> @ViewBag.Month, @ViewBag.Year</h3>
+                <h3> @ViewBag.monthName, @ViewBag.Year</h3>
                 @if (ViewBag.filterType == 1)
                 {
                     <h6>Due Installments</h6>
@@ -200,16 +243,33 @@
 
 <script>
 
+    $(document).ready(
+        function () {
+            var monthValue = @ViewBag.Month;
+            $('#month option[value=' + monthValue + ']').attr('selected', true);
+
+            var yearValue = @ViewBag.Year;
+            $('#year option[value=' + yearValue + ']').attr('selected', true);
+
+            var dayValue = @ViewBag.Day;
+            $('#day option[value=' + dayValue + ']').attr('selected', true);
+
+            var filterType = @ViewBag.filterType;
+            $('#filterType option[value=' + filterType + ']').attr('selected', true);
+        });
+
+
+
     function ViewSchedule(id) {
         var url = '/Accountant/viewSchedule?ApplicationId=' + id;
         window.open(url, '_blank').focus();
     }
 
     $(document).ready(function () {
-        $("#dataTable_length select").append($("<option></option>").attr("value", '500').text('500')); 
-        $("#dataTable_length select").append($("<option></option>").attr("value", '1000').text('1000')); 
+        $("#dataTable_length select").append($("<option></option>").attr("value", '500').text('500'));
+        $("#dataTable_length select").append($("<option></option>").attr("value", '1000').text('1000'));
         $("#filter").click(function () {
             $(".pageloader").toggleClass("d-none");
-        }); 
+        });
     });
 </script>

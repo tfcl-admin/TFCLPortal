@@ -633,7 +633,7 @@
                                 <span class="title">Search</span>
                             </a>
                         </li>*@
-                    @if (IsGranted(PermissionNames.Pages_MCRC))
+                    @if (!IsGranted(PermissionNames.Pages_BA))
                     {
                         <li class="nav-item">
                             <a class='sidebar-link' href="~/Accountant/InstallmentPaymentList">

@@ -315,9 +315,10 @@ namespace TFCLPortal.Web.Controllers
 
             return View(schedules);
         }
-        public IActionResult InstallmentPaymentList(int? filterType, int? month, int? year)
+        public IActionResult InstallmentPaymentList(int? filterType, int? branchFilter, int? day, int? month, int? year)
         {
             List<ScheduleInstallmenttListDto> scheduleInstallments = new List<ScheduleInstallmenttListDto>();
+
 
             decimal totalDue = 0;
             decimal totalPaid = 0;
@@ -327,6 +328,10 @@ namespace TFCLPortal.Web.Controllers
             {
                 filterType = 1;
             }
+            //if (day == null)
+            //{
+            //    day = DateTime.Now.Day;
+            //}
             if (month == null)
             {
                 month = DateTime.Now.Month;
@@ -337,11 +342,34 @@ namespace TFCLPortal.Web.Controllers
             }
 
             string monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName((int)month);
-            ViewBag.Month = monthName;
+            ViewBag.monthName = monthName;
+            ViewBag.Month = month;
             ViewBag.Year = year;
+            ViewBag.Day = day;
             ViewBag.filterType = filterType;
 
-            var getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed).ToList();
+            int branch = 0;
+
+            if (branchFilter == null)
+            {
+                branch= Branchid();
+            }
+            else
+            {
+                branch = (int)branchFilter;
+            }
+
+            var getDisbursedApplications= new List<Applicationz>();
+
+            if (branch != 0)
+            {
+                getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed && (int)x.FK_branchid == branch).ToList();
+            }
+            else
+            {
+                getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed).ToList();
+            }
+
             if (getDisbursedApplications.Count > 0)
             {
                 foreach (var app in getDisbursedApplications)
@@ -350,14 +378,38 @@ namespace TFCLPortal.Web.Controllers
                     if (schedule != null)
                     {
                         List<ScheduleInstallmenttListDto> installments = new List<ScheduleInstallmenttListDto>();
-                        if (filterType == 1)
+
+                        if(day!=null)
                         {
-                            installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
+                            if (filterType == 1)
+                            {
+                                installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && DateTime.Parse(x.InstallmentDueDate).Day == day && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
+                            }
+                            else if (filterType == 2)
+                            {
+                                installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid == true && ((DateTime)x.PaymentDate).Day == day && ((DateTime)x.PaymentDate).Month == month && ((DateTime)x.PaymentDate).Year == year).ToList();
+                            }
+                            else if (filterType == 3)
+                            {
+                                installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid != true && DateTime.Parse(x.InstallmentDueDate).Day == day && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
+                            }
                         }
-                        else if (filterType == 2)
+                        else
                         {
-                            installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid == true && ((DateTime)x.PaymentDate).Month == month && ((DateTime)x.PaymentDate).Year == year).ToList();
+                            if (filterType == 1)
+                            {
+                                installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
+                            }
+                            else if (filterType == 2)
+                            {
+                                installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid == true && ((DateTime)x.PaymentDate).Month == month && ((DateTime)x.PaymentDate).Year == year).ToList();
+                            }
+                            else if (filterType == 3)
+                            {
+                                installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid != true && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
+                            }
                         }
+                     
 
                         var paidInstallments = _installmentPaymentAppService.GetInstallmentPaymentByApplicationId(schedule.ApplicationId).Result;
 
@@ -437,6 +489,10 @@ namespace TFCLPortal.Web.Controllers
             ViewBag.Due = totalDue;
             ViewBag.Paid = totalPaid;
             ViewBag.UnPaid = totalUnPaid;
+
+            var branches = _branchDetailAppService.GetBranchListDetail();
+
+            ViewBag.McrcUserList = new SelectList(branches, "Id", "BranchCode");
 
             return View(scheduleInstallments);
         }
@@ -794,23 +850,23 @@ namespace TFCLPortal.Web.Controllers
                         var AllDefferedInstallments = getSchedule.installmentList.Where(x => x.InstNumber == installment.InstNumber).ToList();
                         var indexOfThisInstallment = AllDefferedInstallments.IndexOf(installment);
 
-                        var paidDeferredInstallments = paidInstallments.Where(x => x.NoOfInstallment.ToString() == "0"&&x.InstallmentDueDate==DateTime.Parse(installment.InstallmentDueDate)).ToList();
+                        var paidDeferredInstallments = paidInstallments.Where(x => x.NoOfInstallment.ToString() == "0" && x.InstallmentDueDate == DateTime.Parse(installment.InstallmentDueDate)).ToList();
 
                         try
                         {
-                            if(paidDeferredInstallments.Count>1)
+                            if (paidDeferredInstallments.Count > 1)
                             {
-                                foreach(var paidDeferment in paidDeferredInstallments)
+                                foreach (var paidDeferment in paidDeferredInstallments)
                                 {
                                     decimal a = 0;
-                                    if (installment.PaidAmount != null && installment.PaidAmount!="")
+                                    if (installment.PaidAmount != null && installment.PaidAmount != "")
                                     {
-                                       a = Decimal.Parse(installment.PaidAmount);
+                                        a = Decimal.Parse(installment.PaidAmount);
                                     }
 
                                     decimal b = paidDeferment.Amount;
 
-                                    installment.PaidAmount = (a+b).ToString();
+                                    installment.PaidAmount = (a + b).ToString();
                                     installment.ExcessShort = paidDeferment.ExcessShortPayment.ToString();
                                 }
 
@@ -927,7 +983,7 @@ namespace TFCLPortal.Web.Controllers
                     int count = 0;
                     foreach (var payments in sameInstallmentPaymentsList)
                     {
-                        if(count>0)
+                        if (count > 0)
                         {
                             sumOfAllPaymentsForOneInstallment += (payments.Amount);
                         }
