@@ -6749,6 +6749,8 @@ namespace TFCLPortal.Migrations
 
                     b.Property<int>("Reciever_UserId");
 
+                    b.Property<bool>("isRead");
+
                     b.Property<string>("title");
 
                     b.HasKey("Id");

@@ -1082,6 +1082,10 @@ namespace TFCLPortal.Web.Controllers
 
             var schedule = _scheduleAppService.GetScheduleByApplicationId(payment.ApplicationId).Result;
             var firstUnpaidInstallment = schedule.installmentList.Where(x => (x.isPaid == false || x.isPaid == null) && x.InstNumber != "G*").FirstOrDefault();
+            var indexOfLastPaidInstallment = schedule.installmentList.IndexOf(firstUnpaidInstallment)-1;
+
+            var lastPaidInstallment = schedule.installmentList[indexOfLastPaidInstallment];
+
             var scheduleInstallment = _scheduleInstallmentRepository.Get(firstUnpaidInstallment.Id);
 
             decimal paidAmount = payment.Amount;
@@ -1092,9 +1096,30 @@ namespace TFCLPortal.Web.Controllers
                 decimal existingAmountForSingleInstallment = 0;
                 foreach (var existingPayment in Exists.Result.Where(x => x.NoOfInstallment.ToString() == scheduleInstallment.InstNumber))
                 {
-                    existingAmountForSingleInstallment += existingPayment.Amount;
+                    existingAmountForSingleInstallment += (existingPayment.Amount);
                 }
-                paidAmount += existingAmountForSingleInstallment;
+
+
+                //Before 2-8-2021
+                //paidAmount += existingAmountForSingleInstallment;
+
+                //After 2-8-2021 Start
+                decimal excessShortForLastPaidInstallment = 0;
+                var lastPaidinstallmentPayment = Exists.Result.Where(x => x.NoOfInstallment == Int32.Parse(lastPaidInstallment.InstNumber)).ToList();
+                if(lastPaidinstallmentPayment.Count==1)
+                {
+                    excessShortForLastPaidInstallment = lastPaidinstallmentPayment[0].ExcessShortPayment;
+                }
+                else if(lastPaidinstallmentPayment.Count>1)
+                {
+                    excessShortForLastPaidInstallment = lastPaidinstallmentPayment.LastOrDefault().ExcessShortPayment;
+                }
+
+
+                paidAmount += existingAmountForSingleInstallment + excessShortForLastPaidInstallment;
+                //After 2-8-2021 End
+
+
 
                 var gracePeriodInstallment = schedule.installmentList.Where(x => (x.isPaid == false || x.isPaid == null) && x.InstNumber == "G*").FirstOrDefault();
                 if (gracePeriodInstallment != null)

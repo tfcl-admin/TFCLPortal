@@ -607,11 +607,10 @@ namespace TFCLPortal.UpdateAllScreens
                                     //Notification To Administrator
                                     var branchName = _branchRepository.Get(appData.FK_branchid).BranchName;
                                     await _notificationLogAppService.SendNotification(2, "Application Submitted in " + branchName + " Branch", appData.ClientID + " has been Submitted by " + sde.Result.FullName);
+                                    //Sending Notifications to BA
+                                    await _notificationLogAppService.SendNotification(63, "Application Submitted in " + branchName + " Branch", appData.ClientID + " has been Submitted by " + sde.Result.FullName);
                                 }
                             }
-
-
-
 
                             ResponseString = null;
 
@@ -650,7 +649,6 @@ namespace TFCLPortal.UpdateAllScreens
             }
             return ResponseString;
         }
-
         public async Task<List<string>> ReSubmitApplication(int ApplicationId, int SDE_ID)
         {
             List<string> ResponseString = new List<string>();
@@ -703,6 +701,8 @@ namespace TFCLPortal.UpdateAllScreens
                                 var branchName = _branchRepository.Get(appData.FK_branchid).BranchName;
                                 await _notificationLogAppService.SendNotification(2, "Application Resubmitted in " + branchName + " Branch", appData.ClientID + " has been Resubmitted by " + sde.Result.FullName);
                                 //await _notificationLogAppService.SendNotification(2, "Application Resubmitted in " + appData.Brances.BranchName + " Branch", appData.ClientID + " has been Resubmitted by " + sde.Result.FullName);
+                                //Sending Notifications to BA
+                                await _notificationLogAppService.SendNotification(63, "Application Resubmitted in " + branchName + " Branch", appData.ClientID + " has been Resubmitted by " + sde.Result.FullName);
                             }
                         }
 
@@ -721,7 +721,6 @@ namespace TFCLPortal.UpdateAllScreens
             }
             return ResponseString;
         }
-
         public List<int> getUserIdsByPermission(int branchId, string role)
         {
             List<int> returnList = new List<int>();

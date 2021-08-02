@@ -340,7 +340,8 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             try
             {
-                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).OrderByDescending(x => x.Id);
+                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).OrderByDescending(x => x.Id).Take(20).ToList();
+
                 return Json(getNotifications);
 
             }
@@ -351,6 +352,55 @@ namespace TFCLPortal.Web.Mvc.Controllers
             }
         }
 
+        public IActionResult ViewNotifications()
+        {
+
+            try
+            {
+                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).OrderByDescending(x => x.Id).ToList();
+
+                return View(getNotifications);
+
+            }
+            catch (Exception ex)
+            {
+                return View();
+
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult markReadNotifications()
+        {
+            try
+            {
+                var markRead = _notificationLogAppService.MarkRead((int)AbpSession.UserId);
+                return Json(markRead);
+            }
+            catch (Exception ex)
+            {
+                return Json("");
+
+            }
+        }
+
+        [HttpPost]
+        public JsonResult getNotificationsCount()
+        {
+
+            try
+            {
+                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).Where(x=>x.isRead==false).Count();
+                return Json(getNotifications);
+
+            }
+            catch (Exception ex)
+            {
+                return Json("");
+
+            }
+        }
         //[HttpPost]
         //public JsonResult getStateWiseCount()
         //{

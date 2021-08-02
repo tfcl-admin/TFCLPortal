@@ -41,6 +41,7 @@ using TFCLPortal.TaleemJariSahulats.Dto;
 using TFCLPortal.TaleemJariSahulats;
 using TFCLPortal.TaleemTeacherSahulats;
 using TFCLPortal.TaleemTeacherSahulats.Dto;
+using TFCLPortal.NotificationLogs;
 
 namespace TFCLPortal.Applications
 {
@@ -71,6 +72,7 @@ namespace TFCLPortal.Applications
         private readonly IBranchManagerActionAppService _branchManagerActionAppService;
         private string application = "Application";
         private readonly IBccStateAppService _bccStateAppService;
+        private readonly INotificationLogAppService _notificationLogAppService;
 
 
 
@@ -87,6 +89,7 @@ namespace TFCLPortal.Applications
             IFinalWorkflowAppService finalWorkflowAppService,
              IRepository<GuarantorDetail> guarantorDetailAppService,
                IRepository<CoApplicantDetail> CoApplicantDetailsrepo,
+               INotificationLogAppService notificationLogAppService,
                IApiCallLogAppService apiCallLogAppService,
             ITaleemSchoolAsasahAppService taleemSchoolAsasahAppService,
             ITaleemSchoolSarmayaAppService taleemSchoolSarmayaAppService,
@@ -98,6 +101,7 @@ namespace TFCLPortal.Applications
             IApplicationWiseDeviationVariableAppService applicationWiseDeviationVariableAppService,
             IRepository<Mobilization, Int32> mobilizationRepository)
         {
+            _notificationLogAppService = notificationLogAppService;
             _applicationRepository = applicationRepository;
             _mobilizationStatusRepository = mobilizationStatusRepository;
             _productTypeRepository = ProductTyperepo;
@@ -330,6 +334,8 @@ namespace TFCLPortal.Applications
 
                         await _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
 
+                        //Sending Notifications to BA
+                        await _notificationLogAppService.SendNotification(63, clientID, "Customer has been Acquired.");
                     }
 
 
@@ -476,7 +482,7 @@ namespace TFCLPortal.Applications
         {
             try
             {
-                if(Id!=0)
+                if (Id != 0)
                 {
                     var mobilizations = _applicationRepository.Get(Id);
                     if (mobilizations != null)
@@ -1070,7 +1076,7 @@ namespace TFCLPortal.Applications
         {
             try
             {
-                var workflow = _finalWorkflowAppService.GetFinalWorkflowByApplicationId(ApplicationId).Where(x=>x.ApplicationState==State).LastOrDefault();
+                var workflow = _finalWorkflowAppService.GetFinalWorkflowByApplicationId(ApplicationId).Where(x => x.ApplicationState == State).LastOrDefault();
 
                 var objworkflow = ObjectMapper.Map<FinalWorkflowListDto>(workflow);
 

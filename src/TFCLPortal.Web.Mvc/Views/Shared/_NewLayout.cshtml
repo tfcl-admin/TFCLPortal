@@ -333,14 +333,7 @@
                                         <h6>Defer Applications Authorizations</h6>
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a href="~/Accountant/AuthorizationInstallmentPayment" class="dropdown-toggle">
-                                        <span class="icon-holder">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                        <h6>Installment Collection Authorizations</h6>
-                                    </a>
-                                </li>
+
                                 <li class="nav-item dropdown">
                                     <a href="~/Accountant/EarlySettlementAuthorizationList" class="dropdown-toggle">
                                         <span class="icon-holder">
@@ -369,7 +362,6 @@
                         </li>
 
                     }
-
                     @if (User.Identity.Name == "admin")
                     {
 
@@ -496,13 +488,13 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item dropdown">
-                                        <a href="~/Accountant/InstallmentPaymentList">
-                                            <span class="icon-holder">
-                                                <i class="fa fa-list"></i>
-                                            </span>
-                                            <h6>Loan Installments</h6>
-                                        </a>
-                                    </li>*@
+                        <a href="~/Accountant/InstallmentPaymentList">
+                            <span class="icon-holder">
+                                <i class="fa fa-list"></i>
+                            </span>
+                            <h6>Loan Installments</h6>
+                        </a>
+                    </li>*@
                             </ul>
                         </li>
                     }
@@ -568,29 +560,29 @@
                                     </a>
                                 </li>
                                 @* <li class="nav-item dropdown">
-                                                    <a href="~/Accountant/InstallmentPaymentList">
-                                                        <span class="icon-holder">
-                                                            <i class="fa fa-list"></i>
-                                                        </span>
-                                                        <h6>Loan Installments</h6>
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item dropdown">
-                                        <a href="~/accountant/CheckAMLCFT">
-                                            <span class="icon-holder">
-                                                <i class="fa fa-check-circle"></i>
-                                            </span>
-                                            <h6>AML CFT Check</h6>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a href="~/accountant/CheckAMLCFTByCNIC">
-                                            <span class="icon-holder">
-                                                <i class="fa fa-check-circle"></i>
-                                            </span>
-                                            <h6>AML CFT Check By CNIC</h6>
-                                        </a>
-                                    </li>*@
+                                    <a href="~/Accountant/InstallmentPaymentList">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-list"></i>
+                                        </span>
+                                        <h6>Loan Installments</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                        <a href="~/accountant/CheckAMLCFT">
+                            <span class="icon-holder">
+                                <i class="fa fa-check-circle"></i>
+                            </span>
+                            <h6>AML CFT Check</h6>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="~/accountant/CheckAMLCFTByCNIC">
+                            <span class="icon-holder">
+                                <i class="fa fa-check-circle"></i>
+                            </span>
+                            <h6>AML CFT Check By CNIC</h6>
+                        </a>
+                    </li>*@
                             </ul>
 
                         </li>
@@ -626,13 +618,13 @@
 
 
                     @*<li class="nav-item">
-                            <a class='sidebar-link' href="~/Search/Index">
-                                <span class="icon-holder">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </span>
-                                <span class="title">Search</span>
-                            </a>
-                        </li>*@
+            <a class='sidebar-link' href="~/Search/Index">
+                <span class="icon-holder">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+                <span class="title">Search</span>
+            </a>
+        </li>*@
                     @if (!IsGranted(PermissionNames.Pages_BA))
                     {
                         <li class="nav-item">
@@ -640,10 +632,23 @@
                                 <span class="icon-holder">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                 </span>
-                                <span class="title">Loan Installments</span>
+                                <span class="title">Loan Installments </span>
                             </a>
                         </li>
                     }
+                  
+                    @if (User.Identity.Name == "nabeel")
+                    {
+                        <li class="nav-item dropdown">
+                            <a href="~/Accountant/AuthorizationInstallmentPayment" class="dropdown-toggle">
+                                <span class="icon-holder">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                <h6>Installment Collection Authorizations</h6>
+                            </a>
+                        </li>
+                    }
+
 
                     @if (User.Identity.Name == "admin")
                     {
@@ -899,29 +904,29 @@
                     </li>
 
                     @*
-                        <li class="nav-item">
-                            <a class='sidebar-link' href="#">
-                                <span class="icon-holder">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                                <span class="title">
-                                    PAR Monitoring & Management Reports
-                                </span>
-                            </a>
-                        </li>
+        <li class="nav-item">
+            <a class='sidebar-link' href="#">
+                <span class="icon-holder">
+                    <i class="fa fa-bell"></i>
+                </span>
+                <span class="title">
+                    PAR Monitoring & Management Reports
+                </span>
+            </a>
+        </li>
                     *@
 
                     @if (IsGranted(PermissionNames.Pages_BA))
                     {
                         @*<li class="nav-item">
-                                <a class='sidebar-link' href="#">
-                                    <span class="icon-holder">
-                                        <i class="fa fa-bell"></i>
+                <a class='sidebar-link' href="#">
+                    <span class="icon-holder">
+                        <i class="fa fa-bell"></i>
 
-                                    </span>
-                                    <span class="title">Notifications</span>
-                                </a>
-                            </li>*@
+                    </span>
+                    <span class="title">Notifications</span>
+                </a>
+            </li>*@
                     }
 
                     @if (IsGranted(PermissionNames.Pages_BM))
@@ -972,14 +977,14 @@
                 @*<div class="position-center"><h4>Loan Origination & Management System</h4></div>*@
                 <ul class="nav-right">
                     <li class="notifications dropdown" style="z-index: 1130;">
-                        @*<span class="counter bgc-red">3</span>*@
+                        <span class="counter bgc-red" id="NotificationCount">...</span>
                         <a id="NotificationButton" class="dropdown-toggle no-after" data-toggle="dropdown">
                             <i class="ti-bell"></i>
                         </a>
 
                         <ul class="dropdown-menu">
                             <li class="pX-20 pY-15 bdB">
-                                <i class="ti-bell pR-10"></i> Notifications
+                                <i class="ti-bell pR-10"></i> <span id="NotificationCount2">Notifications</span>
                                 <span class="fsz-sm fw-600 c-grey-900">Notifications</span>
                             </li>
                             <li>
@@ -992,7 +997,7 @@
                                             <div class="peer peer-greed">
                                                 <span>
                                                     <span class="c-grey-600">
-                                                        Resieved Notifications <span class="text-dark">Mr.usman</span>
+                                                        Received Notifications <span class="text-dark">Mr.usman</span>
                                                     </span>
                                                 </span>
                                                 <p class="m-0">
@@ -1005,7 +1010,7 @@
                             </li>
                             <li class="pX-20 pY-15 ta-c bdT">
                                 <span>
-                                    <a href="" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a>
+                                    <a href="/Dashboard/ViewNotifications" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a>
                                 </span>
                             </li>
                         </ul>
@@ -1137,10 +1142,15 @@
                         var response = data.result;
                         console.log(response);
 
-
                         var content = '';
                         response.forEach(function (item) {
-                            content += '<li>';
+
+                            if (item.isRead == true) {
+                                content += '<li>';
+                            }
+                            else {
+                                content += '<li style="background-color: #e6f7dc;">';
+                            }
                             content += ' <a href="" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">';
                             content += '<div class="peer mR-15">';
                             content += '<img class="w-3r bdrs-50p" src="/images/logo.jpg" alt="">';
@@ -1161,8 +1171,8 @@
                             content += '</li>';
                         });
 
-
                         $('#innerNotifications').html(content);
+                        NotificationsMarkRead();
                     },
                     error: function (data) {
 
@@ -1171,6 +1181,59 @@
                     }
                 });
             });
+
+            getNotificationsCount();
+            function getNotificationsCount(){
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/getNotificationsCount")',
+                    data: {} ,
+                    success: function (data) {
+                        var response = data.result;
+
+                        //response = 0;
+                        //alert(response);
+                        if (response != 0) {
+                            $('#NotificationCount').html(response);
+                            $('#NotificationCount2').html(response + ' Unread Notifications');
+                        }
+                        else {
+                            $('#NotificationCount').addClass("d-none");
+                            $('#NotificationCount2').html('Notifications');
+                        }
+
+                        //$('#innerNotifications').html(content);
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occured while getting Notifications. Contact with admin..!", "error");
+                        console.log(data);
+                    }
+                 });
+
+
+            }
+
+            function NotificationsMarkRead() {
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/markReadNotifications")',
+                    data: {},
+                    success: function (data) {
+                        var response = data.result;
+                        console.log("Marked Read : " + response);
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occured while getting Notifications. Contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+            }
         </script>
 
     </environment>

@@ -14,11 +14,11 @@ namespace TFCLPortal.NotificationLogs
 
     public class NotificationLogAppService : TFCLPortalAppServiceBase, INotificationLogAppService
     {
-        private readonly IRepository<NotificationLog, Int32> _NotificationLogRepository;
+        private readonly IRepository<NotificationLog> _NotificationLogRepository;
         private readonly IFcmTokenAppService _fcmTokenAppService;
         private string NotificationLog = "Notification Log";
 
-        public NotificationLogAppService(IRepository<NotificationLog, Int32> NotificationLogRepository, IFcmTokenAppService fcmTokenAppService)
+        public NotificationLogAppService(IRepository<NotificationLog> NotificationLogRepository, IFcmTokenAppService fcmTokenAppService)
         {
             _NotificationLogRepository = NotificationLogRepository;
             _fcmTokenAppService = fcmTokenAppService;
@@ -142,15 +142,17 @@ namespace TFCLPortal.NotificationLogs
                 List<NotificationLogListDto> NotifList = new List<NotificationLogListDto>();
                 if (NotificationLogVar != null)
                 {
-                    int maxValue = 0;
-                    if (NotificationLogVar.Count < 20)
-                    {
-                        maxValue = NotificationLogVar.Count;
-                    }
-                    else
-                    {
-                        maxValue = 20;
-                    }
+                    int maxValue = NotificationLogVar.Count;
+                    //int maxValue = 0;
+                    //if (NotificationLogVar.Count < 20)
+                    //{
+                    //    maxValue = NotificationLogVar.Count;
+                    //}
+                    //else
+                    //{
+                    //    maxValue = 20;
+                    //}
+
                     for (int i = 0; i < maxValue; i++)
                     {
                         var tempnotification = ObjectMapper.Map<NotificationLogListDto>(NotificationLogVar[i]);
@@ -164,6 +166,28 @@ namespace TFCLPortal.NotificationLogs
             catch (Exception ex)
             {
                 throw new UserFriendlyException(L("GetMethodError{0}", NotificationLog));
+            }
+        }
+
+        public bool MarkRead(int UserId)
+        {
+            try
+            {
+                var NotificationLogVar = _NotificationLogRepository.GetAllList(x=>x.Reciever_UserId==UserId&&x.isRead==false);
+
+                foreach(var item in NotificationLogVar)
+                {
+                    item.isRead = true;
+                    _NotificationLogRepository.Update(item);
+                    CurrentUnitOfWork.SaveChanges();
+                }
+              
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

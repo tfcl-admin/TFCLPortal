@@ -14,5 +14,7 @@ namespace TFCLPortal.NotificationLogs
         List<NotificationLogListDto> GetNotificationLogList();
         Task<string> SendNotification(int userId, string title, string body);
         List<NotificationLogListDto> GetNotificationLogListByUserId(int UserId);
+
+        bool MarkRead(int UserId);
     }
 }

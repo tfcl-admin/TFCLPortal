@@ -13,5 +13,6 @@ namespace TFCLPortal.NotificationLogs.Dto
         public string Reciever_Token { get; set; }
         public string title { get; set; }
         public string Body { get; set; }
+        public bool isRead { get; set; }
     }
 }
