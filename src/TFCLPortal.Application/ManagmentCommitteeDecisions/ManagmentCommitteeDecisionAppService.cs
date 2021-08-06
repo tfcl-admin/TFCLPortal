@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFCLPortal.Applications;
+using TFCLPortal.BccDecisions;
 using TFCLPortal.ManagmentCommitteeDecisions.Dto;
+using TFCLPortal.McrcDecisions;
 using TFCLPortal.Users;
 
 namespace TFCLPortal.ManagmentCommitteeDecisions
@@ -16,16 +18,20 @@ namespace TFCLPortal.ManagmentCommitteeDecisions
     {
         private readonly IRepository<ManagmentCommitteeDecision, Int32> _ManagmentCommitteeDecisionRepository;
         private readonly IRepository<Applicationz, Int32> _applicationRepository;
+        private readonly IRepository<McrcDecision, Int32> _McrcDecisionRepository;
+        private readonly IRepository<BccDecision, Int32> _BccDecisionRepository;
         private string bcc = "Managment Committee Decision";
         private readonly IApplicationAppService _applicationAppService;
         private readonly IUserAppService _userAppService;
 
-        public ManagmentCommitteeDecisionAppService(IUserAppService userAppService,IRepository<Applicationz, Int32> applicationRepository,IRepository<ManagmentCommitteeDecision, Int32> ManagmentCommitteeDecisionRepository, IApplicationAppService applicationAppService)
+        public ManagmentCommitteeDecisionAppService(IRepository<BccDecision, Int32> BccDecisionRepository,IRepository<McrcDecision, Int32> McrcDecisionRepository,IUserAppService userAppService,IRepository<Applicationz, Int32> applicationRepository,IRepository<ManagmentCommitteeDecision, Int32> ManagmentCommitteeDecisionRepository, IApplicationAppService applicationAppService)
         {
             _userAppService = userAppService;
             _ManagmentCommitteeDecisionRepository = ManagmentCommitteeDecisionRepository;
             _applicationAppService = applicationAppService;
             _applicationRepository = applicationRepository;
+            _BccDecisionRepository = BccDecisionRepository;
+            _McrcDecisionRepository = McrcDecisionRepository;
         }
 
         public async Task CreateManagmentCommitteeDecision(CreateManagmentCommitteeDecisionDto input)
@@ -86,6 +92,8 @@ namespace TFCLPortal.ManagmentCommitteeDecisions
                 var result= ObjectMapper.Map<List<ManagmentCommitteeDecisionListDto>>(ManagmentCommitteeDecision);
                 var applications = _applicationRepository.GetAllList();
                 var users = _userAppService.GetAllUsers();
+                var mcrcDecisions = _McrcDecisionRepository.GetAllList(x => x.Decision == "Approve");
+                var bccDecisions = _BccDecisionRepository.GetAllList(x => x.Decision == "Approve");
 
                 foreach (var mc in result)
                 {
@@ -98,6 +106,21 @@ namespace TFCLPortal.ManagmentCommitteeDecisions
                         mc.State = application.ScreenStatus;
                         mc.State = application.ScreenStatus;
                         mc.productType = application.ProductType;
+
+                        var mcrcDecision = mcrcDecisions.Where(x => x.ApplicationId == mc.ApplicationId).ToList();
+                        if(mcrcDecision.Count>0)
+                        {
+                            mc.BccApprovalDate = mcrcDecision.LastOrDefault().LastModificationTime;
+                        }
+                        else
+                        {
+                            var bccDecision = bccDecisions.Where(x => x.ApplicationId == mc.ApplicationId).ToList();
+                            if (bccDecision.Count > 0)
+                            {
+                                mc.BccApprovalDate = bccDecision.LastOrDefault().CreationTime;
+                            }
+                        }
+
                     }
                     var user = users.Where(x => x.Id == mc.fk_userid).FirstOrDefault();
                     if(user!=null)

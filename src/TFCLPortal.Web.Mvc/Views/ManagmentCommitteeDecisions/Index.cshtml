@@ -1,6 +1,10 @@
 ﻿@model TFCLPortal.Web.Models.McModels.McModel
+
 @{ int i = 0;}
-@{ int n = 0;}
+@{
+    int n = 0;
+    List<TFCLPortal.ManagmentCommitteeDecisions.Dto.ManagmentCommitteeDecisionListDto> decisions = new List<TFCLPortal.ManagmentCommitteeDecisions.Dto.ManagmentCommitteeDecisionListDto>();
+}
 
 @{
     ViewData["Title"] = "Index";
@@ -12,6 +16,7 @@
         background-image: none;
         position: relative;
     }
+
     .dropdown-item {
         font-size: 11px;
         color: #416a2c;
@@ -128,16 +133,16 @@
                         Client / School / Business Name
                     </th>
                     <th>
-                        Application State
+                        State
                     </th>
                     <th>
-                        Decision
-                    </th>
-                    <th>
-                        Decision By
+                        Authorization By (No Of MCM)
                     </th>
                     <th>
                         Decision Date
+                    </th>
+                    <th>
+                        BCC Approval Date
                     </th>
                     <th>
                         Details
@@ -145,12 +150,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.decisions)
+
+                @foreach (var Outeritem in Model.decisions.GroupBy(x => x.ApplicationId).ToList())
                 {
+
+                    var item = Model.decisions.Where(x => x.ApplicationId == Outeritem.Key).FirstOrDefault();
+
                 <tr>
                     <td> @{n = n + 1;} @n</td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ClientID)
+                        @item.ClientID
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ClientName)
@@ -158,16 +167,30 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.SchoolName)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.State)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Decision)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Username)
+                    @*<td>
+            @Html.DisplayFor(modelItem => item.State)
+        </td>*@
+                    @if (Outeritem.Count() < 3)
+                    {
+                        <td>Pending</td>
+                    }
+                    else
+                    {
+                        <td>Authorized</td>
+                    }
+
+                    <td width="10%">
+                        @if (Outeritem.Count() < 3)
+                        {
+                            @(Outeritem.Count())
+                        }
+                        else
+                        {
+                            @(3)
+                        }
                     </td>
                     <td>@item.CreationTime.ToString("dd MMM yyyy hh:mm tt")</td>
+                    <td>@(item.BccApprovalDate==null? "--": String.Format("{0:dd MMM yyyy hh:mm tt}", item.BccApprovalDate))</td>
                     <td>
                         <div class="dropdown">
                             <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -193,5 +216,29 @@
             </tbody>
         </table>
     </div>
+
+    @*<table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        Details
+                    </th>
+                    <th>
+                        Details
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+
+                    <tr>
+                        <td> @item.Key</td>
+
+                        <td> @(item.Count())</td>
+                    </tr>
+            </tbody>
+        </table>*@
 
 </main>

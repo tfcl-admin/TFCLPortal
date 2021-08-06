@@ -1,0 +1,904 @@
+﻿@{
+    Layout = null;
+}
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<style>
+    .topTables td {
+        padding-top: 3px;
+        border: 1px solid;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .tblTopData td {
+        border: 1px solid;
+        padding: 3px;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    .installments thead {
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .installments tr {
+        font-size: 11px
+    }
+
+    .Tranchinstallments thead {
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .Tranchinstallments tr {
+        font-size: 11px
+    }
+
+    .signatures {
+        font-size: 11px;
+        font-weight: bold;
+        margin-top: 100px;
+        border-top: 1px solid;
+        text-transform: uppercase;
+    }
+
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
+</style>
+
+
+<div class=" text-right border-bottom p-3  mb-3" id="topMenu">
+    <div class="col-md-12">
+        <a class="btn btn-outline-primary" id="print"><i class="fa fa-print"></i> Print</a>
+        <a class="btn btn-outline-success" id="save"><i class="fa fa-forward"></i> Send To BM</a>
+    </div>
+</div>
+<div class="pageloader d-none"></div>
+
+<div class="container ">
+
+    <div class="row">
+        <div class="col-md-3 text-right">
+            <img id="Imglogo" src="~/Theame/images/bg.png" width="50px">
+        </div>
+        <div class="col-md-9" style="padding-top:30px">
+            <h1>Taleem Finance Company Limited</h1>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:50px">
+        <div class="col-md-4 text-left">
+            <table width="100%" class="topTables">
+                <tr>
+                    <td><h6><b>Client ID</b></h6></td>
+                    <td style="background-color:lightyellow"><h6>@ViewBag.Application.ClientID</h6></td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-right">
+            <table width="100%" class="topTables">
+                <tr>
+                    <td><h6><b>Schedule Type </b></h6></td>
+                    <td style="background-color:lightyellow"><h6>@ViewBag.Input.ScheduleType </h6> </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-6 text-left">
+            <table width="100%" class="tblTopData">
+                <tr>
+                    <td width="40%"><b>Applicant Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.Application.ClientName</td>
+                </tr>
+                <tr>
+                    <td><b>Client/School Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.Application.SchoolName</td>
+                </tr>
+                <tr>
+                    <td><b>Product</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.Application.ProductTypeName</td>
+                </tr>
+                <tr>
+                    <td><b>A/C Title</b></td>
+                    <td id="txtAccountTitle" style="background-color:lightyellow">Taleem Finance Company</td">
+                </tr>
+                <tr>
+                    <td><b>Repayment A/C No</b></td>
+                    <td id="txtRepaymentACnumber" style="background-color:lightyellow">1087643581000566</td>
+                </tr>
+                <tr>
+                    <td><b>Bank/Branch Name</b></td>
+                    <td id="txtBankBranchName" style="background-color:lightyellow">MCB / Falcon Complex Br</td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-md-6 text-right">
+            <table width="100%" class="tblTopData">
+                <tr>
+                    <td width="40%"><b>Loan Amount</b></td>
+                    <td style="background-color:lightyellow" id="txtLoanAmount">
+                        @(ViewBag.Input.LoanAmount == null || ViewBag.Input.LoanAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.LoanAmount)))
+                        <a title="Edit Loan Amount" href="" data-toggle="modal" data-target="#_addDeferment"><i class="fa fa-edit"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Tenure (Months)</b></td>
+                    <td style="background-color:lightyellow" id="txtTenure">
+                        @(ViewBag.Input.Tenure == null || ViewBag.Input.Tenure == ""  ? "--" : ViewBag.Input.Tenure)
+                        <a title="Edit Tenure" href="" data-toggle="modal" data-target="#_editTenure"><i class="fa fa-edit"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Mark-up Rate</b></td>
+                    <td style="background-color:lightyellow" id="txtMarkup">@(ViewBag.Input.Markup == null || ViewBag.Input.Markup == ""  ? "--" : ViewBag.Input.Markup)</td>
+                </tr>
+                <tr>
+                    <td><b>Disbursement Date</b></td>
+                    <td style="background-color:lightyellow" id="txtDisbursmentDate">
+                        @(ViewBag.Input.DisbursmentDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.DisbursmentDate))
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Grace Days</b></td>
+                    <td style="background-color:lightyellow" id="txtGraceDays">@ViewBag.Input.GraceDays</td>
+                </tr>
+                <tr>
+                    <td><b>Deferment (Months)</b></td>
+                    <td style="background-color:lightyellow">
+                        <span id="txtDeferment">@(ViewBag.Input.Deferment == null || ViewBag.Input.Deferment == "0"  ? "--" : ViewBag.Input.Deferment)</span>
+                        @*<a title="Add Deferment" href="" data-toggle="modal" data-target="#_addDeferment"><i class="fa fa-plus-circle"></i></a>*@
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-6 text-left">
+            <table width="100%" class="tblTopData">
+                <tr>
+                    <td width="40%"><b>Branch Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.Input.TFCL_Branch</td>
+                </tr>
+                <tr>
+                    <td><b>Branch Manager Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.BMName</td>
+                </tr>
+                <tr>
+                    <td><b>SDE Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.SDEName</td>
+                </tr>
+
+
+            </table>
+
+        </div>
+        <div class="col-md-6 text-right">
+            <table width="100%" class="tblTopData">
+                <tr>
+                    <td width="40%"><b>IRR %</b></td>
+                    <td style="background-color:lightyellow" id="txtIRR">@(ViewBag.Input.IRR == null || ViewBag.Input.IRR == ""  ? "--" : ViewBag.Input.IRR)</td>
+                </tr>
+                <tr>
+                    <td><b>Installment</b></td>
+                    <td style="background-color:lightyellow" id="installmentDiv">@(ViewBag.Input.Installment == null || ViewBag.Input.Installment == "--"  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.Installment)))</td>
+                </tr>
+                <tr>
+                    <td><b>Loan Start Date</b></td>
+                    <td style="background-color:lightyellow" id="txtLoanStartDate">@(ViewBag.Input.LoanStartDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.LoanStartDate))</td>
+
+                </tr>
+                <tr>
+                    <td><b>Last Inst Date</b></td>
+                    <td style="background-color:lightyellow" id="txtLastInstallmentDate">
+                        @(ViewBag.Input.LastInstallmentDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.LastInstallmentDate))
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Yearly Mark-up</b></td>
+                    <td style="background-color:lightyellow" id="YearlyDiv">@(ViewBag.Input.YearlyMarkup == null || ViewBag.Input.YearlyMarkup == "--"  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.YearlyMarkup)))</td>
+                </tr>
+                <tr>
+                    <td><b>Per Day Mark-up</b></td>
+                    <td style="background-color:lightyellow" id="DayDiv">@(ViewBag.Input.PerDayMarkup == null || ViewBag.Input.PerDayMarkup == "--"  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.PerDayMarkup)))</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row" id="TranchesTbl" style="margin-top:20px">
+        <div class="col-md-12">
+            <div id="innerTranchesTbl"></div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+            <div id="installmentsTable"></div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+            <div id="SignaturesTable"></div>
+        </div>
+    </div>
+
+</div>
+<!--Deferment Modal -->
+<div class="modal fade" id="_addDeferment" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Apply Deferment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <p class="detailHeading">Deferment Start Date</p>
+                        <input id="DefermentStartDate" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-12" style="margin-top:30px">
+                        <p class="detailHeading">Deferred Months</p>
+                        <input id="DefermentMonths" type="number" max="10" min="1" value="1" class="form-control" />
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="applyDeferment" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
+                <button data-dismiss="modal" type="button" class="btn btn-outline-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--Deferment Modal -->
+<div class="modal fade" id="_editTranches" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Tranche</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="tranchInner row">
+
+                            <div class="col-md-12">
+                                <p class="detailHeading">Amount</p>
+                                <input id="Amount" type="number" class="form-control" />
+                                <input id="dot" type="hidden" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="applyTranches" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
+                <button data-dismiss="modal" type="button" class="btn btn-outline-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/abp.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js" asp-append-version="true"></script>
+<script>
+    $(function () {
+
+        @*var Installments = Number('@ViewBag.Input.Tenure');
+        var InstallmentAmount = Number('@ViewBag.Input.Installment.Replace(",","")');
+        var LoanAmount = Number('@ViewBag.Input.LoanAmount');
+        var graceDays = Number('@ViewBag.Input.GraceDays');
+        var DefermentMonths = Number('@ViewBag.Input.Deferment');
+        var markupPercentage = parseFloat('@ViewBag.Input.Markup');
+        var LoanStartDate = new Date('@ViewBag.Input.LoanStartDate');
+        var PerDayMarkup = parseFloat('@ViewBag.Input.PerDayMarkup.Replace(",","")');
+        var YearlyMarkup = parseFloat('@ViewBag.Input.YearlyMarkup.Replace(",","")');
+
+
+        var tranches =  @Html.Raw(Json.Serialize(""));*@
+        var Irr = parseFloat('@ViewBag.Input.IRR')/100;
+
+        var Signatories = @Html.Raw(Json.Serialize(ViewBag.Signatories));
+        var Type = '@ViewBag.Input.ScheduleType';
+        if (Type == 'Standard') {
+
+        }
+        else if (Type == 'Tranches') {
+            $('#installmentDiv').html("--");
+            $('#DayDiv').html("--");
+            $('#YearlyDiv').html("--");
+        }
+        $(".pageloader").toggleClass("d-none");
+
+        var installments = [];
+
+        $.ajax({
+            type: 'POST',
+            datatype: "json",
+            contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Accountant/getInstallments")',
+            data:{'ApplicationId':'@ViewBag.ApplicationId'},
+            success: function (response) {
+                $(".pageloader").toggleClass("d-none");
+                installments = response.result;
+                console.table(response.result);
+                displayInstallmentsTable(installments);
+
+
+            },
+            error: function (error) {
+                console.log(error);
+                $(".pageloader").toggleClass("d-none");
+
+            }
+        });
+
+
+
+        function displayInstallmentsTable(data) {
+            $(".pageloader").toggleClass("d-none");
+
+            var content = "";
+            content += "<table  class='table table-striped table-bordered installments' cellspacing='0' width='100 %'>";
+            content += "<thead>";
+            content += " <th style='text-align: center'>Inst #</th>";
+            content += " <th style='text-align: center'>Bal Inst</th>";
+            content += " <th style='text-align: center'>Installment Due Date</th>";
+            content += " <th style='text-align: center'>O/S Principal - Op</th>";
+            content += " <th style='text-align: center'>Additional Tranche</th>";
+            content += " <th style='text-align: center'>O/S Principal - Opening</th>";
+            content += " <th style='text-align: center'>Markup</th>";
+            content += " <th style='text-align: center'>Principal</th>";
+            content += " <th style='text-align: center'>Installment Amount</th>";
+            content += " <th style='text-align: center'>O/S Principal - Closing</th>";
+            content += " <th style='text-align: center'>Paid</th>";
+            content += " <th style='text-align: center'>Payment Date</th>";
+            content += "</thead>";
+            content += "<tbody>";
+
+            for (i = 0; i < data.length; i++) {
+
+                if (data[i].isPaid == 1) {
+                    content += '<tr  style="background-color:lightgray">';
+
+                }
+                else {
+                    content += '<tr>';
+                }
+                content += '<td style="text-align: center">' + data[i].instNumber + '</td>';
+                content += '<td style="text-align: center">' + data[i].balInst + '</td>';
+                content += '<td style="text-align: center">' + data[i].installmentDueDate + '</td>';
+                content += '<td style="text-align: center">' + data[i].osPrincipal_op + '</td>';
+                if (data[i].additionalTranche != "--") {
+                    content += '<td style="text-align: center">' + data[i].additionalTranche + ' </td > ';
+                    //content += '<td style="text-align: center">' + data[i].additionalTranche + '  <a title="Edit Tranches" class="ChangeTranche" hidden-value=' + data[i].additionalTranche + ' hidden-date="' + data[i].installmentDueDate+'"><i class="fa fa-edit"></i></a></td > ';
+                }
+                else {
+                    content += '<td style="text-align: center">--</td>';
+                }
+                content += '<td style="text-align: center">' + data[i].osPrincipal_Opening + '</td>';
+                content += '<td style="text-align: center">' + data[i].markup + '</td>';
+                content += '<td style="text-align: center">' + data[i].principal + '</td>';
+                content += '<td style="text-align: center">' + data[i].installmentAmount + '</td>';
+                content += '<td style="text-align: center">' + data[i].osPrincipal_Closing + '</td>';
+                content += '<td style="text-align: center">' + isPaidCheck(data[i].isPaid) + '</td>';
+                if (isNullOrEmpty(data[i].paymentDate)!='--') {
+                    content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate).substr(0, 10)) + '</td>';
+                } else {
+                    content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate)) + '</td>';
+                }
+                content += '</tr>';
+
+            }
+            content += "</tbody>";
+            content += "</table>"
+
+            $('#installmentsTable').html(content);
+            $(".pageloader").toggleClass("d-none");
+
+
+        }
+
+        $("#applyDeferment").click(function () {
+            $('#_addDeferment').modal('hide');
+            var StartDate = $('#DefermentStartDate').val();
+            $('#DefermentStartDate').val('');
+            var Months = Number($('#DefermentMonths').val());
+            $('#DefermentMonths').val('1');
+
+            var Markup = Number($("#txtMarkup").text()) / 100;
+
+
+            if (StartDate != "" && Months > 0) {
+
+                //Get Installment Index according to start Date;
+                var indexOfInstallment = null;
+                var DateOfInstallment = null;
+                var openingPrincipalAmount = null;
+                var previousDate = null;
+                var differenceDays = null;
+                installments.forEach(function (item, index) {
+                    var currentDueDate = moment(item.installmentDueDate);
+                    if (StartDate == currentDueDate.format('YYYY-MM-DD')) {
+                        indexOfInstallment = index;
+                        DateOfInstallment = StartDate;
+                        differenceDays = currentDueDate.diff(previousDate, 'days');
+                    }
+                    previousDate = item.installmentDueDate;
+                });
+                var previousInstallment = installments[indexOfInstallment - 1];
+                debugger
+                var previousPrincipal_op = Number(previousInstallment.osPrincipal_op.replaceAll(",", ""));
+                if (previousInstallment.principal != '--') {
+                    var previousPrincipal = Number(previousInstallment.principal.replaceAll(",", ""));
+                    openingPrincipalAmount = previousPrincipal_op - previousPrincipal;
+
+                }
+                else{
+                    var previousPrincipal = Number(previousInstallment.osPrincipal_Closing.replaceAll(",", ""));
+                    openingPrincipalAmount = previousPrincipal;
+                }
+
+
+                var defferedInstallments = [];
+                for (var i = 0; i < Months; i++) {
+
+                    var temp = {
+                        instNumber: '0',
+                        balInst: '--',
+                        installmentDueDate: moment(DateOfInstallment).format('DD MMM YYYY'),
+                        osPrincipal_op: numberWithCommas(openingPrincipalAmount),
+                        additionalTranche: '--',
+                        osPrincipal_Opening: '--',
+                        markup: numberWithCommas(((openingPrincipalAmount * Markup) / 365) * differenceDays),
+                        installmentAmount: numberWithCommas(((openingPrincipalAmount * Markup) / 365) * differenceDays),
+                        osPrincipal_Closing: previousInstallment.osPrincipal_Closing,
+                        isPaid: null,
+                        paymentDate: null,
+                        principal: '--',
+                        fK_ScheduleId: '--',
+                        id: '--'
+                    };
+
+                    installments.splice(indexOfInstallment, 0, temp);
+                    indexOfInstallment++;
+                    previousDate = moment(DateOfInstallment).format('DD MMM YYYY');
+                    DateOfInstallment = moment(DateOfInstallment).add(1, 'M');
+                    differenceDays = DateOfInstallment.diff(previousDate, 'days');
+
+                }
+
+                for (var i = indexOfInstallment; i < installments.length; i++) {
+                    installments[i].installmentDueDate = moment(installments[i].installmentDueDate).add(Months, 'M').format('DD MMM YYYY');
+                }
+
+                if ($('#txtDeferment').text().trim() == "--") {
+                    $('#txtDeferment').text(Months);
+                }
+                else {
+                    $('#txtDeferment').text(Number($('#txtDeferment').text().trim()) + Months);
+                }
+                $('#txtLastInstallmentDate').text(moment($('#txtLastInstallmentDate').text()).add(Months, 'M').format('DD MMM YYYY'));
+
+                displayInstallmentsTable(installments);
+            }
+            else {
+                alert("Please Select Required Fields");
+            }
+
+
+        });
+
+
+
+        $(document).on('click', '.ChangeTranche', function (e) {
+
+            $('#_editTranches').modal('show');
+            var dateOfTranche = $(this).attr("hidden-date");
+            var val = $(this).attr("hidden-value");
+            $('#Amount').val(val.replaceAll(",", ""));
+            $('#dot').val(dateOfTranche);
+
+        });
+
+
+        $("#applyTranches").click(function () {
+            var val = $('#Amount').val();
+            var dateOfTranche=$('#dot').val();
+
+            if (val == "") {
+                val = 0;
+            }
+
+            if (confirm("Are you sure you want to proceed?")) {
+                updateInstallmentsApplyTranche(dateOfTranche,val);
+            } else {
+                alert('Cancelled');
+            }
+
+        });
+
+
+        function updateInstallmentsApplyTranche(dateOfTranch, NewTranchValue) {
+            //alert(dateOfTranch);
+            //alert(NewTranchValue);
+            $('#_editTranches').modal('hide');
+
+
+            var indexOfInstallment = null;
+            var DateOfInstallment = null;
+            installments.forEach(function (item, index) {
+
+                if (dateOfTranch == item.installmentDueDate) {
+                    indexOfInstallment = index;
+                    DateOfInstallment = dateOfTranch;
+                }
+            });
+
+            //Update Tranch Row
+            installments[indexOfInstallment].additionalTranche = numberWithCommas(NewTranchValue);
+
+
+
+
+            displayInstallmentsTable(installments);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (Signatories.length > 0) {
+            var signHtml = "<div class='row text-center'>";
+
+
+            Signatories.forEach(function (item, index) {
+                if (Signatories.length <= 2) {
+                    signHtml += "<div class='col-md-6'>";
+                }
+                else {
+                    signHtml += "<div class='col-md-4'>";
+                }
+                signHtml += "<p class='signatures'>" + item.name + " " + item.detail + "</p>";
+                signHtml += "</div>";
+            });
+
+            signHtml += "</div>";
+            $('#SignaturesTable').append(signHtml);
+        }
+
+
+        function numberWithCommas(x) {
+            x = Math.round(x);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        function removeNaN(a) {
+            return a = a || 0;
+        }
+        function isNullOrEmpty(str) {
+            if (str) {
+                return str;
+            }
+            else {
+                return "--";
+            }
+        }
+
+        function isPaidCheck(str){
+            if (str == null) {
+                return '<i class="fa fa-times" style="color:red"></i>';
+            }
+            else if (str == 1 || str == true) {
+                return '<i class="fa fa-check" style="color:green"></i>';
+
+            }
+            else if (str == 0 || str == false) {
+                return '<i class="fa fa-times" style="color:red"></i>';
+            }
+        }
+        function getInstallmentDate(loanStart) {
+
+            var d = moment(loanStart).add(1, 'M');
+            return moment(d).format('DD MMM YYYY');
+
+        }
+        function formatDate(loanStart) {
+
+            return moment(loanStart).format('DD MMM YYYY');
+
+        }
+        function getMarkup(pa, irr) {
+            return ((pa * irr) / 12) / 100;
+        }
+
+        function getTranch(LoanStartDate) {
+
+            var tranchAmount = "--";
+
+            tranches.forEach(function (item) {
+                var formattedDate = moment(item.startDate).format('DD MMM YYYY');
+                if (formattedDate == LoanStartDate) {
+                    tranchAmount = item;
+                }
+            });
+
+            return tranchAmount;
+        }
+        function getTranchAmount(LoanStartDate) {
+
+            var tranchAmount = "--";
+
+            tranches.forEach(function (item) {
+                var formattedDate = moment(item.startDate).format('DD MMM YYYY');
+                if (formattedDate == LoanStartDate) {
+                    tranchAmount = item.amount;
+                }
+            });
+
+            return  tranchAmount;
+        }
+
+        function pmt(monthlyRate, monthlyPayments, presentValue, residualValue, advancedPayments) {
+            var t1 = 1 + monthlyRate;
+            var t2 = Math.pow(t1, monthlyPayments);
+            var t3 = Math.pow(t1, (monthlyPayments - advancedPayments));
+            var t4 = (presentValue - (residualValue / t2)) / (((1 - (1 / (t3))) / monthlyRate) + advancedPayments);
+            return t4;
+        }
+
+        function getInstallment(tranch, osPrincipalAmount) {
+
+            var installment = pmt(tranch.irr / 12 / 100, tranch.tranchTenure, osPrincipalAmount, 0, 0);
+
+            return Math.round(installment);
+        }
+
+
+        //$("#print").click(function () {
+        //    $(".container").print();
+        //});
+
+        $("#print").click(function () {
+            //Hide all other elements other than printarea.
+            $("#topMenu").toggleClass("d-none");
+            $(".container").show();
+            window.print();
+            $("#topMenu").toggleClass("d-none");
+
+        });
+
+        $("#save").click(function () {
+
+            $(".pageloader").toggleClass("d-none");
+
+
+            var ScheduleInstallments = [];
+            var stype = '@ViewBag.Input.ScheduleType';
+
+            var tbl = $('table.installments tr').get().map(function (row) {
+                return $(row).find('td').get().map(function (cell) {
+                    return $(cell).html();
+                });
+            });
+
+
+            if (stype == 'Standard') {
+
+                tbl.forEach(function (item, index) {
+                    if (index != 0) {
+
+                        var pdate;
+                        var ip;
+                        console.log(item[10]);
+                        if (item[10] == '<i class="fa fa-times" style="color:red"></i>') {
+                            ip = false;
+                        }
+                        else if (item[10] == '<i class="fa fa-check" style="color:green"></i>') {
+                            ip = true;
+                        }
+
+                        if (item[11] == '--') {
+                            pdate = null;
+                        }
+                        else {
+                            pdate = item[11];
+                        }
+
+                        var list = {
+                            'InstNumber': item[0],
+                            'BalInst': item[1],
+                            'InstallmentDueDate': item[2],
+                            'OsPrincipal_op': item[3],
+                            'AdditionalTranche': '--',
+                            'OsPrincipal_Opening': '--',
+                            'markup': item[6],
+                            'principal': item[7],
+                            'installmentAmount': item[8],
+                            'OsPrincipal_Closing': item[9],
+                            'isPaid': ip,
+                            'PaymentDate': pdate
+                        };
+
+                        ScheduleInstallments.push(list);
+                    }
+                });
+
+            }
+            else if (stype == 'Tranches') {
+
+                tbl.forEach(function (item, index) {
+                    if (index != 0) {
+
+                        var tranchValSplit = item[4].split(" ");
+
+                        var pdate;
+                        var ip;
+                        if (item[10] == '<i class="fa fa-times" style="color:red"></i>') {
+                            ip = false;
+                        }
+                        else if (item[10] == '<i class="fa fa-check" style="color:green"></i>') {
+                            ip = true;
+                        }
+
+                        if (item[11] == '--') {
+                            pdate = null
+                        }
+                        else {
+                            pdate = item[11];
+                        }
+
+                        var list = {
+                            'InstNumber': item[0],
+                            'BalInst': item[1],
+                            'InstallmentDueDate': item[2],
+                            'OsPrincipal_op': item[3],
+                            'AdditionalTranche': tranchValSplit[0],
+                            'OsPrincipal_Opening': item[5],
+                            'markup': item[6],
+                            'principal': item[7],
+                            'installmentAmount': item[8],
+                            'OsPrincipal_Closing': item[9],
+                            'isPaid': ip,
+                            'PaymentDate': pdate
+                        };
+
+                        ScheduleInstallments.push(list);
+                    }
+                });
+
+            }
+
+             var dataToSend = {
+                'ApplicationId':'@ViewBag.ApplicationId',
+                'ClientId':'@ViewBag.Application.ClientID',
+                'ScheduleType':'@ViewBag.Input.ScheduleType',
+                'LoanAmount': $("#txtLoanAmount").text(),
+                'Tenure': $("#txtTenure").text(),
+                'Markup': $("#txtMarkup").text(),
+                 'DisbursmentDate': $("#txtDisbursmentDate").text().trim(),
+                'GraceDays': $("#txtGraceDays").text(),
+                'Deferment': $("#txtDeferment").text(),
+                'AccountTitle': $("#txtAccountTitle").text(),
+                'RepaymentACnumber': $("#txtRepaymentACnumber").text(),
+                'BankBranchName': $("#txtBankBranchName").text(),
+                'TFCL_Branch': '@ViewBag.Input.TFCL_Branch',
+                'BranchManager':'@ViewBag.BMName',
+                'SDE': '@ViewBag.SDEName',
+                 'DeffermentStartDate': $("#txtDeffermentStartDate").text().trim(),
+                 'DeffermentEndDate': $("#txtDeffermentEndDate").text().trim(),
+                'IRR': $("#txtIRR").text(),
+                'Installment': $("#installmentDiv").text(),
+                 'LoanStartDate': $("#txtLoanStartDate").text().trim(),
+                 'LastInstallmentDate': $("#txtLastInstallmentDate").text().trim(),
+                'YearlyMarkup': $("#YearlyDiv").text(),
+                'PerDayMarkup': $("#DayDiv").text(),
+                'installmentList': ScheduleInstallments
+            };
+
+
+
+            $.ajax({
+                type: 'POST',
+                datatype: "json",
+                contenttype: 'application/json; charset=utf-8',
+                url: '@Url.Content("~/Accountant/SaveScheduleTemp")',
+                data: dataToSend,
+                  success: function (response) {
+                      alert(response.result);
+                      console.log(response);
+                      $(".pageloader").toggleClass("d-none");
+
+                  },
+                  error: function (error) {
+                      alert("Error : " + error);
+                      console.log(error);
+                      $(".pageloader").toggleClass("d-none");
+
+                  }
+                });
+
+
+            //console.log(dataToSend);
+            //$(".pageloader").toggleClass("d-none");
+
+
+
+        });
+
+    });
+
+
+</script>

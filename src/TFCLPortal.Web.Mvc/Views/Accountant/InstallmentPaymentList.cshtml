@@ -188,51 +188,59 @@
                     <th>Payment Date</th>
                     <th>Paid Amount</th>
                     <th>Excess/Short</th>
+                    <th>Branch</th>
+                    <th>SDE</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr onclick="ViewSchedule(@item.Applicationid)">
-                        <td> @{i = i + 1;} @i</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ClientId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ClientName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BusinessName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.InstNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.installmentAmount)
-                        </td>
-                        <td>
-                            @string.Format("{0:dd MMM yyyy}", DateTime.Parse(item.InstallmentDueDate))
-                        </td>
-                        <td>
-                            @if (item.isPaid == true)
-                            {
-                                <i class="fa fa-check text-success"></i>
-                            }
-                            else
-                            {
-                                <i class="fa fa-times text-danger"></i>
-                            }
-                        </td>
-                        <td>
-                            @(item.PaymentDate==null?"--":string.Format("{0:dd MMM yyyy}",item.PaymentDate))
-                        </td>
-                        <td>
-                            @(item.PaidAmount == null || item.PaidAmount == "" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.PaidAmount)))
-                        </td>
-                        <td>
-                            @(item.ExcessShort == null || item.ExcessShort == "" || item.ExcessShort == "0" || item.ExcessShort == "0.00" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.ExcessShort)))
-                        </td>
-                    </tr>
+                <tr onclick="ViewSchedule(@item.Applicationid)">
+                    <td> @{i = i + 1;} @i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BusinessName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InstNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.installmentAmount)
+                    </td>
+                    <td>
+                        @string.Format("{0:dd MMM yyyy}", DateTime.Parse(item.InstallmentDueDate))
+                    </td>
+                    <td>
+                        @if (item.isPaid == true)
+                        {
+                            <i class="fa fa-check text-success"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-times text-danger"></i>
+                        }
+                    </td>
+                    <td>
+                        @(item.PaymentDate==null?"--":string.Format("{0:dd MMM yyyy}",item.PaymentDate))
+                    </td>
+                    <td>
+                        @(item.PaidAmount == null || item.PaidAmount == "" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.PaidAmount)))
+                    </td>
+                    <td>
+                        @(item.ExcessShort == null || item.ExcessShort == "" || item.ExcessShort == "0" || item.ExcessShort == "0.00" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.ExcessShort)))
+                    </td>
+                    <td>
+                        @(item.BranchName == null || item.BranchName == "" ? "--" : item.BranchName)
+                    </td>
+                    <td>
+                        @(item.SdeName == null || item.SdeName == "" ? "--" : item.SdeName)
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

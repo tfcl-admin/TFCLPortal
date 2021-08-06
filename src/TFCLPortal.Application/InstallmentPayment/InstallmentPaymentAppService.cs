@@ -13,6 +13,7 @@ using TFCLPortal.DynamicDropdowns.ReferenceChecks;
 using TFCLPortal.DynamicDropdowns.UtilityBillPayments;
 using TFCLPortal.InstallmentPayments.Dto;
 using TFCLPortal.NatureOfPayments;
+using TFCLPortal.Users;
 
 namespace TFCLPortal.InstallmentPayments
 {
@@ -25,7 +26,9 @@ namespace TFCLPortal.InstallmentPayments
         private readonly IRepository<ReferenceCheck> _referenceCheckRepository;
         private readonly IRepository<CompanyBankAccount> _companyBankAccountRepository;
         private readonly IRepository<NatureOfPayment> _natureOfPaymentRepository;
+        private readonly IRepository<Applicationz> _applicationRepository;
         private readonly IApplicationAppService _applicationAppService;
+        private readonly IUserAppService _userAppService;
 
         #endregion
         #region Constructor 
@@ -34,9 +37,13 @@ namespace TFCLPortal.InstallmentPayments
             IRepository<CompanyBankAccount> companyBankAccountRepository,
             IRepository<UtilityBillPayment> utilityBillPayment,
             IRepository<NatureOfPayment> natureOfPaymentRepository,
+            IRepository<Applicationz> applicationRepository,
             IApplicationAppService applicationAppService,
+            IUserAppService userAppService,
             IRepository<ReferenceCheck> referenceCheckRepository)
         {
+            _userAppService = userAppService;
+            _applicationRepository = applicationRepository;
             _InstallmentPaymentRepository = InstallmentPaymentRepository;
             _applicantReputations = applicantReputations;
             _utilityBillPayment = utilityBillPayment;
@@ -114,6 +121,9 @@ namespace TFCLPortal.InstallmentPayments
             {
                 var InstallmentPayment = _InstallmentPaymentRepository.GetAllList().Where(x => x.ApplicationId == ApplicationId && x.isAuthorized==true).ToList();
                 var payments = ObjectMapper.Map<List<InstallmentPaymentListDto>>(InstallmentPayment);
+
+                //var apps = _applicationRepository.GetAllList();
+                //var users = _userAppService.GetAllUsers();
 
                 if (payments != null && payments.Count > 0)
                 {

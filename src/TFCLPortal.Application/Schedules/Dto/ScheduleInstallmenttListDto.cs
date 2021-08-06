@@ -28,5 +28,9 @@ namespace TFCLPortal.Schedules.Dto
         public string ClientName { get; set; }
         public string BusinessName { get; set; }
         public int Applicationid { get; set; }
+
+        public string SdeName { get; set; }
+        public string BranchName { get; set; }
+
     }
 }

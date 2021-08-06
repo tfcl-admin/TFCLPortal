@@ -20,5 +20,6 @@ namespace TFCLPortal.ManagmentCommitteeDecisions.Dto
         public string State { get; set; }
         public string Decision { get; set; }
         public string Reason { get; set; }
+        public DateTime? BccApprovalDate { get; set; }
     }
 }

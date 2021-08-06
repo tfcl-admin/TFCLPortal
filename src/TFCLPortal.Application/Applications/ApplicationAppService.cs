@@ -140,7 +140,7 @@ namespace TFCLPortal.Applications
             if (input.MobilizationStatus == 4)
             {
 
-                var cnicList = _applicationRepository.GetAllList().Where(x => x.CNICNo.Trim() == input.CNICNo.Trim() && x.ScreenStatus != ApplicationState.Decline && x.ScreenStatus != "decline" && x.ScreenStatus != ApplicationState.Closed).FirstOrDefault();
+                var cnicList = _applicationRepository.GetAllList().Where(x => x.CNICNo.Trim() == input.CNICNo.Trim() && x.ScreenStatus != ApplicationState.Decline && x.ScreenStatus != "decline" && x.ScreenStatus != ApplicationState.Closed && x.ScreenStatus != ApplicationState.EarlySettled).FirstOrDefault();
 
                 GuarantorDetail guarantor = null;
                 if (cnicList == null)

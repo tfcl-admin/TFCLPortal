@@ -37,5 +37,8 @@ namespace TFCLPortal.InstallmentPayments.Dto
         public string ClientName { get; set; }
         public string SchoolName { get; set; }
         public int branchId { get; set; }
+
+
+
     }
 }

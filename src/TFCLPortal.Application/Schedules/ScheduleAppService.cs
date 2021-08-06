@@ -15,6 +15,7 @@ using TFCLPortal.Schedules.Dto;
 using TFCLPortal.GuarantorDetails;
 using TFCLPortal.Applications.Dto;
 using TFCLPortal.InstallmentPayments;
+using TFCLPortal.Users;
 
 namespace TFCLPortal.Schedules
 {
@@ -26,6 +27,7 @@ namespace TFCLPortal.Schedules
         private readonly IApiCallLogAppService _apiCallLogAppService;
         private readonly IRepository<Applicationz, Int32> _applicationRepository;
         private readonly IInstallmentPaymentAppService _installmentPaymentAppService;
+        private readonly IUserAppService _userAppService;
 
         private string Schedules = "Schedules";
         public ScheduleAppService(IRepository<Schedule, Int32> ScheduleRepository,
@@ -34,9 +36,11 @@ namespace TFCLPortal.Schedules
             IApiCallLogAppService apiCallLogAppService,
             IRepository<BusinessPlan, Int32> BusinessPlanAppService,
             IInstallmentPaymentAppService installmentPaymentAppService,
+            IUserAppService userAppService,
             IRepository<Applicationz, Int32> applicationRepository,
             IRepository<ScheduleInstallment, Int32> childRepository)
         {
+            _userAppService = userAppService;
             _applicationRepository = applicationRepository;
             _ScheduleRepository = ScheduleRepository;
             _childRepository = childRepository;
@@ -249,6 +253,8 @@ namespace TFCLPortal.Schedules
                 int month = DateTime.Now.Month;
                 int year = DateTime.Now.Year;
 
+
+
                 var getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed && x.CreatorUserId==UserId).ToList();
                 if (getDisbursedApplications.Count > 0)
                 {
@@ -316,6 +322,8 @@ namespace TFCLPortal.Schedules
                                     inst.ClientName = app.ClientName;
                                     inst.BusinessName = app.SchoolName;
                                     inst.Applicationid = app.Id;
+                                 
+
                                     scheduleInstallments.Add(inst);
                                 }
                             }

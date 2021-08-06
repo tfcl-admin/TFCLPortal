@@ -361,6 +361,9 @@ namespace TFCLPortal.Web.Controllers
 
             var getDisbursedApplications= new List<Applicationz>();
 
+            var users = _userAppService.GetAllUsers();
+
+
             if (branch != 0)
             {
                 getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed && (int)x.FK_branchid == branch).ToList();
@@ -466,6 +469,12 @@ namespace TFCLPortal.Web.Controllers
                                 inst.ClientName = app.ClientName;
                                 inst.BusinessName = app.SchoolName;
                                 inst.Applicationid = app.Id;
+                                inst.BranchName = app.BranchCode;
+                                var sde = users.Where(x => x.Id == app.CreatorUserId).FirstOrDefault();
+                                if (sde != null)
+                                {
+                                    inst.SdeName = sde.FullName;
+                                }
                                 scheduleInstallments.Add(inst);
 
                                 totalDue += decimal.Parse(inst.installmentAmount.Replace(",", ""));
