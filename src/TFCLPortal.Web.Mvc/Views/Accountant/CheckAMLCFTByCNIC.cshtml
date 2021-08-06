@@ -68,7 +68,9 @@
 
     }
 
-    function printDiv(present,item) {
+    function printDiv(present, item) {
+        var d = new Date().toLocaleString();
+
         if (present == 1) {
             abp.notify.error("CNIC found in AML/CFT", "");
 
@@ -82,6 +84,7 @@
                 html_string = html_string.replace("{father}", item.fatherName);
                 html_string = html_string.replace("{province}", item.province);
                 html_string = html_string.replace("{district}", item.district);
+                html_string = html_string.replace("{datetime}", d);
                 printResult(html_string);
             }, 'html'); 
 
@@ -94,6 +97,8 @@
                 html_string = html_string.replaceAll("{color}", "success");
                 html_string = html_string.replace("{isfound}", "not found");
                 html_string = html_string.replaceAll("{CNIC}", item);
+                html_string = html_string.replace("{datetime}", d);
+
                 printResult(html_string);
             }, 'html'); 
         }
