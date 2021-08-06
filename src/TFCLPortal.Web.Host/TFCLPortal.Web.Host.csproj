@@ -51,4 +51,5 @@
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 </Project>
