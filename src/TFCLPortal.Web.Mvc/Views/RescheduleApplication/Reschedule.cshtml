@@ -62,6 +62,7 @@
 
 <div class=" text-right border-bottom p-3  mb-3" id="topMenu">
     <div class="col-md-12">
+        <a class="btn btn-outline-warning" onclick="window.location.reload();"><i class="fa fa-recycle"></i> Reset</a>
         <a class="btn btn-outline-primary" id="print"><i class="fa fa-print"></i> Print</a>
         <a class="btn btn-outline-success" id="save"><i class="fa fa-forward"></i> Send To BM</a>
     </div>
@@ -136,14 +137,14 @@
                     <td width="40%"><b>Loan Amount</b></td>
                     <td style="background-color:lightyellow" id="txtLoanAmount">
                         @(ViewBag.Input.LoanAmount == null || ViewBag.Input.LoanAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.LoanAmount)))
-                        <a title="Edit Loan Amount" href="" data-toggle="modal" data-target="#_addDeferment"><i class="fa fa-edit"></i></a>
+                        <a title="Edit Loan Amount" href="" id="LoanAmountChangeBtn" data-toggle="modal" data-target="#_editLoanAmount"><i class="fa fa-edit"></i></a>
                     </td>
                 </tr>
                 <tr>
                     <td><b>Tenure (Months)</b></td>
                     <td style="background-color:lightyellow" id="txtTenure">
                         @(ViewBag.Input.Tenure == null || ViewBag.Input.Tenure == ""  ? "--" : ViewBag.Input.Tenure)
-                        <a title="Edit Tenure" href="" data-toggle="modal" data-target="#_editTenure"><i class="fa fa-edit"></i></a>
+                        <a title="Edit Tenure" href="" data-toggle="modal" id="TenureChangeBtn" data-target="#_editTenure"><i class="fa fa-edit"></i></a>
                     </td>
                 </tr>
                 <tr>
@@ -232,6 +233,13 @@
     </div>
 
     <div class="row" style="margin-top:20px">
+        <div class="col-md-12 text-right">
+            <a href="" class="text-danger" data-toggle="modal" data-target="#_AddBaloonPayment"><i class="fa fa-plus-circle"></i> Add Baloon Payment</a>
+            <a href="" class="text-success" data-toggle="modal" data-target="#_AddTopUpPayment"><i class="fa fa-plus-circle"></i> Add Top Up</a>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
         <div class="col-md-12">
             <div id="installmentsTable"></div>
         </div>
@@ -245,11 +253,11 @@
 
 </div>
 <!--Deferment Modal -->
-<div class="modal fade" id="_addDeferment" tabindex="-1" role="dialog" style="z-index: 1100;">
+<div class="modal fade" id="_editLoanAmount" tabindex="-1" role="dialog" style="z-index: 1100;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Apply Deferment</h4>
+                <h4 class="modal-title">Edit Loan Amount</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -259,12 +267,16 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <p class="detailHeading">Deferment Start Date</p>
-                        <input id="DefermentStartDate" type="date" class="form-control" />
+                        <p class="detailHeading">Total Loan Amount</p>
+                        <input id="totalLoanAmount" type="text" readonly="readonly" value="@(ViewBag.Input.LoanAmount == null || ViewBag.Input.LoanAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.LoanAmount)))" class="form-control" />
                     </div>
-                    <div class="col-md-12" style="margin-top:30px">
-                        <p class="detailHeading">Deferred Months</p>
-                        <input id="DefermentMonths" type="number" max="10" min="1" value="1" class="form-control" />
+                    <div class="col-md-12">
+                        <p class="detailHeading">Outstanding Principal</p>
+                        <input id="OutstandingPrincipalText" type="text" readonly="readonly" class="form-control" />
+                    </div>
+                    <div class="col-md-12">
+                        <p class="detailHeading">New Outstanding Principal</p>
+                        <input id="NewOutstandingPrincipalText" type="text" class="form-control" />
                     </div>
 
                 </div>
@@ -272,7 +284,7 @@
 
             </div>
             <div class="modal-footer">
-                <button id="applyDeferment" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
+                <button id="applyAmountChange" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
                 <button data-dismiss="modal" type="button" class="btn btn-outline-danger bg1 ef1">Cancel</button>
             </div>
         </div>
@@ -280,11 +292,54 @@
 </div>
 <!-- Modal -->
 <!--Deferment Modal -->
-<div class="modal fade" id="_editTranches" tabindex="-1" role="dialog" style="z-index: 1100;">
+<div class="modal fade" id="_editTenure" tabindex="-1" role="dialog" style="z-index: 1100;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Tranche</h4>
+                <h4 class="modal-title">Edit Tenure</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <p class="detailHeading">Total Tenure</p>
+                        <input id="totalTenureText" type="text" readonly="readonly" value="@(ViewBag.Input.Tenure == null || ViewBag.Input.Tenure == ""  ? "--" : ViewBag.Input.Tenure)" class="form-control" />
+                    </div>
+                    <div class="col-md-12">
+                        <p class="detailHeading">Last Paid Installment</p>
+                        <input id="PaidInstallmentNoText" type="text" readonly="readonly" class="form-control" />
+                    </div>
+                    <div class="col-md-12">
+                        <p class="detailHeading">Remaining Installments</p>
+                        <input id="RemainingInstallmentsTexts" type="text" readonly="readonly" class="form-control" />
+                    </div>
+                    <div class="col-md-12">
+                        <p class="detailHeading">New Remaing Installments</p>
+                        <input id="NewRemainingInstallmentsText" type="text" class="form-control" />
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="applyTenureChange" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
+                <button data-dismiss="modal" type="button" class="btn btn-outline-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--Deferment Modal -->
+<div class="modal fade" id="_AddBaloonPayment" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Baloon Payment</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -295,12 +350,11 @@
 
                     <div class="col-md-12">
 
-                        <div class="tranchInner row">
+                        <div class=" row">
 
                             <div class="col-md-12">
                                 <p class="detailHeading">Amount</p>
-                                <input id="Amount" type="number" class="form-control" />
-                                <input id="dot" type="hidden" class="form-control" />
+                                <input id="BaloonAmountText" type="number" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -310,7 +364,46 @@
 
             </div>
             <div class="modal-footer">
-                <button id="applyTranches" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
+                <button id="applyBaloonPayment" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
+                <button data-dismiss="modal" type="button" class="btn btn-outline-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+
+<!--Deferment Modal -->
+<div class="modal fade" id="_AddTopUpPayment" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Top Up Payment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class=" row">
+
+                            <div class="col-md-12">
+                                <p class="detailHeading">Amount</p>
+                                <input id="TopUpAmountText" type="number" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="applyTopUpPayment" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
                 <button data-dismiss="modal" type="button" class="btn btn-outline-danger bg1 ef1">Cancel</button>
             </div>
         </div>
@@ -327,21 +420,11 @@
 <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js" asp-append-version="true"></script>
 <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js" asp-append-version="true"></script>
 <script>
+
+
+
     $(function () {
 
-        @*var Installments = Number('@ViewBag.Input.Tenure');
-        var InstallmentAmount = Number('@ViewBag.Input.Installment.Replace(",","")');
-        var LoanAmount = Number('@ViewBag.Input.LoanAmount');
-        var graceDays = Number('@ViewBag.Input.GraceDays');
-        var DefermentMonths = Number('@ViewBag.Input.Deferment');
-        var markupPercentage = parseFloat('@ViewBag.Input.Markup');
-        var LoanStartDate = new Date('@ViewBag.Input.LoanStartDate');
-        var PerDayMarkup = parseFloat('@ViewBag.Input.PerDayMarkup.Replace(",","")');
-        var YearlyMarkup = parseFloat('@ViewBag.Input.YearlyMarkup.Replace(",","")');
-
-
-        var tranches =  @Html.Raw(Json.Serialize(""));*@
-        var Irr = parseFloat('@ViewBag.Input.IRR')/100;
 
         var Signatories = @Html.Raw(Json.Serialize(ViewBag.Signatories));
         var Type = '@ViewBag.Input.ScheduleType';
@@ -369,6 +452,7 @@
                 console.table(response.result);
                 displayInstallmentsTable(installments);
 
+                //reDisplayTable();
 
             },
             error: function (error) {
@@ -404,7 +488,7 @@
             for (i = 0; i < data.length; i++) {
 
                 if (data[i].isPaid == 1) {
-                    content += '<tr  style="background-color:lightgray">';
+                    content += '<tr  style="background-color:#F3F5F2">';
 
                 }
                 else {
@@ -443,97 +527,6 @@
 
 
         }
-
-        $("#applyDeferment").click(function () {
-            $('#_addDeferment').modal('hide');
-            var StartDate = $('#DefermentStartDate').val();
-            $('#DefermentStartDate').val('');
-            var Months = Number($('#DefermentMonths').val());
-            $('#DefermentMonths').val('1');
-
-            var Markup = Number($("#txtMarkup").text()) / 100;
-
-
-            if (StartDate != "" && Months > 0) {
-
-                //Get Installment Index according to start Date;
-                var indexOfInstallment = null;
-                var DateOfInstallment = null;
-                var openingPrincipalAmount = null;
-                var previousDate = null;
-                var differenceDays = null;
-                installments.forEach(function (item, index) {
-                    var currentDueDate = moment(item.installmentDueDate);
-                    if (StartDate == currentDueDate.format('YYYY-MM-DD')) {
-                        indexOfInstallment = index;
-                        DateOfInstallment = StartDate;
-                        differenceDays = currentDueDate.diff(previousDate, 'days');
-                    }
-                    previousDate = item.installmentDueDate;
-                });
-                var previousInstallment = installments[indexOfInstallment - 1];
-                debugger
-                var previousPrincipal_op = Number(previousInstallment.osPrincipal_op.replaceAll(",", ""));
-                if (previousInstallment.principal != '--') {
-                    var previousPrincipal = Number(previousInstallment.principal.replaceAll(",", ""));
-                    openingPrincipalAmount = previousPrincipal_op - previousPrincipal;
-
-                }
-                else{
-                    var previousPrincipal = Number(previousInstallment.osPrincipal_Closing.replaceAll(",", ""));
-                    openingPrincipalAmount = previousPrincipal;
-                }
-
-
-                var defferedInstallments = [];
-                for (var i = 0; i < Months; i++) {
-
-                    var temp = {
-                        instNumber: '0',
-                        balInst: '--',
-                        installmentDueDate: moment(DateOfInstallment).format('DD MMM YYYY'),
-                        osPrincipal_op: numberWithCommas(openingPrincipalAmount),
-                        additionalTranche: '--',
-                        osPrincipal_Opening: '--',
-                        markup: numberWithCommas(((openingPrincipalAmount * Markup) / 365) * differenceDays),
-                        installmentAmount: numberWithCommas(((openingPrincipalAmount * Markup) / 365) * differenceDays),
-                        osPrincipal_Closing: previousInstallment.osPrincipal_Closing,
-                        isPaid: null,
-                        paymentDate: null,
-                        principal: '--',
-                        fK_ScheduleId: '--',
-                        id: '--'
-                    };
-
-                    installments.splice(indexOfInstallment, 0, temp);
-                    indexOfInstallment++;
-                    previousDate = moment(DateOfInstallment).format('DD MMM YYYY');
-                    DateOfInstallment = moment(DateOfInstallment).add(1, 'M');
-                    differenceDays = DateOfInstallment.diff(previousDate, 'days');
-
-                }
-
-                for (var i = indexOfInstallment; i < installments.length; i++) {
-                    installments[i].installmentDueDate = moment(installments[i].installmentDueDate).add(Months, 'M').format('DD MMM YYYY');
-                }
-
-                if ($('#txtDeferment').text().trim() == "--") {
-                    $('#txtDeferment').text(Months);
-                }
-                else {
-                    $('#txtDeferment').text(Number($('#txtDeferment').text().trim()) + Months);
-                }
-                $('#txtLastInstallmentDate').text(moment($('#txtLastInstallmentDate').text()).add(Months, 'M').format('DD MMM YYYY'));
-
-                displayInstallmentsTable(installments);
-            }
-            else {
-                alert("Please Select Required Fields");
-            }
-
-
-        });
-
 
 
         $(document).on('click', '.ChangeTranche', function (e) {
@@ -582,20 +575,291 @@
 
             //Update Tranch Row
             installments[indexOfInstallment].additionalTranche = numberWithCommas(NewTranchValue);
-
-
-
-
             displayInstallmentsTable(installments);
-
         }
 
 
+        $(document).on('click', '#LoanAmountChangeBtn', function (e) {
+
+            var Principal = installments.find(x => x.isPaid != true).osPrincipal_op;
+            console.log('Opening Prinipal : '+Principal);
+            $('#OutstandingPrincipalText').val(Principal);
+        });
+        $(document).on('click', '#TenureChangeBtn', function (e) {
+            var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length-1;
+            var LastInstallment = installments[LastInstallmentIndex];
+            $('#PaidInstallmentNoText').val(LastInstallment.instNumber);
+            $('#RemainingInstallmentsTexts').val(LastInstallment.balInst);
+            console.log(LastInstallment);
+            //$('#OutstandingPrincipalText').val(Principal);
+        });
+        $(document).on('click', '#applyAmountChange', function (e) {
+            var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
+            var LastInstallmentP = installments[LastInstallmentIndex];
+            var FirstInstallmentU = installments[LastInstallmentIndex + 1];
+
+            var tenure = $('#NewRemainingInstallmentsText').val();
+
+            if (tenure == "" || tenure == null) {
+                tenure = LastInstallmentP.balInst;
+            }
+
+            var Amount = $('#NewOutstandingPrincipalText').val();
+
+            if (Amount == "" || Amount == null) {
+                Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
+            }
 
 
+            reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU);
+            console.log("------------------------------------Apply Change Start------------------------------------");
+            console.log("Tenure : " + tenure);
+            console.log("Amount : " + Amount);
+            console.log("LastInstallmentP : ");
+            console.log(LastInstallmentP);
+            console.log("FirstInstallmentU : ");
+            console.log(FirstInstallmentU);
+            console.log("------------------------------------Apply Change End------------------------------------");
+            $('#_editLoanAmount').modal('hide');
+        });
 
 
+        $(document).on('click', '#applyTenureChange', function (e) {
+            var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
+            var LastInstallmentP = installments[LastInstallmentIndex];
+            var FirstInstallmentU = installments[LastInstallmentIndex + 1];
 
+            var tenure = $('#NewRemainingInstallmentsText').val();
+
+            if (tenure == "" || tenure == null) {
+                tenure = LastInstallmentP.balInst;
+            }
+
+            var Amount = $('#NewOutstandingPrincipalText').val();
+
+            if (Amount == "" || Amount == null) {
+                Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
+            }
+
+
+            reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU);
+            console.log("------------------------------------Apply Change Start------------------------------------");
+            console.log("Tenure : " + tenure);
+            console.log("Amount : " + Amount);
+            console.log("LastInstallmentP : ");
+            console.log(LastInstallmentP);
+            console.log("FirstInstallmentU : ");
+            console.log(FirstInstallmentU);
+            console.log("------------------------------------Apply Change End------------------------------------");
+            $('#_editTenure').modal('hide');
+        });
+
+
+        $(document).on('click', '#applyBaloonPayment', function (e) {
+            var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
+            var LastInstallmentP = installments[LastInstallmentIndex];
+            var FirstInstallmentU = installments[LastInstallmentIndex + 1];
+            if (Number($('#BaloonAmountText').val()) < Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", ""))) {
+                var tenure = $('#NewRemainingInstallmentsText').val();
+
+                if (tenure == "" || tenure == null) {
+                    tenure = LastInstallmentP.balInst;
+                }
+
+                var Amount = Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", "")) - Number($('#BaloonAmountText').val());
+
+                if (Amount == "" || Amount == null) {
+                    Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
+                }
+
+
+                reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU);
+                console.log("------------------------------------Apply Change Start------------------------------------");
+                console.log("Tenure : " + tenure);
+                console.log("Amount : " + Amount);
+                console.log("LastInstallmentP : ");
+                console.log(LastInstallmentP);
+                console.log("FirstInstallmentU : ");
+                console.log(FirstInstallmentU);
+                console.log("------------------------------------Apply Change End------------------------------------");
+                $('#_AddBaloonPayment').modal('hide');
+
+            }
+            else {
+                alert('Baloon Payment can not be more than or equal to current outstanding amount : ' + FirstInstallmentU.osPrincipal_op);
+            }
+        });
+
+        $(document).on('click', '#applyTopUpPayment', function (e) {
+
+            var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
+            var LastInstallmentP = installments[LastInstallmentIndex];
+            var FirstInstallmentU = installments[LastInstallmentIndex + 1];
+
+                var tenure = $('#NewRemainingInstallmentsText').val();
+
+                if (tenure == "" || tenure == null) {
+                    tenure = LastInstallmentP.balInst;
+                }
+
+                var Amount = Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", "")) + Number($('#TopUpAmountText').val());
+
+                if (Amount == "" || Amount == null) {
+                    Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
+                }
+
+
+                reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU);
+                console.log("------------------------------------Apply Change Start------------------------------------");
+                console.log("Tenure : " + tenure);
+                console.log("Amount : " + Amount);
+                console.log("LastInstallmentP : ");
+                console.log(LastInstallmentP);
+                console.log("FirstInstallmentU : ");
+                console.log(FirstInstallmentU);
+                console.log("------------------------------------Apply Change End------------------------------------");
+                $('#_AddTopUpPayment').modal('hide');
+
+        });
+
+
+        function reDisplayTable(Tenure,LoanAmountPar,LastPaidInstallment,FirstUnpaidInstallment) {
+
+            var Tenure = Number(Tenure);
+            var LoanAmount = Number(LoanAmountPar);
+            var LoanStartDate = new Date('@ViewBag.Input.LoanStartDate');
+            var Irr = parseFloat('@ViewBag.Input.IRR') / 100;
+
+            if (Type == 'Standard') {
+                var counter = 0;
+                data = installments;
+
+                var content = "";
+                content += "<table  class='table table-striped table-bordered installments' cellspacing='0' width='100 %'>";
+                content += "<thead>";
+                content += " <th style='text-align: center'>Inst #</th>";
+                content += " <th style='text-align: center'>Bal Inst</th>";
+                content += " <th style='text-align: center'>Installment Due Date</th>";
+                content += " <th style='text-align: center'>O/S Principal - Op</th>";
+                content += " <th style='text-align: center'>Additional Tranche</th>";
+                content += " <th style='text-align: center'>O/S Principal - Opening</th>";
+                content += " <th style='text-align: center'>Markup</th>";
+                content += " <th style='text-align: center'>Principal</th>";
+                content += " <th style='text-align: center'>Installment Amount</th>";
+                content += " <th style='text-align: center'>O/S Principal - Closing</th>";
+                content += " <th style='text-align: center'>Paid</th>";
+                content += " <th style='text-align: center'>Payment Date</th>";
+                content += "</thead>";
+                content += "<tbody>";
+
+                for (i = 0; i < data.filter(x=>x.isPaid==true).length; i++) {
+                    counter++;
+                    if (data[i].isPaid == 1) {
+                        content += '<tr  style="background-color:lightgray">';
+
+                    }
+                    else {
+                        content += '<tr>';
+                    }
+                    content += '<td style="text-align: center">' + data[i].instNumber + '</td>';
+                    content += '<td style="text-align: center">' + data[i].balInst + '</td>';
+                    content += '<td style="text-align: center">' + data[i].installmentDueDate + '</td>';
+                    content += '<td style="text-align: center">' + data[i].osPrincipal_op + '</td>';
+                    if (data[i].additionalTranche != "--") {
+                        content += '<td style="text-align: center">' + data[i].additionalTranche + ' </td > ';
+                        //content += '<td style="text-align: center">' + data[i].additionalTranche + '  <a title="Edit Tranches" class="ChangeTranche" hidden-value=' + data[i].additionalTranche + ' hidden-date="' + data[i].installmentDueDate+'"><i class="fa fa-edit"></i></a></td > ';
+                    }
+                    else {
+                        content += '<td style="text-align: center">--</td>';
+                    }
+                    content += '<td style="text-align: center">' + data[i].osPrincipal_Opening + '</td>';
+                    content += '<td style="text-align: center">' + data[i].markup + '</td>';
+                    content += '<td style="text-align: center">' + data[i].principal + '</td>';
+                    content += '<td style="text-align: center">' + data[i].installmentAmount + '</td>';
+                    content += '<td style="text-align: center">' + data[i].osPrincipal_Closing + '</td>';
+                    content += '<td style="text-align: center">' + isPaidCheck(data[i].isPaid) + '</td>';
+                    if (isNullOrEmpty(data[i].paymentDate) != '--') {
+                        content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate).substr(0, 10)) + '</td>';
+                    } else {
+                        content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate)) + '</td>';
+                    }
+                    content += '</tr>';
+
+                }
+
+                var osPrincipalAmount = LoanAmount;
+                var additionalTranch = Number(LoanAmount) - Number(FirstUnpaidInstallment.osPrincipal_op.replaceAll(",", ""));
+
+                var emi = pmt(Irr / 12 , Tenure, osPrincipalAmount, 0, 0);
+
+                var startingIndex=Number(data[counter].instNumber);
+                var startDate = Number(moment(LoanStartDate).add(counter,'M'));
+                console.log(data[counter].installmentDueDate);
+
+                for (i = counter, counter = 0, j = (Tenure - 1); counter < Tenure; i++, counter++, j--) {
+
+                    content += '<tr  style="background-color: #FFFFE0">';
+                    content += '<td style="text-align: center">' + (startingIndex++) + '</td>';
+                    content += '<td style="text-align: center">' + j + '</td>';
+                    content += '<td style="text-align: center">' + getInstallmentDate(startDate) + '</td>';
+
+                    if (counter == 0) {
+                        content += '<td style="text-align: center">' + numberWithCommas(FirstUnpaidInstallment.osPrincipal_op.replaceAll(",", "")) + '</td>';
+                    }
+                    else {
+                        content += '<td style="text-align: center">' + numberWithCommas(osPrincipalAmount) + '</td>';
+                    }
+
+                    //content += '<td style="text-align: center">' + data[i].osPrincipal_op + '</td>';
+                    if (additionalTranch != 0) {
+                        content += '<td style="text-align: center">' + numberWithCommas(additionalTranch) + ' </td > ';
+                        additionalTranch = 0;
+                    }
+
+                    else {
+                        content += '<td style="text-align: center">--</td>';
+                    }
+                    content += '<td style="text-align: center">' + numberWithCommas(osPrincipalAmount) + '</td>';
+
+                    var resGetMarkup = getMarkup(osPrincipalAmount, Irr*100).toFixed(2);
+                    content += '<td style="text-align: center">' + numberWithCommas(resGetMarkup) + '</td>';
+
+                    var principal = (emi - resGetMarkup).toFixed(2);
+                    content += '<td style="text-align: right">' + numberWithCommas(principal) + '</td>';
+
+
+                    //content += '<td style="text-align: center">' + data[i].markup + '</td>';
+                    content += '<td style="text-align: center">' + numberWithCommas(Math.round(emi)) + '</td>';
+
+                    var osPrincipalClosing = (osPrincipalAmount - principal).toFixed(2);
+                    if (j == 0 && osPrincipalClosing <= 10) {
+                        content += '<td style="text-align: center">' + 0 + '</td>';
+                    }
+                    else {
+                        content += '<td style="text-align: center">' + numberWithCommas(osPrincipalClosing) + '</td>';
+                    }
+
+                    content += '<td style="text-align: center">' + '<i class="fa fa-times" style="color:red"></i>' + '</td>';
+                    content += '<td style="text-align: center">' + '--' + '</td>';
+                    //if (isNullOrEmpty(data[i].paymentDate) != '--') {
+                    //    content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate).substr(0, 10)) + '</td>';
+                    //} else {
+                    //    content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate)) + '</td>';
+                    //}
+                    content += '</tr>';
+
+                    osPrincipalAmount = osPrincipalClosing;
+                    startDate = Number(moment(startDate).add(1, 'M'));
+                }
+
+                content += "</tbody>";
+                content += "</table>"
+
+
+                $('#installmentsTable').html(content);
+            }
+
+        }
 
 
 
@@ -681,6 +945,7 @@
 
         }
         function getMarkup(pa, irr) {
+            console.log(pa + ' : ' + irr);
             return ((pa * irr) / 12) / 100;
         }
 
@@ -725,7 +990,12 @@
 
             return Math.round(installment);
         }
+        //function getInstallment(irr, osPrincipalAmount) {
 
+        //    var installment = pmt(irr / 12 / 100, Tenure, osPrincipalAmount, 0, 0);
+
+        //    return Math.round(installment);
+        //}
 
         //$("#print").click(function () {
         //    $(".container").print();
