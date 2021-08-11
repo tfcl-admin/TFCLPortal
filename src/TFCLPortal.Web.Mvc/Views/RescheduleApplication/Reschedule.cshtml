@@ -371,8 +371,6 @@
     </div>
 </div>
 <!-- Modal -->
-
-
 <!--Deferment Modal -->
 <div class="modal fade" id="_AddTopUpPayment" tabindex="-1" role="dialog" style="z-index: 1100;">
     <div class="modal-dialog">
@@ -419,6 +417,8 @@
 <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js" asp-append-version="true"></script>
 <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js" asp-append-version="true"></script>
 <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js" asp-append-version="true"></script>
+<script src="~/vendor/formula/dist/formula.min.js" asp-append-version="true"></script>
+
 <script>
 
 
@@ -729,6 +729,9 @@
             var LoanAmount = Number(LoanAmountPar);
             var LoanStartDate = new Date('@ViewBag.Input.LoanStartDate');
             var Irr = parseFloat('@ViewBag.Input.IRR') / 100;
+            var Markup = parseFloat('@ViewBag.Input.Markup')/100;
+            var IrrFull = parseFloat('@ViewBag.IRR_full') / 100;
+
 
             if (Type == 'Standard') {
                 var counter = 0;
@@ -787,10 +790,20 @@
 
                 }
 
+                Irr = formulajs.RATE(Tenure, (1 + ((1 * Markup) / 12 * Tenure)) / Tenure, -1, 0, 0)*12;
+                //Irr = formulajs.RATE(Tenure, (1 + ((Markup / 12 * Tenure) / Tenure)), -1, 0, 0);
+                //alert(Irr);
+                //console.log('Markup : ' + Markup);
+                //console.log('Tenure : ' + Tenure);
+                //console.log('(1 + ((1 * ' + Markup + ') / 12 * ' + Tenure + ')) / ' + Tenure);
+
+
                 var osPrincipalAmount = LoanAmount;
                 var additionalTranch = Number(LoanAmount) - Number(FirstUnpaidInstallment.osPrincipal_op.replaceAll(",", ""));
 
-                var emi = pmt(Irr / 12 , Tenure, osPrincipalAmount, 0, 0);
+                var emi = pmt(Irr / 12, Tenure, osPrincipalAmount, 0, 0);
+
+               
 
                 var startingIndex=Number(data[counter].instNumber);
                 var startDate = Number(moment(LoanStartDate).add(counter,'M'));
@@ -821,17 +834,17 @@
                     }
                     content += '<td style="text-align: center">' + numberWithCommas(osPrincipalAmount) + '</td>';
 
-                    var resGetMarkup = getMarkup(osPrincipalAmount, Irr*100).toFixed(2);
+                    var resGetMarkup = getMarkup(osPrincipalAmount, Irr*100);
                     content += '<td style="text-align: center">' + numberWithCommas(resGetMarkup) + '</td>';
 
-                    var principal = (emi - resGetMarkup).toFixed(2);
-                    content += '<td style="text-align: right">' + numberWithCommas(principal) + '</td>';
+                    var principal = emi - resGetMarkup;
+                    content += '<td style="text-align: center">' + numberWithCommas(principal) + '</td>';
 
 
                     //content += '<td style="text-align: center">' + data[i].markup + '</td>';
-                    content += '<td style="text-align: center">' + numberWithCommas(Math.round(emi)) + '</td>';
+                    content += '<td style="text-align: center">' + numberWithCommas(emi) + '</td>';
 
-                    var osPrincipalClosing = (osPrincipalAmount - principal).toFixed(2);
+                    var osPrincipalClosing = (osPrincipalAmount - principal);
                     if (j == 0 && osPrincipalClosing <= 10) {
                         content += '<td style="text-align: center">' + 0 + '</td>';
                     }
@@ -990,6 +1003,10 @@
 
             return Math.round(installment);
         }
+
+
+
+
         //function getInstallment(irr, osPrincipalAmount) {
 
         //    var installment = pmt(irr / 12 / 100, Tenure, osPrincipalAmount, 0, 0);

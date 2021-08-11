@@ -352,14 +352,14 @@ namespace TFCLPortal.Web.Controllers
 
             if (branchFilter == null)
             {
-                branch= Branchid();
+                branch = Branchid();
             }
             else
             {
                 branch = (int)branchFilter;
             }
 
-            var getDisbursedApplications= new List<Applicationz>();
+            var getDisbursedApplications = new List<Applicationz>();
 
             var users = _userAppService.GetAllUsers();
 
@@ -382,7 +382,7 @@ namespace TFCLPortal.Web.Controllers
                     {
                         List<ScheduleInstallmenttListDto> installments = new List<ScheduleInstallmenttListDto>();
 
-                        if(day!=null)
+                        if (day != null)
                         {
                             if (filterType == 1)
                             {
@@ -412,7 +412,7 @@ namespace TFCLPortal.Web.Controllers
                                 installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid != true && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
                             }
                         }
-                     
+
 
                         var paidInstallments = _installmentPaymentAppService.GetInstallmentPaymentByApplicationId(schedule.ApplicationId).Result;
 
@@ -1091,7 +1091,7 @@ namespace TFCLPortal.Web.Controllers
 
             var schedule = _scheduleAppService.GetScheduleByApplicationId(payment.ApplicationId).Result;
             var firstUnpaidInstallment = schedule.installmentList.Where(x => (x.isPaid == false || x.isPaid == null) && x.InstNumber != "G*").FirstOrDefault();
-            var indexOfLastPaidInstallment = schedule.installmentList.IndexOf(firstUnpaidInstallment)-1;
+            var indexOfLastPaidInstallment = schedule.installmentList.IndexOf(firstUnpaidInstallment) - 1;
 
             var lastPaidInstallment = schedule.installmentList[indexOfLastPaidInstallment];
 
@@ -1115,11 +1115,11 @@ namespace TFCLPortal.Web.Controllers
                 //After 2-8-2021 Start
                 decimal excessShortForLastPaidInstallment = 0;
                 var lastPaidinstallmentPayment = Exists.Result.Where(x => x.NoOfInstallment == Int32.Parse(lastPaidInstallment.InstNumber)).ToList();
-                if(lastPaidinstallmentPayment.Count==1)
+                if (lastPaidinstallmentPayment.Count == 1)
                 {
                     excessShortForLastPaidInstallment = lastPaidinstallmentPayment[0].ExcessShortPayment;
                 }
-                else if(lastPaidinstallmentPayment.Count>1)
+                else if (lastPaidinstallmentPayment.Count > 1)
                 {
                     excessShortForLastPaidInstallment = lastPaidinstallmentPayment.LastOrDefault().ExcessShortPayment;
                 }
@@ -1570,7 +1570,11 @@ namespace TFCLPortal.Web.Controllers
 
 
             ViewBag.Input = Schedule;
-
+            var branch = _branchDetailAppService.GetBranchListDetail().Where(x => x.BranchName.Contains(Schedule.BranchName)).FirstOrDefault();
+            if (branch != null)
+            {
+                ViewBag.BranchCode = branch.BranchCode;
+            }
             return View();
         }
 

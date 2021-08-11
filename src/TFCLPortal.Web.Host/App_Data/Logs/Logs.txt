@@ -11971,3 +11971,967 @@ INFO  2021-08-02 13:39:08,572 [60   ] .Mvc.Infrastructure.ObjectResultExecutor -
 INFO  2021-08-02 13:39:08,575 [60   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action TFCLPortal.NotificationLogs.NotificationLogAppService.SendNotification (TFCLPortal.Application) in 627.1916ms
 INFO  2021-08-02 13:39:08,577 [60   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'TFCLPortal.NotificationLogs.NotificationLogAppService.SendNotification (TFCLPortal.Application)'
 INFO  2021-08-02 13:39:08,580 [60   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 664.3725ms 200 application/json; charset=utf-8
+DEBUG 2021-08-11 14:39:49,236 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2021-08-11 14:39:49,945 [1    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2021-08-11 14:39:49,987 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.Web.Host.Startup.TFCLPortalWebHostModule, TFCLPortal.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:49,997 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalWebCoreModule, TFCLPortal.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:49,998 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalApplicationModule, TFCLPortal.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:49,999 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalCoreModule, TFCLPortal.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,000 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,000 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,001 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,003 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,004 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.EntityFrameworkCore.TFCLPortalEntityFrameworkModule, TFCLPortal.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,005 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,006 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,007 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,008 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,009 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,010 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:39:50,026 [1    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2021-08-11 14:39:50,247 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:39:50,247 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:39:50,247 [1    ] o.Configuration.LanguageManagementConfig - Converted TFCLPortal (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:39:50,247 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:39:51,949 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: TFCLPortal.EntityFrameworkCore.TFCLPortalDbContext, TFCLPortal.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:40:08,682 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2021-08-11 14:40:08,753 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2021-08-11 14:40:08,775 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2021-08-11 14:40:08,788 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: TFCLPortal
+DEBUG 2021-08-11 14:40:08,797 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2021-08-11 14:40:09,254 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2021-08-11 14:40:09,580 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2021-08-11 14:40:09,736 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 414 classes define auto mapping attributes
+DEBUG 2021-08-11 14:40:09,736 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2021-08-11 14:40:09,751 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.WriteOffs.Dto.CreateWriteOff
+DEBUG 2021-08-11 14:40:09,752 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.WriteOffs.Dto.EditWriteOff
+DEBUG 2021-08-11 14:40:09,752 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.WriteOffs.Dto.WriteOffListDto
+DEBUG 2021-08-11 14:40:09,752 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Users.Dto.CreateUserDto
+DEBUG 2021-08-11 14:40:09,753 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Users.Dto.UserDto
+DEBUG 2021-08-11 14:40:09,753 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TJSLoanEligibilities.Dto.CreateTJSLoanEligibilityDto
+DEBUG 2021-08-11 14:40:09,754 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TJSLoanEligibilities.Dto.TJSLoanEligibilityListDto
+DEBUG 2021-08-11 14:40:09,754 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TJSLoanEligibilities.Dto.UpdateTJSLoanEligibilityDto
+DEBUG 2021-08-11 14:40:09,754 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSLoanEligibilities.Dto.CreateTDSLoanEligibilityDto
+DEBUG 2021-08-11 14:40:09,755 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSLoanEligibilities.Dto.TDSLoanEligibilityListDto
+DEBUG 2021-08-11 14:40:09,755 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSLoanEligibilities.Dto.UpdateTDSLoanEligibilityDto
+DEBUG 2021-08-11 14:40:09,755 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.CreateTdsInventoryDetailChildDto
+DEBUG 2021-08-11 14:40:09,756 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.CreateTdsInventoryDetailDto
+DEBUG 2021-08-11 14:40:09,756 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.CreateTdsInventoryDetailGrandChildDto
+DEBUG 2021-08-11 14:40:09,756 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.TdsInventoryDetailChildListDto
+DEBUG 2021-08-11 14:40:09,757 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.TdsInventoryDetailGrandChildListDto
+DEBUG 2021-08-11 14:40:09,757 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.TdsInventoryDetailListDto
+DEBUG 2021-08-11 14:40:09,758 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.CreateTDSBusinessExpenseChildDto
+DEBUG 2021-08-11 14:40:09,758 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.CreateTDSBusinessExpenseDto
+DEBUG 2021-08-11 14:40:09,759 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.CreateTDSBusinessExpenseGrandChildDto
+DEBUG 2021-08-11 14:40:09,759 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.TDSBusinessExpenseChildListDto
+DEBUG 2021-08-11 14:40:09,759 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.TDSBusinessExpenseGrandChildListDto
+DEBUG 2021-08-11 14:40:09,760 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.TDSBusinessExpenseListDto
+DEBUG 2021-08-11 14:40:09,760 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.UpdateTDSBusinessExpenseDto
+DEBUG 2021-08-11 14:40:09,760 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemTeacherSahulats.Dto.CreateTaleemTeacherSahulatDto
+DEBUG 2021-08-11 14:40:09,760 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemTeacherSahulats.Dto.TaleemTeacherSahulatListDto
+DEBUG 2021-08-11 14:40:09,761 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemTeacherSahulats.Dto.UpdateTaleemTeacherSahulatDto
+DEBUG 2021-08-11 14:40:09,761 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolSarmayas.Dto.CreateTaleemSchoolSarmayaDto
+DEBUG 2021-08-11 14:40:09,761 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolSarmayas.Dto.TaleemSchoolSarmayasListDto
+DEBUG 2021-08-11 14:40:09,761 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolSarmayas.Dto.UpdateTaleemSchoolSarmayaDto
+DEBUG 2021-08-11 14:40:09,761 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolAsasahs.Dto.CreateTaleemSchoolAsasahDto
+DEBUG 2021-08-11 14:40:09,761 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolAsasahs.Dto.TaleemSchoolAsasahListDto
+DEBUG 2021-08-11 14:40:09,761 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolAsasahs.Dto.UpdateTaleemSchoolAsasahDto
+DEBUG 2021-08-11 14:40:09,762 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemJariSahulats.Dto.CreateTaleemJariSahulatDto
+DEBUG 2021-08-11 14:40:09,762 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemJariSahulats.Dto.TaleemJariSahulatListDto
+DEBUG 2021-08-11 14:40:09,762 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemJariSahulats.Dto.UpdateTaleemJariSahulatDto
+DEBUG 2021-08-11 14:40:09,762 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulats.Dto.CreateTaleemDostSahulatDto
+DEBUG 2021-08-11 14:40:09,762 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulats.Dto.TaleemDostSahulatListDto
+DEBUG 2021-08-11 14:40:09,762 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulats.Dto.UpdateTaleemDostSahulatDto
+DEBUG 2021-08-11 14:40:09,762 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.SalesPurchasesTDS.Dto.CreateSalesPurchaseTDSDto
+DEBUG 2021-08-11 14:40:09,763 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.SalesPurchasesTDS.Dto.SalesPurchaseTDSListDto
+DEBUG 2021-08-11 14:40:09,763 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.SalesPurchasesTDS.Dto.UpdateSalesPurchaseTDSDto
+DEBUG 2021-08-11 14:40:09,763 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.FinancialInformationsTDS.Dto.CreateFinancialInformationTDSDto
+DEBUG 2021-08-11 14:40:09,764 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.FinancialInformationsTDS.Dto.FinancialInformationTDSListDto
+DEBUG 2021-08-11 14:40:09,764 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.FinancialInformationsTDS.Dto.UpdateFinancialInformationTDSDto
+DEBUG 2021-08-11 14:40:09,764 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2021-08-11 14:40:09,765 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Sessions.Dto.UserLoginInfoDto
+DEBUG 2021-08-11 14:40:09,765 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.CreateScheduleDto
+DEBUG 2021-08-11 14:40:09,765 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.CreateScheduleInstallmentDto
+DEBUG 2021-08-11 14:40:09,765 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.ScheduleInstallmenttListDto
+DEBUG 2021-08-11 14:40:09,766 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.ScheduleListDto
+DEBUG 2021-08-11 14:40:09,766 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.UpdateScheduleDto
+DEBUG 2021-08-11 14:40:09,766 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.UpdateScheduleInstallmentDto
+DEBUG 2021-08-11 14:40:09,767 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.CreateScheduleTempInstallmentDto
+DEBUG 2021-08-11 14:40:09,767 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.CreateScheduleTempDto
+DEBUG 2021-08-11 14:40:09,767 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.ScheduleInstallmenttTempListDto
+DEBUG 2021-08-11 14:40:09,767 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.ScheduleTempListDto
+DEBUG 2021-08-11 14:40:09,768 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.UpdateScheduleTempDto
+DEBUG 2021-08-11 14:40:09,768 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.UpdateScheduleInstallmentTempDto
+DEBUG 2021-08-11 14:40:09,768 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.CreateSalesDetailChildDto
+DEBUG 2021-08-11 14:40:09,769 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.CreateSalesDetailDto
+DEBUG 2021-08-11 14:40:09,769 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.CreateSalesDetailGrandChildDto
+DEBUG 2021-08-11 14:40:09,769 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.SalesDetailChildListDto
+DEBUG 2021-08-11 14:40:09,769 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.SalesDetailGrandChildListDto
+DEBUG 2021-08-11 14:40:09,770 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.SalesDetailListDto
+DEBUG 2021-08-11 14:40:09,770 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.UpdateSalesDetailDto
+DEBUG 2021-08-11 14:40:09,770 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.CreateSalaryDetailChildDto
+DEBUG 2021-08-11 14:40:09,770 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.CreateSalaryDetailDto
+DEBUG 2021-08-11 14:40:09,770 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.SalaryDetailChildDto
+DEBUG 2021-08-11 14:40:09,771 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.SalaryDetailDto
+DEBUG 2021-08-11 14:40:09,771 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.UpdateSalaryDetailChildDto
+DEBUG 2021-08-11 14:40:09,771 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.UpdateSalaryDetailDto
+DEBUG 2021-08-11 14:40:09,771 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Roles.Dto.PermissionDto
+DEBUG 2021-08-11 14:40:09,772 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.CreatePurchaseDetailChildDto
+DEBUG 2021-08-11 14:40:09,772 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.CreatePurchaseDetailDto
+DEBUG 2021-08-11 14:40:09,773 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.CreatePurchaseDetailGrandChildDto
+DEBUG 2021-08-11 14:40:09,773 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.PurchaseDetailChildListDto
+DEBUG 2021-08-11 14:40:09,773 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.PurchaseDetailGrandChildListDto
+DEBUG 2021-08-11 14:40:09,774 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.PurchaseDetailListDto
+DEBUG 2021-08-11 14:40:09,774 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.UpdatePurchaseDetailDto
+DEBUG 2021-08-11 14:40:09,774 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.CreateProductDetailDto
+DEBUG 2021-08-11 14:40:09,774 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.CreateProductDto
+DEBUG 2021-08-11 14:40:09,774 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.ProductDetailListDto
+DEBUG 2021-08-11 14:40:09,775 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.ProductListDto
+DEBUG 2021-08-11 14:40:09,775 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.UpdateProductDetailDto
+DEBUG 2021-08-11 14:40:09,775 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.UpdateProductDto
+DEBUG 2021-08-11 14:40:09,775 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.CreatePreferenceInput
+DEBUG 2021-08-11 14:40:09,775 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.EditPreferenceInput
+DEBUG 2021-08-11 14:40:09,776 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.PreferenceAddDto
+DEBUG 2021-08-11 14:40:09,776 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.PreferencesListDto
+DEBUG 2021-08-11 14:40:09,776 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.UpdatePreferenceDto
+DEBUG 2021-08-11 14:40:09,777 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PersonalDetails.Dto.CreatePersonalDetailDto
+DEBUG 2021-08-11 14:40:09,777 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PersonalDetails.Dto.PersonalDetailDto
+DEBUG 2021-08-11 14:40:09,777 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PersonalDetails.Dto.UpdatePersonalDetailDto
+DEBUG 2021-08-11 14:40:09,777 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.OtherDetails.Dto.CreateOtherDetailDto
+DEBUG 2021-08-11 14:40:09,778 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.OtherDetails.Dto.OtherDetailListDto
+DEBUG 2021-08-11 14:40:09,778 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.OtherDetails.Dto.UpdateOtherDetailDto
+DEBUG 2021-08-11 14:40:09,778 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NotificationLogs.Dto.CreateNotificationLogDto
+DEBUG 2021-08-11 14:40:09,778 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NotificationLogs.Dto.NotificationLogListDto
+DEBUG 2021-08-11 14:40:09,779 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NonAssociatedIncomeDetails.Dto.CreateNonAssociatedIncomeChildDto
+DEBUG 2021-08-11 14:40:09,779 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NonAssociatedIncomeDetails.Dto.CreateNonAssociatedIncomeDto
+DEBUG 2021-08-11 14:40:09,779 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NonAssociatedIncomeDetails.Dto.NonAssociatedIncomeChildListDto
+DEBUG 2021-08-11 14:40:09,780 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NonAssociatedIncomeDetails.Dto.NonAssociatedIncomeListDto
+DEBUG 2021-08-11 14:40:09,780 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2021-08-11 14:40:09,780 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.MultiTenancy.Dto.TenantDto
+DEBUG 2021-08-11 14:40:09,780 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Mobilizations.Dto.CreateMobilizationDto
+DEBUG 2021-08-11 14:40:09,781 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Mobilizations.Dto.MobilizationListDto
+DEBUG 2021-08-11 14:40:09,782 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Mobilizations.Dto.UpdateMobilizationDto
+DEBUG 2021-08-11 14:40:09,783 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.MobilizationsLogs.Dto.CreateMobilizationsLogDto
+DEBUG 2021-08-11 14:40:09,784 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.MobilizationsLogs.Dto.MobilizationsLogListDto
+DEBUG 2021-08-11 14:40:09,784 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcStates.Dto.CreateMcrcStateDto
+DEBUG 2021-08-11 14:40:09,784 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcStates.Dto.McrcStateListDto
+DEBUG 2021-08-11 14:40:09,785 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcStates.Dto.UpdateMcrcStateDto
+DEBUG 2021-08-11 14:40:09,785 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcRecords.Dto.CreateMcrcRecordDto
+DEBUG 2021-08-11 14:40:09,785 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcRecords.Dto.McrcRecordListDto
+DEBUG 2021-08-11 14:40:09,785 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcRecords.Dto.UpdateMcrcRecordDto
+DEBUG 2021-08-11 14:40:09,785 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcDecisions.Dto.CreateMcrcDecisionDto
+DEBUG 2021-08-11 14:40:09,786 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcDecisions.Dto.McrcDecisionListDto
+DEBUG 2021-08-11 14:40:09,786 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcDecisions.Dto.UpdateMcrcDecisionDto
+DEBUG 2021-08-11 14:40:09,786 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ManagmentCommitteeDecisions.Dto.CreateManagmentCommitteeDecisionDto
+DEBUG 2021-08-11 14:40:09,787 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ManagmentCommitteeDecisions.Dto.ManagmentCommitteeDecisionListDto
+DEBUG 2021-08-11 14:40:09,787 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ManagmentCommitteeDecisions.Dto.UpdateManagmentCommitteeDecisionDto
+DEBUG 2021-08-11 14:40:09,787 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanSchedules.Dto.CreateLoanScheduleDto
+DEBUG 2021-08-11 14:40:09,787 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanSchedules.Dto.LoanScheduleListDto
+DEBUG 2021-08-11 14:40:09,787 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanSchedules.Dto.UpdateLoanScheduleDto
+DEBUG 2021-08-11 14:40:09,788 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanEligibilities.Dto.CreateLoanEligibilityDto
+DEBUG 2021-08-11 14:40:09,788 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanEligibilities.Dto.LoanEligibilityListDto
+DEBUG 2021-08-11 14:40:09,789 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanEligibilities.Dto.UpdateLoanEligibilityDto
+DEBUG 2021-08-11 14:40:09,790 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizations.Dto.CreateLoanAmortizationDto
+DEBUG 2021-08-11 14:40:09,790 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizations.Dto.LoanAmortizationListDto
+DEBUG 2021-08-11 14:40:09,791 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizations.Dto.UpdateLoanAmortizationDto
+DEBUG 2021-08-11 14:40:09,791 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizationChild.Dto.CreateLoanAmortizationChildDto
+DEBUG 2021-08-11 14:40:09,792 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizationChilds.Dto.CreateLoanAmortizationChildDto
+DEBUG 2021-08-11 14:40:09,792 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.InstallmentPayments.Dto.CreateInstallmentPayment
+DEBUG 2021-08-11 14:40:09,792 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.InstallmentPayments.Dto.EditInstallmentPayment
+DEBUG 2021-08-11 14:40:09,793 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.InstallmentPayments.Dto.InstallmentPaymentListDto
+DEBUG 2021-08-11 14:40:09,793 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.CreateHouseholdIncomeDto
+DEBUG 2021-08-11 14:40:09,794 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.CreateHouseholdIncomeParentDto
+DEBUG 2021-08-11 14:40:09,795 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.HouseholdIncomeListDto
+DEBUG 2021-08-11 14:40:09,795 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.HouseholdIncomeParentListDto
+DEBUG 2021-08-11 14:40:09,796 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.UpdateHouseholdIncomeDto
+DEBUG 2021-08-11 14:40:09,796 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.UpdateHouseholdIncomeParentDto
+DEBUG 2021-08-11 14:40:09,796 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Holidays.Dto.CreateHolidayDto
+DEBUG 2021-08-11 14:40:09,796 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Holidays.Dto.HolidayListDto
+DEBUG 2021-08-11 14:40:09,796 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Holidays.Dto.UpdateHolidayDto
+DEBUG 2021-08-11 14:40:09,797 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.GuarantorDetails.Dto.CreateGuarantorDetailInput
+DEBUG 2021-08-11 14:40:09,797 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.GuarantorDetails.Dto.EditGuarantorDetailinput
+DEBUG 2021-08-11 14:40:09,798 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.GuarantorDetails.Dto.GuarantorDetailListDto
+DEBUG 2021-08-11 14:40:09,798 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ForSDES.Dto.CreateForSDEInput
+DEBUG 2021-08-11 14:40:09,798 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ForSDES.Dto.EditForSDEInput
+DEBUG 2021-08-11 14:40:09,799 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ForSDES.Dto.ForSDEListDto
+DEBUG 2021-08-11 14:40:09,799 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FinalWorkflows.Dto.CreateFinalWorkflowDto
+DEBUG 2021-08-11 14:40:09,799 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FinalWorkflows.Dto.FinalWorkflowListDto
+DEBUG 2021-08-11 14:40:09,799 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FinalWorkflows.Dto.UpdateFinalWorkflowDto
+DEBUG 2021-08-11 14:40:09,800 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FileTypes.Dto.CreateFileTypeDto
+DEBUG 2021-08-11 14:40:09,800 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FileTypes.Dto.FileTypeListDto
+DEBUG 2021-08-11 14:40:09,800 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FileTypes.Dto.UpdateFileTypeDto
+DEBUG 2021-08-11 14:40:09,800 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FilesUploads.Dto.CreateFileUploadDto
+DEBUG 2021-08-11 14:40:09,800 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FilesUploads.Dto.FilesUploadListDto
+DEBUG 2021-08-11 14:40:09,801 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FilesUploads.Dto.UpdateFileDto
+DEBUG 2021-08-11 14:40:09,801 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FcmTokens.Dto.CreateFcmTokenDto
+DEBUG 2021-08-11 14:40:09,801 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FcmTokens.Dto.FcmTokenListDto
+DEBUG 2021-08-11 14:40:09,801 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FcmTokens.Dto.UpdateFcmTokenDto
+DEBUG 2021-08-11 14:40:09,801 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.CreateExposureDetailDto
+DEBUG 2021-08-11 14:40:09,802 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.ExposureDetailChildListDto
+DEBUG 2021-08-11 14:40:09,802 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.ExposureDetailListDto
+DEBUG 2021-08-11 14:40:09,803 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.UpdateExposureChildDto
+DEBUG 2021-08-11 14:40:09,803 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.UpdateExposureDetailDto
+DEBUG 2021-08-11 14:40:09,803 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ErrorLogs.ErrorLogDto
+DEBUG 2021-08-11 14:40:09,803 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EmploymentDetails.Dto.CreateEmploymentDetailInput
+DEBUG 2021-08-11 14:40:09,804 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EmploymentDetails.Dto.EditEmploymentDetailinput
+DEBUG 2021-08-11 14:40:09,804 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EmploymentDetails.Dto.EmploymentDetailListDto
+DEBUG 2021-08-11 14:40:09,804 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EarlySettlements.Dto.CreateEarlySettlement
+DEBUG 2021-08-11 14:40:09,805 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EarlySettlements.Dto.EarlySettlementListDto
+DEBUG 2021-08-11 14:40:09,805 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EarlySettlements.Dto.EditEarlySettlement
+DEBUG 2021-08-11 14:40:09,805 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.AcademicSessionListDto
+DEBUG 2021-08-11 14:40:09,806 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.AgeOfVehicleListDto
+DEBUG 2021-08-11 14:40:09,806 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ApplicantReputationListDto
+DEBUG 2021-08-11 14:40:09,806 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ApplicantSourceListDto
+DEBUG 2021-08-11 14:40:09,806 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ApplicantTypeListDto
+DEBUG 2021-08-11 14:40:09,806 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BankListDto
+DEBUG 2021-08-11 14:40:09,806 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BankRatingListDto
+DEBUG 2021-08-11 14:40:09,806 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BusinessLegalStatusListDto
+DEBUG 2021-08-11 14:40:09,807 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BusinessNatureListDto
+DEBUG 2021-08-11 14:40:09,807 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BusinessTypeListDto
+DEBUG 2021-08-11 14:40:09,807 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ClientBusinessClassificationListDto
+DEBUG 2021-08-11 14:40:09,807 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ClientStatusListDto
+DEBUG 2021-08-11 14:40:09,807 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CollateralOwnershipListDto
+DEBUG 2021-08-11 14:40:09,807 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CollateralTypeListDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CompanyTypeListDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ContactPreferencesListDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ContactSourceListDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateApplicantReputationDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateApplicantTypeDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateBusinessLegalStatusDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateCollateralOwnershipDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateCollateralTypeDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateCompanyTypeDto
+DEBUG 2021-08-11 14:40:09,808 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateContactSourceDto
+DEBUG 2021-08-11 14:40:09,809 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateCreditCommetteeDto
+DEBUG 2021-08-11 14:40:09,809 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateDistrictDto
+DEBUG 2021-08-11 14:40:09,809 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateFundSourceDto
+DEBUG 2021-08-11 14:40:09,809 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateGenderDto
+DEBUG 2021-08-11 14:40:09,809 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateInventoryEntrySourceDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateInventoryRecordMaintenanceDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateLandTypeDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateLoanPurposeDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateLoanTenureRequiredDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateMaritalStatusDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateMobilizationStatusDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateNatureOfBusinessDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateNatureOfEmploymentDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateNatureOfPaymentDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateOccupationDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateOwnershipStatusDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreatePaymentFrequencyDto
+DEBUG 2021-08-11 14:40:09,810 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateProductTypeDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreatePropertyTypeDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateProvinceDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateQualificationDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateReferenceCheckDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateSchoolClassDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateSchoolTypeDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateStudentGenderDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateUtilityBillPaymentDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreditBureauCheckListDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreditBureauReportedListDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreditCommetteeListDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.DesignationListDto
+DEBUG 2021-08-11 14:40:09,811 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.DistrictListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.FundSourceListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.GenderListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.InventoryEntrySourceListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.InventoryRecordMaintenanceListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LandTypeListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LegalStatusListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LoanNatureListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LoanPurposeClassificationListDto
+DEBUG 2021-08-11 14:40:09,812 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LoanPurposeListDto
+DEBUG 2021-08-11 14:40:09,813 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LoanTenureRequiredListDto
+DEBUG 2021-08-11 14:40:09,813 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.MaritalStatusListDto
+DEBUG 2021-08-11 14:40:09,813 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.MobilizationStatusListDto
+DEBUG 2021-08-11 14:40:09,813 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.NaSourceOfIncomeListDto
+DEBUG 2021-08-11 14:40:09,813 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.NatureOfBusinessListDto
+DEBUG 2021-08-11 14:40:09,813 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.NatureOfEmploymentListDto
+DEBUG 2021-08-11 14:40:09,813 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.NatureOfPaymentListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.OccupationListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.OtherAssociatedIncomeListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.OtherSourceOfIncomeListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.OwnershipStatusListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.PaymentFrequencyListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ProductTypeListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.PropertyTypeListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ProvinceListDto
+DEBUG 2021-08-11 14:40:09,814 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.QualificationListDto
+DEBUG 2021-08-11 14:40:09,815 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ReasonForNotBeingInterestedListDto
+DEBUG 2021-08-11 14:40:09,815 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ReasonOfDeclineListDto
+DEBUG 2021-08-11 14:40:09,815 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ReferenceCheckListDto
+DEBUG 2021-08-11 14:40:09,815 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.RelationshipWithApplicantListDto
+DEBUG 2021-08-11 14:40:09,815 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.RentAgreementSignatoryListDto
+DEBUG 2021-08-11 14:40:09,815 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.RentAgreementSignatoryOtherListDto
+DEBUG 2021-08-11 14:40:09,815 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.RespondantDesignationListDto
+DEBUG 2021-08-11 14:40:09,815 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BuildingStatusListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SchoolCategoryListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SchoolClassListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SchoolLevelListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SchoolTypeListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SpouseStatusListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.StudentGenderListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.TDSBusinessNatureListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.UtilityBillPaymentListDto
+DEBUG 2021-08-11 14:40:09,816 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationMatrices.Dto.CreateDeviationMatrixDto
+DEBUG 2021-08-11 14:40:09,817 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationMatrices.Dto.DeviationMatrixListDto
+DEBUG 2021-08-11 14:40:09,817 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationMatrices.Dto.UpdateDeviationMatrixDto
+DEBUG 2021-08-11 14:40:09,817 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationApprovals.Dto.CreateDeviationApprovalDto
+DEBUG 2021-08-11 14:40:09,817 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationApprovals.Dto.DeviationApprovalListDto
+DEBUG 2021-08-11 14:40:09,817 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationApprovals.Dto.UpdateDeviationApprovalDto
+DEBUG 2021-08-11 14:40:09,817 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DescripentScreens.Dto.CreateDescripentScreenDto
+DEBUG 2021-08-11 14:40:09,817 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DescripentScreens.Dto.DescripentScreenListDto
+DEBUG 2021-08-11 14:40:09,818 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DescripentScreens.Dto.UpdateDescripentScreenDto
+DEBUG 2021-08-11 14:40:09,818 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.CreateDependentEducationDetailChildDto
+DEBUG 2021-08-11 14:40:09,818 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.CreateDependentEducationDetailDto
+DEBUG 2021-08-11 14:40:09,818 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.DependentEducationDetailChildListDto
+DEBUG 2021-08-11 14:40:09,819 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.DependentEducationDetailListDto
+DEBUG 2021-08-11 14:40:09,819 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.UpdateDependentEducationDetailChildDto
+DEBUG 2021-08-11 14:40:09,819 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.UpdateDependentEducationDetailDto
+DEBUG 2021-08-11 14:40:09,819 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeceasedSettlements.Dto.CreateDeceasedSettlement
+DEBUG 2021-08-11 14:40:09,819 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeceasedSettlements.Dto.DeceasedSettlementListDto
+DEBUG 2021-08-11 14:40:09,820 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeceasedSettlements.Dto.EditDeceasedSettlement
+DEBUG 2021-08-11 14:40:09,820 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ContactDetails.Dto.ContactDetailListDto
+DEBUG 2021-08-11 14:40:09,820 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ContactDetails.Dto.CreateContactDetailDto
+DEBUG 2021-08-11 14:40:09,820 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ContactDetails.Dto.UpdateContactDetailDto
+DEBUG 2021-08-11 14:40:09,821 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CompanyBankAccounts.Dto.CompanyBankAccountListDto
+DEBUG 2021-08-11 14:40:09,821 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CompanyBankAccounts.Dto.CreateCompanyBankAccountDto
+DEBUG 2021-08-11 14:40:09,821 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CompanyBankAccounts.Dto.UpdateCompanyBankAccountDto
+DEBUG 2021-08-11 14:40:09,821 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Company.Dto.UpdateCompanyDetailDto
+DEBUG 2021-08-11 14:40:09,821 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Companies.Dto.CompanyDetailListDto
+DEBUG 2021-08-11 14:40:09,822 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Companies.Dto.CreateCompanyDetailDto
+DEBUG 2021-08-11 14:40:09,822 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralDetailListDto
+DEBUG 2021-08-11 14:40:09,822 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralFranchiseListDto
+DEBUG 2021-08-11 14:40:09,822 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralGoldListDto
+DEBUG 2021-08-11 14:40:09,823 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralLandBuildingListDto
+DEBUG 2021-08-11 14:40:09,823 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralTDRListDto
+DEBUG 2021-08-11 14:40:09,824 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralVehicleListDto
+DEBUG 2021-08-11 14:40:09,824 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralDetailDto
+DEBUG 2021-08-11 14:40:09,825 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralFranchiseDto
+DEBUG 2021-08-11 14:40:09,825 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralGoldDto
+DEBUG 2021-08-11 14:40:09,826 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralLandBuildingDto
+DEBUG 2021-08-11 14:40:09,826 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralTDRDto
+DEBUG 2021-08-11 14:40:09,827 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralVehicleDto
+DEBUG 2021-08-11 14:40:09,827 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralDetailDto
+DEBUG 2021-08-11 14:40:09,828 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralFranchiseDto
+DEBUG 2021-08-11 14:40:09,829 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralGoldDto
+DEBUG 2021-08-11 14:40:09,829 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralLandBuildingDto
+DEBUG 2021-08-11 14:40:09,829 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralTDRDto
+DEBUG 2021-08-11 14:40:09,829 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralVehicleDto
+DEBUG 2021-08-11 14:40:09,830 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.CoApplicantAddDto
+DEBUG 2021-08-11 14:40:09,830 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.CoApplicantDetailListDto
+DEBUG 2021-08-11 14:40:09,831 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.CreateCoApplicantDetailInput
+DEBUG 2021-08-11 14:40:09,831 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.EditCoApplicantDetailInput
+DEBUG 2021-08-11 14:40:09,831 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.UpdateCoApplicantDto
+DEBUG 2021-08-11 14:40:09,831 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessPlans.Dto.BusinessPlanListDto
+DEBUG 2021-08-11 14:40:09,832 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessPlans.Dto.CreateBusinessPlanDto
+DEBUG 2021-08-11 14:40:09,832 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessPlans.Dto.UpdateBusinessPlanDto
+DEBUG 2021-08-11 14:40:09,832 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeListDto
+DEBUG 2021-08-11 14:40:09,833 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeSchoolAcademiesListDto
+DEBUG 2021-08-11 14:40:09,833 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeSchoolAcademyClassesListDto
+DEBUG 2021-08-11 14:40:09,833 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeSchoolClassesListDto
+DEBUG 2021-08-11 14:40:09,833 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeSchoolListDto
+DEBUG 2021-08-11 14:40:09,834 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeDto
+DEBUG 2021-08-11 14:40:09,835 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeSchoolAcademyClassesDto
+DEBUG 2021-08-11 14:40:09,835 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeSchoolAcademyDto
+DEBUG 2021-08-11 14:40:09,835 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeSchoolClassesDto
+DEBUG 2021-08-11 14:40:09,835 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeSchoolDto
+DEBUG 2021-08-11 14:40:09,835 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.UpdateBusinessChildDto
+DEBUG 2021-08-11 14:40:09,835 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.UpdateBusinessIncomeDto
+DEBUG 2021-08-11 14:40:09,836 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseListDto
+DEBUG 2021-08-11 14:40:09,836 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseSchoolAcademiesListDto
+DEBUG 2021-08-11 14:40:09,836 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseSchoolAcademyClassesListDto
+DEBUG 2021-08-11 14:40:09,837 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseSchoolClassesListDto
+DEBUG 2021-08-11 14:40:09,837 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseSchoolListDto
+DEBUG 2021-08-11 14:40:09,837 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseDto
+DEBUG 2021-08-11 14:40:09,837 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseSchoolAcademiesDto
+DEBUG 2021-08-11 14:40:09,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseSchoolAcademyClassesDto
+DEBUG 2021-08-11 14:40:09,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseSchoolClassesDto
+DEBUG 2021-08-11 14:40:09,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseSchoolDto
+DEBUG 2021-08-11 14:40:09,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.UpdateBusinessExpenseDto
+DEBUG 2021-08-11 14:40:09,839 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.CreateSchoolBranchDto
+DEBUG 2021-08-11 14:40:09,840 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.BusinessDetailDto
+DEBUG 2021-08-11 14:40:09,840 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.CreateBusinessDetailDto
+DEBUG 2021-08-11 14:40:09,841 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.SchoolBranchDto
+DEBUG 2021-08-11 14:40:09,842 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.UpdateBusinessDetailDto
+DEBUG 2021-08-11 14:40:09,842 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.UpdateSchoolBranchDto
+DEBUG 2021-08-11 14:40:09,844 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetailsTDS.Dto.BusinessDetailTDSListDto
+DEBUG 2021-08-11 14:40:09,845 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetailsTDS.Dto.CreateBusinessDetailTDSDto
+DEBUG 2021-08-11 14:40:09,845 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetailsTDS.Dto.UpdateBusinessDetailTDSDto
+DEBUG 2021-08-11 14:40:09,845 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BranchManagerActions.Dto.BranchManagerActionListDto
+DEBUG 2021-08-11 14:40:09,846 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BranchManagerActions.Dto.CreateBranchManagerActionDto
+DEBUG 2021-08-11 14:40:09,846 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BranchManagerActions.Dto.UpdateBranchMangerActionDto
+DEBUG 2021-08-11 14:40:09,846 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Branches.Dto.BranchDetailList
+DEBUG 2021-08-11 14:40:09,846 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Branches.Dto.CreateBranchDetail
+DEBUG 2021-08-11 14:40:09,846 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Branches.Dto.UpdateBranchDetail
+DEBUG 2021-08-11 14:40:09,846 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BccDecisions.Dto.BccDecisionListDto
+DEBUG 2021-08-11 14:40:09,847 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BccDecisions.Dto.CreateBccDecisionDto
+DEBUG 2021-08-11 14:40:09,848 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BccDecisions.Dto.UpdateBccDecisionDto
+DEBUG 2021-08-11 14:40:09,848 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.BankAccountChildDto
+DEBUG 2021-08-11 14:40:09,849 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.BankAccountChildListDto
+DEBUG 2021-08-11 14:40:09,849 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.BankAccountDto
+DEBUG 2021-08-11 14:40:09,850 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.BankAccountListDto
+DEBUG 2021-08-11 14:40:09,850 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.CreateBankAccountDto
+DEBUG 2021-08-11 14:40:09,850 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.UpdateBankDto
+DEBUG 2021-08-11 14:40:09,850 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AuthorizeInstallmentPayments.Dto.AuthorizeInstallmentPaymentListDto
+DEBUG 2021-08-11 14:40:09,851 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AuthorizeInstallmentPayments.Dto.CreateAuthorizeInstallmentPayment
+DEBUG 2021-08-11 14:40:09,851 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AuthorizeInstallmentPayments.Dto.EditAuthorizeInstallmentPayment
+DEBUG 2021-08-11 14:40:09,852 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.AssociatedIncomeChildListDto
+DEBUG 2021-08-11 14:40:09,852 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.AssociatedIncomeGrandChildListDto
+DEBUG 2021-08-11 14:40:09,853 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.AssociatedIncomeListDto
+DEBUG 2021-08-11 14:40:09,853 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.CreateAssociatedIncomeChildDto
+DEBUG 2021-08-11 14:40:09,853 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.CreateAssociatedIncomeDto
+DEBUG 2021-08-11 14:40:09,853 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.CreateAssociatedIncomeGrandChildDto
+DEBUG 2021-08-11 14:40:09,854 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssetLiabilityDetails.Dto.AssetLiabilityDetailListDto
+DEBUG 2021-08-11 14:40:09,855 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssetLiabilityDetails.Dto.CreateAssetLiabilityDetailDto
+DEBUG 2021-08-11 14:40:09,856 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssetLiabilityDetails.Dto.UpdateAssetLiabilityDetailDto
+DEBUG 2021-08-11 14:40:09,857 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AppScreenStatuses.Dto.AppScreenStatusListDto
+DEBUG 2021-08-11 14:40:09,857 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AppScreenStatuses.Dto.CreateAppScreenStatusDto
+DEBUG 2021-08-11 14:40:09,857 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AppScreenStatuses.Dto.UpdateAppScreenStatusDto
+DEBUG 2021-08-11 14:40:09,858 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlows.Dto.CreateWorkFlowDto
+DEBUG 2021-08-11 14:40:09,858 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlows.Dto.UpdateWorkFlowDto
+DEBUG 2021-08-11 14:40:09,858 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlows.Dto.WorkFlowListDto
+DEBUG 2021-08-11 14:40:09,858 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlowApplicationStates.Dto.CreateWorkFlowApplicationStateDto
+DEBUG 2021-08-11 14:40:09,858 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlowApplicationStates.Dto.UpdateWorkFlowApplicationStateDto
+DEBUG 2021-08-11 14:40:09,859 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlowApplicationStates.Dto.WorkFlowApplicationStateListDto
+DEBUG 2021-08-11 14:40:09,859 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.BranchCreditCommitteeListDto
+DEBUG 2021-08-11 14:40:09,859 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.CreateBranchCreditCommitteeDto
+DEBUG 2021-08-11 14:40:09,859 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.UpdateBranchCreditCommitteeDto
+DEBUG 2021-08-11 14:40:09,860 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BccStates.Dto.BccStateListDto
+DEBUG 2021-08-11 14:40:09,860 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BccStates.Dto.CreateBccStateDto
+DEBUG 2021-08-11 14:40:09,860 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BccStates.Dto.UpdateBccStateDto
+DEBUG 2021-08-11 14:40:09,860 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BADataChecks.Dto.BADataCheckListDto
+DEBUG 2021-08-11 14:40:09,861 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BADataChecks.Dto.CreateBADataCheckDto
+DEBUG 2021-08-11 14:40:09,861 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BADataChecks.Dto.UpdateBADataCheckDto
+DEBUG 2021-08-11 14:40:09,861 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.ApplicationDescripantDeclineStates.Dto.ApplicationDescripantDeclineStateListDto
+DEBUG 2021-08-11 14:40:09,862 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.ApplicationDescripantDeclineStates.Dto.CreateApplicationDescripantDeclineStateDto
+DEBUG 2021-08-11 14:40:09,862 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.ApplicationDescripantDeclineStates.Dto.UpdateApplicationDescripantDeclineStateDto
+DEBUG 2021-08-11 14:40:09,862 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWiseDeviationVariables.Dto.ApplicationWiseDeviationVariableListDto
+DEBUG 2021-08-11 14:40:09,863 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWiseDeviationVariables.Dto.CreateApplicationWiseDeviationVariableDto
+DEBUG 2021-08-11 14:40:09,863 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWiseDeviationVariables.Dto.UpdateApplicationWiseDeviationVariableDto
+DEBUG 2021-08-11 14:40:09,864 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Applications.Dto.ApplicationListDto
+DEBUG 2021-08-11 14:40:09,865 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Applications.Dto.CreateApplicationDto
+DEBUG 2021-08-11 14:40:09,866 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Applications.Dto.UpdateApplicationDto
+DEBUG 2021-08-11 14:40:09,867 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApiCallLogs.Dto.ApiCallLogListDto
+DEBUG 2021-08-11 14:40:09,867 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApiCallLogs.Dto.CreateApiCallLogDto
+DEBUG 2021-08-11 14:40:09,867 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Web.Host.Models.ApplicationStatesModel
+INFO  2021-08-11 14:40:23,686 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2021-08-11 14:40:23,686 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2021-08-11 14:40:23,900 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 225.9263ms 200 
+INFO  2021-08-11 14:40:24,411 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)'
+INFO  2021-08-11 14:40:32,273 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)
+INFO  2021-08-11 14:40:34,377 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host) - Validation state: Valid
+INFO  2021-08-11 14:40:34,390 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 4.6102ms.
+INFO  2021-08-11 14:40:34,904 [13   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2021-08-11 14:40:34,931 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host) in 2647.7749ms
+INFO  2021-08-11 14:40:34,937 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)'
+INFO  2021-08-11 14:40:34,978 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 11310.0796ms 302 
+DEBUG 2021-08-11 14:53:15,985 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2021-08-11 14:53:16,578 [1    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2021-08-11 14:53:16,678 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.Web.Host.Startup.TFCLPortalWebHostModule, TFCLPortal.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,685 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalWebCoreModule, TFCLPortal.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,686 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalApplicationModule, TFCLPortal.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,687 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalCoreModule, TFCLPortal.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,687 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,687 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,688 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,688 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,689 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.EntityFrameworkCore.TFCLPortalEntityFrameworkModule, TFCLPortal.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,689 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,689 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,690 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,690 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,691 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,691 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:16,696 [1    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2021-08-11 14:53:16,811 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:53:16,811 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:53:16,811 [1    ] o.Configuration.LanguageManagementConfig - Converted TFCLPortal (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:53:16,811 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:53:18,725 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: TFCLPortal.EntityFrameworkCore.TFCLPortalDbContext, TFCLPortal.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,882 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2021-08-11 14:53:25,945 [1    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2021-08-11 14:53:25,985 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.Web.Host.Startup.TFCLPortalWebHostModule, TFCLPortal.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,991 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalWebCoreModule, TFCLPortal.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,992 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalApplicationModule, TFCLPortal.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,992 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.TFCLPortalCoreModule, TFCLPortal.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,993 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,993 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,994 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,996 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,996 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: TFCLPortal.EntityFrameworkCore.TFCLPortalEntityFrameworkModule, TFCLPortal.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,997 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,998 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,999 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:25,999 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:26,000 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:26,000 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:26,006 [1    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2021-08-11 14:53:26,121 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:53:26,121 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:53:26,121 [1    ] o.Configuration.LanguageManagementConfig - Converted TFCLPortal (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:53:26,121 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-08-11 14:53:27,369 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: TFCLPortal.EntityFrameworkCore.TFCLPortalDbContext, TFCLPortal.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-08-11 14:53:35,950 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2021-08-11 14:53:36,001 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2021-08-11 14:53:36,016 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2021-08-11 14:53:36,025 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: TFCLPortal
+DEBUG 2021-08-11 14:53:36,034 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2021-08-11 14:53:36,125 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2021-08-11 14:53:36,176 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2021-08-11 14:53:36,276 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 414 classes define auto mapping attributes
+DEBUG 2021-08-11 14:53:36,276 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2021-08-11 14:53:36,288 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.WriteOffs.Dto.CreateWriteOff
+DEBUG 2021-08-11 14:53:36,288 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.WriteOffs.Dto.EditWriteOff
+DEBUG 2021-08-11 14:53:36,288 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.WriteOffs.Dto.WriteOffListDto
+DEBUG 2021-08-11 14:53:36,289 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Users.Dto.CreateUserDto
+DEBUG 2021-08-11 14:53:36,289 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Users.Dto.UserDto
+DEBUG 2021-08-11 14:53:36,289 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TJSLoanEligibilities.Dto.CreateTJSLoanEligibilityDto
+DEBUG 2021-08-11 14:53:36,290 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TJSLoanEligibilities.Dto.TJSLoanEligibilityListDto
+DEBUG 2021-08-11 14:53:36,290 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TJSLoanEligibilities.Dto.UpdateTJSLoanEligibilityDto
+DEBUG 2021-08-11 14:53:36,290 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSLoanEligibilities.Dto.CreateTDSLoanEligibilityDto
+DEBUG 2021-08-11 14:53:36,290 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSLoanEligibilities.Dto.TDSLoanEligibilityListDto
+DEBUG 2021-08-11 14:53:36,290 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSLoanEligibilities.Dto.UpdateTDSLoanEligibilityDto
+DEBUG 2021-08-11 14:53:36,291 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.CreateTdsInventoryDetailChildDto
+DEBUG 2021-08-11 14:53:36,291 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.CreateTdsInventoryDetailDto
+DEBUG 2021-08-11 14:53:36,291 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.CreateTdsInventoryDetailGrandChildDto
+DEBUG 2021-08-11 14:53:36,291 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.TdsInventoryDetailChildListDto
+DEBUG 2021-08-11 14:53:36,291 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.TdsInventoryDetailGrandChildListDto
+DEBUG 2021-08-11 14:53:36,291 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TdsInventoryDetails.Dto.TdsInventoryDetailListDto
+DEBUG 2021-08-11 14:53:36,291 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.CreateTDSBusinessExpenseChildDto
+DEBUG 2021-08-11 14:53:36,292 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.CreateTDSBusinessExpenseDto
+DEBUG 2021-08-11 14:53:36,292 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.CreateTDSBusinessExpenseGrandChildDto
+DEBUG 2021-08-11 14:53:36,292 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.TDSBusinessExpenseChildListDto
+DEBUG 2021-08-11 14:53:36,292 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.TDSBusinessExpenseGrandChildListDto
+DEBUG 2021-08-11 14:53:36,292 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.TDSBusinessExpenseListDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TDSBusinessExpenses.Dto.UpdateTDSBusinessExpenseDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemTeacherSahulats.Dto.CreateTaleemTeacherSahulatDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemTeacherSahulats.Dto.TaleemTeacherSahulatListDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemTeacherSahulats.Dto.UpdateTaleemTeacherSahulatDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolSarmayas.Dto.CreateTaleemSchoolSarmayaDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolSarmayas.Dto.TaleemSchoolSarmayasListDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolSarmayas.Dto.UpdateTaleemSchoolSarmayaDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolAsasahs.Dto.CreateTaleemSchoolAsasahDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolAsasahs.Dto.TaleemSchoolAsasahListDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemSchoolAsasahs.Dto.UpdateTaleemSchoolAsasahDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemJariSahulats.Dto.CreateTaleemJariSahulatDto
+DEBUG 2021-08-11 14:53:36,293 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemJariSahulats.Dto.TaleemJariSahulatListDto
+DEBUG 2021-08-11 14:53:36,294 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemJariSahulats.Dto.UpdateTaleemJariSahulatDto
+DEBUG 2021-08-11 14:53:36,294 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulats.Dto.CreateTaleemDostSahulatDto
+DEBUG 2021-08-11 14:53:36,294 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulats.Dto.TaleemDostSahulatListDto
+DEBUG 2021-08-11 14:53:36,294 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulats.Dto.UpdateTaleemDostSahulatDto
+DEBUG 2021-08-11 14:53:36,294 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.SalesPurchasesTDS.Dto.CreateSalesPurchaseTDSDto
+DEBUG 2021-08-11 14:53:36,294 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.SalesPurchasesTDS.Dto.SalesPurchaseTDSListDto
+DEBUG 2021-08-11 14:53:36,294 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.SalesPurchasesTDS.Dto.UpdateSalesPurchaseTDSDto
+DEBUG 2021-08-11 14:53:36,295 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.FinancialInformationsTDS.Dto.CreateFinancialInformationTDSDto
+DEBUG 2021-08-11 14:53:36,295 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.FinancialInformationsTDS.Dto.FinancialInformationTDSListDto
+DEBUG 2021-08-11 14:53:36,296 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.TaleemDostSahulatProduct.FinancialInformationsTDS.Dto.UpdateFinancialInformationTDSDto
+DEBUG 2021-08-11 14:53:36,296 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2021-08-11 14:53:36,296 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Sessions.Dto.UserLoginInfoDto
+DEBUG 2021-08-11 14:53:36,296 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.CreateScheduleDto
+DEBUG 2021-08-11 14:53:36,297 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.CreateScheduleInstallmentDto
+DEBUG 2021-08-11 14:53:36,297 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.ScheduleInstallmenttListDto
+DEBUG 2021-08-11 14:53:36,297 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.ScheduleListDto
+DEBUG 2021-08-11 14:53:36,297 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.UpdateScheduleDto
+DEBUG 2021-08-11 14:53:36,298 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Schedules.Dto.UpdateScheduleInstallmentDto
+DEBUG 2021-08-11 14:53:36,298 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.CreateScheduleTempInstallmentDto
+DEBUG 2021-08-11 14:53:36,298 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.CreateScheduleTempDto
+DEBUG 2021-08-11 14:53:36,298 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.ScheduleInstallmenttTempListDto
+DEBUG 2021-08-11 14:53:36,298 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.ScheduleTempListDto
+DEBUG 2021-08-11 14:53:36,299 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.UpdateScheduleTempDto
+DEBUG 2021-08-11 14:53:36,299 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ScheduleTemps.Dto.UpdateScheduleInstallmentTempDto
+DEBUG 2021-08-11 14:53:36,299 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.CreateSalesDetailChildDto
+DEBUG 2021-08-11 14:53:36,299 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.CreateSalesDetailDto
+DEBUG 2021-08-11 14:53:36,299 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.CreateSalesDetailGrandChildDto
+DEBUG 2021-08-11 14:53:36,300 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.SalesDetailChildListDto
+DEBUG 2021-08-11 14:53:36,300 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.SalesDetailGrandChildListDto
+DEBUG 2021-08-11 14:53:36,300 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.SalesDetailListDto
+DEBUG 2021-08-11 14:53:36,300 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalesDetails.Dto.UpdateSalesDetailDto
+DEBUG 2021-08-11 14:53:36,300 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.CreateSalaryDetailChildDto
+DEBUG 2021-08-11 14:53:36,300 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.CreateSalaryDetailDto
+DEBUG 2021-08-11 14:53:36,300 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.SalaryDetailChildDto
+DEBUG 2021-08-11 14:53:36,301 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.SalaryDetailDto
+DEBUG 2021-08-11 14:53:36,301 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.UpdateSalaryDetailChildDto
+DEBUG 2021-08-11 14:53:36,301 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.SalaryDetails.Dto.UpdateSalaryDetailDto
+DEBUG 2021-08-11 14:53:36,301 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Roles.Dto.PermissionDto
+DEBUG 2021-08-11 14:53:36,301 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.CreatePurchaseDetailChildDto
+DEBUG 2021-08-11 14:53:36,302 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.CreatePurchaseDetailDto
+DEBUG 2021-08-11 14:53:36,302 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.CreatePurchaseDetailGrandChildDto
+DEBUG 2021-08-11 14:53:36,302 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.PurchaseDetailChildListDto
+DEBUG 2021-08-11 14:53:36,302 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.PurchaseDetailGrandChildListDto
+DEBUG 2021-08-11 14:53:36,302 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.PurchaseDetailListDto
+DEBUG 2021-08-11 14:53:36,302 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PurchaseDetails.Dto.UpdatePurchaseDetailDto
+DEBUG 2021-08-11 14:53:36,303 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.CreateProductDetailDto
+DEBUG 2021-08-11 14:53:36,303 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.CreateProductDto
+DEBUG 2021-08-11 14:53:36,303 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.ProductDetailListDto
+DEBUG 2021-08-11 14:53:36,303 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.ProductListDto
+DEBUG 2021-08-11 14:53:36,303 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.UpdateProductDetailDto
+DEBUG 2021-08-11 14:53:36,303 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ProductMarkupRates.Dto.UpdateProductDto
+DEBUG 2021-08-11 14:53:36,303 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.CreatePreferenceInput
+DEBUG 2021-08-11 14:53:36,304 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.EditPreferenceInput
+DEBUG 2021-08-11 14:53:36,304 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.PreferenceAddDto
+DEBUG 2021-08-11 14:53:36,304 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.PreferencesListDto
+DEBUG 2021-08-11 14:53:36,304 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Preferences.Dto.UpdatePreferenceDto
+DEBUG 2021-08-11 14:53:36,304 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PersonalDetails.Dto.CreatePersonalDetailDto
+DEBUG 2021-08-11 14:53:36,304 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PersonalDetails.Dto.PersonalDetailDto
+DEBUG 2021-08-11 14:53:36,305 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.PersonalDetails.Dto.UpdatePersonalDetailDto
+DEBUG 2021-08-11 14:53:36,305 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.OtherDetails.Dto.CreateOtherDetailDto
+DEBUG 2021-08-11 14:53:36,305 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.OtherDetails.Dto.OtherDetailListDto
+DEBUG 2021-08-11 14:53:36,305 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.OtherDetails.Dto.UpdateOtherDetailDto
+DEBUG 2021-08-11 14:53:36,305 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NotificationLogs.Dto.CreateNotificationLogDto
+DEBUG 2021-08-11 14:53:36,305 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NotificationLogs.Dto.NotificationLogListDto
+DEBUG 2021-08-11 14:53:36,305 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NonAssociatedIncomeDetails.Dto.CreateNonAssociatedIncomeChildDto
+DEBUG 2021-08-11 14:53:36,305 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NonAssociatedIncomeDetails.Dto.CreateNonAssociatedIncomeDto
+DEBUG 2021-08-11 14:53:36,306 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NonAssociatedIncomeDetails.Dto.NonAssociatedIncomeChildListDto
+DEBUG 2021-08-11 14:53:36,306 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.NonAssociatedIncomeDetails.Dto.NonAssociatedIncomeListDto
+DEBUG 2021-08-11 14:53:36,306 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2021-08-11 14:53:36,306 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.MultiTenancy.Dto.TenantDto
+DEBUG 2021-08-11 14:53:36,306 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Mobilizations.Dto.CreateMobilizationDto
+DEBUG 2021-08-11 14:53:36,307 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Mobilizations.Dto.MobilizationListDto
+DEBUG 2021-08-11 14:53:36,307 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Mobilizations.Dto.UpdateMobilizationDto
+DEBUG 2021-08-11 14:53:36,307 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.MobilizationsLogs.Dto.CreateMobilizationsLogDto
+DEBUG 2021-08-11 14:53:36,308 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.MobilizationsLogs.Dto.MobilizationsLogListDto
+DEBUG 2021-08-11 14:53:36,308 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcStates.Dto.CreateMcrcStateDto
+DEBUG 2021-08-11 14:53:36,308 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcStates.Dto.McrcStateListDto
+DEBUG 2021-08-11 14:53:36,308 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcStates.Dto.UpdateMcrcStateDto
+DEBUG 2021-08-11 14:53:36,308 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcRecords.Dto.CreateMcrcRecordDto
+DEBUG 2021-08-11 14:53:36,308 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcRecords.Dto.McrcRecordListDto
+DEBUG 2021-08-11 14:53:36,309 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcRecords.Dto.UpdateMcrcRecordDto
+DEBUG 2021-08-11 14:53:36,309 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcDecisions.Dto.CreateMcrcDecisionDto
+DEBUG 2021-08-11 14:53:36,309 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcDecisions.Dto.McrcDecisionListDto
+DEBUG 2021-08-11 14:53:36,309 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.McrcDecisions.Dto.UpdateMcrcDecisionDto
+DEBUG 2021-08-11 14:53:36,309 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ManagmentCommitteeDecisions.Dto.CreateManagmentCommitteeDecisionDto
+DEBUG 2021-08-11 14:53:36,310 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ManagmentCommitteeDecisions.Dto.ManagmentCommitteeDecisionListDto
+DEBUG 2021-08-11 14:53:36,310 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ManagmentCommitteeDecisions.Dto.UpdateManagmentCommitteeDecisionDto
+DEBUG 2021-08-11 14:53:36,310 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanSchedules.Dto.CreateLoanScheduleDto
+DEBUG 2021-08-11 14:53:36,310 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanSchedules.Dto.LoanScheduleListDto
+DEBUG 2021-08-11 14:53:36,310 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanSchedules.Dto.UpdateLoanScheduleDto
+DEBUG 2021-08-11 14:53:36,310 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanEligibilities.Dto.CreateLoanEligibilityDto
+DEBUG 2021-08-11 14:53:36,311 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanEligibilities.Dto.LoanEligibilityListDto
+DEBUG 2021-08-11 14:53:36,311 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanEligibilities.Dto.UpdateLoanEligibilityDto
+DEBUG 2021-08-11 14:53:36,311 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizations.Dto.CreateLoanAmortizationDto
+DEBUG 2021-08-11 14:53:36,312 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizations.Dto.LoanAmortizationListDto
+DEBUG 2021-08-11 14:53:36,312 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizations.Dto.UpdateLoanAmortizationDto
+DEBUG 2021-08-11 14:53:36,312 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizationChild.Dto.CreateLoanAmortizationChildDto
+DEBUG 2021-08-11 14:53:36,312 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.LoanAmortizationChilds.Dto.CreateLoanAmortizationChildDto
+DEBUG 2021-08-11 14:53:36,312 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.InstallmentPayments.Dto.CreateInstallmentPayment
+DEBUG 2021-08-11 14:53:36,312 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.InstallmentPayments.Dto.EditInstallmentPayment
+DEBUG 2021-08-11 14:53:36,313 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.InstallmentPayments.Dto.InstallmentPaymentListDto
+DEBUG 2021-08-11 14:53:36,313 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.CreateHouseholdIncomeDto
+DEBUG 2021-08-11 14:53:36,313 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.CreateHouseholdIncomeParentDto
+DEBUG 2021-08-11 14:53:36,313 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.HouseholdIncomeListDto
+DEBUG 2021-08-11 14:53:36,314 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.HouseholdIncomeParentListDto
+DEBUG 2021-08-11 14:53:36,314 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.UpdateHouseholdIncomeDto
+DEBUG 2021-08-11 14:53:36,314 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.HouseholdIncomesExpenses.Dto.UpdateHouseholdIncomeParentDto
+DEBUG 2021-08-11 14:53:36,314 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Holidays.Dto.CreateHolidayDto
+DEBUG 2021-08-11 14:53:36,314 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Holidays.Dto.HolidayListDto
+DEBUG 2021-08-11 14:53:36,314 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Holidays.Dto.UpdateHolidayDto
+DEBUG 2021-08-11 14:53:36,314 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.GuarantorDetails.Dto.CreateGuarantorDetailInput
+DEBUG 2021-08-11 14:53:36,315 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.GuarantorDetails.Dto.EditGuarantorDetailinput
+DEBUG 2021-08-11 14:53:36,315 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.GuarantorDetails.Dto.GuarantorDetailListDto
+DEBUG 2021-08-11 14:53:36,315 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ForSDES.Dto.CreateForSDEInput
+DEBUG 2021-08-11 14:53:36,315 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ForSDES.Dto.EditForSDEInput
+DEBUG 2021-08-11 14:53:36,315 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ForSDES.Dto.ForSDEListDto
+DEBUG 2021-08-11 14:53:36,315 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FinalWorkflows.Dto.CreateFinalWorkflowDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FinalWorkflows.Dto.FinalWorkflowListDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FinalWorkflows.Dto.UpdateFinalWorkflowDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FileTypes.Dto.CreateFileTypeDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FileTypes.Dto.FileTypeListDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FileTypes.Dto.UpdateFileTypeDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FilesUploads.Dto.CreateFileUploadDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FilesUploads.Dto.FilesUploadListDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FilesUploads.Dto.UpdateFileDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FcmTokens.Dto.CreateFcmTokenDto
+DEBUG 2021-08-11 14:53:36,316 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FcmTokens.Dto.FcmTokenListDto
+DEBUG 2021-08-11 14:53:36,317 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.FcmTokens.Dto.UpdateFcmTokenDto
+DEBUG 2021-08-11 14:53:36,317 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.CreateExposureDetailDto
+DEBUG 2021-08-11 14:53:36,317 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.ExposureDetailChildListDto
+DEBUG 2021-08-11 14:53:36,317 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.ExposureDetailListDto
+DEBUG 2021-08-11 14:53:36,317 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.UpdateExposureChildDto
+DEBUG 2021-08-11 14:53:36,317 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ExposureDetails.Dto.UpdateExposureDetailDto
+DEBUG 2021-08-11 14:53:36,317 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ErrorLogs.ErrorLogDto
+DEBUG 2021-08-11 14:53:36,318 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EmploymentDetails.Dto.CreateEmploymentDetailInput
+DEBUG 2021-08-11 14:53:36,318 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EmploymentDetails.Dto.EditEmploymentDetailinput
+DEBUG 2021-08-11 14:53:36,318 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EmploymentDetails.Dto.EmploymentDetailListDto
+DEBUG 2021-08-11 14:53:36,318 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EarlySettlements.Dto.CreateEarlySettlement
+DEBUG 2021-08-11 14:53:36,318 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EarlySettlements.Dto.EarlySettlementListDto
+DEBUG 2021-08-11 14:53:36,319 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.EarlySettlements.Dto.EditEarlySettlement
+DEBUG 2021-08-11 14:53:36,319 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.AcademicSessionListDto
+DEBUG 2021-08-11 14:53:36,319 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.AgeOfVehicleListDto
+DEBUG 2021-08-11 14:53:36,319 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ApplicantReputationListDto
+DEBUG 2021-08-11 14:53:36,319 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ApplicantSourceListDto
+DEBUG 2021-08-11 14:53:36,319 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ApplicantTypeListDto
+DEBUG 2021-08-11 14:53:36,319 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BankListDto
+DEBUG 2021-08-11 14:53:36,319 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BankRatingListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BusinessLegalStatusListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BusinessNatureListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BusinessTypeListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ClientBusinessClassificationListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ClientStatusListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CollateralOwnershipListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CollateralTypeListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CompanyTypeListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ContactPreferencesListDto
+DEBUG 2021-08-11 14:53:36,320 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ContactSourceListDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateApplicantReputationDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateApplicantTypeDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateBusinessLegalStatusDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateCollateralOwnershipDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateCollateralTypeDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateCompanyTypeDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateContactSourceDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateCreditCommetteeDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateDistrictDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateFundSourceDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateGenderDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateInventoryEntrySourceDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateInventoryRecordMaintenanceDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateLandTypeDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateLoanPurposeDto
+DEBUG 2021-08-11 14:53:36,321 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateLoanTenureRequiredDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateMaritalStatusDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateMobilizationStatusDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateNatureOfBusinessDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateNatureOfEmploymentDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateNatureOfPaymentDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateOccupationDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateOwnershipStatusDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreatePaymentFrequencyDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateProductTypeDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreatePropertyTypeDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateProvinceDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateQualificationDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateReferenceCheckDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateSchoolClassDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateSchoolTypeDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateStudentGenderDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreateUtilityBillPaymentDto
+DEBUG 2021-08-11 14:53:36,322 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreditBureauCheckListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreditBureauReportedListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.CreditCommetteeListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.DesignationListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.DistrictListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.FundSourceListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.GenderListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.InventoryEntrySourceListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.InventoryRecordMaintenanceListDto
+DEBUG 2021-08-11 14:53:36,323 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LandTypeListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LegalStatusListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LoanNatureListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LoanPurposeClassificationListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LoanPurposeListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.LoanTenureRequiredListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.MaritalStatusListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.MobilizationStatusListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.NaSourceOfIncomeListDto
+DEBUG 2021-08-11 14:53:36,324 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.NatureOfBusinessListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.NatureOfEmploymentListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.NatureOfPaymentListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.OccupationListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.OtherAssociatedIncomeListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.OtherSourceOfIncomeListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.OwnershipStatusListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.PaymentFrequencyListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ProductTypeListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.PropertyTypeListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ProvinceListDto
+DEBUG 2021-08-11 14:53:36,325 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.QualificationListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ReasonForNotBeingInterestedListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ReasonOfDeclineListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.ReferenceCheckListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.RelationshipWithApplicantListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.RentAgreementSignatoryListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.RentAgreementSignatoryOtherListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.RespondantDesignationListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.BuildingStatusListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SchoolCategoryListDto
+DEBUG 2021-08-11 14:53:36,326 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SchoolClassListDto
+DEBUG 2021-08-11 14:53:36,327 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SchoolLevelListDto
+DEBUG 2021-08-11 14:53:36,327 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SchoolTypeListDto
+DEBUG 2021-08-11 14:53:36,327 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.SpouseStatusListDto
+DEBUG 2021-08-11 14:53:36,327 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.StudentGenderListDto
+DEBUG 2021-08-11 14:53:36,327 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.TDSBusinessNatureListDto
+DEBUG 2021-08-11 14:53:36,327 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DynamicDropdowns.Dto.UtilityBillPaymentListDto
+DEBUG 2021-08-11 14:53:36,327 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationMatrices.Dto.CreateDeviationMatrixDto
+DEBUG 2021-08-11 14:53:36,327 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationMatrices.Dto.DeviationMatrixListDto
+DEBUG 2021-08-11 14:53:36,328 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationMatrices.Dto.UpdateDeviationMatrixDto
+DEBUG 2021-08-11 14:53:36,328 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationApprovals.Dto.CreateDeviationApprovalDto
+DEBUG 2021-08-11 14:53:36,328 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationApprovals.Dto.DeviationApprovalListDto
+DEBUG 2021-08-11 14:53:36,328 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeviationApprovals.Dto.UpdateDeviationApprovalDto
+DEBUG 2021-08-11 14:53:36,329 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DescripentScreens.Dto.CreateDescripentScreenDto
+DEBUG 2021-08-11 14:53:36,329 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DescripentScreens.Dto.DescripentScreenListDto
+DEBUG 2021-08-11 14:53:36,329 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DescripentScreens.Dto.UpdateDescripentScreenDto
+DEBUG 2021-08-11 14:53:36,329 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.CreateDependentEducationDetailChildDto
+DEBUG 2021-08-11 14:53:36,329 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.CreateDependentEducationDetailDto
+DEBUG 2021-08-11 14:53:36,329 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.DependentEducationDetailChildListDto
+DEBUG 2021-08-11 14:53:36,330 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.DependentEducationDetailListDto
+DEBUG 2021-08-11 14:53:36,330 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.UpdateDependentEducationDetailChildDto
+DEBUG 2021-08-11 14:53:36,330 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DependentEducationDetails.Dto.UpdateDependentEducationDetailDto
+DEBUG 2021-08-11 14:53:36,330 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeceasedSettlements.Dto.CreateDeceasedSettlement
+DEBUG 2021-08-11 14:53:36,330 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeceasedSettlements.Dto.DeceasedSettlementListDto
+DEBUG 2021-08-11 14:53:36,330 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.DeceasedSettlements.Dto.EditDeceasedSettlement
+DEBUG 2021-08-11 14:53:36,330 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ContactDetails.Dto.ContactDetailListDto
+DEBUG 2021-08-11 14:53:36,331 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ContactDetails.Dto.CreateContactDetailDto
+DEBUG 2021-08-11 14:53:36,331 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ContactDetails.Dto.UpdateContactDetailDto
+DEBUG 2021-08-11 14:53:36,331 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CompanyBankAccounts.Dto.CompanyBankAccountListDto
+DEBUG 2021-08-11 14:53:36,331 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CompanyBankAccounts.Dto.CreateCompanyBankAccountDto
+DEBUG 2021-08-11 14:53:36,331 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CompanyBankAccounts.Dto.UpdateCompanyBankAccountDto
+DEBUG 2021-08-11 14:53:36,331 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Company.Dto.UpdateCompanyDetailDto
+DEBUG 2021-08-11 14:53:36,331 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Companies.Dto.CompanyDetailListDto
+DEBUG 2021-08-11 14:53:36,332 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Companies.Dto.CreateCompanyDetailDto
+DEBUG 2021-08-11 14:53:36,332 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralDetailListDto
+DEBUG 2021-08-11 14:53:36,332 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralFranchiseListDto
+DEBUG 2021-08-11 14:53:36,332 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralGoldListDto
+DEBUG 2021-08-11 14:53:36,332 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralLandBuildingListDto
+DEBUG 2021-08-11 14:53:36,333 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralTDRListDto
+DEBUG 2021-08-11 14:53:36,333 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CollateralVehicleListDto
+DEBUG 2021-08-11 14:53:36,333 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralDetailDto
+DEBUG 2021-08-11 14:53:36,333 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralFranchiseDto
+DEBUG 2021-08-11 14:53:36,333 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralGoldDto
+DEBUG 2021-08-11 14:53:36,334 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralLandBuildingDto
+DEBUG 2021-08-11 14:53:36,334 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralTDRDto
+DEBUG 2021-08-11 14:53:36,334 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.CreateCollateralVehicleDto
+DEBUG 2021-08-11 14:53:36,334 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralDetailDto
+DEBUG 2021-08-11 14:53:36,334 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralFranchiseDto
+DEBUG 2021-08-11 14:53:36,335 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralGoldDto
+DEBUG 2021-08-11 14:53:36,335 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralLandBuildingDto
+DEBUG 2021-08-11 14:53:36,335 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralTDRDto
+DEBUG 2021-08-11 14:53:36,335 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CollateralDetails.Dto.UpdateCollateralVehicleDto
+DEBUG 2021-08-11 14:53:36,335 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.CoApplicantAddDto
+DEBUG 2021-08-11 14:53:36,336 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.CoApplicantDetailListDto
+DEBUG 2021-08-11 14:53:36,336 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.CreateCoApplicantDetailInput
+DEBUG 2021-08-11 14:53:36,336 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.EditCoApplicantDetailInput
+DEBUG 2021-08-11 14:53:36,336 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.CoApplicantDetails.Dto.UpdateCoApplicantDto
+DEBUG 2021-08-11 14:53:36,336 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessPlans.Dto.BusinessPlanListDto
+DEBUG 2021-08-11 14:53:36,337 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessPlans.Dto.CreateBusinessPlanDto
+DEBUG 2021-08-11 14:53:36,337 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessPlans.Dto.UpdateBusinessPlanDto
+DEBUG 2021-08-11 14:53:36,337 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeListDto
+DEBUG 2021-08-11 14:53:36,337 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeSchoolAcademiesListDto
+DEBUG 2021-08-11 14:53:36,338 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeSchoolAcademyClassesListDto
+DEBUG 2021-08-11 14:53:36,338 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeSchoolClassesListDto
+DEBUG 2021-08-11 14:53:36,338 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.BusinessIncomeSchoolListDto
+DEBUG 2021-08-11 14:53:36,338 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeDto
+DEBUG 2021-08-11 14:53:36,339 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeSchoolAcademyClassesDto
+DEBUG 2021-08-11 14:53:36,339 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeSchoolAcademyDto
+DEBUG 2021-08-11 14:53:36,339 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeSchoolClassesDto
+DEBUG 2021-08-11 14:53:36,339 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.CreateBusinessIncomeSchoolDto
+DEBUG 2021-08-11 14:53:36,340 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.UpdateBusinessChildDto
+DEBUG 2021-08-11 14:53:36,340 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessIncomes.Dto.UpdateBusinessIncomeDto
+DEBUG 2021-08-11 14:53:36,340 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseListDto
+DEBUG 2021-08-11 14:53:36,341 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseSchoolAcademiesListDto
+DEBUG 2021-08-11 14:53:36,341 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseSchoolAcademyClassesListDto
+DEBUG 2021-08-11 14:53:36,341 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseSchoolClassesListDto
+DEBUG 2021-08-11 14:53:36,342 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.BusinessExpenseSchoolListDto
+DEBUG 2021-08-11 14:53:36,342 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseDto
+DEBUG 2021-08-11 14:53:36,343 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseSchoolAcademiesDto
+DEBUG 2021-08-11 14:53:36,343 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseSchoolAcademyClassesDto
+DEBUG 2021-08-11 14:53:36,343 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseSchoolClassesDto
+DEBUG 2021-08-11 14:53:36,344 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.CreateBusinessExpenseSchoolDto
+DEBUG 2021-08-11 14:53:36,344 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessExpenses.Dto.UpdateBusinessExpenseDto
+DEBUG 2021-08-11 14:53:36,345 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.CreateSchoolBranchDto
+DEBUG 2021-08-11 14:53:36,346 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.BusinessDetailDto
+DEBUG 2021-08-11 14:53:36,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.CreateBusinessDetailDto
+DEBUG 2021-08-11 14:53:36,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.SchoolBranchDto
+DEBUG 2021-08-11 14:53:36,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.UpdateBusinessDetailDto
+DEBUG 2021-08-11 14:53:36,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetails.Dto.UpdateSchoolBranchDto
+DEBUG 2021-08-11 14:53:36,349 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetailsTDS.Dto.BusinessDetailTDSListDto
+DEBUG 2021-08-11 14:53:36,350 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetailsTDS.Dto.CreateBusinessDetailTDSDto
+DEBUG 2021-08-11 14:53:36,350 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BusinessDetailsTDS.Dto.UpdateBusinessDetailTDSDto
+DEBUG 2021-08-11 14:53:36,350 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BranchManagerActions.Dto.BranchManagerActionListDto
+DEBUG 2021-08-11 14:53:36,350 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BranchManagerActions.Dto.CreateBranchManagerActionDto
+DEBUG 2021-08-11 14:53:36,350 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BranchManagerActions.Dto.UpdateBranchMangerActionDto
+DEBUG 2021-08-11 14:53:36,351 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Branches.Dto.BranchDetailList
+DEBUG 2021-08-11 14:53:36,351 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Branches.Dto.CreateBranchDetail
+DEBUG 2021-08-11 14:53:36,351 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Branches.Dto.UpdateBranchDetail
+DEBUG 2021-08-11 14:53:36,351 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BccDecisions.Dto.BccDecisionListDto
+DEBUG 2021-08-11 14:53:36,352 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BccDecisions.Dto.CreateBccDecisionDto
+DEBUG 2021-08-11 14:53:36,352 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BccDecisions.Dto.UpdateBccDecisionDto
+DEBUG 2021-08-11 14:53:36,353 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.BankAccountChildDto
+DEBUG 2021-08-11 14:53:36,353 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.BankAccountChildListDto
+DEBUG 2021-08-11 14:53:36,353 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.BankAccountDto
+DEBUG 2021-08-11 14:53:36,353 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.BankAccountListDto
+DEBUG 2021-08-11 14:53:36,354 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.CreateBankAccountDto
+DEBUG 2021-08-11 14:53:36,354 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.BankAccountDetails.Dto.UpdateBankDto
+DEBUG 2021-08-11 14:53:36,354 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AuthorizeInstallmentPayments.Dto.AuthorizeInstallmentPaymentListDto
+DEBUG 2021-08-11 14:53:36,354 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AuthorizeInstallmentPayments.Dto.CreateAuthorizeInstallmentPayment
+DEBUG 2021-08-11 14:53:36,354 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AuthorizeInstallmentPayments.Dto.EditAuthorizeInstallmentPayment
+DEBUG 2021-08-11 14:53:36,355 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.AssociatedIncomeChildListDto
+DEBUG 2021-08-11 14:53:36,355 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.AssociatedIncomeGrandChildListDto
+DEBUG 2021-08-11 14:53:36,355 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.AssociatedIncomeListDto
+DEBUG 2021-08-11 14:53:36,355 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.CreateAssociatedIncomeChildDto
+DEBUG 2021-08-11 14:53:36,355 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.CreateAssociatedIncomeDto
+DEBUG 2021-08-11 14:53:36,356 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssociatedIncomeDetails.Dto.CreateAssociatedIncomeGrandChildDto
+DEBUG 2021-08-11 14:53:36,356 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssetLiabilityDetails.Dto.AssetLiabilityDetailListDto
+DEBUG 2021-08-11 14:53:36,356 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssetLiabilityDetails.Dto.CreateAssetLiabilityDetailDto
+DEBUG 2021-08-11 14:53:36,357 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AssetLiabilityDetails.Dto.UpdateAssetLiabilityDetailDto
+DEBUG 2021-08-11 14:53:36,357 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AppScreenStatuses.Dto.AppScreenStatusListDto
+DEBUG 2021-08-11 14:53:36,357 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AppScreenStatuses.Dto.CreateAppScreenStatusDto
+DEBUG 2021-08-11 14:53:36,357 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.AppScreenStatuses.Dto.UpdateAppScreenStatusDto
+DEBUG 2021-08-11 14:53:36,358 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlows.Dto.CreateWorkFlowDto
+DEBUG 2021-08-11 14:53:36,358 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlows.Dto.UpdateWorkFlowDto
+DEBUG 2021-08-11 14:53:36,358 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlows.Dto.WorkFlowListDto
+DEBUG 2021-08-11 14:53:36,358 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlowApplicationStates.Dto.CreateWorkFlowApplicationStateDto
+DEBUG 2021-08-11 14:53:36,358 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlowApplicationStates.Dto.UpdateWorkFlowApplicationStateDto
+DEBUG 2021-08-11 14:53:36,358 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.WorkFlowApplicationStates.Dto.WorkFlowApplicationStateListDto
+DEBUG 2021-08-11 14:53:36,358 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.BranchCreditCommitteeListDto
+DEBUG 2021-08-11 14:53:36,358 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.CreateBranchCreditCommitteeDto
+DEBUG 2021-08-11 14:53:36,359 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BranchCreditCommittees.Dto.UpdateBranchCreditCommitteeDto
+DEBUG 2021-08-11 14:53:36,359 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BccStates.Dto.BccStateListDto
+DEBUG 2021-08-11 14:53:36,359 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BccStates.Dto.CreateBccStateDto
+DEBUG 2021-08-11 14:53:36,359 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BccStates.Dto.UpdateBccStateDto
+DEBUG 2021-08-11 14:53:36,359 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BADataChecks.Dto.BADataCheckListDto
+DEBUG 2021-08-11 14:53:36,359 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BADataChecks.Dto.CreateBADataCheckDto
+DEBUG 2021-08-11 14:53:36,359 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.BADataChecks.Dto.UpdateBADataCheckDto
+DEBUG 2021-08-11 14:53:36,359 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.ApplicationDescripantDeclineStates.Dto.ApplicationDescripantDeclineStateListDto
+DEBUG 2021-08-11 14:53:36,360 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.ApplicationDescripantDeclineStates.Dto.CreateApplicationDescripantDeclineStateDto
+DEBUG 2021-08-11 14:53:36,360 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWorkFlows.ApplicationDescripantDeclineStates.Dto.UpdateApplicationDescripantDeclineStateDto
+DEBUG 2021-08-11 14:53:36,360 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWiseDeviationVariables.Dto.ApplicationWiseDeviationVariableListDto
+DEBUG 2021-08-11 14:53:36,360 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWiseDeviationVariables.Dto.CreateApplicationWiseDeviationVariableDto
+DEBUG 2021-08-11 14:53:36,361 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApplicationWiseDeviationVariables.Dto.UpdateApplicationWiseDeviationVariableDto
+DEBUG 2021-08-11 14:53:36,361 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Applications.Dto.ApplicationListDto
+DEBUG 2021-08-11 14:53:36,361 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Applications.Dto.CreateApplicationDto
+DEBUG 2021-08-11 14:53:36,362 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Applications.Dto.UpdateApplicationDto
+DEBUG 2021-08-11 14:53:36,362 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApiCallLogs.Dto.ApiCallLogListDto
+DEBUG 2021-08-11 14:53:36,362 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.ApiCallLogs.Dto.CreateApiCallLogDto
+DEBUG 2021-08-11 14:53:36,362 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - TFCLPortal.Web.Host.Models.ApplicationStatesModel
+INFO  2021-08-11 14:53:49,230 [10   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2021-08-11 14:53:49,230 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2021-08-11 14:53:49,743 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)'
+INFO  2021-08-11 14:53:49,743 [10   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)'
+INFO  2021-08-11 14:53:51,715 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)
+INFO  2021-08-11 14:53:51,715 [10   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)
+INFO  2021-08-11 14:53:52,554 [10   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host) - Validation state: Valid
+INFO  2021-08-11 14:53:52,554 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host) - Validation state: Valid
+INFO  2021-08-11 14:53:52,564 [10   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 4.9985ms.
+INFO  2021-08-11 14:53:52,566 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 6.1933ms.
+INFO  2021-08-11 14:53:52,968 [9    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2021-08-11 14:53:52,968 [13   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2021-08-11 14:53:52,990 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host) in 1267.0409ms
+INFO  2021-08-11 14:53:52,990 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host) in 1267.0479ms
+INFO  2021-08-11 14:53:52,993 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)'
+INFO  2021-08-11 14:53:52,993 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'TFCLPortal.Web.Host.Controllers.HomeController.Index (TFCLPortal.Web.Host)'
+INFO  2021-08-11 14:53:53,108 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 3884.0448ms 302 
+INFO  2021-08-11 14:53:53,108 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 3884.0915ms 302 
+INFO  2021-08-11 14:53:53,112 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger  
+INFO  2021-08-11 14:53:53,166 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 54.6535ms 301 
+INFO  2021-08-11 14:53:53,178 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2021-08-11 14:53:53,509 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 330.4282ms 200 text/html
+INFO  2021-08-11 14:53:53,576 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui.css  
+INFO  2021-08-11 14:53:53,576 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui-bundle.js  
+INFO  2021-08-11 14:53:53,645 [9    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+INFO  2021-08-11 14:53:53,645 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 69.5665ms 200 text/css
+INFO  2021-08-11 14:53:53,665 [9    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+INFO  2021-08-11 14:53:53,669 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 93.1847ms 200 application/javascript
+INFO  2021-08-11 14:53:53,673 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui-standalone-preset.js  
+INFO  2021-08-11 14:53:53,679 [9    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+INFO  2021-08-11 14:53:53,679 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 6.1949ms 200 application/javascript
+INFO  2021-08-11 14:53:53,739 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/ui/abp.js  
+INFO  2021-08-11 14:53:53,779 [16   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/ui/abp.swagger.js  
+INFO  2021-08-11 14:53:53,843 [7    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger/ui/abp.js'. Physical path: 'F:\Code\TFCLPortal\src\TFCLPortal.Web.Host\wwwroot\swagger\ui\abp.js'
+INFO  2021-08-11 14:53:53,843 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 103.5002ms 200 application/javascript
+INFO  2021-08-11 14:53:53,852 [16   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger/ui/abp.swagger.js'. Physical path: 'F:\Code\TFCLPortal\src\TFCLPortal.Web.Host\wwwroot\swagger\ui\abp.swagger.js'
+INFO  2021-08-11 14:53:53,853 [16   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 73.2674ms 200 application/javascript
+INFO  2021-08-11 14:53:54,537 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/favicon-32x32.png  
+INFO  2021-08-11 14:53:54,539 [7    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+INFO  2021-08-11 14:53:54,539 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2.1662ms 200 image/png
