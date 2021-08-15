@@ -2177,7 +2177,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
                 var Fileuploadpath = Path.Combine(_env.WebRootPath, "uploads");
                 string rootPath = Path.Combine(Fileuploadpath, ApplicationId.ToString());
                 string rootPath2 = Path.Combine(rootPath, "CreditBureau");
-                string fileName = "CreditBureau_" + DocumentType.Replace(" ", "") + "_" + PersonName.Replace(" ", "") + "_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+                string fileName = "CreditBureau_" + DocumentType.Replace("/","").Replace(" ", "") + "_" + PersonName.Replace(" ", "") + "_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
                 string extension = System.IO.Path.GetExtension(file.FileName);
                 //input.DecisionFile = "/uploads/" + input.ApplicationId.ToString() + "/" + fileName + extension;
 
@@ -2435,15 +2435,12 @@ namespace TFCLPortal.Web.Mvc.Controllers
         {
             try
             {
-
                 _applicationAppService.ChangeApplicationState(TFCLPortal.Applications.Dto.ApplicationState.Disbursed, Convert.ToInt32(ApplicationId), "");
-
             }
             catch (Exception ex)
             {
 
             }
-
 
             return Json("Application disburse successfully");
 

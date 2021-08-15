@@ -1,0 +1,74 @@
+﻿@model List<TFCLPortal.Users.Dto.UserDto>
+@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Portfolio Tagging
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Portfolio Tagging
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+
+    <div class="card p-10 mB-20">
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%" style="min-height: 400px;">
+            <thead>
+                <tr>
+                    <th>Sr#</th>
+                    <th>SDE Name</th>
+                    <th>Email Id</th>
+                    <th>No of Applications</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    int i = 0;
+                    foreach (var item in Model.Where(x=>x.applicationsCount>0))
+                    {
+                        i = i + 1;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.FullName</td>
+                            <td>@item.EmailAddress</td>
+                            <td>@item.applicationsCount</td>
+                           <td>
+                                <a href="~/portfoliotagging/UserApplications?userid=@item.Id"><i class="fa fa-file" aria-hidden="true"></i></a>
+                                <!--<div class="dropdown">
+                                    <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-list"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="~/About/Index?id=@item.Id&&u=BM" target="_blank"><i class="fa fa-upload"></i> Upload Documents</a>
+                                        <a class="dropdown-item" href="~/Deviation/ApplicationWiseDetails/@item.Id" target="_blank"><i class="fa fa-clipboard"></i> View Deviation Matrix</a>
+                                        <a class="dropdown-item" href="/Dashboard/ViewApplication?id=@item.Id" target="_blank"><i class="fa fa-search-plus"></i> View Full Application</a>
+                                        <a class="dropdown-item" href="/accountant/UploadedDocuments?applicationid=@item.Id" target="_blank"><i class="fa fa-search-plus"></i> View Credit Bureau Files</a>
+                                        <a class="dropdown-item" href="/Dashboard/Timeline?ApplicationId=@item.Id" target="_blank"><i class="fa fa-search-plus"></i> Application Timeline</a>
+                                        <a class="dropdown-item clickingClass" data-toggle="modal" data-target="#Modal" applicationId="@item.Id"><i class="fa fa-print"></i> Print Application</a>
+                                        <!--<a class="dropdown-item" href="/McrcDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
+                                        <a class="dropdown-item" href="/BCCDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
+                                        <a class="dropdown-item" href="/Application/ApplicationDiscrepencies?id=@item.Id" target="_blank"><i class="fa fa-warning"></i> View Discrepencies</a>
+
+                                    </div>
+                                </div>-->
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</main>

@@ -41,7 +41,7 @@ namespace TFCLPortal.Users.Dto
 
         public string FCM_Token { get; set; }
 
-
+        public int applicationsCount { get; set; }
 
     }
 }
