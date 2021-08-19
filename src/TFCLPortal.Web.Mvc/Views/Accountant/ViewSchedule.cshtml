@@ -49,10 +49,7 @@
         <div class="col-md-4 text-center" style="padding-top:30px">
             <h3 style="text-transform:uppercase">Loan Schedule</h3>
         </div>
-        <div class="col-md-4 text-right" style="padding-top:30px">
-            <h6>@*<u>Print Date</u>*@</h6>
-            <h5>@ViewBag.PrintDate</h5>
-        </div>
+      
     </div>
 
     <div class="row" style="padding-top:30px;">
@@ -189,7 +186,7 @@
                             @if (item.PaymentDate != null && item.InstallmentDueDate != null && item.InstallmentDueDate != "" && item.InstallmentDueDate != "--")
                             {
                                 <font>
-                                    @{ int lateDays=(item.PaymentDate - DateTime.ParseExact(item.InstallmentDueDate, "dd MMM yyyy", null)).Value.Days;}
+                                    @{ int lateDays = (item.PaymentDate - DateTime.ParseExact(item.InstallmentDueDate, "dd MMM yyyy", null)).Value.Days;}
                                     @(lateDays<=0?"--":lateDays.ToString())
                                 </font>
                             }
@@ -269,10 +266,10 @@
                     }
 
                     @*@{
-                            totalPrincipal = totalPrincipal + (item.principal == "--" || item.principal == "" || item.principal == null ? 0 : int.Parse(item.principal.Replace(",", "")));
-                            totalInterest = totalInterest + (item.markup == "--" || item.markup == "" || item.markup == null ? 0 : int.Parse(item.markup.Replace(",", "")));
-                            totalInstallment = totalInstallment + (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null ? 0 : int.Parse(item.installmentAmount.Replace(",", "")));
-                        }*@
+                    totalPrincipal = totalPrincipal + (item.principal == "--" || item.principal == "" || item.principal == null ? 0 : int.Parse(item.principal.Replace(",", "")));
+                    totalInterest = totalInterest + (item.markup == "--" || item.markup == "" || item.markup == null ? 0 : int.Parse(item.markup.Replace(",", "")));
+                    totalInstallment = totalInstallment + (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null ? 0 : int.Parse(item.installmentAmount.Replace(",", "")));
+                }*@
 
 
                 }
@@ -297,6 +294,7 @@
 
 
             </table>
+            <div class="col-md-12 text-right" style="padding-top: 40px;font-size: 12px;">Print Date : @ViewBag.PrintDate</div>
         </div>
     </div>
 

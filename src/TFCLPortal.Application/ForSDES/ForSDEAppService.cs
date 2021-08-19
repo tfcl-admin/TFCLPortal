@@ -126,7 +126,7 @@ namespace TFCLPortal.ForSDES
 
                     if (sde.referenceCheckId != 0)
                     {
-                        var referenceCheck = _utilityBillPayment.Get(sde.referenceCheckId);
+                        var referenceCheck = _referenceCheckRepository.Get(sde.referenceCheckId);
                         sde.referenceCheckName = referenceCheck.Name;
                     }
 
