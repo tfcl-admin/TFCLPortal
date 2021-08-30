@@ -1093,7 +1093,12 @@ namespace TFCLPortal.Web.Controllers
             var firstUnpaidInstallment = schedule.installmentList.Where(x => (x.isPaid == false || x.isPaid == null) && x.InstNumber != "G*").FirstOrDefault();
             var indexOfLastPaidInstallment = schedule.installmentList.IndexOf(firstUnpaidInstallment) - 1;
 
-            var lastPaidInstallment = schedule.installmentList[indexOfLastPaidInstallment];
+            ScheduleInstallmenttListDto lastPaidInstallment = new ScheduleInstallmenttListDto();
+
+            if (indexOfLastPaidInstallment!=-1)
+            {
+                lastPaidInstallment = schedule.installmentList[indexOfLastPaidInstallment];
+            }
 
             var scheduleInstallment = _scheduleInstallmentRepository.Get(firstUnpaidInstallment.Id);
 
@@ -1113,19 +1118,22 @@ namespace TFCLPortal.Web.Controllers
                 //paidAmount += existingAmountForSingleInstallment;
 
                 //After 2-8-2021 Start
-                decimal excessShortForLastPaidInstallment = 0;
-                var lastPaidinstallmentPayment = Exists.Result.Where(x => x.NoOfInstallment == Int32.Parse(lastPaidInstallment.InstNumber)).ToList();
-                if (lastPaidinstallmentPayment.Count == 1)
+                if(lastPaidInstallment!=null)
                 {
-                    excessShortForLastPaidInstallment = lastPaidinstallmentPayment[0].ExcessShortPayment;
-                }
-                else if (lastPaidinstallmentPayment.Count > 1)
-                {
-                    excessShortForLastPaidInstallment = lastPaidinstallmentPayment.LastOrDefault().ExcessShortPayment;
-                }
+                    decimal excessShortForLastPaidInstallment = 0;
+                    var lastPaidinstallmentPayment = Exists.Result.Where(x => x.NoOfInstallment == Int32.Parse(lastPaidInstallment.InstNumber)).ToList();
+                    if (lastPaidinstallmentPayment.Count == 1)
+                    {
+                        excessShortForLastPaidInstallment = lastPaidinstallmentPayment[0].ExcessShortPayment;
+                    }
+                    else if (lastPaidinstallmentPayment.Count > 1)
+                    {
+                        excessShortForLastPaidInstallment = lastPaidinstallmentPayment.LastOrDefault().ExcessShortPayment;
+                    }
 
 
-                paidAmount += existingAmountForSingleInstallment + excessShortForLastPaidInstallment;
+                    paidAmount += existingAmountForSingleInstallment + excessShortForLastPaidInstallment;
+                }
                 //After 2-8-2021 End
 
 
