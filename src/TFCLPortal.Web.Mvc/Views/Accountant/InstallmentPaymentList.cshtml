@@ -229,7 +229,7 @@
                         @(item.PaymentDate==null?"--":string.Format("{0:dd MMM yyyy}",item.PaymentDate))
                     </td>
                     <td>
-                        @(item.PaidAmount == null || item.PaidAmount == "" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.PaidAmount)))
+                        @(item.PaidAmount == null || item.PaidAmount == ""  ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.PaidAmount)))
                     </td>
                     <td>
                         @(item.ExcessShort == null || item.ExcessShort == "" || item.ExcessShort == "0" || item.ExcessShort == "0.00" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.ExcessShort)))

@@ -59,6 +59,9 @@
                     <th>
                         Excess / Short
                     </th>
+                    <th>
+                        Mode
+                    </th>
                     <th colspan="2">
                         Actions
                     </th>
@@ -96,9 +99,11 @@
                     <td>
                         @(string.Format("{0:#,##0}", item.ExcessShortPayment))
                     </td>
-
                     <td>
-                        <a href="/Accountant/ViewInstallmentPayment?Id=@item.Id" ><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>
+                        @item.ModeOfPayment
+                    </td>
+                    <td>
+                        <a href="/Accountant/ViewInstallmentPayment?Id=@item.Id"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>
                         @*<a class="openModal" data-user-id="@item.Id" data-toggle="modal" data-target="#Modal"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>*@
                     </td>
                     <td>
