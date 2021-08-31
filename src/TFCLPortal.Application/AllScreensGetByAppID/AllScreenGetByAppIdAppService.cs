@@ -38,6 +38,8 @@ using TFCLPortal.PurchaseDetails;
 using TFCLPortal.SalaryDetails;
 using TFCLPortal.EmploymentDetails;
 using TFCLPortal.TJSLoanEligibilities;
+using TFCLPortal.TaggedPortfolios;
+using Abp.Domain.Repositories;
 
 namespace TFCLPortal.AllScreensGetByAppID
 {
@@ -78,6 +80,8 @@ namespace TFCLPortal.AllScreensGetByAppID
 
         private readonly ISalaryDetailsAppService _salaryDetailsAppService;
         private readonly IEmploymentDetailAppService _employmentDetailAppService;
+        private readonly IRepository<TaggedPortfolio> _taggedPortfolioRepository;
+
 
         public AllScreenGetByAppIdAppService(
             IPersonalDetailAppService personalDetailAppService,
@@ -109,8 +113,10 @@ namespace TFCLPortal.AllScreensGetByAppID
         ISalesDetailAppService salesDetailAppService,
         IPurchaseDetailAppService purchaseDetailAppService,
         ITDSBusinessExpenseAppService tDSBusinessExpenseAppService,
+        ITaggedPortfolioAppService taggedPortfolioAppService,
         ITDSLoanEligibilityAppService tDSLoanEligibilityAppService,
         IBusinessDetailsTDSAppService businessDetailsTDSAppService,
+        IRepository<TaggedPortfolio> taggedPortfolioRepository,
         IDependentEducationDetailsAppService dependentEducationDetailsAppService
             )
         {
@@ -135,6 +141,7 @@ namespace TFCLPortal.AllScreensGetByAppID
             _applicationAppService = applicationAppService;
             _forSDEAppService = forSDEAppService;
             _bankAccountAppService = bankAccountAppService;
+            _taggedPortfolioRepository = taggedPortfolioRepository;
             _applicationWiseDeviationVariableAppService = applicationWiseDeviationVariableAppService;
             _loanEligibilityAppService = loanEligibilityAppService;
 
@@ -409,6 +416,80 @@ namespace TFCLPortal.AllScreensGetByAppID
                 {
                     mob.MobilizationTableID = x++;
                 }
+
+
+                returnList.Applications = list;
+                returnList.Mobilizations = mobreturnList;
+
+                return returnList;
+
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", "All Screens by (SDE ID =" + SDE_Id + " )"));
+            }
+        }
+
+        public async Task<AllScreenGetBySDEidDto> AllScreenGetBySdeIdImprovedTaggedPortfolio(int SDE_Id)
+        {
+            string ResponseString = "";
+            try
+            {
+                AllScreenGetBySDEidDto returnList = new AllScreenGetBySDEidDto();
+
+                var apps = _taggedPortfolioRepository.GetAllList(s => s.NewUserId == SDE_Id);
+
+                List<AllScreenGetByAppIdDto> list = new List<AllScreenGetByAppIdDto>();
+                //var apps = _applicationAppService.GetAllApplicationsByUserId(SDE_Id);
+                if (apps != null)
+                {
+                    foreach (var app in apps)
+                    {
+
+                        int ApplicationId = app.ApplicationId;
+                        var Deviation = await _applicationWiseDeviationVariableAppService.GetApplicationWiseDeviationVariableDetailByApplicationIdAsync(ApplicationId);
+                        var Application = _applicationAppService.GetApplicationById(ApplicationId);
+                        AllScreenGetByAppIdDto allScreenGetByAppId = new AllScreenGetByAppIdDto();
+                        allScreenGetByAppId.ApplicationId = ApplicationId;
+                        allScreenGetByAppId.listDeviation = Deviation;
+                        allScreenGetByAppId.listApplication = Application;
+
+                        list.Add(allScreenGetByAppId);
+                    }
+                }
+
+                //var mobilizaitons= _mobilizationAppService.GetMobilizationListBySdeId(SDE_Id);
+
+
+                var mobilizationList = _mobilizationAppService.GetMobilizationListBySdeId(SDE_Id);
+                List<GetMobilizationListDto> mobreturnList = new List<GetMobilizationListDto>();
+
+                //int x = 1;
+
+                //foreach (var mob in mobilizationList)
+                //{
+                //    bool exist = false;
+
+                //    foreach (var app in list)
+                //    {
+                //        if (mob.CNICNo == app.listApplication.CNICNo)
+                //        {
+                //            exist = true;
+                //        }
+                //    }
+
+                //    if (!exist)
+                //    {
+                //        mobreturnList.Add(mob);
+                //    }
+
+
+                //}
+
+                //foreach (var mob in mobreturnList) // Requirement for TT
+                //{
+                //    mob.MobilizationTableID = x++;
+                //}
 
 
                 returnList.Applications = list;

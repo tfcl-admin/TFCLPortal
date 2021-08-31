@@ -7999,6 +7999,39 @@ namespace TFCLPortal.Migrations
                     b.ToTable("TJSLoanEligibilities");
                 });
 
+            modelBuilder.Entity("TFCLPortal.TaggedPortfolios.TaggedPortfolio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationId");
+
+                    b.Property<string>("Comments");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<int>("NewUserId");
+
+                    b.Property<int>("OldUserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TaggedPortfolio");
+                });
+
             modelBuilder.Entity("TFCLPortal.TaleemDostSahulatProduct.FinancialInformationsTDS.FinancialInformationTDS", b =>
                 {
                     b.Property<int>("Id")

@@ -157,6 +157,7 @@ using TFCLPortal.DeceasedSettlements;
 using TFCLPortal.EmploymentDetails;
 using TFCLPortal.ManagmentCommitteeDecisions;
 using TFCLPortal.SalaryDetails;
+using TFCLPortal.TaggedPortfolios;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -209,6 +210,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<CompanyType> CompanyTypeDbSet { get; set; }
         //NEW DROPDOWN API ADDITION END
 
+        public DbSet<TaggedPortfolio> TaggedPortfolioDbSet { get; set; }
         public DbSet<CompanyBankAccount> CompanyBankAccountDbSet { get; set; }
         public DbSet<ProductType> ProductTypeDbSet { get; set; }
         public DbSet<SchoolClass> SchoolClassDbSet { get; set; }
