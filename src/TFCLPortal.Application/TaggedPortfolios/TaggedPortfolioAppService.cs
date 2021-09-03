@@ -42,6 +42,8 @@ namespace TFCLPortal.TaggedPortfolios
                 {
                     var tp = _TaggedPortfolioRepository.Get(bp.Id);
                     await _TaggedPortfolioRepository.DeleteAsync(tp);
+                    var TaggedPortfolios = ObjectMapper.Map<TaggedPortfolio>(input);
+                    _TaggedPortfolioRepository.Insert(TaggedPortfolios);
                 }
                 else
                 {
@@ -115,7 +117,21 @@ namespace TFCLPortal.TaggedPortfolios
             }
         }
 
-       
+        public List<TaggedPortfolioListDto> GetAllTaggedPortfolio()
+        {
+            try
+            {
+                var TaggedPortfolios = _TaggedPortfolioRepository.GetAllList();
+                var TaggedPortfolioz = ObjectMapper.Map<List<TaggedPortfolioListDto>>(TaggedPortfolios);
+                return TaggedPortfolioz;
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", TaggedPortfolio));
+            }
+        }
+
+
         public bool CheckTaggedPortfolioByApplicationId(int ApplicationId)
         {
             try

@@ -7568,6 +7568,8 @@ namespace TFCLPortal.Migrations
 
                     b.Property<string>("Tenure");
 
+                    b.Property<string>("UpdationReason");
+
                     b.Property<string>("YearlyMarkup");
 
                     b.Property<bool?>("isAuthorizedByBM");
@@ -8026,6 +8028,8 @@ namespace TFCLPortal.Migrations
                     b.Property<int>("NewUserId");
 
                     b.Property<int>("OldUserId");
+
+                    b.Property<bool?>("isApproved");
 
                     b.HasKey("Id");
 

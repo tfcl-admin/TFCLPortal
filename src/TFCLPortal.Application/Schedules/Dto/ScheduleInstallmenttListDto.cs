@@ -32,5 +32,9 @@ namespace TFCLPortal.Schedules.Dto
         public string SdeName { get; set; }
         public string BranchName { get; set; }
 
+        public string Outstanding { get; set; }
+        public string LoanAmount { get; set; }
+
+
     }
 }

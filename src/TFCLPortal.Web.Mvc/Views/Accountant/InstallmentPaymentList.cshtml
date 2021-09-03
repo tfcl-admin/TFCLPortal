@@ -174,17 +174,17 @@
                         CLIENT ID
                     </th>
                     <th>
-                        APPLICANT / RESPONDENT NAME
+                        CLIENT NAME
                     </th>
                     <th>
-                        Client / School / Business Name
+                        School / Business Name
                     </th>
                     <th>Inst. No.</th>
+                    <th>Loan Amount</th>
+                    <th>Outstanding Balance</th>
                     <th>Inst. Amount</th>
                     <th>Due Date</th>
-                    <th>
-                        Paid
-                    </th>
+                    <th>Paid</th>
                     <th>Payment Date</th>
                     <th>Paid Amount</th>
                     <th>Excess/Short</th>
@@ -210,6 +210,23 @@
                         @Html.DisplayFor(modelItem => item.InstNumber)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.LoanAmount)
+                    </td>
+
+                    <td>
+                        @if (item.isPaid == true)
+                        {
+                            @(item.OsPrincipal_Closing == null || item.OsPrincipal_Closing == "" || item.OsPrincipal_Closing == "--"  ? item.LoanAmount : string.Format("{0:#,###}", Decimal.Parse(item.OsPrincipal_Closing)))
+
+                        }
+                        else
+                        {
+                            @(item.OsPrincipal_op == null || item.OsPrincipal_op == "" || item.OsPrincipal_op == "--"  ? item.LoanAmount : string.Format("{0:#,###}", Decimal.Parse(item.OsPrincipal_op)))
+
+                        }
+
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.installmentAmount)
                     </td>
                     <td>
@@ -229,7 +246,7 @@
                         @(item.PaymentDate==null?"--":string.Format("{0:dd MMM yyyy}",item.PaymentDate))
                     </td>
                     <td>
-                        @(item.PaidAmount == null || item.PaidAmount == ""  ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.PaidAmount)))
+                        @(item.PaidAmount == null || item.PaidAmount == "" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.PaidAmount)))
                     </td>
                     <td>
                         @(item.ExcessShort == null || item.ExcessShort == "" || item.ExcessShort == "0" || item.ExcessShort == "0.00" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.ExcessShort)))
@@ -251,6 +268,12 @@
 
 <script>
 
+
+    function ViewSchedule(id) {
+        var url = '/Accountant/viewSchedule?ApplicationId=' + id;
+        window.open(url, '_blank').focus();
+    }
+
     $(document).ready(
         function () {
             var monthValue = @ViewBag.Month;
@@ -259,19 +282,17 @@
             var yearValue = @ViewBag.Year;
             $('#year option[value=' + yearValue + ']').attr('selected', true);
 
-            var dayValue = @ViewBag.Day;
+            var dayValue = '@ViewBag.Day';
             $('#day option[value=' + dayValue + ']').attr('selected', true);
 
             var filterType = @ViewBag.filterType;
             $('#filterType option[value=' + filterType + ']').attr('selected', true);
+
         });
 
 
 
-    function ViewSchedule(id) {
-        var url = '/Accountant/viewSchedule?ApplicationId=' + id;
-        window.open(url, '_blank').focus();
-    }
+   
 
     $(document).ready(function () {
         $("#dataTable_length select").append($("<option></option>").attr("value", '500').text('500'));
@@ -279,5 +300,6 @@
         $("#filter").click(function () {
             $(".pageloader").toggleClass("d-none");
         });
+
     });
 </script>

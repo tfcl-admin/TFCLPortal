@@ -46,6 +46,7 @@
         <link href="~/Theame/css/prettyPhoto.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/toastr/toastr.css" rel="stylesheet" asp-append-version="true" />
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+        <link href="~/scss/_jquerydatatable.scss" rel="stylesheet" asp-append-version="true" />
         <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/materialize.css" rel="stylesheet" asp-append-version="true" />
         @*<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" asp-append-version="true" />*@
@@ -330,7 +331,7 @@
                                         <span class="icon-holder">
                                             <i class="fa fa-calendar"></i>
                                         </span>
-                                        <h6>Defer Applications Authorizations</h6>
+                                        <h6>Schedule Update Authorizations</h6>
                                     </a>
                                 </li>
 
@@ -400,6 +401,44 @@
                     }
 
 
+
+                    @if (IsGranted(PermissionNames.Pages_BM) || User.Identity.Name == "asif.shamsi" || User.Identity.Name == "admin")
+                    {
+                        <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#TP">
+                            <a>
+                                <span class="icon-holder">
+                                    <i class="fa fa-address-card"></i>
+                                </span>
+                                <span class="title">Portfolio Transfer <i class="fa fa-caret-down"></i></span>
+                            </a>
+                            <ul id="TP" class="collapse sidebar-menua">
+
+                                @if (IsGranted(PermissionNames.Pages_BM) || User.Identity.Name == "admin")
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a href="~/PortfolioTagging/Index" class="dropdown-toggle">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-user-circle"></i>
+                                            </span>
+                                            <h6>SDE/BDE Applications</h6>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if (User.Identity.Name == "asif.shamsi" || User.Identity.Name == "admin")
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a href="~/portfoliotagging/Authorization" class="dropdown-toggle">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-pencil"></i>
+                                            </span>
+                                            <h6>Authorizations</h6>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
 
                     @if (IsGranted(PermissionNames.Pages_BM))
                     {
@@ -488,13 +527,13 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item dropdown">
-                        <a href="~/Accountant/InstallmentPaymentList">
-                            <span class="icon-holder">
-                                <i class="fa fa-list"></i>
-                            </span>
-                            <h6>Loan Installments</h6>
-                        </a>
-                    </li>*@
+                                        <a href="~/Accountant/InstallmentPaymentList">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-list"></i>
+                                            </span>
+                                            <h6>Loan Installments</h6>
+                                        </a>
+                                    </li>*@
                             </ul>
                         </li>
                     }
@@ -568,29 +607,29 @@
                                     </a>
                                 </li>
                                 @* <li class="nav-item dropdown">
-                        <a href="~/Accountant/InstallmentPaymentList">
-                            <span class="icon-holder">
-                                <i class="fa fa-list"></i>
-                            </span>
-                            <h6>Loan Installments</h6>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-            <a href="~/accountant/CheckAMLCFT">
-                <span class="icon-holder">
-                    <i class="fa fa-check-circle"></i>
-                </span>
-                <h6>AML CFT Check</h6>
-            </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="~/accountant/CheckAMLCFTByCNIC">
-                <span class="icon-holder">
-                    <i class="fa fa-check-circle"></i>
-                </span>
-                <h6>AML CFT Check By CNIC</h6>
-            </a>
-        </li>*@
+                                                    <a href="~/Accountant/InstallmentPaymentList">
+                                                        <span class="icon-holder">
+                                                            <i class="fa fa-list"></i>
+                                                        </span>
+                                                        <h6>Loan Installments</h6>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item dropdown">
+                                        <a href="~/accountant/CheckAMLCFT">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-check-circle"></i>
+                                            </span>
+                                            <h6>AML CFT Check</h6>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a href="~/accountant/CheckAMLCFTByCNIC">
+                                            <span class="icon-holder">
+                                                <i class="fa fa-check-circle"></i>
+                                            </span>
+                                            <h6>AML CFT Check By CNIC</h6>
+                                        </a>
+                                    </li>*@
                             </ul>
 
                         </li>
@@ -626,13 +665,13 @@
 
 
                     @*<li class="nav-item">
-            <a class='sidebar-link' href="~/Search/Index">
-                <span class="icon-holder">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </span>
-                <span class="title">Search</span>
-            </a>
-        </li>*@
+                            <a class='sidebar-link' href="~/Search/Index">
+                                <span class="icon-holder">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </span>
+                                <span class="title">Search</span>
+                            </a>
+                        </li>*@
                     @if (!IsGranted(PermissionNames.Pages_BA))
                     {
                         <li class="nav-item">
@@ -644,7 +683,7 @@
                             </a>
                         </li>
                     }
-                  
+
                     @if (User.Identity.Name == "nabeel")
                     {
                         <li class="nav-item dropdown">
@@ -912,29 +951,29 @@
                     </li>
 
                     @*
-        <li class="nav-item">
-            <a class='sidebar-link' href="#">
-                <span class="icon-holder">
-                    <i class="fa fa-bell"></i>
-                </span>
-                <span class="title">
-                    PAR Monitoring & Management Reports
-                </span>
-            </a>
-        </li>
+                        <li class="nav-item">
+                            <a class='sidebar-link' href="#">
+                                <span class="icon-holder">
+                                    <i class="fa fa-bell"></i>
+                                </span>
+                                <span class="title">
+                                    PAR Monitoring & Management Reports
+                                </span>
+                            </a>
+                        </li>
                     *@
 
                     @if (IsGranted(PermissionNames.Pages_BA))
                     {
                         @*<li class="nav-item">
-                <a class='sidebar-link' href="#">
-                    <span class="icon-holder">
-                        <i class="fa fa-bell"></i>
+                                <a class='sidebar-link' href="#">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-bell"></i>
 
-                    </span>
-                    <span class="title">Notifications</span>
-                </a>
-            </li>*@
+                                    </span>
+                                    <span class="title">Notifications</span>
+                                </a>
+                            </li>*@
                     }
 
                     @if (IsGranted(PermissionNames.Pages_BM))
@@ -1100,6 +1139,7 @@
         <script src="~/lib/jquery-slimscroll/jquery.slimscroll.js" asp-append-version="true"></script>
         <script src="~/lib/Waves/dist/waves.js" asp-append-version="true"></script>
         <script src="~/lib/push.js/push.js" asp-append-version="true"></script>
+        <script src="~/js/tableHTMLExport.js" asp-append-version="true"></script>
         <script src="~/lib/abp-web-resources/Abp/Framework/scripts/abp.js" asp-append-version="true"></script>
         <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js" asp-append-version="true"></script>
         <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js" asp-append-version="true"></script>

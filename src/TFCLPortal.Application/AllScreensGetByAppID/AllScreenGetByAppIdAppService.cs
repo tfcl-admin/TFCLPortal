@@ -437,7 +437,7 @@ namespace TFCLPortal.AllScreensGetByAppID
             {
                 AllScreenGetBySDEidDto returnList = new AllScreenGetBySDEidDto();
 
-                var apps = _taggedPortfolioRepository.GetAllList(s => s.NewUserId == SDE_Id);
+                var apps = _taggedPortfolioRepository.GetAllList(s => s.NewUserId == SDE_Id&&s.isApproved==true);
 
                 List<AllScreenGetByAppIdDto> list = new List<AllScreenGetByAppIdDto>();
                 //var apps = _applicationAppService.GetAllApplicationsByUserId(SDE_Id);

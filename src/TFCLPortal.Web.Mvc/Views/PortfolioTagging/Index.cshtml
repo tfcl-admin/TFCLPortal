@@ -7,10 +7,10 @@
     <div class="row page-title">
         <div class="col-md-6 text-left">
             <h4 class="page-title-text">
-                Portfolio Tagging
+                Portfolio Transfer
             </h4>
             <h6 class="page-title-breadcrumbs">
-                <a href="~/Dashboard/Dashboard">Home</a> > Portfolio Tagging
+                <a href="~/Dashboard/Dashboard">Home</a> > Portfolio Transfer
             </h6>
         </div>
         <div class="col-md-6 text-right">
@@ -26,7 +26,8 @@
                     <th>SDE Name</th>
                     <th>Email Id</th>
                     <th>No of Applications</th>
-                    <th>Actions</th>
+                    <th>No of Transferred Applications</th>
+                    <th>Transfer Applications</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,8 +42,9 @@
                             <td>@item.FullName</td>
                             <td>@item.EmailAddress</td>
                             <td>@item.applicationsCount</td>
+                            <td>@item.taggedApplicationsCount</td>
                            <td>
-                                <a href="~/portfoliotagging/UserApplications?userid=@item.Id"><i class="fa fa-file" aria-hidden="true"></i></a>
+                                <a href="~/portfoliotagging/UserApplications?userid=@item.Id"><i class="fa fa-copy" aria-hidden="true"></i></a>
                                 <!--<div class="dropdown">
                                     <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-list"></i>

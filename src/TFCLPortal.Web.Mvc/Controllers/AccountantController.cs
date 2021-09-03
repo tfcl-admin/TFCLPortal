@@ -431,9 +431,11 @@ namespace TFCLPortal.Web.Controllers
                                     {
                                         sumOfAmountsPerInstallment += paidInstallment.Amount;
                                         excessShort = paidInstallment.ExcessShortPayment;
+
+
                                     }
                                     installment.PaidAmount = sumOfAmountsPerInstallment.ToString();
-                                    installment.ExcessShort = excessShort.ToString();
+
 
                                     sumOfAmountsPerInstallment = 0;
                                 }
@@ -470,6 +472,7 @@ namespace TFCLPortal.Web.Controllers
                                 inst.BusinessName = app.SchoolName;
                                 inst.Applicationid = app.Id;
                                 inst.BranchName = app.BranchCode;
+                                inst.LoanAmount = schedule.LoanAmount;
                                 var sde = users.Where(x => x.Id == app.CreatorUserId).FirstOrDefault();
                                 if (sde != null)
                                 {
@@ -585,6 +588,7 @@ namespace TFCLPortal.Web.Controllers
                 foreach (var schedule in schedules)
                 {
                     var app = _applicationAppService.GetApplicationById(schedule.ApplicationId);
+                    app.Comments = schedule.UpdationReason;
                     apps.Add(app);
                 }
             }
@@ -1095,7 +1099,7 @@ namespace TFCLPortal.Web.Controllers
 
             ScheduleInstallmenttListDto lastPaidInstallment = new ScheduleInstallmenttListDto();
 
-            if (indexOfLastPaidInstallment!=-1)
+            if (indexOfLastPaidInstallment != -1)
             {
                 lastPaidInstallment = schedule.installmentList[indexOfLastPaidInstallment];
             }
@@ -1118,20 +1122,21 @@ namespace TFCLPortal.Web.Controllers
                 //paidAmount += existingAmountForSingleInstallment;
 
                 //After 2-8-2021 Start
-                if(lastPaidInstallment!=null)
+                if (lastPaidInstallment != null)
                 {
                     decimal excessShortForLastPaidInstallment = 0;
-                    var lastPaidinstallmentPayment = Exists.Result.Where(x => x.NoOfInstallment == Int32.Parse(lastPaidInstallment.InstNumber)).ToList();
-                    if (lastPaidinstallmentPayment.Count == 1)
+                    if (lastPaidInstallment.InstNumber != "G*")
                     {
-                        excessShortForLastPaidInstallment = lastPaidinstallmentPayment[0].ExcessShortPayment;
+                        var lastPaidinstallmentPayment = Exists.Result.Where(x => x.NoOfInstallment == Int32.Parse(lastPaidInstallment.InstNumber)).ToList();
+                        if (lastPaidinstallmentPayment.Count == 1)
+                        {
+                            excessShortForLastPaidInstallment = lastPaidinstallmentPayment[0].ExcessShortPayment;
+                        }
+                        else if (lastPaidinstallmentPayment.Count > 1)
+                        {
+                            excessShortForLastPaidInstallment = lastPaidinstallmentPayment.LastOrDefault().ExcessShortPayment;
+                        }
                     }
-                    else if (lastPaidinstallmentPayment.Count > 1)
-                    {
-                        excessShortForLastPaidInstallment = lastPaidinstallmentPayment.LastOrDefault().ExcessShortPayment;
-                    }
-
-
                     paidAmount += existingAmountForSingleInstallment + excessShortForLastPaidInstallment;
                 }
                 //After 2-8-2021 End
@@ -1172,10 +1177,6 @@ namespace TFCLPortal.Web.Controllers
                 _scheduleInstallmentRepository.Update(scheduleInstallment);
                 CurrentUnitOfWork.SaveChanges();
             }
-
-
-
-
             return RedirectToAction("AuthorizationInstallmentPayment");
         }
 

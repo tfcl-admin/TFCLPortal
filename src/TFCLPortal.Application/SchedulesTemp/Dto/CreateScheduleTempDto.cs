@@ -33,6 +33,7 @@ namespace TFCLPortal.ScheduleTemps.Dto
         public string PerDayMarkup { get; set; }
         public bool? isAuthorizedByBM { get; set; }
         public string Reason { get; set; }
+        public string UpdationReason { get; set; }
 
         public List<CreateScheduleTempInstallmentDto> installmentList { get; set; }
 

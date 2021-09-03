@@ -755,8 +755,12 @@
                 content += "</thead>";
                 content += "<tbody>";
 
-                for (i = 0; i < data.filter(x=>x.isPaid==true).length; i++) {
+                for (i = 0; i < data.filter(x => x.isPaid == true).length; i++) {
+
+                    if (data[i].instNumber != 'G*') {
                     counter++;
+                    }
+
                     if (data[i].isPaid == 1) {
                         content += '<tr  style="background-color:lightgray">';
 
@@ -803,7 +807,7 @@
 
                 var emi = pmt(Irr / 12, Tenure, osPrincipalAmount, 0, 0);
 
-               
+
 
                 var startingIndex=Number(data[counter].instNumber);
                 var startDate = Number(moment(LoanStartDate).add(counter,'M'));
@@ -862,6 +866,9 @@
                     content += '</tr>';
 
                     osPrincipalAmount = osPrincipalClosing;
+                    $('#txtLastInstallmentDate').text(getInstallmentDate(startDate));
+                    $('#installmentDiv').text(numberWithCommas(emi));
+                    $('#txtIRR').text((Irr * 100).toFixed(2));
                     startDate = Number(moment(startDate).add(1, 'M'));
                 }
 
@@ -1042,49 +1049,47 @@
             });
 
 
-            if (stype == 'Standard') {
 
-                tbl.forEach(function (item, index) {
-                    if (index != 0) {
+                //tbl.forEach(function (item, index) {
+                //    if (index != 0) {
 
-                        var pdate;
-                        var ip;
-                        console.log(item[10]);
-                        if (item[10] == '<i class="fa fa-times" style="color:red"></i>') {
-                            ip = false;
-                        }
-                        else if (item[10] == '<i class="fa fa-check" style="color:green"></i>') {
-                            ip = true;
-                        }
+                //        var pdate;
+                //        var ip;
+                //        console.log(item[10]);
+                //        if (item[10] == '<i class="fa fa-times" style="color:red"></i>') {
+                //            ip = false;
+                //        }
+                //        else if (item[10] == '<i class="fa fa-check" style="color:green"></i>') {
+                //            ip = true;
+                //        }
 
-                        if (item[11] == '--') {
-                            pdate = null;
-                        }
-                        else {
-                            pdate = item[11];
-                        }
+                //        if (item[11] == '--') {
+                //            pdate = null;
+                //        }
+                //        else {
+                //            pdate = item[11];
+                //        }
 
-                        var list = {
-                            'InstNumber': item[0],
-                            'BalInst': item[1],
-                            'InstallmentDueDate': item[2],
-                            'OsPrincipal_op': item[3],
-                            'AdditionalTranche': '--',
-                            'OsPrincipal_Opening': '--',
-                            'markup': item[6],
-                            'principal': item[7],
-                            'installmentAmount': item[8],
-                            'OsPrincipal_Closing': item[9],
-                            'isPaid': ip,
-                            'PaymentDate': pdate
-                        };
+                //        var list = {
+                //            'InstNumber': item[0],
+                //            'BalInst': item[1],
+                //            'InstallmentDueDate': item[2],
+                //            'OsPrincipal_op': item[3],
+                //            'AdditionalTranche': '--',
+                //            'OsPrincipal_Opening': '--',
+                //            'markup': item[6],
+                //            'principal': item[7],
+                //            'installmentAmount': item[8],
+                //            'OsPrincipal_Closing': item[9],
+                //            'isPaid': ip,
+                //            'PaymentDate': pdate
+                //        };
 
-                        ScheduleInstallments.push(list);
-                    }
-                });
+                //        ScheduleInstallments.push(list);
+                //    }
+                //});
 
-            }
-            else if (stype == 'Tranches') {
+            console.table(tbl);
 
                 tbl.forEach(function (item, index) {
                     if (index != 0) {
@@ -1126,14 +1131,13 @@
                     }
                 });
 
-            }
 
              var dataToSend = {
                 'ApplicationId':'@ViewBag.ApplicationId',
                 'ClientId':'@ViewBag.Application.ClientID',
                 'ScheduleType':'@ViewBag.Input.ScheduleType',
-                'LoanAmount': $("#txtLoanAmount").text(),
-                'Tenure': $("#txtTenure").text(),
+                'LoanAmount': ($("#txtLoanAmount").text()).trim(),
+                 'Tenure': ($("#txtTenure").text()).trim(),
                 'Markup': $("#txtMarkup").text(),
                  'DisbursmentDate': $("#txtDisbursmentDate").text().trim(),
                 'GraceDays': $("#txtGraceDays").text(),
@@ -1144,14 +1148,15 @@
                 'TFCL_Branch': '@ViewBag.Input.TFCL_Branch',
                 'BranchManager':'@ViewBag.BMName',
                 'SDE': '@ViewBag.SDEName',
-                 'DeffermentStartDate': $("#txtDeffermentStartDate").text().trim(),
-                 'DeffermentEndDate': $("#txtDeffermentEndDate").text().trim(),
+                'DeffermentStartDate': $("#txtDeffermentStartDate").text().trim(),
+                'DeffermentEndDate': $("#txtDeffermentEndDate").text().trim(),
                 'IRR': $("#txtIRR").text(),
                 'Installment': $("#installmentDiv").text(),
                  'LoanStartDate': $("#txtLoanStartDate").text().trim(),
                  'LastInstallmentDate': $("#txtLastInstallmentDate").text().trim(),
                 'YearlyMarkup': $("#YearlyDiv").text(),
                 'PerDayMarkup': $("#DayDiv").text(),
+                'UpdationReason': 'Reschedule',
                 'installmentList': ScheduleInstallments
             };
 

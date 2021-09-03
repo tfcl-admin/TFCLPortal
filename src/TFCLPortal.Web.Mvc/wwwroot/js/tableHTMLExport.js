@@ -22,8 +22,6 @@ THE SOFTWARE.*/
 
 (function($){
 
-
-
     $.fn.extend({
         tableHTMLExport: function(options) {
 

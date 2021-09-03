@@ -14,5 +14,6 @@ namespace TFCLPortal.TaggedPortfolios
         Task<string> UpdateTaggedPortfolio(UpdateTaggedPortfolioDto input);
         Task<TaggedPortfolioListDto> GetTaggedPortfolioByApplicationId(int ApplicationId);
         bool CheckTaggedPortfolioByApplicationId(int ApplicationId);
+        List<TaggedPortfolioListDto> GetAllTaggedPortfolio();
     }
 }
