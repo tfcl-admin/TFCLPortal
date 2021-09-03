@@ -755,10 +755,12 @@
                 content += "</thead>";
                 content += "<tbody>";
 
+                var isGraceDaysExist = false;
                 for (i = 0; i < data.filter(x => x.isPaid == true).length; i++) {
 
                     if (data[i].instNumber != 'G*') {
-                    counter++;
+                        counter++;
+                        isGraceDaysExist = true;
                     }
 
                     if (data[i].isPaid == 1) {
@@ -808,8 +810,12 @@
                 var emi = pmt(Irr / 12, Tenure, osPrincipalAmount, 0, 0);
 
 
-
-                var startingIndex=Number(data[counter+1].instNumber);
+                if (isGraceDaysExist) {
+                    var startingIndex = Number(data[counter + 1].instNumber);
+                }
+                else {
+                    var startingIndex = Number(data[counter].instNumber);
+                }
                 var startDate = Number(moment(LoanStartDate).add(counter,'M'));
                 console.log(data[counter].installmentDueDate);
 
