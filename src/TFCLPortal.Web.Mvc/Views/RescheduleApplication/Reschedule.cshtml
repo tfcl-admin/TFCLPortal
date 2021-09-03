@@ -760,8 +760,11 @@
 
                     if (data[i].instNumber != 'G*') {
                         counter++;
+                    }
+                    else {
                         isGraceDaysExist = true;
                     }
+
 
                     if (data[i].isPaid == 1) {
                         content += '<tr  style="background-color:lightgray">';
@@ -810,8 +813,8 @@
                 var emi = pmt(Irr / 12, Tenure, osPrincipalAmount, 0, 0);
 
 
-                if (isGraceDaysExist) {
-                    var startingIndex = Number(data[counter + 1].instNumber);
+                if (isGraceDaysExist==true) {
+                    var startingIndex = Number(data[counter+1].instNumber);
                 }
                 else {
                     var startingIndex = Number(data[counter].instNumber);
