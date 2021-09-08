@@ -158,6 +158,7 @@ using TFCLPortal.EmploymentDetails;
 using TFCLPortal.ManagmentCommitteeDecisions;
 using TFCLPortal.SalaryDetails;
 using TFCLPortal.TaggedPortfolios;
+using TFCLPortal.Targets;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -237,6 +238,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<PaymentFrequency> PaymentFrequencyDbSet { get; set; }
         public DbSet<LoanPurpose> LoanPurposeDbSet { get; set; }
         public DbSet<PersonalDetail> PersonalDetailDbSet { get; set; }
+        public DbSet<Target> TargetDbSet { get; set; }
         public DbSet<Preferences.Preference> PreferenceDbSet { get; set; }
         public DbSet<CoApplicantDetails.CoApplicantDetail> CoApplicantDetailDbSet { get; set; }
         public DbSet<GuarantorDetails.GuarantorDetail> GuarantorDetailDbSet { get; set; }

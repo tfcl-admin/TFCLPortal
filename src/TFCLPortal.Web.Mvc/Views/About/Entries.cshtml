@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Queries";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Website Queries
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Website Queries
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col-md-12">
+        <iframe width="100%" style="max-height:700px;min-height:600px;overflow-y:scroll" src="https://taleemfinance.com/EntryList.php" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+    </div>
+</main>

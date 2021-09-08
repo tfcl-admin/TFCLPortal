@@ -8373,6 +8373,53 @@ namespace TFCLPortal.Migrations
                     b.ToTable("TaleemTeacherSahulat");
                 });
 
+            modelBuilder.Entity("TFCLPortal.Targets.Target", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<int>("DisbursmentValue");
+
+                    b.Property<int>("Fk_BranchId");
+
+                    b.Property<int>("Fk_ProductTypeId");
+
+                    b.Property<int>("Fk_SdeId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<int>("Maturity");
+
+                    b.Property<int>("Month");
+
+                    b.Property<int>("NoOfApplications");
+
+                    b.Property<int>("RepeatClients");
+
+                    b.Property<decimal>("SecuredUnsecuredRatio");
+
+                    b.Property<int>("Year");
+
+                    b.Property<decimal>("Yeild");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Target");
+                });
+
             modelBuilder.Entity("TFCLPortal.TdsInventoryDetailChilds.TdsInventoryDetailChild", b =>
                 {
                     b.Property<int>("Id")

@@ -187,6 +187,38 @@
                             <span class="title">Analytics</span>
                         </a>
                     </li>
+
+                    <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#MB">
+                        <a>
+                            <span class="icon-holder">
+                                <i class="fa fa-users"></i>
+                            </span>
+                            <span class="title">Mobilizations<i class="fa fa-caret-down"></i></span>
+
+                        </a>
+                        <ul id="MB" class="collapse sidebar-menua">
+
+                            <li>
+                                <a class="sidebar-link" href="~/About/Entries">
+                                    <span class="icon-holder">
+                                        <i class="ti-help-alt"></i>
+                                    </span>
+                                    <h6>Website Queries</h6>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class='sidebar-link' href="~/Mobilization/Mobilizations">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-users"></i>
+                                    </span>
+                                    <h6>Mobilization</h6>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     <li class="nav-item dropdown collapsed d-none" data-toggle="collapse" data-target="#DA">
                         <a>
                             <span class="icon-holder">
@@ -217,14 +249,7 @@
 
                         </ul>
                     </li>
-                    <li class="nav-item ">
-                        <a class='sidebar-link' href="~/Mobilization/Mobilizations">
-                            <span class="icon-holder">
-                                <i class="fa fa-users"></i>
-                            </span>
-                            <span class="title">Mobilization</span>
-                        </a>
-                    </li>
+
 
                     <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#LP">
                         <a>
@@ -261,6 +286,73 @@
                                         <i class="fa fa-print"></i>
                                     </span>
                                     <h6>Loan Application Printing</h6>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#TA">
+                        <a>
+                            <span class="icon-holder">
+                                <i class="fa fa-tasks"></i>
+                            </span>
+                            <span class="title">Target Allocation<i class="fa fa-caret-down"></i></span>
+
+                        </a>
+                        <ul id="TA" class="collapse sidebar-menua">
+
+                            <li>
+                                <a href="~/Application/Applications">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-edit"></i>
+                                    </span>
+                                    <h6>
+                                        Alocate Targets
+                                    </h6>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="~/targets/index">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-list"></i>
+                                    </span>
+                                    <h6>
+                                        Alocated Targets
+                                    </h6>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#MB">
+                        <a>
+                            <span class="icon-holder">
+                                <i class="fa fa-users"></i>
+                            </span>
+                            <span class="title">Mobilizations<i class="fa fa-caret-down"></i></span>
+
+                        </a>
+                        <ul id="MB" class="collapse sidebar-menua">
+
+                            <li>
+                                <a class="sidebar-link" href="~/About/Entries">
+                                    <span class="icon-holder">
+                                        <i class="ti-help-alt"></i>
+                                    </span>
+                                    <h6>Website Queries</h6>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class='sidebar-link' href="~/Mobilization/Mobilizations">
+                                    <span class="icon-holder">
+                                        <i class="fa fa-users"></i>
+                                    </span>
+                                    <h6>Mobilization</h6>
                                 </a>
                             </li>
 
@@ -527,13 +619,13 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item dropdown">
-                                        <a href="~/Accountant/InstallmentPaymentList">
-                                            <span class="icon-holder">
-                                                <i class="fa fa-list"></i>
-                                            </span>
-                                            <h6>Loan Installments</h6>
-                                        </a>
-                                    </li>*@
+                        <a href="~/Accountant/InstallmentPaymentList">
+                            <span class="icon-holder">
+                                <i class="fa fa-list"></i>
+                            </span>
+                            <h6>Loan Installments</h6>
+                        </a>
+                    </li>*@
                             </ul>
                         </li>
                     }
@@ -607,29 +699,29 @@
                                     </a>
                                 </li>
                                 @* <li class="nav-item dropdown">
-                                                    <a href="~/Accountant/InstallmentPaymentList">
-                                                        <span class="icon-holder">
-                                                            <i class="fa fa-list"></i>
-                                                        </span>
-                                                        <h6>Loan Installments</h6>
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item dropdown">
-                                        <a href="~/accountant/CheckAMLCFT">
-                                            <span class="icon-holder">
-                                                <i class="fa fa-check-circle"></i>
-                                            </span>
-                                            <h6>AML CFT Check</h6>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a href="~/accountant/CheckAMLCFTByCNIC">
-                                            <span class="icon-holder">
-                                                <i class="fa fa-check-circle"></i>
-                                            </span>
-                                            <h6>AML CFT Check By CNIC</h6>
-                                        </a>
-                                    </li>*@
+                                    <a href="~/Accountant/InstallmentPaymentList">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-list"></i>
+                                        </span>
+                                        <h6>Loan Installments</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                        <a href="~/accountant/CheckAMLCFT">
+                            <span class="icon-holder">
+                                <i class="fa fa-check-circle"></i>
+                            </span>
+                            <h6>AML CFT Check</h6>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="~/accountant/CheckAMLCFTByCNIC">
+                            <span class="icon-holder">
+                                <i class="fa fa-check-circle"></i>
+                            </span>
+                            <h6>AML CFT Check By CNIC</h6>
+                        </a>
+                    </li>*@
                             </ul>
 
                         </li>
@@ -658,6 +750,14 @@
                                         <h6>Search By CNIC</h6>
                                     </a>
                                 </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/accountant/cnics" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-address-card-o"></i>
+                                        </span>
+                                        <h6>CNIC List</h6>
+                                    </a>
+                                </li>
                             </ul>
 
                         </li>
@@ -665,13 +765,13 @@
 
 
                     @*<li class="nav-item">
-                            <a class='sidebar-link' href="~/Search/Index">
-                                <span class="icon-holder">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </span>
-                                <span class="title">Search</span>
-                            </a>
-                        </li>*@
+            <a class='sidebar-link' href="~/Search/Index">
+                <span class="icon-holder">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+                <span class="title">Search</span>
+            </a>
+        </li>*@
                     @if (!IsGranted(PermissionNames.Pages_BA))
                     {
                         <li class="nav-item">
@@ -951,29 +1051,29 @@
                     </li>
 
                     @*
-                        <li class="nav-item">
-                            <a class='sidebar-link' href="#">
-                                <span class="icon-holder">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                                <span class="title">
-                                    PAR Monitoring & Management Reports
-                                </span>
-                            </a>
-                        </li>
+        <li class="nav-item">
+            <a class='sidebar-link' href="#">
+                <span class="icon-holder">
+                    <i class="fa fa-bell"></i>
+                </span>
+                <span class="title">
+                    PAR Monitoring & Management Reports
+                </span>
+            </a>
+        </li>
                     *@
 
                     @if (IsGranted(PermissionNames.Pages_BA))
                     {
                         @*<li class="nav-item">
-                                <a class='sidebar-link' href="#">
-                                    <span class="icon-holder">
-                                        <i class="fa fa-bell"></i>
+                <a class='sidebar-link' href="#">
+                    <span class="icon-holder">
+                        <i class="fa fa-bell"></i>
 
-                                    </span>
-                                    <span class="title">Notifications</span>
-                                </a>
-                            </li>*@
+                    </span>
+                    <span class="title">Notifications</span>
+                </a>
+            </li>*@
                     }
 
                     @if (IsGranted(PermissionNames.Pages_BM))

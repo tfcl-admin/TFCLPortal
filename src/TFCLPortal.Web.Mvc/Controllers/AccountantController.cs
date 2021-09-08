@@ -134,6 +134,60 @@ namespace TFCLPortal.Web.Controllers
             _earlySettlementAppService = earlySettlementAppService;
         }
 
+        public IActionResult cnics()
+        {
+            var Applications = _applicationRepository.GetAllList();
+            List<CnicByApp> cniclist = new List<CnicByApp>();
+
+            if (Applications != null)
+            {
+                var guarantors = _GuarantorRepository.GetAllList();
+                var coApplicants = _CoApplicantRepository.GetAllList();
+
+                foreach (var app in Applications)
+                {
+                    CnicByApp cnic = new CnicByApp();
+
+                    cnic.ClientId = app.ClientID;
+                    cnic.ClientName = app.ClientName;
+                    cnic.BusinessName = app.SchoolName;
+                    cnic.ClientCNIC = app.CNICNo;
+                    cnic.Screenstatus = app.ScreenStatus;
+
+                    var guarantor = guarantors.Where(x => x.ApplicationId == app.Id).ToList();
+                    if (guarantor.Count > 0)
+                    {
+                        cnic.Guarantor1Cnic = guarantor[0].CNICNumber;
+                        cnic.Guarantor1Name = guarantor[0].FullName;
+                        if (guarantor.Count > 1)
+                        {
+                            cnic.Guarantor2Cnic = guarantor[1].CNICNumber;
+                            cnic.Guarantor2Name = guarantor[1].FullName;
+                        }
+                    }
+
+                    var coApplicant = coApplicants.Where(x => x.ApplicationId == app.Id).ToList();
+                    if (coApplicant.Count > 0)
+                    {
+                        cnic.CoApplicant1Cnic = coApplicant[0].CNICNumber;
+                        cnic.CoApplicant1Name = coApplicant[0].FullName;
+                        if (coApplicant.Count > 1)
+                        {
+                            cnic.CoApplicant2Cnic = coApplicant[1].CNICNumber;
+                            cnic.CoApplicant2Name = coApplicant[1].FullName;
+                        }
+                    }
+
+                    cniclist.Add(cnic);
+
+                }
+
+            }
+
+
+            return View(cniclist);
+        }
+
         public IActionResult Index()
         {
             var Applications = _applicationAppService.GetShortApplicationList(ApplicationState.MC_Authorized, Branchid());

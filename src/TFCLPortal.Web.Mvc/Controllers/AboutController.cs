@@ -87,6 +87,11 @@ namespace TFCLPortal.Web.Controllers
         {
             return View();
         }
+        
+        public ActionResult Entries()
+        {
+            return View();
+        }
 
         public JsonResult FetchFileTypes()
         {

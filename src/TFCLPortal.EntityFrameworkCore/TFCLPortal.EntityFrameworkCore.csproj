@@ -129,6 +129,8 @@
     <Compile Remove="Migrations\20201023065840_addDropdownForAssociatedIncomeAPI.Designer.cs" />
     <Compile Remove="Migrations\20201103060350_updateForBusinessExpenseAPI.cs" />
     <Compile Remove="Migrations\20201103060350_updateForBusinessExpenseAPI.Designer.cs" />
+    <Compile Remove="Migrations\20210908063554_addedTargetTable.cs" />
+    <Compile Remove="Migrations\20210908063554_addedTargetTable.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />

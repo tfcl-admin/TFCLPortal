@@ -1,0 +1,130 @@
+﻿@model TFCLPortal.Targets.Target
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Target</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Month)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Month)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fk_SdeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fk_SdeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fk_BranchId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fk_BranchId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fk_ProductTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fk_ProductTypeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NoOfApplications)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NoOfApplications)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisbursmentValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisbursmentValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Yeild)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Yeild)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SecuredUnsecuredRatio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SecuredUnsecuredRatio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RepeatClients)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RepeatClients)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Maturity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Maturity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeleterUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeleterUserId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeletionTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeletionTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModificationTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastModificationTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifierUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastModifierUserId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreationTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatorUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatorUserId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

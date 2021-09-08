@@ -371,16 +371,18 @@ namespace TFCLPortal.AllScreensGetByAppID
                 {
                     foreach (var app in apps)
                     {
+                        if(app.ScreenStatus!="decline")
+                        {
+                            int ApplicationId = app.Id;
+                            var Deviation = await _applicationWiseDeviationVariableAppService.GetApplicationWiseDeviationVariableDetailByApplicationIdAsync(ApplicationId);
+                            var Application = _applicationAppService.GetApplicationById(ApplicationId);
+                            AllScreenGetByAppIdDto allScreenGetByAppId = new AllScreenGetByAppIdDto();
+                            allScreenGetByAppId.ApplicationId = ApplicationId;
+                            allScreenGetByAppId.listDeviation = Deviation;
+                            allScreenGetByAppId.listApplication = Application;
 
-                        int ApplicationId = app.Id;
-                        var Deviation = await _applicationWiseDeviationVariableAppService.GetApplicationWiseDeviationVariableDetailByApplicationIdAsync(ApplicationId);
-                        var Application = _applicationAppService.GetApplicationById(ApplicationId);
-                        AllScreenGetByAppIdDto allScreenGetByAppId = new AllScreenGetByAppIdDto();
-                        allScreenGetByAppId.ApplicationId = ApplicationId;
-                        allScreenGetByAppId.listDeviation = Deviation;
-                        allScreenGetByAppId.listApplication = Application;
-
-                        list.Add(allScreenGetByAppId);
+                            list.Add(allScreenGetByAppId);
+                        }
                     }
                 }
 

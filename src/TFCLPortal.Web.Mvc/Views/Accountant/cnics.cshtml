@@ -1,0 +1,97 @@
+﻿@model List<TFCLPortal.Web.Models.AMLCFT.CnicByApp>
+@{ int i = 0;}
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Application Wise CNICs
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Application Wise CNICs
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        @*<p>
+            <a asp-action="Create">Create New</a>
+        </p>*@
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0"  style="overflow-x:scroll">
+            <thead>
+                <tr>
+                    <th>Sr</th>
+                    <th>CLIENT ID</th>
+                    <th>APPLICANT / RESPONDENT NAME</th>
+                    <th>School / Business Name</th>
+                    @*<th>Screen Status</th>*@
+
+                    <th>Applicant CNIC</th>
+                    <th>Guarantor 1 Name</th>
+                    <th>Guarantor 1 CNIC</th>
+
+                    <th>coApplicant 1 Name</th>
+                    <th>coApplicant 1 CNIC</th>
+                    <th>Guarantor 2 Name</th>
+                    <th>Guarantor 2 CNIC</th>
+                    <th>coApplicant 2 Name</th>
+                    <th>coApplicant 2 CNIC</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td> @{i = i + 1;} @i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BusinessName)
+                    </td>
+                    @*<td>@item.Screenstatus</td>*@
+                    <td>@item.ClientCNIC</td>
+                    <td>@(item.Guarantor1Name==""||item.Guarantor1Name==null?"--":item.Guarantor1Name)</td>
+                    <td>@(item.Guarantor1Cnic == ""||item.Guarantor1Cnic == null?"--":item.Guarantor1Cnic)</td>
+                    <td>@(item.CoApplicant1Name == ""||item.CoApplicant1Name == null?"--":item.CoApplicant1Name)</td>
+                    <td>@(item.CoApplicant1Cnic == ""||item.CoApplicant1Cnic == null?"--":item.CoApplicant1Cnic)</td>
+                    <td>@(item.Guarantor2Name == ""||item.Guarantor2Name == null?"--":item.Guarantor2Name)</td>
+                    <td>@(item.Guarantor2Cnic == ""||item.Guarantor2Cnic == null?"--":item.Guarantor2Cnic)</td>
+                    <td>@(item.CoApplicant2Name == ""||item.CoApplicant2Name == null?"--":item.CoApplicant2Name)</td>
+                    <td>@(item.CoApplicant2Cnic == ""||item.CoApplicant2Cnic == null?"--":item.CoApplicant2Cnic)</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+
+<script>
+
+    $('.Disburse').click(function () {
+
+        var appid = $(this).attr("appId");
+        var clientid = $(this).attr("clientid");
+
+        if (confirm('Proceed to Disburse Application : ' + clientid)) {
+            window.location = '/Accountant/DisburseApplication?ApplicationId=' + appid;
+        }
+
+    });
+</script>
