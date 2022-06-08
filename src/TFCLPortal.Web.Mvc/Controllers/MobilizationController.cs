@@ -235,11 +235,11 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             if (startdate != null)
             {
-                returnList = returnList.FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate));
+                returnList = returnList.FindAll(x => x.CreationTime.Date >= Convert.ToDateTime(startdate).Date);
             }
             if (enddate != null)
             {
-                returnList = returnList.FindAll(x => x.CreationTime <= Convert.ToDateTime(enddate));
+                returnList = returnList.FindAll(x => x.CreationTime.Date <= Convert.ToDateTime(enddate).Date);
             }
             if (nextmeeting != null)
             {
@@ -258,87 +258,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
                 returnList = returnList.FindAll(x => x.CreatorUserId == sdeId);
             }
 
-            //if (startdate != null && enddate != null && nextmeeting != null && ProductId != null && MobilizationStatusId != null && SDEUserId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate) && x.NextMeeting == Convert.ToDateTime(nextmeeting) && x.CreatorUserId == sdeId && x.MobilizationStatus == statusId && x.ProductType == productId);
-            //}
-            //else if (startdate != null && enddate != null && nextmeeting != null && ProductId != null && MobilizationStatusId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate) && x.NextMeeting == Convert.ToDateTime(nextmeeting) && x.MobilizationStatus == statusId && x.ProductType == productId);
-
-            //}
-            //else if (startdate != null && enddate != null && nextmeeting != null && SDEUserId != null && MobilizationStatusId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate) && x.NextMeeting == Convert.ToDateTime(nextmeeting) && x.CreatorUserId == sdeId && x.MobilizationStatus == statusId);
-
-            //}
-            //else if (startdate != null && enddate != null && nextmeeting != null && ProductId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate) && x.NextMeeting == Convert.ToDateTime(nextmeeting) && x.ProductType == productId);
-
-            //}
-            //else if (startdate != null && enddate != null && ProductId != null && MobilizationStatusId != null && SDEUserId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate) && x.CreatorUserId == sdeId && x.MobilizationStatus == statusId && x.ProductType == productId);
-            //}
-            //else if (startdate != null && enddate != null && ProductId != null && MobilizationStatusId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate) && x.MobilizationStatus == statusId && x.ProductType == productId);
-
-            //}
-            //else if (startdate != null && enddate != null && nextmeeting != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate) && x.NextMeeting == Convert.ToDateTime(nextmeeting));
-            //}
-            //else if (startdate != null && enddate != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate));
-            //}
-            //else if (startdate != null && enddate != null && SDEUserId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate)).Where(x => x.CreatorUserId == sdeId).ToList();
-            //}
-            //else if (startdate != null && enddate != null && ProductId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate)).Where(x => x.ProductType == productId).ToList();
-            //}
-            //else if (startdate != null && enddate != null && MobilizationStatusId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreationTime >= Convert.ToDateTime(startdate) && x.CreationTime <= Convert.ToDateTime(enddate)).Where(x => x.MobilizationStatus == statusId).ToList();
-            //}
-            //else if (SDEUserId != null && ProductId != null && MobilizationStatusId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.ProductType == productId && x.MobilizationStatus == statusId && x.CreatorUserId == sdeId).ToList();
-            //}
-            //else if (ProductId != null && MobilizationStatusId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.ProductType == productId && x.MobilizationStatus == statusId).ToList();
-            //}
-            //else if (SDEUserId != null && MobilizationStatusId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreatorUserId == sdeId && x.MobilizationStatus == statusId).ToList();
-            //}
-            //else if (SDEUserId != null && ProductId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.CreatorUserId == sdeId && x.ProductType == productId).ToList();
-            //}
-            //else if (nextmeeting != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().FindAll(x => x.NextMeeting >= Convert.ToDateTime(nextmeeting));
-            //}
-            //else if (SDEUserId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().Where(x => x.CreatorUserId == sdeId).ToList();
-            //}
-            //else if (ProductId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().Where(x => x.ProductType == productId).ToList();
-            //}
-            //else if (MobilizationStatusId != null)
-            //{
-            //    mobilizationList = _mobilizationAppService.GetMobilizationList().Where(x => x.MobilizationStatus == statusId).ToList();
-            //}
-
+          
 
             var users = (await _userAppService.GetAll(new PagedUserResultRequestDto { MaxResultCount = int.MaxValue })).Items;
             List<UserDto> SdeUsers = new List<UserDto>();
@@ -369,32 +289,6 @@ namespace TFCLPortal.Web.Mvc.Controllers
                 }
             }
 
-
-
-            //var ApplicationStatuslist = new List<SelectListItem>
-            //{
-            //    new SelectListItem{ Text="Created", Value = "Created" },
-            //    new SelectListItem{ Text="In Process", Value = "In Process" },
-            //    new SelectListItem{ Text="Submitted", Value = "Submitted" },
-            //    new SelectListItem{ Text="In Verification", Value = "In Verification" },
-            //    new SelectListItem{ Text="VO Verified", Value = "VO Verified" },
-            //    new SelectListItem{ Text="VO Descripent", Value = "VO Descripent" },
-            //    new SelectListItem{ Text="VO Decline", Value = "VO Decline" },
-            //    new SelectListItem{ Text="Screening", Value = "Screening" },
-            //    new SelectListItem{ Text="BM Verified", Value = "BM Verified" },
-            //    new SelectListItem{ Text="BM Descripent", Value = "BM Descripent" },
-            //    new SelectListItem{ Text="BM Decline", Value = "BM Decline" },
-            //    new SelectListItem{ Text="BCC", Value = "BCC" },
-            //    new SelectListItem{ Text="BCC Approved", Value = "BCC Approved" },
-            //    new SelectListItem{ Text="BCC Descripent", Value = "BCC Descripent" },
-            //    new SelectListItem{ Text="BCC Decline", Value = "BCC Decline" },
-            //    new SelectListItem{ Text="Disbursed", Value = "Disbursed" },
-            //    new SelectListItem{ Text="Closed", Value = "Closed" },
-            //    new SelectListItem{ Text="Force Decline", Value = "Force Decline" },
-            //    new SelectListItem{ Text="Select Application State", Value = "Select", Selected = true }
-            //};
-
-            //ViewBag.ApplicationStatuslist = ApplicationStatuslist;
 
 
             var productList = _productAppService.GetAllList();

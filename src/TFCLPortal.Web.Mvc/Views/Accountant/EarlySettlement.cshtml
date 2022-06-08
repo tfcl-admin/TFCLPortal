@@ -155,8 +155,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Amount Deposited (Rs)</label>
-                            <input asp-for="amountDeposited" class="form-control" />
+                            <label>Account Balance (Rs)</label>
+                            <input asp-for="amountDeposited" value="@(ViewBag.Payment==null||ViewBag.Payment==null?0:ViewBag.Payment)" readonly="readonly" class="form-control" />
                         </div>
                     </div>
 

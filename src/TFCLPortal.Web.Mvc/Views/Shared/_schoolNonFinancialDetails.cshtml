@@ -1,0 +1,268 @@
+﻿@model TFCLPortal.SchoolNonFinancials.Dto.SchoolNonFinancialListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <p class="detailHeading">Building Condition</p>
+                    <p class="detailText">@(Model.BuildingConditionName == null || Model.BuildingConditionName == "" ? "--" : Model.BuildingConditionName)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Power back up</p>
+                    <p class="detailText">@(Model.PowerBackup == null || Model.PowerBackup == "" ? "--" : Model.PowerBackup)</p>
+                </div>
+
+                <div class="col-md-4">
+                    <p class="detailHeading">First aid box availability</p>
+                    <p class="detailText">@(Model.FirstAid == null || Model.FirstAid == "" ? "--" : Model.FirstAid)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Ayas present for younger children</p>
+                    <p class="detailText">@(Model.AyasPresent == null || Model.AyasPresent == "" ? "--" : Model.AyasPresent)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Separate washrooms for boys and girls</p>
+                    <p class="detailText">@(Model.SeperateWashrooms == null || Model.SeperateWashrooms == "" ? "--" : Model.SeperateWashrooms)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Other Payment Behaviour</p>
+                    <p class="detailText">@(Model.OtherPaymentBehaviourName == null || Model.OtherPaymentBehaviourName == "" ? "--" : Model.OtherPaymentBehaviourName)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Dropout Students</p>
+                    <p class="detailText">@(Model.DropoutStudents == null || Model.DropoutStudents == 0 ? "--" : Model.DropoutStudents.ToString())</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Classrooms have proper lighting & Ventilation</p>
+                    <p class="detailText">@(Model.ProperLighting == null || Model.ProperLighting == "" ? "--" : Model.ProperLighting)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Clean drinking water availability</p>
+                    <p class="detailText">@(Model.CleanWater == null || Model.CleanWater == "" ? "--" : Model.CleanWater)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Computer lab functional with req. no. of computers</p>
+                    <p class="detailText">@(Model.FunctionalComputerLab == null || Model.FunctionalComputerLab == "" ? "--" : Model.FunctionalComputerLab)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">School Management System/Ed Tech used</p>
+                    <p class="detailText">@(Model.SchoolManagementSystem == null || Model.SchoolManagementSystem == "" ? "--" : Model.SchoolManagementSystem)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading"> Classrooms and school decor</p>
+                    <p class="detailText">@(Model.SchoolDecor == null || Model.SchoolDecor == "" ? "--" : Model.SchoolDecor)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Teaching and learning aids are used in classrooms </p>
+                    <p class="detailText">@(Model.LearningAid == null || Model.LearningAid == "" ? "--" : Model.LearningAid)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Teachers have attended trainings</p>
+                    <p class="detailText">@(Model.TeacherTrainings == null || Model.TeacherTrainings == "" ? "--" : Model.TeacherTrainings)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Child protection policy</p>
+                    <p class="detailText">@(Model.ChildProtection == null || Model.ChildProtection == "" ? "--" : Model.ChildProtection)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Emergency exits planned and highlighted</p>
+                    <p class="detailText">@(Model.EmergencyExits == null || Model.EmergencyExits == "" ? "--" : Model.EmergencyExits)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Security guards and/or related security infrastructure </p>
+                    <p class="detailText">@(Model.SecurityGuards == null || Model.SecurityGuards == "" ? "--" : Model.SecurityGuards)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Health and Environment protection policy implemented</p>
+                    <p class="detailText">@(Model.HealthEnvironment == null || Model.HealthEnvironment == "" ? "--" : Model.HealthEnvironment)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Structure/ systematic financial records available</p>
+                    <p class="detailText">@(Model.FinancialRecordsName == null || Model.FinancialRecordsName == "" ? "--" : Model.FinancialRecordsName)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Business Succession? (family members, principle)</p>
+                    <p class="detailText">@(Model.BusinessSuccession == null || Model.BusinessSuccession == "" ? "--" : Model.BusinessSuccession)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Client Business Radius</p>
+                    <p class="detailText">@(Model.BusinessRadiusName == null || Model.BusinessRadiusName == "" ? "--" : Model.BusinessRadiusName)</p>
+                </div>
+                <div class="col-md-4">
+                    <p class="detailHeading">Banking Transaction History</p>
+                    <p class="detailText">@(Model.TransactionHistoryName == null || Model.TransactionHistoryName == "" ? "--" : Model.TransactionHistoryName)</p>
+                </div>
+            </div>
+
+
+            <div class="col-md-12" style="text-align: right;">
+                <a id="screenBtnSNF" href="" data-toggle="modal" data-target="#_ForSNF_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                <a id="discrepentBtnSNF" href="" data-toggle="modal" data-target="#_ForSNF_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<!--Approved Modal -->
+<div class="modal fade" id="_ForSNF_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenSNF" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_ForSNF_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdSNF"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorSNF">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentSNF" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentIdSNF').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.SNFAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnSNF').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnSNF').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnSNF').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnSNF').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnSNF').toggleClass("d-none");
+            $('#discrepentBtnSNF').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenSNF').click(function () {
+        debugger;
+        var comment = $('#commentIdSNF').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'SCHOOL NON-FINANCIAL DETAILS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentSNF').click(function () {
+        debugger;
+        if (!$('#commentIdSNF').val()) {
+            $('#comment_errorSNF').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorSNF').css("display", "none");
+        }
+        var comment = $('#commentIdSNF').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'SCHOOL NON-FINANCIAL DETAILS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdSNF').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

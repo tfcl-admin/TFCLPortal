@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TFCLPortal.Schedules.Dto;
 
 namespace TFCLPortal.LoanSchedules.Dto
 {
@@ -8,6 +9,7 @@ namespace TFCLPortal.LoanSchedules.Dto
     public class GetFromFormDto
     {
 
+        public int PrevApplicationId { get; set; }
         public int ApplicationId { get; set; }
         public string ScheduleNo { get; set; }
         public string RevisionNo { get; set; }
@@ -30,6 +32,9 @@ namespace TFCLPortal.LoanSchedules.Dto
         public string Markup { get; set; }
         public string LoanAmount { get; set; }
         public string Tenure { get; set; }
+        public int TurnArroundTimeMins { get; set; }
+        public string ReasonForDelayTAT { get; set; }
+
         public List<tranchList> listForTranches { get; set; }
 
         public bool isDeferrment{ get; set; }
@@ -37,6 +42,12 @@ namespace TFCLPortal.LoanSchedules.Dto
         public int DefermentMonths { get; set; }
         public DateTime DefermentEndDate { get; set; }
 
+        public List<ScheduleInstallmenttListDto> PaidInstallmentList { get; set; }
+        public ScheduleListDto OldSchedule { get; set; }
+
+        public decimal newLoanAmountDiff { get; set; }
+        public decimal newEnhancedAmount { get; set; }
+        public decimal newEnhancedTenure { get; set; }
     }
 
     public class tranchList

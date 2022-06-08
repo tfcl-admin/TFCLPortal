@@ -16,6 +16,7 @@ using TFCLPortal.DynamicDropdowns.Occupations;
 using TFCLPortal.ExposureDetailChilds;
 using TFCLPortal.ExposureDetails.Dto;
 using TFCLPortal.GuarantorDetails;
+using TFCLPortal.LiabilityTypes;
 
 namespace TFCLPortal.ExposureDetails
 {
@@ -28,12 +29,14 @@ namespace TFCLPortal.ExposureDetails
         private readonly IApplicationAppService _applicationAppService;
         private readonly IApiCallLogAppService _apiCallLogAppService;
         private readonly IRepository<Bank, Int32> _bankRepository;
+        private readonly IRepository<LiabilityType, Int32> _liabilityTypeRepository;
 
         private string ExposureDetails = "Exposure Detail";
         public ExposureDetailAppService(IRepository<ExposureDetail, Int32> exposureDetailRepository,
             IRepository<GuarantorDetail, Int32> guarantorDetailAppService,
             IApplicationAppService applicationAppService,
             IApiCallLogAppService apiCallLogAppService,
+            IRepository<LiabilityType, Int32> liabilityTypeRepository,
             IRepository<BusinessPlan, Int32> BusinessPlanAppService,
             IRepository<Bank, Int32> bankRepository,
             IRepository<ExposureDetailChild, Int32> childRepository)
@@ -44,6 +47,7 @@ namespace TFCLPortal.ExposureDetails
             _applicationAppService = applicationAppService;
             _BusinessPlanAppService = BusinessPlanAppService;
             _apiCallLogAppService = apiCallLogAppService;
+            _liabilityTypeRepository = liabilityTypeRepository;
             _bankRepository = bankRepository;
         }
 
@@ -206,6 +210,10 @@ namespace TFCLPortal.ExposureDetails
                             if(child.BankName!=null && child.BankName!=0)
                             {
                                 child.BankNameString = _bankRepository.Get((int)child.BankName).Name;
+                            }
+                            if ( child.LiabilityType != 0)
+                            {
+                                child.LiabilityTypeName = _liabilityTypeRepository.Get(child.LiabilityType).Name;
                             }
                         }
                     }

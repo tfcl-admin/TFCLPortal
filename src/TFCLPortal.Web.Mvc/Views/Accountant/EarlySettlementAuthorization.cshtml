@@ -154,18 +154,22 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Amount Deposited (Rs)</label>
+                            <label>Account Balance (Rs)</label>
                             <input asp-for="amountDeposited" value="@(string.Format("{0:#,##0}",Model.amountDeposited))" readonly="readonly" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-md-12 text-right">
-                        <input id="RejectionReason" type="text" style="width:25%;" class="form-control d-inline" placeholder="Reason For Rejection" />
-                        <a class="btn btn-outline-danger d-inline" style="color: red !important;padding:8px" id="rejectBtn"><i class="fa fa-times"></i> Reject Entry</a>
-                        <a   class="btn btn-outline-success d-inline" style="color: green !important;padding:8px" id="uploadBtn"><i class="fa fa-upload"></i> Authorize Entry</a>
-                    </div>
+                    @if (Model.isAuthorized == null)
+                    {
+                        <div class="col-md-12 text-right">
+                            <input id="RejectionReason" type="text" style="width:25%;" class="form-control d-inline" placeholder="Reason For Rejection" />
+                            <a class="btn btn-outline-danger d-inline" style="color: red !important;padding:8px" id="rejectBtn"><i class="fa fa-times"></i> Reject Entry</a>
+                            <a class="btn btn-outline-success d-inline" style="color: green !important;padding:8px" id="uploadBtn"><i class="fa fa-upload"></i> Authorize Entry</a>
+                        </div>
+                    }
+
                     @*<div class="col-md-12 text-right">
-                        <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
-                    </div>*@
+            <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
+        </div>*@
                 </div>
             </form>
         </div>

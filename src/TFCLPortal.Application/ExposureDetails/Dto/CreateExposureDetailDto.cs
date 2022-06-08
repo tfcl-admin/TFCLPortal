@@ -30,6 +30,13 @@ namespace TFCLPortal.ExposureDetails.Dto
 
         public List<UpdateExposureChildDto> exposureDetailsList { get; set; }
 
-       // public List<ExposureDetailListDto> AddAnotherExposure { get; set; }
+
+        public bool isNew { get; set; }
+        public string CurrentTotalAmount { get; set; }
+        public string CurrentTotalInstallmentpayment { get; set; }
+        public string LongtermTotalAmount { get; set; }
+        public string LongtermInstallmentpayment { get; set; }
+
+        // public List<ExposureDetailListDto> AddAnotherExposure { get; set; }
     }
 }

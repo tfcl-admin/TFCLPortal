@@ -1,0 +1,101 @@
+﻿@model List<TFCLPortal.EnhancementRequests.Dto.EnhancementRequestListDto>
+@{ int i = 0;}
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Enhancement Requests
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Loan Operations > Enhancement Requests
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        @*<p>
+            <a asp-action="Create">Create New</a>
+        </p>*@
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        Sr
+                    </th>
+                    <th>
+                        CLIENT ID
+                    </th>
+                    <th>
+                        APPLICANT / RESPONDENT NAME
+                    </th>
+                    <th>
+                        Client / School / Business Name
+                    </th>
+                    <th colspan="3">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td> @{i = i + 1;} @i</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientBusiness)
+                        </td>
+                        <td>
+                            @if (item.ClientId.StartsWith("TSS-") || item.ClientId.StartsWith("TSA-"))
+                            {
+                                <a href="/Dashboard/Application?id=@item.ApplicationId" title="View Application Details" target="_blank"><i class="fa fa-desktop"></i> View Application Details</a>
+                            }
+                            else
+                            {
+                                <a href="/Dashboard/TdsApplication?id=@item.ApplicationId" title="View Application Details" target="_blank"><i class="fa fa-desktop"></i> View Application Details</a>
+                            }
+                        </td>
+                        <td>
+                            <a href="/Accountant/ViewSchedule?id=@item.ApplicationId" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i> View Schedule</a>
+                        </td>
+                        <td>
+                            @if (item.RequestState == 0)
+                            {
+                                <a onclick="if (confirm('Are you sure you want to Authorize the request?')) { window.location.href='/Accountant/ApproveEnhancement?id=@item.Id&&approve=true' }" class="text-success" title="Authorize"><i class="fa fa-check"></i> Authorize</a>
+                                <a onclick="if (confirm('Are you sure you want to Reject the request?')) { window.location.href='/Accountant/ApproveEnhancement?id=@item.Id&&approve=false' }" class="pl-2 text-danger" title="Reject"><i class="fa fa-times"></i> Reject</a>
+                            }
+                            else if (item.RequestState == 1)
+                            {
+                                <span class="text-success">Authorized</span>
+                            }
+                            else if (item.RequestState == 2)
+                            {
+                                <span class="text-danger">Rejected</span>
+                            }
+                            else if (item.RequestState == 3)
+                            {
+                                <span class="text-warning">Processed</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+</main>

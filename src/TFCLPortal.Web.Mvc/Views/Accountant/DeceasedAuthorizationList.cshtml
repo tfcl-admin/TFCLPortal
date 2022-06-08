@@ -1,0 +1,142 @@
+﻿@model List<TFCLPortal.DeceasedAuthorizations.Dto.DeceasedAuthorizationListDto>
+@{ int i = 0;}
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Deceased Marking Authorization List
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> >  Deceased Marking Authorization List
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        @*<p>
+            <a asp-action="Create">Create New</a>
+        </p>*@
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        Sr
+                    </th>
+                    <th>
+                        CLIENT ID
+                    </th>
+                    <th>
+                        APPLICANT / RESPONDENT NAME
+                    </th>
+                    <th>
+                        Client / School / Business Name
+                    </th>
+                    <th>
+                        Reason Of Death
+                    </th>
+                    <th>
+                        Date of Death
+                    </th>
+                    <th>
+                        Verification
+                    </th>
+                    <th>
+                        Document
+                    </th>
+                    <th colspan="3">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderByDescending(x=>x.Id).ToList())
+                {
+                <tr>
+                    <td> @{i = i + 1;} @i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SchoolName)
+                    </td>
+
+                    <td>
+                        @item.ReasonOfDeath
+                    </td>
+                    <td>
+                        @item.DateOfDeath
+                    </td>
+                    <td>
+                        @item.VerifiedBy
+                    </td>
+                    <td>
+                        @if (item.ProofUrl != ""&&item.ProofUrl!=null)
+                        {
+                            <a href="../@item.ProofUrl.Replace("wwwroot/","")"><i class="fa fa-download"></i></a>
+                        }
+                        else{
+                    <p>--</p>
+                        }
+                    </td>
+                    <td>
+                        <a class="Approve text-success" cnic="@item.CNIC" appid="@item.Id" title="Approve Deceased Marking"><i class="fa fa-check-circle-o"></i> Authorize</a>
+                    </td>
+                    <td>
+                        <a class="Reject text-danger" appid="@item.Id" title="Reject Deceased Marking"><i class="fa fa-times-circle-o"></i> Reject</a>
+                    </td>
+                    <td>
+                        <a href="/Dashboard/Application?id=@item.Id" title="View Application Details" target="_blank"><i class="fa fa-desktop"></i></a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+
+<script>
+
+    $('.Approve').click(function () {
+
+        var cnic = $(this).attr("cnic");
+        var appid = $(this).attr("appid");
+
+        if (confirm('Proceed to marking this applicant deceased?')) {
+            $(".pageloader").toggleClass("d-none");
+            window.location = '/Accountant/MarkApplicantDeceased?cnic=' + cnic + '&&appid='+appid;
+        }
+
+    });
+
+    $('.Reject').click(function () {
+
+        var appid = $(this).attr("appId");
+        let msg = prompt("Please enter reason for rejection:", "");
+        $(".pageloader").toggleClass("d-none");
+
+        if (msg == null || msg == "") {
+            // text = "User cancelled the prompt.";
+        } else {
+            //text = msg;
+            window.location.href = '../Accountant/declineMarkingDeceased?Id=' + appid + '&&Reason=' + msg;
+        }
+
+    });
+
+</script>

@@ -241,6 +241,7 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
                             mbo.AcademicSessionName = dataReader["AcademicSessionName"] == DBNull.Value || dataReader["AcademicSessionName"] == "" ? "" : Convert.ToString(dataReader["AcademicSessionName"]);
                             mbo.TDSBusinessNature = dataReader["TDSBusinessNature"] == DBNull.Value || dataReader["TDSBusinessNature"] == "" ? 0 : Convert.ToInt32(dataReader["TDSBusinessNature"]);
                             mbo.TDSBusinessNatureName = dataReader["TDSBusinessNatureName"] == DBNull.Value || dataReader["TDSBusinessNatureName"] == "" ? "" : Convert.ToString(dataReader["TDSBusinessNatureName"]);
+                            mbo.MobilizationRecordId = dataReader["mobilizationrecordid"] == DBNull.Value || dataReader["mobilizationrecordid"] == "" ? "" : Convert.ToString(dataReader["mobilizationrecordid"]);
 
                             mbo.AreaOfSchoolMarla = dataReader["AreaOfSchoolMarla"] == DBNull.Value || dataReader["AreaOfSchoolMarla"] == "" ? 0 : Convert.ToInt32(dataReader["AreaOfSchoolMarla"]);
 
@@ -284,12 +285,12 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
             }
         }
 
-        public List<ApplicationDto> GetAllApplicationList(string applicationState, int branchId, bool showAll = false, bool IsAdmin = false)
+        public List<ApplicationDto> GetAllApplicationList(string applicationState, int branchId, bool showAll = false, bool IsAdmin = false, bool IsEnhancement = false)
         {
             List<ApplicationDto> AppList = new List<ApplicationDto>();
             EnsureConnectionOpen();
             // bool IsApproved = false;
-            SqlParameter[] parameter = new SqlParameter[4];
+            SqlParameter[] parameter = new SqlParameter[5];
             parameter[0] = new SqlParameter();
             parameter[0].SqlDbType = SqlDbType.VarChar;
             parameter[0].ParameterName = "@ApplicationState";
@@ -309,6 +310,11 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
             parameter[3].SqlDbType = SqlDbType.Bit;
             parameter[3].ParameterName = "@IsAdmin";
             parameter[3].Value = IsAdmin;
+
+            parameter[4] = new SqlParameter();
+            parameter[4].SqlDbType = SqlDbType.Bit;
+            parameter[4].ParameterName = "@IsEnhancement";
+            parameter[4].Value = IsEnhancement;
 
             using (var command = CreateCommand("SP_GetAllApplications", CommandType.StoredProcedure, parameter))
             {
@@ -333,9 +339,13 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
                             obj.ShortCode = Convert.ToString(dataReader["ShortCode"]);
                             obj.AppDate = Convert.ToDateTime(dataReader["CreationTime"]);
                             obj.Id = Convert.ToInt32(dataReader["AppzId"]);
+                            obj.TAT = Convert.ToInt32(dataReader["TAT"]);
                             obj.branchId = Convert.ToInt32(dataReader["branchId"]);
+                            obj.FundingSource = Convert.ToInt32(dataReader["FundingSource"]);
+                            obj.FundingSourceName = dataReader["FundingSourceName"].ToString();
                             obj.Comments = dataReader["Comments"].ToString();
                             obj.LastScreen = Convert.ToString(dataReader["LastScreen"]);
+                            obj.Transferred = Convert.ToString(dataReader["transferred"]);
                             AppList.Add(obj);
 
                         }
@@ -391,6 +401,17 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
                         dashboard.TotalfileCount = Convert.ToInt32(dataReader["TotalfileCount"]);
                         dashboard.UnderMCRCreviewCount = Convert.ToInt32(dataReader["McrcReviewfileCount"]);
                         dashboard.ManagementApprovedCount = Convert.ToInt32(dataReader["ManagementApprovedCount"]);
+                        
+                        dashboard.SettledfileCount = Convert.ToInt32(dataReader["SettledfileCount"]);
+                        dashboard.SettledfileAmount = Convert.ToInt32(dataReader["SettledfileAmount"]);
+                        dashboard.EarlySettledfileCount = Convert.ToInt32(dataReader["EarlySettledfileCount"]);
+                        dashboard.EarlySettledfileAmount = Convert.ToInt32(dataReader["EarlySettledfileAmount"]);
+
+                        dashboard.DeceasedfileAmount = Convert.ToInt32(dataReader["DeceasedfileAmount"]);
+                        dashboard.DeceasedfileCount = Convert.ToInt32(dataReader["DeceasedfileCount"]);
+                        dashboard.EnhancementfileCount = Convert.ToInt32(dataReader["EnhancementfileCount"]);
+                        dashboard.EnhancedfileCount = Convert.ToInt32(dataReader["EnhancedfileCount"]);
+
 
 
                     }

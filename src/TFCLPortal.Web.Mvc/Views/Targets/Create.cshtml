@@ -4,115 +4,164 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
 }
+<style>
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
+</style>
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="pageloader d-none"></div>
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Allocate Target
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Target Allocation > Allocate Target
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+            <a asp-action="Index" class="btn btn-sm btn-outline-success bg1 eft-1"><i class="fa fa-list"></i> Go to List</a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
 
-<h2>Create</h2>
-
-<h4>Target</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Month" class="control-label"></label>
-                <input asp-for="Month" class="form-control" />
-                <span asp-validation-for="Month" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Month" class="control-label"></label>
+                        <select asp-for="Month" class="form-control">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <span asp-validation-for="Month" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Year" class="control-label"></label>
+                        <select asp-for="Year" class="form-control">
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                        </select>
+                        <span asp-validation-for="Year" class="text-danger"></span>
+                    </div>
+                </div>
+
             </div>
-            <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fk_SdeId" class="control-label"></label>
-                <input asp-for="Fk_SdeId" class="form-control" />
-                <span asp-validation-for="Fk_SdeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fk_BranchId" class="control-label"></label>
-                <input asp-for="Fk_BranchId" class="form-control" />
-                <span asp-validation-for="Fk_BranchId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fk_ProductTypeId" class="control-label"></label>
-                <input asp-for="Fk_ProductTypeId" class="form-control" />
-                <span asp-validation-for="Fk_ProductTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NoOfApplications" class="control-label"></label>
-                <input asp-for="NoOfApplications" class="form-control" />
-                <span asp-validation-for="NoOfApplications" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DisbursmentValue" class="control-label"></label>
-                <input asp-for="DisbursmentValue" class="form-control" />
-                <span asp-validation-for="DisbursmentValue" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Yeild" class="control-label"></label>
-                <input asp-for="Yeild" class="form-control" />
-                <span asp-validation-for="Yeild" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SecuredUnsecuredRatio" class="control-label"></label>
-                <input asp-for="SecuredUnsecuredRatio" class="form-control" />
-                <span asp-validation-for="SecuredUnsecuredRatio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RepeatClients" class="control-label"></label>
-                <input asp-for="RepeatClients" class="form-control" />
-                <span asp-validation-for="RepeatClients" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Maturity" class="control-label"></label>
-                <input asp-for="Maturity" class="form-control" />
-                <span asp-validation-for="Maturity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                    </label>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Employee Name</label>
+                        @Html.DropDownListFor(m => m.Fk_SdeId, ViewBag.UserList as SelectList, "Select Employee", new { @class = "form-control text-capitalize" })
+                        <span asp-validation-for="Fk_SdeId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Branch Name</label>
+                        @Html.DropDownListFor(m => m.Fk_BranchId, ViewBag.BranchList as SelectList, "Select Branch", new { @class = "form-control text-capitalize" })
+                        <span asp-validation-for="Fk_BranchId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Product Name</label>
+                        @Html.DropDownListFor(m => m.Fk_ProductTypeId, ViewBag.ProductList as SelectList, "Select Product", new { @class = "form-control text-capitalize" })
+                        <span asp-validation-for="Fk_ProductTypeId" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DeleterUserId" class="control-label"></label>
-                <input asp-for="DeleterUserId" class="form-control" />
-                <span asp-validation-for="DeleterUserId" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">No. Of Applications</label>
+                        <input asp-for="NoOfApplications" class="form-control" />
+                        <span asp-validation-for="NoOfApplications" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Disbursment Value</label>
+                        <input asp-for="DisbursmentValue" class="form-control" />
+                        <span asp-validation-for="DisbursmentValue" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                    <div class="form-group">
+                        <label class="control-label">Yield</label>
+                        <input asp-for="Yeild" class="form-control" />
+                        <span asp-validation-for="Yeild" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DeletionTime" class="control-label"></label>
-                <input asp-for="DeletionTime" class="form-control" />
-                <span asp-validation-for="DeletionTime" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Secured/Unsecured Ratio</label>
+                        <input asp-for="SecuredUnsecuredRatio" class="form-control" />
+                        <span asp-validation-for="SecuredUnsecuredRatio" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Repeat Clients</label>
+                        <input asp-for="RepeatClients" class="form-control" />
+                        <span asp-validation-for="RepeatClients" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Maturity" class="control-label"></label>
+                        <input asp-for="Maturity" class="form-control" />
+                        <span asp-validation-for="Maturity" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastModificationTime" class="control-label"></label>
-                <input asp-for="LastModificationTime" class="form-control" />
-                <span asp-validation-for="LastModificationTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastModifierUserId" class="control-label"></label>
-                <input asp-for="LastModifierUserId" class="form-control" />
-                <span asp-validation-for="LastModifierUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreationTime" class="control-label"></label>
-                <input asp-for="CreationTime" class="form-control" />
-                <span asp-validation-for="CreationTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatorUserId" class="control-label"></label>
-                <input asp-for="CreatorUserId" class="form-control" />
-                <span asp-validation-for="CreatorUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="form-group">
+                        <input type="submit" id="submit" value="Create" style="width:200px" class="btn btn-success" />
+                        <div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
-</div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $('#submit').on("click", function (e) {
+        $(".pageloader").toggleClass("d-none");
+    });
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+</script>

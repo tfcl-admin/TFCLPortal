@@ -34,5 +34,9 @@ namespace TFCLPortal.Schedules
         public string PerDayMarkup { get; set; }
         public string Reason { get; set; }
         public bool? isAuthorizedByBM { get; set; }
+        public int TurnArroundTimeMins { get; set; }
+        public string ReasonForDelayTAT { get; set; }
+        public decimal OpeningBalance { get; set; }
+
     }
 }

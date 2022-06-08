@@ -185,7 +185,7 @@ namespace TFCLPortal.ScheduleTemps
                 var result = ObjectMapper.Map<ScheduleTempListDto>(Schedule);
                 if (result != null)
                 {
-                    var ScheduleTempInstallment = _childRepository.GetAllList(i => i.FK_ScheduleId == result.Id);
+                    var ScheduleTempInstallment = _childRepository.GetAllList(i => i.FK_ScheduleId == result.Id).OrderBy(x => x.Id).ToList();
                     var MapScheduleTempAddDto = ObjectMapper.Map<List<ScheduleInstallmenttTempListDto>>(ScheduleTempInstallment);
                     result.installmentList = MapScheduleTempAddDto;
                 }

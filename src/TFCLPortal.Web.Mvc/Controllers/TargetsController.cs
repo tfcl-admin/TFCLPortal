@@ -6,9 +6,14 @@ using Abp.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TFCLPortal.Branches;
 using TFCLPortal.Controllers;
+using TFCLPortal.DynamicDropdowns.ProductTypes;
 using TFCLPortal.EntityFrameworkCore;
 using TFCLPortal.Targets;
+using TFCLPortal.Users;
+using TFCLPortal.Users.Dto;
+using TFCLPortal.Web.Models.Common;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -16,30 +21,98 @@ namespace TFCLPortal.Web.Controllers
     {
         private readonly ITargetAppService _targetAppService;
         private readonly IRepository<Target> _targetRepository;
+        private readonly IProductTypeAppService _productTypeAppService;
+        private readonly IBranchDetailAppService _branchDetailAppService;
+        private readonly IUserAppService _userAppService;
 
-
-        public TargetsController(ITargetAppService targetAppService, IRepository<Target> targetRepository)
+        public TargetsController(IUserAppService userAppService,IBranchDetailAppService branchDetailAppService,IProductTypeAppService productTypeAppService,ITargetAppService targetAppService, IRepository<Target> targetRepository)
         {
+            _userAppService = userAppService;
+            _branchDetailAppService = branchDetailAppService;
+            _productTypeAppService = productTypeAppService;
             _targetRepository = targetRepository;
             _targetAppService = targetAppService;
         }
 
         // GET: Targets
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(TargetIndexModelFilter filter)
         {
             var targets = _targetAppService.GetAllAlocatedTarget();
-            return View(targets);
+            
+            if(filter.Month!=null && filter.Month != 0)
+            {
+                targets = targets.Where(x => x.Month == filter.Month).ToList();
+            }
+            else
+            {
+                filter.Month = DateTime.Now.Month;
+                targets = targets.Where(x => x.Month == DateTime.Now.Month).ToList();
+            }
+
+            if (filter.Year != null && filter.Year != 0)
+            {
+                targets = targets.Where(x => x.Year == filter.Year).ToList();
+            }
+            else
+            {
+                filter.Year = DateTime.Now.Year;
+                targets = targets.Where(x => x.Year == DateTime.Now.Year).ToList();
+            }
+
+            if (filter.Fk_SdeId != null && filter.Fk_SdeId != 0)
+            {
+                targets = targets.Where(x => x.Fk_SdeId == filter.Fk_SdeId).ToList();
+            }
+
+            if (filter.Fk_ProductTypeId != null && filter.Fk_ProductTypeId != 0)
+            {
+                targets = targets.Where(x => x.Fk_ProductTypeId == filter.Fk_ProductTypeId).ToList();
+            }
+
+            if (filter.Fk_BranchId != null && filter.Fk_BranchId != 0)
+            {
+                targets = targets.Where(x => x.Fk_BranchId == filter.Fk_BranchId).ToList();
+            }
+
+            var users = (await _userAppService.GetAll(new PagedUserResultRequestDto { MaxResultCount = int.MaxValue })).Items;
+            List<Users.Dto.UserDto> SdeUsers = new List<Users.Dto.UserDto>();
+
+            foreach (var user in users)
+            {
+                if (user.RoleNames != null && user.RoleNames.Any(r => r == "SDE"))
+                {
+
+                    SdeUsers.Add(user);
+                }
+
+            }
+
+            ViewBag.UserList = new SelectList(SdeUsers, "Id", "FullName");
+
+            var products = _targetAppService.getProducts();
+            ViewBag.ProductList = new SelectList(products, "Id", "Name");
+
+            var branches = _branchDetailAppService.GetBranchListDetail();
+            ViewBag.BranchList = new SelectList(branches, "Id", "BranchCode");
+
+
+            TargetIndexModel model = new TargetIndexModel();
+
+            model.Filters = filter;
+            model.Targets = targets;
+
+            return View(model);
         }
 
         // GET: Targets/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var target = _targetAppService.GetTargetById((int)id);
+            var target = _targetAppService.GetAllAlocatedTarget().Where(x=>x.Id==(int)id).SingleOrDefault();
             if (target == null)
             {
                 return NotFound();
@@ -49,8 +122,30 @@ namespace TFCLPortal.Web.Controllers
         }
 
         // GET: Targets/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var users = (await _userAppService.GetAll(new PagedUserResultRequestDto { MaxResultCount = int.MaxValue })).Items;
+            List<Users.Dto.UserDto> SdeUsers = new List<Users.Dto.UserDto>();
+
+            foreach (var user in users)
+            {
+                if (user.RoleNames != null && user.RoleNames.Any(r => r == "SDE"))
+                {
+
+                    SdeUsers.Add(user);
+                }
+
+            }
+
+            ViewBag.UserList = new SelectList(SdeUsers, "Id", "FullName");
+            
+            var products = _targetAppService.getProducts();
+            ViewBag.ProductList = new SelectList(products, "Id", "Name");
+
+            var branches = _branchDetailAppService.GetBranchListDetail();
+            ViewBag.BranchList = new SelectList(branches, "Id", "BranchCode");
+
+
             return View();
         }
 
@@ -59,12 +154,12 @@ namespace TFCLPortal.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Target target)
+        public IActionResult Create(Target target)
         {
             if (ModelState.IsValid)
             {
-                _targetRepository.InsertAsync(target);
-                CurrentUnitOfWork.SaveChangesAsync();
+                _targetRepository.Insert(target);
+                CurrentUnitOfWork.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(target);
@@ -78,11 +173,33 @@ namespace TFCLPortal.Web.Controllers
                 return NotFound();
             }
 
-            var target = await _targetRepository.GetAsync((int)id);
+            var target =  _targetRepository.Get((int)id);
             if (target == null)
             {
                 return NotFound();
             }
+
+            var users = (await _userAppService.GetAll(new PagedUserResultRequestDto { MaxResultCount = int.MaxValue })).Items;
+            List<Users.Dto.UserDto> SdeUsers = new List<Users.Dto.UserDto>();
+
+            foreach (var user in users)
+            {
+                if (user.RoleNames != null && user.RoleNames.Any(r => r == "SDE"))
+                {
+
+                    SdeUsers.Add(user);
+                }
+
+            }
+
+            ViewBag.UserList = new SelectList(SdeUsers, "Id", "FullName");
+
+            var products = _targetAppService.getProducts();
+            ViewBag.ProductList = new SelectList(products, "Id", "Name");
+
+            var branches = _branchDetailAppService.GetBranchListDetail();
+            ViewBag.BranchList = new SelectList(branches, "Id", "BranchCode");
+
             return View(target);
         }
 
@@ -91,7 +208,7 @@ namespace TFCLPortal.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Target target)
+        public  IActionResult Edit(int id, Target target)
         {
             if (id != target.Id)
             {
@@ -102,7 +219,7 @@ namespace TFCLPortal.Web.Controllers
             {
                 try
                 {
-                    _targetRepository.UpdateAsync(target);
+                    _targetRepository.Update(target);
                     CurrentUnitOfWork.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -122,14 +239,14 @@ namespace TFCLPortal.Web.Controllers
         }
 
         // GET: Targets/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var target = await _targetRepository.GetAsync((int)id);
+            var target = _targetAppService.GetAllAlocatedTarget().Where(x=>x.Id==(int)id).SingleOrDefault();
             if (target == null)
             {
                 return NotFound();
@@ -141,11 +258,11 @@ namespace TFCLPortal.Web.Controllers
         // POST: Targets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var target = await _targetRepository.GetAsync((int)id);
-            _targetRepository.DeleteAsync(target);
-            CurrentUnitOfWork.SaveChangesAsync();
+            var target = _targetRepository.Get((int)id);
+            _targetRepository.Delete(target);
+            CurrentUnitOfWork.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 

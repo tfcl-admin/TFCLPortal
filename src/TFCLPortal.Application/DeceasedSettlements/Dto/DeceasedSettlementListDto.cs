@@ -26,5 +26,8 @@ namespace TFCLPortal.DeceasedSettlements.Dto
         public string ClientName { get; set; }
         public string CNIC { get; set; }
         public string SchoolName { get; set; }
+
+        public string ProofUrl { get; set; }
+
     }
 }

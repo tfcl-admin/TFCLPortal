@@ -28,7 +28,7 @@
                 <input type="number" id="cnicText" placeholder="CNIC without - (3754815465445)" maxlength="13" class="form-control" />
             </div>
             <div class="col-md-3">
-                <a class="btn btn-outline-success" onclick="searchCNIC()" ><i class="fa fa-search"></i> Search</a>
+                <a class="btn btn-outline-success" onclick="searchCNIC()"><i class="fa fa-search"></i> Search</a>
             </div>
             <div class="col-md-12 text-center" style="margin-top:50px">
                 <p id="LoadedCNICs"></p>
@@ -43,20 +43,21 @@
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="~/js/printThis-master/printThis.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
 
 <script>
 
     var getJson = @Html.Raw(Json.Serialize(ViewBag.JsonData));
-    var allResults = JSON.stringify(getJson.value);
-    console.table(allResults);
-    $('#LoadedCNICs').text(getJson.value.length + ' CNICs Loaded.');
+    var allResults = JSON.stringify(getJson);
+    //console.table(allResults);
+    $('#LoadedCNICs').text(getJson.length + ' CNICs Loaded.');
 
-
+    var dateUpdate = moment(getJson[0].creationTime).format('DD MMM YYYY hh:mm A');
     function searchCNIC() {
         var cnic = $('#cnicText').val();
         if (cnic != "" && cnic.length == 13) {
             if (allResults.indexOf(cnic) > -1) {
-                printDiv(1, getJson.value.find(x=>x.cnic==cnic));
+                printDiv(1, getJson.find(x=>x.cnic==cnic));
             }
             else {
                 printDiv(0, cnic);
@@ -69,7 +70,7 @@
     }
 
     function printDiv(present, item) {
-        var d = new Date().toLocaleString();
+        var d = new Date();
 
         if (present == 1) {
             abp.notify.error("CNIC found in AML/CFT", "");
@@ -84,9 +85,12 @@
                 html_string = html_string.replace("{father}", item.fatherName);
                 html_string = html_string.replace("{province}", item.province);
                 html_string = html_string.replace("{district}", item.district);
-                html_string = html_string.replace("{datetime}", d);
+                html_string = html_string.replace("{datetime}", moment().format('DD MMM YYYY hh:mm A'));
+                html_string = html_string.replace("{TodayDatetime}", dateUpdate);
+
+
                 printResult(html_string);
-            }, 'html'); 
+            }, 'html');
 
         }
         else if (present == 0) {
@@ -97,10 +101,11 @@
                 html_string = html_string.replaceAll("{color}", "success");
                 html_string = html_string.replace("{isfound}", "not found");
                 html_string = html_string.replaceAll("{CNIC}", item);
-                html_string = html_string.replace("{datetime}", d);
+                html_string = html_string.replace("{datetime}", moment().format('DD MMM YYYY hh:mm A'));
+                html_string = html_string.replace("{TodayDatetime}", dateUpdate);
 
                 printResult(html_string);
-            }, 'html'); 
+            }, 'html');
         }
     }
 

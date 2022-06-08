@@ -215,7 +215,19 @@ namespace TFCLPortal.Schedules
             {
                 var Schedule = _ScheduleRepository.GetAllList().ToList();
 
-                return ObjectMapper.Map<List<ScheduleListDto>>(Schedule);
+                var result = ObjectMapper.Map<List<ScheduleListDto>>(Schedule);
+
+                foreach(var item in result)
+                {
+                    if (result != null)
+                    {
+                        var ScheduleInstallment = _childRepository.GetAllList(i => i.FK_ScheduleId == item.Id).OrderBy(x => x.Id);
+                        var MapScheduleAddDto = ObjectMapper.Map<List<ScheduleInstallmenttListDto>>(ScheduleInstallment);
+                        item.installmentList = MapScheduleAddDto;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {

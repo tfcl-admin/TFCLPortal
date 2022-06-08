@@ -2,12 +2,13 @@
 
 @{
     Layout = null;
-    int totalPrincipal = 0;
+    decimal totalPrincipal = 0;
     int totalInterest = 0;
     int totalInstallment = 0;
     //CultureInfo provider = CultureInfo.InvariantCulture;
 
 }
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
 
@@ -33,6 +34,7 @@
         padding: 4px;
         text-transform: uppercase
     }
+
     .container {
         background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url("/Theame/images/bg.png");
         background-repeat: no-repeat;
@@ -49,7 +51,7 @@
         <div class="col-md-4 text-center" style="padding-top:30px">
             <h3 style="text-transform:uppercase">Loan Schedule</h3>
         </div>
-      
+
     </div>
 
     <div class="row" style="padding-top:30px;">
@@ -59,8 +61,14 @@
                     <td>
                         <b>School/Business Name</b>
                     </td>
-                    <td colspan="3">
+                    <td colspan="1">
                         @ViewBag.SchoolName
+                    </td>
+                    <td>
+                        <b>Loan Cycle</b>
+                    </td>
+                    <td colspan="1">
+                        @ViewBag.LoanCycles
                     </td>
                 </tr>
                 <tr>
@@ -107,10 +115,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <b>APR</b>
+                        <b>APR *</b>
                     </td>
                     <td>
-                        @Model.Markup
+                        @Model.Markup%
                     </td>
                     <td>
                         <b>Current Status</b>
@@ -165,11 +173,11 @@
                             </td>
                         }
 
+                    <td style="text-align:right">
+                        <font class="@(item.isPrincipalPaid?"text-success":"text-gray")">@item.principal</font>
+                    </td>
                         <td style="text-align:right">
-                            @item.principal
-                        </td>
-                        <td style="text-align:right">
-                            @item.markup
+                            <font class="@(item.isMarkupPaid?"text-success":"text-gray")">@item.markup</font>
                         </td>
                         <td style="text-align:right">
                             @item.installmentAmount
@@ -200,7 +208,7 @@
                             @(item.PaidAmount == null ||item.PaidAmount=="" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,##0}", Decimal.Parse((item.PaidAmount).Replace(",", ""))))
                         </td>
                         <td style="text-align:center">
-                            @(item.ExcessShort == null ||item.ExcessShort == "" || item.ExcessShort == "0" ? "--" : string.Format("{0:##,###}", item.ExcessShort))
+                            @(item.ExcessShort == null ||item.ExcessShort == "" || item.ExcessShort == "0.00" || item.ExcessShort == "0" ? "--" : string.Format("{0:##,###}", Decimal.Parse((item.ExcessShort).Replace(",", ""))))
                         </td>
 
 
@@ -244,7 +252,7 @@
                     }
                     else
                     {
-                        totalPrincipal += int.Parse(item.principal.Replace(",", ""));
+                        totalPrincipal += decimal.Parse(item.principal.Replace(",", ""));
                     }
 
                     @if (item.markup == "--" || item.markup == "" || item.markup == null)
@@ -266,10 +274,10 @@
                     }
 
                     @*@{
-                    totalPrincipal = totalPrincipal + (item.principal == "--" || item.principal == "" || item.principal == null ? 0 : int.Parse(item.principal.Replace(",", "")));
-                    totalInterest = totalInterest + (item.markup == "--" || item.markup == "" || item.markup == null ? 0 : int.Parse(item.markup.Replace(",", "")));
-                    totalInstallment = totalInstallment + (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null ? 0 : int.Parse(item.installmentAmount.Replace(",", "")));
-                }*@
+                            totalPrincipal = totalPrincipal + (item.principal == "--" || item.principal == "" || item.principal == null ? 0 : int.Parse(item.principal.Replace(",", "")));
+                            totalInterest = totalInterest + (item.markup == "--" || item.markup == "" || item.markup == null ? 0 : int.Parse(item.markup.Replace(",", "")));
+                            totalInstallment = totalInstallment + (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null ? 0 : int.Parse(item.installmentAmount.Replace(",", "")));
+                        }*@
 
 
                 }
@@ -283,9 +291,24 @@
                     else
                     {
                         <th style="text-align:center" colspan="2">Grand Total</th>
-
                     }
+
+                    @if (totalPrincipal > 999999)
+                    {
+                        totalPrincipal = totalPrincipal / 100000;
+                        totalPrincipal = Math.Round(totalPrincipal);
+                        totalPrincipal = totalPrincipal * 100000;
+                    }
+                    else if (totalPrincipal > 99999)
+                    {
+                        totalPrincipal = totalPrincipal / 10000;
+                        totalPrincipal = Math.Round(totalPrincipal);
+                        totalPrincipal = totalPrincipal * 10000;
+                    }
+
+
                     <th style="text-align:right">@string.Format("{0:#,##0}", totalPrincipal)</th>
+
                     <th style="text-align:right">@string.Format("{0:#,##0}", totalInterest)</th>
                     <th style="text-align:right">@string.Format("{0:#,##0}", totalInstallment)</th>
                     <th style="text-align:right"></th>
@@ -294,7 +317,10 @@
 
 
             </table>
-            <div class="col-md-12 text-right" style="padding-top: 40px;font-size: 12px;">Print Date : @ViewBag.PrintDate</div>
+            <div class="row">
+                <div class="col-md-8" style="padding-top: 40px;font-size: 12px;"><i>*IRR for this loan is @Model.IRR%</i></div>
+                <div class="col-md-4 text-right" style="padding-top: 40px;font-size: 12px;"><i>Print Date : @ViewBag.PrintDate</i></div>
+            </div>
         </div>
     </div>
 

@@ -42,12 +42,20 @@
                         Client / School / Business Name
                     </th>
                     <th>
+                        O/S Principal
+                    </th>
+                    <th>
+                        O/S Mark-Up
+                    </th>
+                    <th>
                         total Amount Payable
                     </th>
                     <th>
                         amount Deposited
                     </th>
-                   
+                    <th>
+                        Document
+                    </th>
                     <th colspan="2">
                         Actions
                     </th>
@@ -68,14 +76,29 @@
                         @Html.DisplayFor(modelItem => item.SchoolName)
                     </td>
                     <td>
+                        @(string.Format("{0:#,##0}", item.OsPrincipalAmount))
+                    </td>
+                    <td>
+                        @(string.Format("{0:#,##0}", item.OsMarkupAmount))
+                    </td>
+                    <td>
                         @(string.Format("{0:#,##0}", item.TotalAmountPayable))
                     </td>
                     <td>
                         @(string.Format("{0:#,##0}", item.AmountDeposited))
                     </td>
-
                     <td>
-                        <a href="/Accountant/DeceasedSettlementAuthorization?Id=@item.Id" ><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>
+                        @if (item.ProofUrl != "" && item.ProofUrl != null)
+                        {
+                            <a href="../@item.ProofUrl.Replace("wwwroot/","")"><i class="fa fa-download"></i></a>
+                        }
+                        else
+                        {
+                            <p>--</p>
+                        }
+                    </td>
+                    <td>
+                        <a href="/Accountant/DeceasedSettlementAuthorization?Id=@item.Id"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>
                         @*<a class="openModal" data-user-id="@item.Id" data-toggle="modal" data-target="#Modal"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>*@
                     </td>
                     <td>

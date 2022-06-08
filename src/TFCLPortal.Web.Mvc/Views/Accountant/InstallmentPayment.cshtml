@@ -2,6 +2,14 @@
 
 @{
     Layout = "~/Views/Shared/_NewLayout.cshtml";
+    decimal payment = (ViewBag.Payment==null?0: ViewBag.Payment);
+    decimal balAfterPayment = 0;
+
+    if (payment >= ViewBag.DueAmount)
+    {
+        balAfterPayment = payment - ViewBag.DueAmount;
+        payment = ViewBag.DueAmount;
+    }
 }
 <style>
     .table-bordered td {
@@ -43,13 +51,13 @@
                             <input type="text" value="@ViewBag.ClientName" readonly="readonly" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 d-none">
                         <div class="form-group">
                             <label>Nature Of Payment <font color="red">*</font></label>
                             @Html.DropDownList("NatureOfPayment", ViewBag.NatureOfPaymentsList as SelectList, new { Name = "NatureOfPayment", @class = "form-control", required = "required" })
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 d-none">
                         <div class="form-group">
                             <label>Others</label>
                             <input asp-for="NatureOfPaymentOthers" class="form-control" readonly="readonly" />
@@ -75,7 +83,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Account Balance</label>
+                            <label>Amount Paid</label>
                             <input asp-for="PreviousBalance" value="@ViewBag.PreviousBalance" readonly="readonly" class="form-control" />
                         </div>
                     </div>
@@ -89,7 +97,7 @@
                             <input asp-for="DueAmount" value="@ViewBag.DueAmount" readonly="readonly" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 d-none">
                         <div class="form-group">
                             <label>Mode of Payment</label>
                             <input asp-for="ModeOfPayment" value="" class="form-control d-none" />
@@ -113,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 d-none">
                         <div class="form-group">
                             <label>Others</label>
                             <input asp-for="ModeOfPaymentOthers" class="form-control" readonly="readonly" />
@@ -121,40 +129,44 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Amount (Rs) <font color="red">*</font></label>
-                            <input asp-for="Amount" value="" class="form-control" required="required" v-model="amount" />
+                            <label>Account Balance (Rs) <font color="red">*</font> @(balAfterPayment>0? "(Balance after Payment : "+@balAfterPayment+")" : "") </label>
+                            <input asp-for="Amount" value="@payment" readonly="readonly" class="form-control" required="required" v-model="amount" />
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Excess Payment / Short Payment</label>
-                            <input asp-for="ExcessShortPayment" value="" readonly="readonly" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-md-12">
                         <div class="form-group">
                             <label>Amount in Words</label>
                             <input asp-for="AmountWords" id="AmountWords" readonly="readonly" class="form-control" style="text-transform:capitalize" />
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Short Payment</label>
+                            <input asp-for="ExcessShortPayment" value="" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount Deposit Date <font color="red">*</font></label>
+                            <input asp-for="DepositDate" class="form-control" required="required" step="any" />
+                        </div>
+                    </div>
 
-
-
-                    <div class="col-md-5">
+                    <div class="col-md-5 d-none">
                         <div class="form-group">
                             <label>Late Days <font color="red">*</font> <span id="lateDaysMessage" style="color:red"></span></label>
                             <input asp-for="LateDays" value="" class="form-control" readonly="readonly" required="required" />
                         </div>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-5 d-none">
                         <div class="form-group">
                             <label>Late Days Charges <span id="LateDaysCharges"></span></label>
                             <input asp-for="LateDaysPenalty" value="" readonly="readonly" class="form-control" />
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-2 d-none">
                         <div class="form-group">
                             <label></label>
                             <input asp-for="isLateDaysApplied" value="" class="form-control d-none" />
@@ -167,14 +179,9 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Amount Deposit Date <font color="red">*</font></label>
-                            <input asp-for="DepositDate" class="form-control" required="required" step="any" />
-                        </div>
-                    </div>
 
-                    <div class="col-md-6">
+
+                    <div class="col-md-6  d-none">
                         <div class="form-group">
                             <label>Bank Name <font color="red">*</font></label>
                             @Html.DropDownList("FK_CompanyBankId", ViewBag.BanksList as SelectList, new { Name = "BankName", @class = "form-control", required = "required" })
@@ -236,6 +243,13 @@
 
 
         });
+
+        var amountex = $('#Amount').val().replaceAll(',', '');
+        //alert(amountex);
+        $('#AmountWords').val(numWords(amountex));
+        $('#ExcessShortPayment').val(numberWithCommas(Number(amountex) - Number($('#DueAmount').val().replaceAll(',', ''))));
+
+
 
         function onDepositDateUpdate() {
             var depositDate = moment($("#DepositDate").val());

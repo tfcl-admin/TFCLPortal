@@ -2,7 +2,30 @@
 @{
     ViewData["Title"] = "Applications";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
-    
+
+}
+
+
+@functions{
+    public string getTAT(int Minutes)
+    {
+        string answer = "";
+
+        if (Minutes!=0)
+        {
+            TimeSpan t = TimeSpan.FromSeconds(Minutes * 60);
+
+            answer = string.Format("{0:D2} Day(s), {1:D2} Hour(s), {2:D2} Minute(s)",
+                        t.Days,
+                        t.Hours,
+                        t.Minutes);
+        }
+
+        //string answer = Minutes.ToString("#,###");
+
+
+        return answer;
+    }
 }
 <style>
     .dropdown-item {
@@ -101,7 +124,16 @@
                             <td>@item.SchoolName</td>
                             <td>@item.Product</td>
                             @*<td>@item.MobilizationStatus</td>*@
-                            <td>@item.SDEName</td>
+
+                            @if (item.Transferred == null || item.Transferred == "")
+                            {
+                                <td>@item.SDEName</td>
+
+                            }
+                            else
+                            {
+                                <td style="color:blue" title="Transferred From @item.SDEName"><i class="fa fa-at"></i> @item.Transferred </td>
+                            }
                             @*<td>@item.NextMeeting.ToString("dd/MM/yyyy")</td>*@
                             <td>@item.AppStatus</td>
                             @*<td><a href="~/Application/ApplicationDetail/@item.Id" class="edit-btn"><i class="fa fa-edit" aria-hidden="true"></i></a></td>*@
@@ -114,7 +146,6 @@
                                         <i class="fa fa-list"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
                                         @if (item.AppStatus.Contains("ecline"))
                                         {
                                             <p class="text-center detailHeading dropdown-item">Decline Reason</p>
@@ -127,11 +158,6 @@
                                             <p class="text-center" style="font-size:11px">@(item.LastScreen==null || item.LastScreen == "" ? "--" : item.LastScreen )</p>
                                             <div class="dropdown-divider"></div>
                                         }
-
-
-
-
-
                                         @if (item.ClientID.Length > 0)
                                         {
 
@@ -145,10 +171,21 @@
                                                 <a class="dropdown-item" href="~/Dashboard/TDSApplication?id=@item.Id"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>
                                                 <a class="dropdown-item " target="_blank" href="/Dashboard/ApplicationReportTds?ApplicationId=@item.Id"><i class="fa fa-print"></i> Print Application</a>
                                             }
+
                                         }
                                         else
                                         {
-                                            <a class="dropdown-item"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>
+                                            @if (item.ShortCode == "TSS" || item.ShortCode == "TSA")
+                                            {
+                                                <a class="dropdown-item" href="~/Dashboard/Application?id=@item.Id"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>
+                                                <a class="dropdown-item " target="_blank" href="/Dashboard/ApplicationReport?ApplicationId=@item.Id"><i class="fa fa-print"></i> Print Application</a>
+                                            }
+                                            else if (item.ShortCode == "TDS" || item.ShortCode == "TJS")
+                                            {
+                                                <a class="dropdown-item" href="~/Dashboard/TDSApplication?id=@item.Id"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>
+                                                <a class="dropdown-item " target="_blank" href="/Dashboard/ApplicationReportTds?ApplicationId=@item.Id"><i class="fa fa-print"></i> Print Application</a>
+                                            }
+                                            @*<a class="dropdown-item"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>*@
                                         }
                                         <a class="dropdown-item" href="~/About/Index?id=@item.Id&&u=BM" target="_blank"><i class="fa fa-upload"></i> Upload Documents</a>
                                         <a class="dropdown-item" href="~/Deviation/ApplicationWiseDetails/@item.Id" target="_blank"><i class="fa fa-clipboard"></i> View Deviation Matrix</a>
@@ -159,10 +196,20 @@
                                         <a class="dropdown-item" href="/McrcDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
                                         <a class="dropdown-item" href="/BCCDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
                                         <a class="dropdown-item" href="/Application/ApplicationDiscrepencies?id=@item.Id" target="_blank"><i class="fa fa-warning"></i> View Discrepencies</a>
-                                        @if (item.AppStatus == "Early Settled" || item.AppStatus == "Disbursed")
+                                        @if (item.AppStatus == "Early Settled" || item.AppStatus == "Disbursed" || item.AppStatus == "Deceased" || item.AppStatus == "Settled" || item.AppStatus == "Enhanced")
                                         {
                                             <a class="dropdown-item" href="/Accountant/ViewSchedule?ApplicationId=@item.Id" target="_blank"><i class="fa fa-calendar"></i> View Schedule</a>
-
+                                            @if (item.AppStatus == "Early Settled")
+                                            {
+                                                <a class="dropdown-item" href="/Accountant/getEarlySettlement?ApplicationId=@item.Id" target="_blank"><i class="fa fa-money"></i> View Settlement</a>
+                                            }
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item">
+                                                <i class="fa fa-money"></i> Funded By @item.FundingSourceName
+                                            </a>
+                                            <a class="dropdown-item">
+                                                <i class="fa fa-calendar"></i> TAT : @getTAT(item.TAT)
+                                            </a>
                                         }
 
                                     </div>

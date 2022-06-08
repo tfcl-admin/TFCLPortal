@@ -39,6 +39,16 @@ namespace TFCLPortal.Applications.Dto
         public string LTVForFranchiseAgreement { get; set; }
         public string LTVForGold { get; set; }
         public string MinStudentEnrolled { get; set; }
+
+        public ApplicationListDto OldApplication { get; set; }
+        //public ApplicationListDto NewApplication { get; set; }
         //New Fields End
+    }
+    public class CnicCheckResponse
+    {
+        public int status { get; set; }
+        public int previousApplicationId { get; set; }
+        public int previousProductType { get; set; }
+        public string MessageToShow { get; set; }
     }
 }

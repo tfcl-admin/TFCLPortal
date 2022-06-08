@@ -41,6 +41,7 @@ namespace TFCLPortal.Applications.Dto
         public int NoOfStaff { get; set; }
         public string BuildingStatus { get; set; }
         public int AreaOfSchoolMarla { get; set; }
+        public string MobilizationRecordId { get; set; }
 
         public string RespondantDesignationOthers { get; set; } //New
         public int InteractionNumber { get; set; }//New
@@ -78,4 +79,5 @@ namespace TFCLPortal.Applications.Dto
         public int SchoolGoingDependants { get; set; }
 
     }
+
 }

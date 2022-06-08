@@ -2,7 +2,22 @@
     Layout = null;
 }
 
+@functions{
+    public string getTAT(int Minutes)
+    {
+        TimeSpan t = TimeSpan.FromSeconds(Minutes * 60);
 
+        string answer = string.Format("{0:D2} Day(s), {1:D2} Hour(s), {2:D2} Minute(s)",
+                    t.Days,
+                    t.Hours,
+                    t.Minutes);
+
+        //string answer = Minutes.ToString("#,###");
+
+    
+        return answer;
+    }
+}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
@@ -177,7 +192,10 @@
                     <td><b>SDE Name</b></td>
                     <td style="background-color:lightyellow">@ViewBag.SDEName</td>
                 </tr>
-
+                <tr>
+                    <td><b>TAT</b></td>
+                    <td style="background-color:lightyellow">@(getTAT(ViewBag.Input.TurnArroundTimeMins))</td>
+                </tr>
 
                 @if (ViewBag.Input.isDeferrment == true)
                 {
@@ -284,6 +302,7 @@
         var YearlyMarkup = parseFloat('@ViewBag.Input.YearlyMarkup.Replace(",","")');
         var Irr = parseFloat('@ViewBag.Input.IRR_Full');
         var Type = '@ViewBag.Input.ScheduleType';
+
         var tranches = @Html.Raw(Json.Serialize(ViewBag.Input.listForTranches));
 
         console.log(tranches);
@@ -794,7 +813,6 @@
                 });
 
             }
-
              var dataToSend = {
                 'ApplicationId':'@ViewBag.ApplicationId',
                 'ClientId':'@ViewBag.Application.ClientID',
@@ -811,6 +829,8 @@
                 'TFCL_Branch': '@ViewBag.Input.BranchName',
                 'BranchManager':'@ViewBag.BMName',
                 'SDE': '@ViewBag.SDEName',
+                'ReasonForDelayTAT': '@ViewBag.Input.ReasonForDelayTAT',
+                'TurnArroundTimeMins': '@ViewBag.Input.TurnArroundTimeMins',
                  'DeffermentStartDate': $("#txtDeffermentStartDate").text().trim(),
                  'DeffermentEndDate': $("#txtDeffermentEndDate").text().trim(),
                 'IRR': $("#txtIRR").text(),

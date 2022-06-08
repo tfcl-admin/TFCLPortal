@@ -12,6 +12,7 @@ namespace TFCLPortal.Targets.Dto
         public int Month { get; set; }
         public int Year { get; set; }
         public int Fk_SdeId { get; set; }
+        public string MonthName { get; set; }
         public string SdeName { get; set; }
         public int Fk_BranchId { get; set; }
         public string BranchName { get; set; }

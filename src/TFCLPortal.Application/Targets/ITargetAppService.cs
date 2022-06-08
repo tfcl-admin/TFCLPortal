@@ -13,6 +13,6 @@ namespace TFCLPortal.Targets
         Task<string> CreateTarget(CreateTargetDto input);
         Task<string> UpdateTarget(UpdateTargetDto input);
         List<TargetListDto> GetAllAlocatedTarget();
-
+        List<TargetProducts> getProducts();
     }
 }

@@ -18,6 +18,7 @@ namespace TFCLPortal.Branches
         public string Active { get; set; }
         public string Address { get; set; }
         public int FK_companyid { get; set; }
+        public int FK_BMid { get; set; }
 
         [ForeignKey("FK_companyid")]
         public Company Comapny { get; set; }

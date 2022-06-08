@@ -7,7 +7,6 @@
     <OutputType>Exe</OutputType>
     <PackageId>TFCLPortal.Web.Host</PackageId>
     <UserSecretsId>AbpCompanyName-TFCLPortal-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/d5b5bce6-a53e-4306-9204-80427e80cb57/resourceGroups/TFCL-Web-Api/providers/microsoft.insights/components/tfclapi</ApplicationInsightsResourceId>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\swagger\ui\index.html" />
@@ -29,6 +28,7 @@
     <ProjectReference Include="..\TFCLPortal.Web.Core\TFCLPortal.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
+    <Folder Include="Properties\ServiceDependencies\local\" />
   </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 </Project>

@@ -23,5 +23,8 @@ namespace TFCLPortal.Schedules.Dto
         public string OsPrincipal_Closing { get; set; }
         public bool? isPaid { get; set; }
         public DateTime? PaymentDate { get; set; }
+
+        public bool isMarkupPaid { get; set; }
+        public bool isPrincipalPaid { get; set; }
     }
 }

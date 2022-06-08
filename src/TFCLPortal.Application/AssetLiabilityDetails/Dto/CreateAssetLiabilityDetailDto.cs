@@ -15,6 +15,7 @@ namespace TFCLPortal.AssetLiabilityDetails.Dto
         public decimal AssetCashInHandAtBank { get; set; }
         public decimal AssetVehicle { get; set; }
         public decimal AssetEquipment { get; set; }
+        public bool isNew { get; set; }
         public decimal AssetCommittee { get; set; }
         public decimal OtherAssets { get; set; }
         public decimal TotalBusinessAsset { get; set; }
@@ -31,7 +32,8 @@ namespace TFCLPortal.AssetLiabilityDetails.Dto
         public decimal BorrowerNetWorthLiability { get; set; }
         public string ScreenStatus { get; set; }
         public string Comments { get; set; }
-
+        public string qtyMachinery { get; set; }
+        public string detailsMachinery { get; set; }
         //NEW
         public decimal AssetStockInHand { get; set; }
         public decimal AssetFranchiseFee { get; set; }
@@ -71,11 +73,27 @@ namespace TFCLPortal.AssetLiabilityDetails.Dto
         public string detailsProvidentFund { get; set; }
         public string qtyProvidentFund { get; set; }
 
-
-
-
         public decimal LiablityStudentSecurityDeposit { get; set; }
         public DateTime AssetLiabilityAsOn { get; set; }
+
+        //----------------------------Addition Due to CAT--------------------------------//
+        public string qtyCurrAccountRecievable { get; set; }
+        public string detailsCurrAccountRecievable { get; set; }
+        public string qtyCurrCommittee { get; set; }
+        public string detailsCurrCommittee { get; set; }
+        public string CurrTotalCurrentAssets { get; set; }
+        public string qtyCurrLoanPayableBanks { get; set; }
+        public string detailsCurrLoanPayableBanks { get; set; }
+        public string qtyCurrAccountPayable { get; set; }
+        public string detailsCurrAccountPayable { get; set; }
+        public string qtyCurrCommitteeLiabilities { get; set; }
+        public string detailsCurrCommitteeLiabilities { get; set; }
+        public string qtyCurrAdvanceReceived { get; set; }
+        public string detailsCurrAdvanceReceived { get; set; }
+        public string CurrTotalCurrentLiabilities { get; set; }
+
+        public string TotalFixedAssets { get; set; }
+        public string TotalLongTermLiabilities { get; set; }
 
     }
 }

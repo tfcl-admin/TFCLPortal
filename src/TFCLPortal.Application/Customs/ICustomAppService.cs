@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 using TFCLPortal.Applications;
 using TFCLPortal.ApplicationWorkFlows.BccStates.Dto;
 using TFCLPortal.Mobilizations;
+using TFCLPortal.ProscribedPersons;
 using TFCLPortal.WorkFlows;
 
 namespace TFCLPortal.Customs
 {
-     public  interface ICustomAppService :IAsyncCrudAppService<BccStateListDto, Int32, PagedResultRequestDto, CreateBccStateDto, BccStateListDto>
+    public interface ICustomAppService : IAsyncCrudAppService<BccStateListDto, Int32, PagedResultRequestDto, CreateBccStateDto, BccStateListDto>
     {
         Task<bool> GetBccApplicationApprovedStaus(int applicationId);
         Task<double> GetIrr(int nper, double pmt, double pv, double fv, bool type);
         Task<List<GetMobilizationListDto>> getMobilizationListBySP();
+        List<ProscribedPerson> getProscribedPersonList();
+        string getNactaData();
+
+
+
     }
 }

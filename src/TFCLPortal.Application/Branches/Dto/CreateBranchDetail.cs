@@ -14,6 +14,7 @@ namespace TFCLPortal.Branches.Dto
         public string Email { get; set; }
         public string TelNo { get; set; }
         public string Active { get; set; }
+        public int FK_BMid { get; set; }
         public string Address { get; set; }
         public int FK_companyid { get; set; }
     }

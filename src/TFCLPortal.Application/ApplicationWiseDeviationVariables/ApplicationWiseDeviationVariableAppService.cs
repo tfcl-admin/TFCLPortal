@@ -215,6 +215,15 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables
                             {
                                 isFresh = true;
                             }
+
+                            if (checkApplications.isEnhancementApplication)
+                            {
+                                isFresh = true;
+                            }
+                            else
+                            {
+                                isFresh = false;
+                            }
                         }
                         else
                         {

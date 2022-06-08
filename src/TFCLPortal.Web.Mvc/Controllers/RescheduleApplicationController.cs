@@ -29,6 +29,7 @@ using Microsoft.AspNetCore.Identity;
 using TFCLPortal.Authorization.Users;
 using TFCLPortal.TDSLoanEligibilities;
 using TFCLPortal.BccDecisions;
+using TFCLPortal.CustomerAccounts;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -36,6 +37,7 @@ namespace TFCLPortal.Web.Controllers
     {
         private readonly IBusinessPlanAppService _businessPlanAppService;
         private readonly IScheduleAppService _scheduleAppService;
+        private readonly ICustomerAccountAppService _customerAccountAppAppService;
         private readonly IApplicationAppService _applicationAppService;
         private readonly ILoanEligibilityAppService _loanEligibilityAppService;
         private readonly ICoApplicantDetailAppService _coApplicantDetailAppService;
@@ -49,6 +51,7 @@ namespace TFCLPortal.Web.Controllers
             IBusinessPlanAppService businessPlanAppService,
             IApplicationAppService applicationAppService,
             ILoanEligibilityAppService loanEligibilityAppService,
+            ICustomerAccountAppService customerAccountAppAppService,
             ICoApplicantDetailAppService coApplicantDetailAppService,
             IGuarantorDetailAppService guarantorDetailAppService,
             IBccDecisionAppService bccDecisionAppService,
@@ -57,6 +60,7 @@ namespace TFCLPortal.Web.Controllers
             UserManager userManager
             )
         {
+            _customerAccountAppAppService = customerAccountAppAppService;
             _bccDecisionAppService = bccDecisionAppService;
             _userManager = userManager;
             _bccDecisionAppService = bccDecisionAppService;
@@ -91,6 +95,10 @@ namespace TFCLPortal.Web.Controllers
             ViewBag.Application = application;
             if (application != null)
             {
+
+                var customerAcc = _customerAccountAppAppService.GetCustomerAccountByCNIC(application.CNICNo);
+                ViewBag.customerAcc = customerAcc;
+
                 signatories applicant = new signatories();
                 applicant.Name = application.ClientName;
                 applicant.Detail = "(Applicant)";

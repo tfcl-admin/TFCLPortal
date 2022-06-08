@@ -114,7 +114,7 @@
                 <a id="WriteOffUrl" class="btn text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px; background-color:lightgray">Write Off Loan</a>
             </div>
             <div class="col-md-4">
-                <a id="DeceasedUrl" class="btn  text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px; background-color:lightgray">Deceased Applicant Settlement</a>
+                <a id="DeceasedUrl" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px;">Deceased Applicant Settlement</a>
             </div>
             <div class="col-md-4">
                 <a id="ScheduleUrl" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px">View Schedule</a>
@@ -209,7 +209,7 @@
             $("#LoanRecoveryUrl").attr("href", "../Accountant/InstallmentPayment?Applicationid="+ApplicationID);
             $("#EarlySettlementUrl").attr("href", "../Accountant/EarlySettlement?Applicationid="+ApplicationID);
             //$("#WriteOffUrl").attr("href", "../Accountant/WriteOff?Applicationid="+ApplicationID);
-            //$("#DeceasedUrl").attr("href", "../Accountant/DeceasedSettlement?Applicationid="+ApplicationID);
+            $("#DeceasedUrl").attr("href", "../Accountant/DeceasedSettlement?Applicationid="+ApplicationID);
             $("#ScheduleUrl").attr("href", "../Accountant/ViewSchedule?ApplicationId="+ApplicationID);
             $("#ApplicationDetailsUrl").attr("href", "../Dashboard/Application?id="+ApplicationID);
         }

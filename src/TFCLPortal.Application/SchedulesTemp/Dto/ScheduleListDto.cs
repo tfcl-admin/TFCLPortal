@@ -35,6 +35,8 @@ namespace TFCLPortal.ScheduleTemps.Dto
         public string UpdationReason { get; set; }
         public bool? isAuthorizedByBM { get; set; }
         public string Reason { get; set; }
+        public int TurnArroundTimeMins { get; set; }
+        public string ReasonForDelayTAT { get; set; }
 
         public List<ScheduleInstallmenttTempListDto> installmentList { get; set; }
 

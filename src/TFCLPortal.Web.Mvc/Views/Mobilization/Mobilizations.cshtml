@@ -158,8 +158,8 @@
                                 <th>SDE Name</th>
                                 <th>Product</th>
                                 <th>Mobilization Status</th>
-
                                 <th>Next meeting </th>
+                                <th style="text-align:center">Src</th>
                                 <th>View Details</th>
                             </tr>
                         </thead>
@@ -170,22 +170,34 @@
                                 foreach (var item in Model.MobilizationList)
                                 {
                                     i = i + 1;
-                                    <tr>
-                                        <td>@i</td>
-                                        <td style="width: 8%">@(item.CreationTime==DateTime.Parse("0001-01-01") ? "--" : item.CreationTime.ToString("dd MMM yyyy"))</td>
-                                        <td style="width: 6%">@item.CreationTime.ToString("hh:mm tt")</td>
-                                        <td>@item.ClientName</td>
-                                        <td>@item.SchoolName</td>
-                                        <td><a href="https://www.google.com/maps/search/?api=1&query=@item.Latitude,@item.Longitude" target="_blank" title="Click to View Location"><i class="fa fa-map-marker"></i> @item.Address</a> </td>
-                                        <td>@item.SDE_Name</td>
-                                        <td>@item.ProductTypeName</td>
-                                        <td>@item.MobStatusName</td>
-                                        <td style="width: 8%">@(item.NextMeeting == DateTime.Parse("0001-01-01") ? "--" : item.NextMeeting.ToString("dd MMM yyyy"))</td>
-                                        <td class="text-center" style="color:#3bb44a;width: 3%">
-                                            @*<a href="~/Mobilization/MobilizationDetail/@item.Id" class="edit-btn"><i class="fa fa-edit" aria-hidden="true"></i></a>*@
-                                            <a onclick="nullifyFeilds(); getMobilizationData(@item.Id);" data-toggle="modal" data-target="#myModalmodal" class="edit-btn"><i class="fa fa-file-text-o" aria-hidden="true" style="width:100%; height:100%"></i></a>
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>@i</td>
+                                <td style="width: 8%">@(item.CreationTime==DateTime.Parse("0001-01-01") ? "--" : item.CreationTime.ToString("dd MMM yyyy"))</td>
+                                <td style="width: 6%">@item.CreationTime.ToString("hh:mm tt")</td>
+                                <td>@item.ClientName</td>
+                                <td>@item.SchoolName</td>
+                                <td><a href="https://www.google.com/maps/search/?api=1&query=@item.Latitude,@item.Longitude" target="_blank" title="Click to View Location"><i class="fa fa-map-marker"></i> @item.Address</a> </td>
+                                <td>@item.SDE_Name</td>
+                                <td>@item.ProductTypeName</td>
+                                <td>@item.MobStatusName</td>
+                                <td style="width: 8%">@(item.NextMeeting == DateTime.Parse("0001-01-01") ? "--" : item.NextMeeting.ToString("dd MMM yyyy"))</td>
+                                @if (item.ContactSourceName == "Telephonically")
+                                {
+                                    <td>T</td>
+                                }
+                                else if (item.ContactSourceName == "Visit")
+                                {
+                                    <td>V</td>
+                                }
+                                else
+                                {
+                                    <td>--</td>
+                                }
+                                <td class="text-center" style="color:#3bb44a;width: 3%">
+                                    @*<a href="~/Mobilization/MobilizationDetail/@item.Id" class="edit-btn"><i class="fa fa-edit" aria-hidden="true"></i></a>*@
+                                    <a onclick="nullifyFeilds(); getMobilizationData(@item.Id);" data-toggle="modal" data-target="#myModalmodal" class="edit-btn"><i class="fa fa-file-text-o" aria-hidden="true" style="width:100%; height:100%"></i></a>
+                                </td>
+                            </tr>
                                 }
                             }
                         </tbody>

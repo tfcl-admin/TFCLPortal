@@ -1,0 +1,341 @@
+﻿@model List<TFCLPortal.Applications.ApplicationDto>
+@{ int i = 0;}
+
+@{
+    ViewData["Title"] = "Funding Source";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+
+    .select2-selection__rendered {
+        text-transform: uppercase;
+    }
+
+    .select2-results__option {
+        text-transform: uppercase;
+    }
+
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
+</style>
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="pageloader d-none"></div>
+
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Funding Source
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Funding Source
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20 mT-20">
+        @*<p>
+                <a asp-action="Create">Create New</a>
+            </p>*@
+        <div class="row">
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Client ID
+                </p>
+                <select id="ClientId" class="form-control select2 ">
+                    <option value="">Select Client ID</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.ClientID">@item.ClientID</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    CNIC number
+                </p>
+                <select id="CNICNo" class="form-control select2">
+                    <option value="">Select CNIC</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.CNICNo">@item.CNICNo</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Applicant Name
+                </p>
+                <select id="ApplicantName" class="form-control select2">
+                    <option value="">Select Applicant Name</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.ApplicantName">@item.ApplicantName</option>
+                        }
+                    }
+                </select>
+            </div>
+            @*<div class="col-md-3 pt-4">
+                    <a class="btn btn-outline-warning btn-sm dis-inline" onClick="window.location.reload();" style="width:100%">Clear Filter</a>
+                </div>*@
+
+        </div>
+
+        <div class="row resultDiv d-none" style=" margin-top: 20px; ">
+            <div class="col-md-3">
+                <p class="detailHeading">Client ID</p>
+                <p class="detailText" id="selectedClientId">--</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">CNIC</p>
+                <p class="detailText" id="selectedCnic">--</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Applicant Name</p>
+                <p class="detailText" id="selectedApplicant">--</p>
+            </div>
+            <div class="col-md-3">
+                <p class="detailHeading">Funding Source</p>
+                <p class="detailText" id="selectedFundingSource">--</p>
+            </div>
+            <div class="col-md-4">
+            </div>
+
+            <div class="col-md-4 mt-5">
+                <p class="detailHeading">
+                    Funding Source
+                </p>
+                @*<select id="" class="form-control select2">
+                <option value="">Select Funding Source</option>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <option value="@item.CNICNo">@item.CNICNo</option>
+                    }
+                }
+            </select>*@
+                @Html.DropDownListFor(x => x.First().FundingSource, ViewBag.sourcesList as SelectList, "Select Funding Source", new { @class = "form-control text-capitalize select2" })
+
+                <a onclick="SaveFundingSource();" class="btn btn-outline-success mt-3 w-100">Save Funding Source</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card p-10 mB-20">
+                    @*<p>
+                <a asp-action="Create">Create New</a>
+            </p>*@
+                    <table id="dataTable" class="table table-striped table-bordered  table-scrollable" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Sr
+                                </th>
+                                <th>
+                                    CLIENT ID
+                                </th>
+                                <th>
+                                    APPLICANT / RESPONDENT NAME
+                                </th>
+                                <th>
+                                    Client / School / Business Name
+                                </th>   <th>
+    Funding Source
+</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td> @{i = i + 1;} @i</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClientID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ApplicantName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SchoolName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FundingSourceName)
+                                </td>
+                               
+                                @*<td>
+            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i> Details</a>
+        </td>*@
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<script>
+    $('.select2').select2();
+
+    $('#ApplicantName').on('change', function () {
+        if (this.value!="") {
+            search("ApplicantName", this.value);
+
+        }
+    });
+    $('#CNICNo').on('change', function () {
+        if (this.value != "") {
+            search("CNICNo", this.value);
+
+        }
+    });
+    $('#ClientId').on('change', function () {
+        if (this.value != "") {
+            search("ClientId", this.value);
+
+        }
+    });
+
+    var appid = 0;
+
+    function search(filter, value) {
+
+        var items = @Html.Raw(Json.Serialize(Model));
+
+        var ApplicationID=0;
+        var CNIC="";
+        var ApplicantName="";
+        var ClientId="";
+        var fSource="";
+
+        if (filter == "ClientId") {
+            items.forEach(function (item, index) {
+                if (item.clientID == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                    fSourceName = item.fundingSourceName;
+                    fSource = item.fundingSource;
+                }
+            });
+        }
+        else if (filter == "CNICNo") {
+            items.forEach(function (item, index) {
+                if (item.cnicNo == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                    fSource = item.fundingSource;
+                    fSourceName = item.fundingSourceName;
+                }
+            });
+        }
+        else if (filter == "ApplicantName") {
+            items.forEach(function (item, index) {
+                if (item.applicantName == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                    fSource = item.fundingSource;
+                    fSourceName = item.fundingSourceName;
+                }
+            });
+        }
+        else {
+            ApplicationID = 0;
+            CNIC = "--";
+            ClientId = "--";
+            ApplicantName = "--";
+            fSourceName = "--";
+            fSource = 0;
+        }
+
+        //$(".select2").prop('selectedIndex',0);
+
+        $("#selectedClientId").text(ClientId);
+        $("#selectedCnic").text(CNIC);
+        $("#selectedApplicant").text(ApplicantName);
+        $("#selectedFundingSource").text(fSourceName);
+        //alert(fSource);
+
+        //$('#select2-FundingSource-container').val(fSource).trigger('change');
+
+
+        $(".resultDiv").removeClass('d-none');
+
+        appid = ApplicationID;
+    }
+
+    function SaveFundingSource() {
+
+          $(".pageloader").toggleClass("d-none");
+        var fsource=$("#FundingSource").val();
+
+        var ApplicationId = appid;
+
+                 $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Accountant/SaveFundingSource")',
+                     data: {
+                         'ApplicationId': ApplicationId,
+                         'fsource': fsource
+                     },
+                     success: function (data) {
+
+                         var returnData = data.result;
+                         abp.notify.success(returnData, "Success");
+                         window.location.reload();
+
+                    },
+                    error: function (data) {
+
+                        abp.notify.error("Some error occure contact with admin..!", "error");
+                        console.log(data);
+                    }
+                });
+
+
+    }
+
+
+
+
+</script>

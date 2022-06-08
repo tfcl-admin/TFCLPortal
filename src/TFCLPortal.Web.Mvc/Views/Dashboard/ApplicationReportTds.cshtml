@@ -2318,7 +2318,7 @@
                                 <td class="text">@(item.HouseholdOwnerName == null || item.HouseholdOwnerName == "0" ? "--" : item.HouseholdOwnerName)</td>
 
                                 <td class="title">HOUSE RENT</td>
-                                <td class="text">@(item.HouseRent == null || item.HouseRent == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.HouseRent).Replace(",", ""))))</td>
+                                <td class="text">@(item.HouseRent == null || item.HouseRent == "0" || item.HouseRent == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.HouseRent).Replace(",", ""))))</td>
                             </tr>
                             <tr>
                                 <td class="title">FOOD EXPENSE</td>

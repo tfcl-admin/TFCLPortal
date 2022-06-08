@@ -1,4 +1,5 @@
 ﻿using Abp.AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,5 +20,8 @@ namespace TFCLPortal.DeceasedSettlements.Dto
 
         public bool? isManagerAuthorized { get; set; }
         public string ManagerRejectionReason { get; set; }
+        public string ProofUrl { get; set; }
+        public IFormFile file { get; set; }
+
     }
 }

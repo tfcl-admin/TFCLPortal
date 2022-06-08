@@ -63,6 +63,7 @@ namespace TFCLPortal.Mobilizations
         public int? TDSBusinessNature { get; set; }// New Dropdown
 
         public int UpdateRecordId { get; set; } //New
+        public string MobilizationRecordId { get; set; }
 
         //Update In Mobilizations Due to TDS,TJS,TTS.
         public int ContactSource { get; set; }

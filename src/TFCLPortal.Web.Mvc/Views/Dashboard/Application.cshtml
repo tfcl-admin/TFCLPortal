@@ -160,9 +160,9 @@
 
                         </a>
                         @*<div class="col-md-3">
-                                <a href="" class="btn btn-sm btn-outline-success bg1 eft-1" title="Mark Screened"><i class="fa fa-check-circle"></i></a>
-                                <a href="" class="btn btn-sm btn-outline-danger bg1 eft-1" title="Decline Application"><i class="fa fa-times-circle"></i></a>
-                            </div>*@
+                    <a href="" class="btn btn-sm btn-outline-success bg1 eft-1" title="Mark Screened"><i class="fa fa-check-circle"></i></a>
+                    <a href="" class="btn btn-sm btn-outline-danger bg1 eft-1" title="Decline Application"><i class="fa fa-times-circle"></i></a>
+                </div>*@
 
 
                     </div>
@@ -705,6 +705,99 @@
                 <div class="card">
 
                     <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistSF == 0 ? "disableHeader" : "")" role="tab" id="headingTwentyOne21">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwentyOne21"
+                           aria-expanded="false" aria-controls="collapseTwentyOne21">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        19. SCHOOL FINANCIAL DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseTwentyOne21" class="collapse" role="tabpanel" aria-labelledby="headingTwentyOne21"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewSCHOOLFINANCIALDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistSNF == 0 ? "disableHeader" : "")" role="tab" id="headingTwentyTwo22">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwentyTwo22"
+                           aria-expanded="false" aria-controls="collapseTwentyTwo22">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        20. SCHOOL NON-FINANCIAL DETAILS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseTwentyTwo22" class="collapse" role="tabpanel" aria-labelledby="headingTwentyTwo22"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewSCHOOLNON-FINANCIALDETAILS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
+                    <div class="card-header  @Html.Raw(ViewBag.isExistPI == 0 ? "disableHeader" : "")" role="tab" id="headingTwentyThree23">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwentyThree23"
+                           aria-expanded="false" aria-controls="collapseTwentyThree23">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="mb-0 _ClickPartialView">
+                                        21. PSYCHOMETRIC INDICATORS
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 text-right icon">
+                                    <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card body -->
+                    <div id="collapseTwentyThree23" class="collapse" role="tabpanel" aria-labelledby="headingTwentyThree23"
+                         data-parent="#accordionEx">
+                        <div class="card-body">
+                            <div id="PartialViewPSYCHOMETRICINDICATORS" class="subnavbar"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Accordion card -->
+                <!-- Accordion card -->
+                <div class="card">
+
+                    <!-- Card header -->
                     <div class="card-header  @Html.Raw(ViewBag.isExistUD == 0 ? "disableHeader" : "")" role="tab" id="headingTwenty20">
                         <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwenty20"
                            aria-expanded="false" aria-controls="collapseTwenty20">
@@ -712,7 +805,7 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <h5 class="mb-0 _ClickPartialView">
-                                        19. Uploaded Documents
+                                        22. Uploaded Documents
                                     </h5>
                                 </div>
                                 <div class="col-md-4 text-right icon">
@@ -731,36 +824,6 @@
                     </div>
 
                 </div>
-                <!-- Accordion card -->
-                <!-- Accordion card -->
-                <!--<div class="card">-->
-                <!-- Card header -->
-                <!--<div class="card-header disableHeader" role="tab" id="headingTwentyOne21">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwentyOne21"
-                       aria-expanded="false" aria-controls="collapseTwentyOne21">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h5 class="mb-0 _ClickPartialView">
-                                    20. BRANCH CREDIT COMMITTEE DECISION
-                                </h5>
-                            </div>
-                            <div class="col-md-4 text-right icon">
-                                <i class="fa fa-bold fa-angle-down rotate-icon text-white "></i>
-                            </div>
-                        </div>
-                    </a>
-                </div>-->
-                <!-- Card body -->
-                <!--<div id="collapseTwentyOne21" class="collapse" role="tabpanel" aria-labelledby="headingTwentyOne21"
-                         data-parent="#accordionEx">
-                        <div class="card-body">
-                            <div id="PartialViewBRANCHCREDITCOMMITTEEDECISION" class="subnavbar"></div>
-                        </div>
-                    </div>
-
-                </div>-->
-                <!-- Accordion card -->
-
             </div>
 
 
@@ -899,6 +962,9 @@
                             content += '<tr><td>16</td><td>Guarantor Details</td>' + getStatus('GD', returnData) + '</tr>';
                             content += '<tr><td>17</td><td>References Details</td>' + getStatus('RD', returnData) + '</tr>';
                             content += '<tr><td>18</td><td>SDE Recommendations</td>' + getStatus('SDE', returnData) + '</tr>';
+                            content += '<tr><td>18</td><td>School Financial Details</td>' + getStatus('SF', returnData) + '</tr>';
+                            content += '<tr><td>18</td><td>School Non-Financial Details</td>' + getStatus('SNF', returnData) + '</tr>';
+                            content += '<tr><td>18</td><td>Psychometric Indicators</td>' + getStatus('PI', returnData) + '</tr>';
                             content += '<tr><td>19</td><td>Uploaded Documents</td>' + getStatus('UD', returnData) + '</tr>';
 
                             content += "</table>";
@@ -960,6 +1026,9 @@
                             content += '<tr><td>16</td><td>Guarantor Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
                             content += '<tr><td>17</td><td>References Details</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
                             content += '<tr><td>18</td><td>SDE Recommendations</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>18</td><td>School Financial Detais</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>18</td><td>School Non-Financial Detais</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
+                            content += '<tr><td>18</td><td>Psychometric Indicators</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
                             content += '<tr><td>19</td><td>Uploaded Documents</td><td><font color="orange"><i class="fa fa-info-circle"></i> Pending</font></td><td>--</td></tr>';
 
                             content += "</table>";
@@ -1219,6 +1288,45 @@
                         }
                         return retStr;
                         break;
+                    case 'SF':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'schoolfinancialdetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'SNF':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'schoolnon-financialdetails') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
+                    case 'PI':
+                        var retStr = '';
+                        arr.forEach(function (item) {
+                            if (item.screenName == 'psychometricindicators') {
+                                retStr = '<td>' + getAction(item.actionType) + '</td><td>' + getReason(item.reason) + '</td>';
+                            }
+
+                        });
+                        if (retStr == '') {
+                            retStr = "<td><font color='orange'><i class='fa fa-info-circle'></i> Pending</font></td><td>--</td>";
+                        }
+                        return retStr;
+                        break;
                     case 'UD':
                         var retStr = '';
                         arr.forEach(function (item) {
@@ -1415,6 +1523,12 @@
                         return 'Sales Details'; break;
                     case 'purchasedetails':
                         return 'Purchase Details'; break;
+                    case 'psychometricindicators':
+                        return 'Psychometric Indicators'; break;
+                    case 'schoolnon-financialdetails':
+                        return 'School Non-Financial Details'; break;
+                    case 'schoolfinancialdetails':
+                        return 'School Financial Details'; break;
                      case 'uploadeddocuments':
                         return 'Upload Documents'; break;
                     default:
@@ -1516,10 +1630,10 @@
                         if (data != null) {
 
                             value = value.replace(/\s/g, '');
+                            //alert(value);
                             $('#PartialView' + value.trim()).html("");
                             $('#PartialView' + value.trim()).html(data);
                             document.getElementById('PartialView' + value.trim()).scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
-
 
 
                         }

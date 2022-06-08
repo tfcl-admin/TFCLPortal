@@ -13,9 +13,13 @@ namespace TFCLPortal.Applications
     {
         ApplicationListDto GetApplicationById(int Id);
         Task<ApplicationResponse> CreateApplication(CreateApplicationDto input);
+        Task<ApplicationResponse> MigrateEnhancementApplication(int OldApplicationId);
         Task<string> UpdateApplication(UpdateApplicationDto input);
         ApplicationListDto GetApplicationByApplicationId(int ApplicationId);
-        List<ApplicationDto> GetApplicationList(string applicationState, int? branchId, bool showAll = false,bool IsAdmin=false);
+        List<ApplicationDto> GetApplicationList(string applicationState, int? branchId, bool showAll = false,bool IsAdmin=false, bool IsEnhanced = false);
+        List<ApplicationListDto> GetAllApplicationsList();
+        List<ApplicationListCrsDto> GetAllApplicationsListForCRS();
+        List<ApplicationListCrsDto> GetAllApplicationsListforcrsTSSTSA();
         Task<DashboardDataDto> GetTFCLDashboardCountingData(int branchId);
         Task<List<HighChartWeeklyDto>> GetHighChartWeekData();
         Task<List<BranchPortfolioGraphDto>> GetBranchPortfolioGraphData();
@@ -33,9 +37,11 @@ namespace TFCLPortal.Applications
         List<MobilizationSyncDto> GetMobilizationDataBySDEId(int SDEId);
 
         List<ApplicationListDto> GetStateWiseApplicationbyUserId(int UserId, string state);
+        string setMobilizationRecordId(List<setMobilizationRecordIdDto> records);
 
         DateTime getLastWorkFlowStateDate(int ApplicationId, string State);
         List<Applicationz> GetBCCShortApplicationList(int userid);
+        Task<CnicCheckResponse> CheckCNIC(string cnic);
         List<Applicationz> GetAllApplicationsByUserId(int userid);
         List<Applicationz> GetAllBCCReviewedApplicationsByUserId(int userid);
         Task<string> ChangeApplicationStateAsync(string state, int ApplicationId, string comments);

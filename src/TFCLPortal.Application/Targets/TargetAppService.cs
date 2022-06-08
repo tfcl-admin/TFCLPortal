@@ -13,6 +13,9 @@ using TFCLPortal.DynamicDropdowns.Districts;
 using TFCLPortal.DynamicDropdowns.Ownership;
 using TFCLPortal.DynamicDropdowns.Provinces;
 using TFCLPortal.DynamicDropdowns.RentAgreementSignatories;
+using TFCLPortal.Users;
+using TFCLPortal.DynamicDropdowns.ProductTypes;
+using TFCLPortal.Branches;
 
 namespace TFCLPortal.Targets
 {
@@ -20,8 +23,14 @@ namespace TFCLPortal.Targets
     {
         private readonly IRepository<Target, Int32> _TargetRepository;
         private string Targets = "Target";
-        public TargetAppService(IRepository<Target, Int32> TargetRepository)
+        private readonly IProductTypeAppService _productTypeAppService;
+        private readonly IBranchDetailAppService _branchDetailAppService;
+        private readonly IUserAppService _userAppService;
+        public TargetAppService(IBranchDetailAppService branchDetailAppService, IProductTypeAppService productTypeAppService, IUserAppService userAppService, IRepository<Target, Int32> TargetRepository)
         {
+            _branchDetailAppService = branchDetailAppService;
+            _productTypeAppService = productTypeAppService;
+            _userAppService = userAppService;
             _TargetRepository = TargetRepository;
         }
 
@@ -31,7 +40,7 @@ namespace TFCLPortal.Targets
 
             try
             {
-            
+
                 var Target = ObjectMapper.Map<Target>(input);
                 await _TargetRepository.InsertAsync(Target);
                 CurrentUnitOfWork.SaveChanges();
@@ -44,11 +53,11 @@ namespace TFCLPortal.Targets
             }
         }
 
-        public  TargetListDto GetTargetById(int Id)
+        public TargetListDto GetTargetById(int Id)
         {
             try
             {
-                var Target =  _TargetRepository.Get(Id);
+                var Target = _TargetRepository.Get(Id);
 
                 return ObjectMapper.Map<TargetListDto>(Target);
 
@@ -91,7 +100,34 @@ namespace TFCLPortal.Targets
             try
             {
                 var Targets = _TargetRepository.GetAllList();
-                return ObjectMapper.Map<List<TargetListDto>>(Targets);
+                var ReturnTargets = ObjectMapper.Map<List<TargetListDto>>(Targets);
+
+                var users = _userAppService.GetAllUsers();
+                var products = _productTypeAppService.GetAllList();
+                var branches = _branchDetailAppService.GetBranchListDetail();
+
+                foreach (var target in ReturnTargets)
+                {
+                    if (target.Fk_SdeId != 0)
+                    {
+                        var sde = users.Where(x => x.Id == target.Fk_SdeId).FirstOrDefault();
+                        target.SdeName = sde.FullName;
+                    }
+                    if (target.Fk_ProductTypeId != 0)
+                    {
+                        var product = getProducts().Where(x => x.Id == target.Fk_ProductTypeId).FirstOrDefault();
+                        target.ProductName = product.Name;
+                    }
+                    if (target.Fk_BranchId != 0)
+                    {
+                        var branch = branches.Where(x => x.Id == target.Fk_BranchId).FirstOrDefault();
+                        target.BranchName = branch.BranchCode;
+                    }
+                    target.MonthName = getMonth(target.Month);
+                }
+
+
+                return ReturnTargets;
             }
             catch (Exception ex)
             {
@@ -99,5 +135,44 @@ namespace TFCLPortal.Targets
             }
         }
 
+        public string getMonth(int number)
+        {
+            switch (number)
+            {
+                case 1: return "January";
+                case 2: return "February";
+                case 3: return "March";
+                case 4: return "April";
+                case 5: return "May";
+                case 6: return "June";
+                case 7: return "July";
+                case 8: return "August";
+                case 9: return "September";
+                case 10: return "October";
+                case 11: return "November";
+                case 12: return "December";
+                default: return "";
+            }
+
+        }
+
+        public List<TargetProducts> getProducts()
+        {
+            List<TargetProducts> tp = new List<TargetProducts>();
+
+            tp.Add(new TargetProducts { Id = 1, Name = "TALEEM SCHOOL SARMAYA / TALEEM SCHOOL ASASAH" });
+            tp.Add(new TargetProducts { Id = 2, Name = "TALEEM DOST SAHULAT" });
+            tp.Add(new TargetProducts { Id = 3, Name = "TALEEM JARI SAHULAT" });
+
+            return tp;
+
+        }
+
+    }
+
+    public class TargetProducts
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

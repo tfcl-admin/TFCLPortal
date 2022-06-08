@@ -74,6 +74,7 @@ namespace TFCLPortal.Mobilizations.Dto
         public int SchoolGoingDependants { get; set; }
 
         public int Gender { get; set; }
+        public string MobilizationRecordId { get; set; }
         public DateTime? CnicIssueDate { get; set; }
 
 

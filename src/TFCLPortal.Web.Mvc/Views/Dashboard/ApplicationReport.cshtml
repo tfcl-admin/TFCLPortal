@@ -162,7 +162,7 @@
         </table>
         @*<div class="col-md-3 text-right">
 
-        </div>*@
+            </div>*@
 
         @if (ViewBag.LRD != null)
         {
@@ -285,18 +285,18 @@
                         <td class="text">@(ViewBag.PD.BirthDate == null   ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.PD.BirthDate))</td>
 
                         @*<td class="title">Age Approval Taken</td>
-                        @if (ViewBag.PD.AgeApprovalTaken == null)
-                        {
-                            <td class="text">--</td>
-                        }
-                        else if (ViewBag.PD.AgeApprovalTaken == false)
-                        {
-                            <td class="text">No</td>
-                        }
-                        else if (ViewBag.PD.AgeApprovalTaken == true)
-                        {
-                            <td class="text">Yes</td>
-                        }*@
+                            @if (ViewBag.PD.AgeApprovalTaken == null)
+                            {
+                                <td class="text">--</td>
+                            }
+                            else if (ViewBag.PD.AgeApprovalTaken == false)
+                            {
+                                <td class="text">No</td>
+                            }
+                            else if (ViewBag.PD.AgeApprovalTaken == true)
+                            {
+                                <td class="text">Yes</td>
+                            }*@
                         <td class="title">GENDER</td>
                         <td class="text">@(ViewBag.PD.GenderName == null || ViewBag.PD.GenderName == "" ? "--" : ViewBag.PD.GenderName)</td>
 
@@ -315,11 +315,11 @@
                         @if (ViewBag.PD.NumberOfDependents == 0 || ViewBag.PD.NumberOfDependents == 1 || ViewBag.PD.NumberOfDependents == 42)
                         {
                             <td class="text">--</td>
- }
+                        }
                         else
                         {
                             <td class="text">@(ViewBag.PD.NumberOfDependents - 1)</td>
-}
+                        }
 
                         <td class="title">School Going Dependents</td>
                         @if (ViewBag.PD.SchoolGoingDependants == null || ViewBag.PD.SchoolGoingDependants == 0 || ViewBag.PD.SchoolGoingDependants == 42)
@@ -1711,324 +1711,732 @@
         }
         @if (ViewBag.ED != null)
         {
-            <table border="1" width="100%" class="tbl">
-                <thead>
-                    <tr>
-                        <th class="title text-center bg-gray ScreenTitle" colspan="4">Exposure Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="title" width="30%">
-                            Existing exposure as on
-                        </td>
-                        <td class="text" width="25%">@(ViewBag.ED.ExistingExposureAsOn == null ? "--" : string.Format("{0:MMM yyyy}", ViewBag.ED.ExistingExposureAsOn))</td>
-
-                        <td class="title" width="25%">
-                            Existing Exposure
-                        </td>
-                        <td class="text" width="20%">@(ViewBag.ED.ExistingBankExposure == null || ViewBag.ED.ExistingBankExposure == "" ? "--" : ViewBag.ED.ExistingBankExposure)</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Credit Bureau Generation
-                        </td>
-                        <td class="text">@(ViewBag.ED.CreditBureauGeneration == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.ED.CreditBureauGeneration))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Have you guaranteed loan from FI
-                        </td>
-                        <td class="text">@(ViewBag.ED.GuaranteedFiLoan == null || ViewBag.ED.GuaranteedFiLoan == "" ? "--" : ViewBag.ED.GuaranteedFiLoan)</td>
-
-                        <td class="title">
-                            Guarantee Amount (FI)
-                        </td>
-                        <td class="text">@(ViewBag.ED.guaranteedAmountFI == null || ViewBag.ED.guaranteedAmountFI == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.guaranteedAmountFI).Replace(",",""))))</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Have you guaranteed TFCL loan?
-                        </td>
-                        <td class="text">@(ViewBag.ED.GuaranteedTFCLLoan == null || ViewBag.ED.GuaranteedTFCLLoan == "" ? "--" : ViewBag.ED.GuaranteedTFCLLoan)</td>
-
-                        <td class="title">
-                            Guarantee Amount (TFCL)
-                        </td>
-                        <td class="text">@(ViewBag.ED.GuaranteeTFCLAmount == null || ViewBag.ED.GuaranteeTFCLAmount == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.GuaranteeTFCLAmount).Replace(",",""))))</td>
-                    </tr>
-
-                    <tr>
-                        <td class="title">
-                            Application Number Guarantee Given
-                        </td>
-                        <td class="text">@(ViewBag.ED.AppNoTfclLoanGuarantee == null || ViewBag.ED.AppNoTfclLoanGuarantee == "" ? "--" : ViewBag.ED.AppNoTfclLoanGuarantee)</td>
-
-                        <td class="title">
-                            Applicant Name Guarantee Given
-                        </td>
-                        <td class="text">@(ViewBag.ED.ApplicantNameTfclLoanGuarantee == null || ViewBag.ED.ApplicantNameTfclLoanGuarantee == "" ? "--" : ViewBag.ED.ApplicantNameTfclLoanGuarantee)</td>
-
-                    </tr>
-
-                    @if (ViewBag.ED.exposureDetailsList != null)
-                    {
+            if (ViewBag.ALD.isNew == false)
+            {
+                <table border="1" width="100%" class="tbl">
+                    <thead>
                         <tr>
-                            <td class="title text-left bg-gray" colspan="4"></td>
+                            <th class="title text-center bg-gray ScreenTitle" colspan="4">Exposure Details</th>
                         </tr>
-                        @foreach (var InnerItem in ViewBag.ED.exposureDetailsList)
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="title" width="30%">
+                                Existing exposure as on
+                            </td>
+                            <td class="text" width="25%">@(ViewBag.ED.ExistingExposureAsOn == null ? "--" : string.Format("{0:MMM yyyy}", ViewBag.ED.ExistingExposureAsOn))</td>
+
+                            <td class="title" width="25%">
+                                Existing Exposure
+                            </td>
+                            <td class="text" width="20%">@(ViewBag.ED.ExistingBankExposure == null || ViewBag.ED.ExistingBankExposure == "" ? "--" : ViewBag.ED.ExistingBankExposure)</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Credit Bureau Generation
+                            </td>
+                            <td class="text">@(ViewBag.ED.CreditBureauGeneration == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.ED.CreditBureauGeneration))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Have you guaranteed loan from FI
+                            </td>
+                            <td class="text">@(ViewBag.ED.GuaranteedFiLoan == null || ViewBag.ED.GuaranteedFiLoan == "" ? "--" : ViewBag.ED.GuaranteedFiLoan)</td>
+
+                            <td class="title">
+                                Guarantee Amount (FI)
+                            </td>
+                            <td class="text">@(ViewBag.ED.guaranteedAmountFI == null || ViewBag.ED.guaranteedAmountFI == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.guaranteedAmountFI).Replace(",", ""))))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Have you guaranteed TFCL loan?
+                            </td>
+                            <td class="text">@(ViewBag.ED.GuaranteedTFCLLoan == null || ViewBag.ED.GuaranteedTFCLLoan == "" ? "--" : ViewBag.ED.GuaranteedTFCLLoan)</td>
+
+                            <td class="title">
+                                Guarantee Amount (TFCL)
+                            </td>
+                            <td class="text">@(ViewBag.ED.GuaranteeTFCLAmount == null || ViewBag.ED.GuaranteeTFCLAmount == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.GuaranteeTFCLAmount).Replace(",", ""))))</td>
+                        </tr>
+
+                        <tr>
+                            <td class="title">
+                                Application Number Guarantee Given
+                            </td>
+                            <td class="text">@(ViewBag.ED.AppNoTfclLoanGuarantee == null || ViewBag.ED.AppNoTfclLoanGuarantee == "" ? "--" : ViewBag.ED.AppNoTfclLoanGuarantee)</td>
+
+                            <td class="title">
+                                Applicant Name Guarantee Given
+                            </td>
+                            <td class="text">@(ViewBag.ED.ApplicantNameTfclLoanGuarantee == null || ViewBag.ED.ApplicantNameTfclLoanGuarantee == "" ? "--" : ViewBag.ED.ApplicantNameTfclLoanGuarantee)</td>
+
+                        </tr>
+
+                        @if (ViewBag.ED.exposureDetailsList != null)
                         {
-
-                            <tr>
-                                <td class="title">
-                                    Name of Bank / Financial Institution
-                                </td>
-                                <td class="text">@(InnerItem.BankNameString == null || InnerItem.BankNameString == "" ? "--" : InnerItem.BankNameString)</td>
-
-                                <td class="title">
-                                    Others
-                                </td>
-                                <td class="text">@(InnerItem.Others == null || InnerItem.Others == "" ? "--" : InnerItem.Others)</td>
-
-                            </tr>
-                            <tr>
-                                <td class="title">Credit Bureau Reported</td>
-                                <td class="text">@(InnerItem.CreditBureauReported == null || InnerItem.CreditBureauReported == "" ? "--" : InnerItem.CreditBureauReported)</td>
-                                <td class="title">Type of Facility</td>
-                                <td class="text">@(InnerItem.TypeOfFacilityTE == null || InnerItem.TypeOfFacilityTE == "" ? "--" : InnerItem.TypeOfFacilityTE)</td>
-                            </tr>
-                            <tr>
-                                <td class="title">Expiry Date</td>
-                                <td class="text">@(InnerItem.ExpiryDate == null ? "--" : string.Format("{0:dd MMM yyyy}", InnerItem.ExpiryDate))</td>
-                                <td class="title">Loan Amount</td>
-                                <td class="text">@(InnerItem.LoanAmount == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.LoanAmount))</td>
-                            </tr>
-                            <tr>
-                                <td class="title">Outstanding Amount</td>
-                                <td class="text">@(InnerItem.OutstandingAmount == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.OutstandingAmount))</td>
-                                <td class="title">Instalment / Min. Payment</td>
-                                <td class="text">@(InnerItem.MonthlyInstallmentPayment == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.MonthlyInstallmentPayment))</td>
-                            </tr>
-
                             <tr>
                                 <td class="title text-left bg-gray" colspan="4"></td>
                             </tr>
+                            @foreach (var InnerItem in ViewBag.ED.exposureDetailsList)
+                            {
+
+                                <tr>
+                                    <td class="title">
+                                        Name of Bank / Financial Institution
+                                    </td>
+                                    <td class="text">@(InnerItem.BankNameString == null || InnerItem.BankNameString == "" ? "--" : InnerItem.BankNameString)</td>
+
+                                    <td class="title">
+                                        Others
+                                    </td>
+                                    <td class="text">@(InnerItem.Others == null || InnerItem.Others == "" ? "--" : InnerItem.Others)</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="title">Credit Bureau Reported</td>
+                                    <td class="text">@(InnerItem.CreditBureauReported == null || InnerItem.CreditBureauReported == "" ? "--" : InnerItem.CreditBureauReported)</td>
+                                    <td class="title">Type of Facility</td>
+                                    <td class="text">@(InnerItem.TypeOfFacilityTE == null || InnerItem.TypeOfFacilityTE == "" ? "--" : InnerItem.TypeOfFacilityTE)</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">Expiry Date</td>
+                                    <td class="text">@(InnerItem.ExpiryDate == null ? "--" : string.Format("{0:dd MMM yyyy}", InnerItem.ExpiryDate))</td>
+                                    <td class="title">Loan Amount</td>
+                                    <td class="text">@(InnerItem.LoanAmount == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.LoanAmount))</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">Outstanding Amount</td>
+                                    <td class="text">@(InnerItem.OutstandingAmount == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.OutstandingAmount))</td>
+                                    <td class="title">Instalment / Min. Payment</td>
+                                    <td class="text">@(InnerItem.MonthlyInstallmentPayment == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.MonthlyInstallmentPayment))</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="title text-left bg-gray" colspan="4"></td>
+                                </tr>
+                            }
+                            <tr>
+                                <td class="title">Total Outstanding Amount</td>
+                                <td class="text">@(ViewBag.ED.TotalAmount == null || ViewBag.ED.TotalAmount == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.TotalAmount).Replace(",", ""))))</td>
+                                <td class="title">Total Instalment / Min. Payment</td>
+                                <td class="text">@( ViewBag.ED.TotalInstallmentpayment == 0 ? "0" : string.Format("{0:#,##0}", ViewBag.ED.TotalInstallmentpayment))</td>
+                            </tr>
+
                         }
+
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <table border="1" width="100%" class="tbl">
+                    <thead>
                         <tr>
-                            <td class="title">Total Outstanding Amount</td>
-                            <td class="text">@(ViewBag.ED.TotalAmount == null || ViewBag.ED.TotalAmount=="" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.TotalAmount).Replace(",", ""))))</td>
-                            <td class="title">Total Instalment / Min. Payment</td>
-                            <td class="text">@( ViewBag.ED.TotalInstallmentpayment == 0 ? "0" : string.Format("{0:#,##0}", ViewBag.ED.TotalInstallmentpayment))</td>
+                            <th class="title text-center bg-gray ScreenTitle" colspan="4">Exposure Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="title" width="30%">
+                                Existing exposure as on
+                            </td>
+                            <td class="text" width="25%">@(ViewBag.ED.ExistingExposureAsOn == null ? "--" : string.Format("{0:MMM yyyy}", ViewBag.ED.ExistingExposureAsOn))</td>
+
+                            <td class="title" width="25%">
+                                Existing Exposure
+                            </td>
+                            <td class="text" width="20%">@(ViewBag.ED.ExistingBankExposure == null || ViewBag.ED.ExistingBankExposure == "" ? "--" : ViewBag.ED.ExistingBankExposure)</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Credit Bureau Generation
+                            </td>
+                            <td class="text">@(ViewBag.ED.CreditBureauGeneration == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.ED.CreditBureauGeneration))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Have you guaranteed loan from FI
+                            </td>
+                            <td class="text">@(ViewBag.ED.GuaranteedFiLoan == null || ViewBag.ED.GuaranteedFiLoan == "" ? "--" : ViewBag.ED.GuaranteedFiLoan)</td>
+
+                            <td class="title">
+                                Guarantee Amount (FI)
+                            </td>
+                            <td class="text">@(ViewBag.ED.guaranteedAmountFI == null || ViewBag.ED.guaranteedAmountFI == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.guaranteedAmountFI).Replace(",", ""))))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Have you guaranteed TFCL loan?
+                            </td>
+                            <td class="text">@(ViewBag.ED.GuaranteedTFCLLoan == null || ViewBag.ED.GuaranteedTFCLLoan == "" ? "--" : ViewBag.ED.GuaranteedTFCLLoan)</td>
+
+                            <td class="title">
+                                Guarantee Amount (TFCL)
+                            </td>
+                            <td class="text">@(ViewBag.ED.GuaranteeTFCLAmount == null || ViewBag.ED.GuaranteeTFCLAmount == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.GuaranteeTFCLAmount).Replace(",", ""))))</td>
                         </tr>
 
-                    }
+                        <tr>
+                            <td class="title">
+                                Application Number Guarantee Given
+                            </td>
+                            <td class="text">@(ViewBag.ED.AppNoTfclLoanGuarantee == null || ViewBag.ED.AppNoTfclLoanGuarantee == "" ? "--" : ViewBag.ED.AppNoTfclLoanGuarantee)</td>
 
-                </tbody>
-            </table>
+                            <td class="title">
+                                Applicant Name Guarantee Given
+                            </td>
+                            <td class="text">@(ViewBag.ED.ApplicantNameTfclLoanGuarantee == null || ViewBag.ED.ApplicantNameTfclLoanGuarantee == "" ? "--" : ViewBag.ED.ApplicantNameTfclLoanGuarantee)</td>
 
+                        </tr>
+
+                        @if (ViewBag.ED.exposureDetailsList != null)
+                        {
+                            <tr>
+                                <td class="title text-left bg-gray" colspan="4"></td>
+                            </tr>
+                            @foreach (var InnerItem in ViewBag.ED.exposureDetailsList)
+                            {
+
+                                <tr>
+                                    <td class="title">
+                                        Name of Bank / Financial Institution
+                                    </td>
+                                    <td class="text">@(InnerItem.BankNameString == null || InnerItem.BankNameString == "" ? "--" : InnerItem.BankNameString)</td>
+
+                                    <td class="title">
+                                        Others
+                                    </td>
+                                    <td class="text">@(InnerItem.Others == null || InnerItem.Others == "" ? "--" : InnerItem.Others)</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="title">Liability Type</td>
+                                    <td class="text">@(InnerItem.LiabilityTypeName == null || InnerItem.LiabilityTypeName == "" ? "--" : InnerItem.LiabilityTypeName)</td>
+
+                                    <td class="title">Credit Bureau Reported</td>
+                                    <td class="text">@(InnerItem.CreditBureauReported == null || InnerItem.CreditBureauReported == "" ? "--" : InnerItem.CreditBureauReported)</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">Type of Facility</td>
+                                    <td class="text">@(InnerItem.TypeOfFacilityTE == null || InnerItem.TypeOfFacilityTE == "" ? "--" : InnerItem.TypeOfFacilityTE)</td>
+                                    <td class="title">Expiry Date</td>
+                                    <td class="text">@(InnerItem.ExpiryDate == null ? "--" : string.Format("{0:dd MMM yyyy}", InnerItem.ExpiryDate))</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">Loan Amount</td>
+                                    <td class="text">@(InnerItem.LoanAmount == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.LoanAmount))</td>
+                                    <td class="title">Outstanding Amount</td>
+                                    <td class="text">@(InnerItem.OutstandingAmount == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.OutstandingAmount))</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">Instalment / Min. Payment</td>
+                                    <td class="text">@(InnerItem.MonthlyInstallmentPayment == 0 ? "0" : string.Format("{0:#,##0}", InnerItem.MonthlyInstallmentPayment))</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="title text-left bg-gray" colspan="4"></td>
+                                </tr>
+                            }
+                            <tr>
+                                <td class="title">Total (Current Liabilities) Outstanding Amount</td>
+                                <td class="text">@(ViewBag.ED.CurrentTotalAmount == null || ViewBag.ED.CurrentTotalAmount == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.CurrentTotalAmount).Replace(",", ""))))</td>
+                                <td class="title">Total (Current Liabilities) Instalment / Min. Payment</td>
+                                <td class="text">@(ViewBag.ED.CurrentTotalInstallmentpayment == null || ViewBag.ED.CurrentTotalInstallmentpayment == "" ? "0" : string.Format("{0:#,##0}", ViewBag.ED.CurrentTotalInstallmentpayment))</td>
+                            </tr>
+                            <tr>
+                                <td class="title">Total (Long-Term Liabilities) Outstanding Amount</td>
+                                <td class="text">@(ViewBag.ED.LongtermTotalAmount == null || ViewBag.ED.LongtermTotalAmount == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.LongtermTotalAmount).Replace(",", ""))))</td>
+                                <td class="title">Total (Long-Term Liabilities) Instalment / Min. Payment</td>
+                                <td class="text">@(ViewBag.ED.LongtermInstallmentpayment == null || ViewBag.ED.LongtermInstallmentpayment == "" ? "0" : string.Format("{0:#,##0}", ViewBag.ED.LongtermInstallmentpayment))</td>
+                            </tr>
+                            <tr>
+                                <td class="title">Total Outstanding Amount</td>
+                                <td class="text">@(ViewBag.ED.TotalAmount == null || ViewBag.ED.TotalAmount == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.TotalAmount).Replace(",", ""))))</td>
+                                <td class="title">Total Instalment / Min. Payment</td>
+                                <td class="text">@( ViewBag.ED.TotalInstallmentpayment == 0 ? "0" : string.Format("{0:#,##0}", ViewBag.ED.TotalInstallmentpayment))</td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            }
         }
         @if (ViewBag.ALD != null)
         {
-            <table border="1" width="100%" class="tbl">
+            if (ViewBag.ALD.isNew == false)
+            {
+                <table border="1" width="100%" class="tbl">
+                    <thead>
+                        <tr>
+                            <th class="title text-center bg-gray ScreenTitle" colspan="4">Asset Liability Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="title" width="30%">
+                                Asset/Liabilty Detail as on
+                            </td>
+                            <td class="text" width="25%">@(ViewBag.ALD.AssetLiabilityAsOn == null ? "--" : string.Format("{0:MMM yyyy}", ViewBag.ALD.AssetLiabilityAsOn))</td>
 
+                            <td class="title" width="25%">
+                            </td>
+                            <td class="text" width="20%"></td>
+                        </tr>
+                        <tr>
+                            <td class="title text-left bg-gray" colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <th class="title" width="55%" colspan="2">Business Assets</th>
+                            <th class="title" width="45%" colspan="2">Business Liabilities</th>
+                        </tr>
 
-                <thead>
-                    <tr>
-                        <th class="title text-center bg-gray ScreenTitle" colspan="4">Asset Liability Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="title" width="30%">
-                            Asset/Liabilty Detail as on
-                        </td>
-                        <td class="text" width="25%">@(ViewBag.ALD.AssetLiabilityAsOn == null ? "--" : string.Format("{0:MMM yyyy}", ViewBag.ALD.AssetLiabilityAsOn))</td>
+                        <tr>
+                            <td class="title">
+                                Cash in hand / at Bank
+                                @(ViewBag.ALD.qtyAssetCashInHandAtBank == "" || ViewBag.ALD.qtyAssetCashInHandAtBank == null  ? "" : " ( "+ViewBag.ALD.qtyAssetCashInHandAtBank+" ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetCashInHandAtBank == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetCashInHandAtBank))</td>
 
-                        <td class="title" width="25%">
-                        </td>
-                        <td class="text" width="20%"></td>
-                    </tr>
-                    <tr>
-                        <td class="title text-left bg-gray" colspan="4"></td>
-                    </tr>
-                    <tr>
-                        <th class="title" width="55%" colspan="2">Business Assets</th>
-                        <th class="title" width="45%" colspan="2">Business Liabilities</th>
-                    </tr>
+                            <td class="title">Loans Payable - Bank @(ViewBag.ALD.detailsLoanPayableBank == "" || ViewBag.ALD.detailsLoanPayableBank == null  ? "" : " ( " + ViewBag.ALD.detailsLoanPayableBank + " ) ")</td>
+                            <td class="text">@(ViewBag.ALD.LiablityLoanPayebleBank == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityLoanPayebleBank))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Stock In Hand
+                                @(ViewBag.ALD.qtyAssetStockInHand == "" || ViewBag.ALD.qtyAssetStockInHand == null  ? "" : " ( " + ViewBag.ALD.qtyAssetStockInHand + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetStockInHand == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetStockInHand))</td>
+                            <td class="title">
+                                Student Security Deposit
+                                @(ViewBag.ALD.detailsStudentSecurityDeposit == "" || ViewBag.ALD.detailsStudentSecurityDeposit == null  ? "" : " ( " + ViewBag.ALD.detailsStudentSecurityDeposit + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.LiablityStudentSecurityDeposit == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityStudentSecurityDeposit))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Account Receivables
+                                @(ViewBag.ALD.qtyAssetAccountReceivable == "" || ViewBag.ALD.qtyAssetAccountReceivable == null  ? "" : " ( " + ViewBag.ALD.qtyAssetAccountReceivable + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetAccountReceivable == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetAccountReceivable))</td>
+                            <td class="title">Advance Received @(ViewBag.ALD.detailsAdvanceReceived == "" || ViewBag.ALD.detailsAdvanceReceived == null  ? "" : " ( " + ViewBag.ALD.detailsAdvanceReceived + " ) ")</td>
+                            <td class="text">@(ViewBag.ALD.LiablityAdvanceReceived == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityAdvanceReceived))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Franchise Fee (Advances)
+                                @(ViewBag.ALD.qtyAssetFranchiseFee == "" || ViewBag.ALD.qtyAssetFranchiseFee == null  ? "" : " ( " + ViewBag.ALD.qtyAssetFranchiseFee + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetFranchiseFee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetFranchiseFee))</td>
+                            <td class="title">Account Payables @(ViewBag.ALD.detailsAccountPayable == "" || ViewBag.ALD.detailsAccountPayable == null  ? "" : " ( " + ViewBag.ALD.detailsAccountPayable + " ) ")</td>
+                            <td class="text">@(ViewBag.ALD.LiablityAccountPayable == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityAccountPayable))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Committee
+                                @(ViewBag.ALD.qtyAssetCommittee == "" || ViewBag.ALD.qtyAssetCommittee == null  ? "" : " ( " + ViewBag.ALD.qtyAssetCommittee + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetCommittee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetCommittee))</td>
+                            <td class="title">Committee @(ViewBag.ALD.detailsCommittee == "" || ViewBag.ALD.detailsCommittee == null  ? "" : " ( " + ViewBag.ALD.detailsCommittee + " ) ")</td>
+                            <td class="text">@(ViewBag.ALD.LiablityCommittee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityCommittee))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Girvi Amount
+                                @(ViewBag.ALD.qtyAssetGirviAmount == "" || ViewBag.ALD.qtyAssetGirviAmount == null  ? "" : " ( " + ViewBag.ALD.qtyAssetGirviAmount + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetGirviAmount == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetGirviAmount))</td>
+                            <td class="title">Other Liabilities @(ViewBag.ALD.detailsOtherLiabilities == "" || ViewBag.ALD.detailsOtherLiabilities == null  ? "" : " ( " + ViewBag.ALD.detailsOtherLiabilities + " ) ")</td>
+                            <td class="text">@(ViewBag.ALD.OtherLiablity == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.OtherLiablity))</td>
+                        </tr>
 
-                    <tr>
-                        <td class="title">
-                            Cash in hand / at Bank
-                            @(ViewBag.ALD.qtyAssetCashInHandAtBank == "" || ViewBag.ALD.qtyAssetCashInHandAtBank == null  ? "" : " ( "+ViewBag.ALD.qtyAssetCashInHandAtBank+" ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetCashInHandAtBank == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetCashInHandAtBank))</td>
+                        <tr>
+                            <td class="title">
+                                Furniture & Fixtures
+                                @(ViewBag.ALD.qtyAssetFurnitureFixture == "" || ViewBag.ALD.qtyAssetFurnitureFixture == null  ? "" : " ( " + ViewBag.ALD.qtyAssetFurnitureFixture + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetFurnitureFixture == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetFurnitureFixture))</td>
+                            <td class="title"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Vehicles
+                                @(ViewBag.ALD.qtyAssetVehicle == "" || ViewBag.ALD.qtyAssetVehicle == null  ? "" : " ( " + ViewBag.ALD.qtyAssetVehicle + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetVehicle == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetVehicle))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Air Conditioners
+                                @(ViewBag.ALD.qtyAssetAirConditioners == "" || ViewBag.ALD.qtyAssetAirConditioners == null  ? "" : " ( " + ViewBag.ALD.qtyAssetAirConditioners + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetAirConditioners == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetAirConditioners))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Computers
+                                @(ViewBag.ALD.qtyAssetComputers == "" || ViewBag.ALD.qtyAssetComputers == null  ? "" : " ( " + ViewBag.ALD.qtyAssetComputers + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetComputers == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetComputers))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Generator/UPS
+                                @(ViewBag.ALD.qtyAssetGeneratorUps == "" || ViewBag.ALD.qtyAssetGeneratorUps == null  ? "" : " ( " + ViewBag.ALD.qtyAssetGeneratorUps + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetGeneratorUps == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetGeneratorUps))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Solar
+                                @(ViewBag.ALD.qtyAssetSolar == "" || ViewBag.ALD.qtyAssetSolar == null  ? "" : " ( " + ViewBag.ALD.qtyAssetSolar + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetSolar == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetSolar))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Other Equipment (Fridge/Photo Copier/Printers etc)
+                                @(ViewBag.ALD.qtyAssetEquipment == "" || ViewBag.ALD.qtyAssetEquipment == null  ? "" : " ( " + ViewBag.ALD.qtyAssetEquipment + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetEquipment == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetEquipment))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
 
-                        <td class="title">Loans Payable - Bank @(ViewBag.ALD.detailsLoanPayableBank == "" || ViewBag.ALD.detailsLoanPayableBank == null  ? "" : " ( " + ViewBag.ALD.detailsLoanPayableBank + " ) ")</td>
-                        <td class="text">@(ViewBag.ALD.LiablityLoanPayebleBank == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityLoanPayebleBank))</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Stock In Hand
-                            @(ViewBag.ALD.qtyAssetStockInHand == "" || ViewBag.ALD.qtyAssetStockInHand == null  ? "" : " ( " + ViewBag.ALD.qtyAssetStockInHand + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetStockInHand == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetStockInHand))</td>
-                        <td class="title">
-                            Student Security Deposit
-                            @(ViewBag.ALD.detailsStudentSecurityDeposit == "" || ViewBag.ALD.detailsStudentSecurityDeposit == null  ? "" : " ( " + ViewBag.ALD.detailsStudentSecurityDeposit + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.LiablityStudentSecurityDeposit == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityStudentSecurityDeposit))</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Account Receivables
-                            @(ViewBag.ALD.qtyAssetAccountReceivable == "" || ViewBag.ALD.qtyAssetAccountReceivable == null  ? "" : " ( " + ViewBag.ALD.qtyAssetAccountReceivable + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetAccountReceivable == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetAccountReceivable))</td>
-                        <td class="title">Advance Received @(ViewBag.ALD.detailsAdvanceReceived == "" || ViewBag.ALD.detailsAdvanceReceived == null  ? "" : " ( " + ViewBag.ALD.detailsAdvanceReceived + " ) ")</td>
-                        <td class="text">@(ViewBag.ALD.LiablityAdvanceReceived == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityAdvanceReceived))</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Franchise Fee (Advances)
-                            @(ViewBag.ALD.qtyAssetFranchiseFee == "" || ViewBag.ALD.qtyAssetFranchiseFee == null  ? "" : " ( " + ViewBag.ALD.qtyAssetFranchiseFee + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetFranchiseFee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetFranchiseFee))</td>
-                        <td class="title">Account Payables @(ViewBag.ALD.detailsAccountPayable == "" || ViewBag.ALD.detailsAccountPayable == null  ? "" : " ( " + ViewBag.ALD.detailsAccountPayable + " ) ")</td>
-                        <td class="text">@(ViewBag.ALD.LiablityAccountPayable == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityAccountPayable))</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Committee
-                            @(ViewBag.ALD.qtyAssetCommittee == "" || ViewBag.ALD.qtyAssetCommittee == null  ? "" : " ( " + ViewBag.ALD.qtyAssetCommittee + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetCommittee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetCommittee))</td>
-                        <td class="title">Committee @(ViewBag.ALD.detailsCommittee == "" || ViewBag.ALD.detailsCommittee == null  ? "" : " ( " + ViewBag.ALD.detailsCommittee + " ) ")</td>
-                        <td class="text">@(ViewBag.ALD.LiablityCommittee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityCommittee))</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Girvi Amount
-                            @(ViewBag.ALD.qtyAssetGirviAmount == "" || ViewBag.ALD.qtyAssetGirviAmount == null  ? "" : " ( " + ViewBag.ALD.qtyAssetGirviAmount + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetGirviAmount == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetGirviAmount))</td>
-                        <td class="title">Other Liabilities @(ViewBag.ALD.detailsOtherLiabilities == "" || ViewBag.ALD.detailsOtherLiabilities == null  ? "" : " ( " + ViewBag.ALD.detailsOtherLiabilities + " ) ")</td>
-                        <td class="text">@(ViewBag.ALD.OtherLiablity == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.OtherLiablity))</td>
-                    </tr>
+                        <tr>
+                            <td class="title">
+                                Land & Building
+                                @(ViewBag.ALD.qtyAssetLandBuliding == "" || ViewBag.ALD.qtyAssetLandBuliding == null  ? "" : " ( " + ViewBag.ALD.qtyAssetLandBuliding + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetLandBuliding == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetLandBuliding))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
 
-                    <tr>
-                        <td class="title">
-                            Furniture & Fixtures
-                            @(ViewBag.ALD.qtyAssetFurnitureFixture == "" || ViewBag.ALD.qtyAssetFurnitureFixture == null  ? "" : " ( " + ViewBag.ALD.qtyAssetFurnitureFixture + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetFurnitureFixture == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetFurnitureFixture))</td>
-                        <td class="title"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Vehicles
-                            @(ViewBag.ALD.qtyAssetVehicle == "" || ViewBag.ALD.qtyAssetVehicle == null  ? "" : " ( " + ViewBag.ALD.qtyAssetVehicle + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetVehicle == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetVehicle))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Air Conditioners
-                            @(ViewBag.ALD.qtyAssetAirConditioners == "" || ViewBag.ALD.qtyAssetAirConditioners == null  ? "" : " ( " + ViewBag.ALD.qtyAssetAirConditioners + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetAirConditioners == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetAirConditioners))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Computers
-                            @(ViewBag.ALD.qtyAssetComputers == "" || ViewBag.ALD.qtyAssetComputers == null  ? "" : " ( " + ViewBag.ALD.qtyAssetComputers + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetComputers == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetComputers))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Generator/UPS
-                            @(ViewBag.ALD.qtyAssetGeneratorUps == "" || ViewBag.ALD.qtyAssetGeneratorUps == null  ? "" : " ( " + ViewBag.ALD.qtyAssetGeneratorUps + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetGeneratorUps == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetGeneratorUps))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Solar
-                            @(ViewBag.ALD.qtyAssetSolar == "" || ViewBag.ALD.qtyAssetSolar == null  ? "" : " ( " + ViewBag.ALD.qtyAssetSolar + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetSolar == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetSolar))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Other Equipment (Fridge/Photo Copier/Printers etc)
-                            @(ViewBag.ALD.qtyAssetEquipment == "" || ViewBag.ALD.qtyAssetEquipment == null  ? "" : " ( " + ViewBag.ALD.qtyAssetEquipment + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetEquipment == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetEquipment))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                        <tr>
+                            <td class="title">
+                                Other Assets
+                                @(ViewBag.ALD.qtyOtherAssets == "" || ViewBag.ALD.qtyOtherAssets == null  ? "" : " ( " + ViewBag.ALD.qtyOtherAssets + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.OtherAssets == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.OtherAssets))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title text-left bg-gray" colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <td class="title"><b>Total Business Assets</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.TotalBusinessAsset == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalBusinessAsset))</b></td>
+                            <td class="title" style="text-align: right;"><b>Total Business Liabilities</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.TotalBusinessLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalBusinessLiability))</b></td>
+                        </tr>
+                        <tr>
+                            <td class="title"><b>Business Net Worth</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.AssetBusinessNetWorth == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetBusinessNetWorth))</b></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Total Household Assets</td>
+                            <td class="text" style="text-align: right;">@(ViewBag.ALD.TotalHouseholdAsset == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalHouseholdAsset))</td>
+                            <td class="title" style="text-align: right;">Total Household Liabilities</td>
+                            <td class="text" style="text-align: right;">@(ViewBag.ALD.TotalHouseholdLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalHouseholdLiability))</td>
+                        </tr>
+                        <tr>
+                            <td class="title"><b>Household Net Worth</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.AssetHouseholdNetWorth == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetHouseholdNetWorth))</b></td>
+                            <td class="title" style="text-align: right;"><b>Borrower's Net Worth</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.BorrowerNetWorthLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.BorrowerNetWorthLiability))</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <table border="1" width="100%" class="tbl">
+                    <thead>
+                        <tr>
+                            <th class="title text-center bg-gray ScreenTitle" colspan="4">Asset Liability Details</th>
+                        </tr>
+                    </thead>
 
-                    <tr>
-                        <td class="title">
-                            Land & Building
-                            @(ViewBag.ALD.qtyAssetLandBuliding == "" || ViewBag.ALD.qtyAssetLandBuliding == null  ? "" : " ( " + ViewBag.ALD.qtyAssetLandBuliding + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.AssetLandBuliding == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetLandBuliding))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td class="title" width="30%">
+                                Asset/Liabilty Detail as on
+                            </td>
+                            <td class="text" width="25%">@(ViewBag.ALD.AssetLiabilityAsOn == null ? "--" : string.Format("{0:MMM yyyy}", ViewBag.ALD.AssetLiabilityAsOn))</td>
 
-                    <tr>
-                        <td class="title">
-                            Other Assets
-                            @(ViewBag.ALD.qtyOtherAssets == "" || ViewBag.ALD.qtyOtherAssets == null  ? "" : " ( " + ViewBag.ALD.qtyOtherAssets + " ) ")
-                        </td>
-                        <td class="text">@(ViewBag.ALD.OtherAssets == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.OtherAssets))</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title text-left bg-gray" colspan="4"></td>
-                    </tr>
-                    <tr>
-                        <td class="title"><b>Total Business Assets</b></td>
-                        <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.TotalBusinessAsset == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalBusinessAsset))</b></td>
-                        <td class="title" style="text-align: right;"><b>Total Business Liabilities</b></td>
-                        <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.TotalBusinessLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalBusinessLiability))</b></td>
-                    </tr>
-                    <tr>
-                        <td class="title"><b>Business Net Worth</b></td>
-                        <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.AssetBusinessNetWorth == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetBusinessNetWorth))</b></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="title">Total Household Assets</td>
-                        <td class="text" style="text-align: right;">@(ViewBag.ALD.TotalHouseholdAsset == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalHouseholdAsset))</td>
-                        <td class="title" style="text-align: right;">Total Household Liabilities</td>
-                        <td class="text" style="text-align: right;">@(ViewBag.ALD.TotalHouseholdLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalHouseholdLiability))</td>
-                    </tr>
-                    <tr>
-                        <td class="title"><b>Household Net Worth</b></td>
-                        <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.AssetHouseholdNetWorth == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetHouseholdNetWorth))</b></td>
-                        <td class="title" style="text-align: right;"><b>Borrower's Net Worth</b></td>
-                        <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.BorrowerNetWorthLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.BorrowerNetWorthLiability))</b></td>
-                    </tr>
-                </tbody>
-            </table>
+                            <td class="title" width="25%">
+                            </td>
+                            <td class="text" width="20%"></td>
+                        </tr>
+                        <tr>
+                            <td class="title text-left bg-gray" colspan="4"></td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr>
+                            <th style="text-align: center" class="title" colspan="2">Current Assets</th>
+                            <th style="text-align: center" class="title" colspan="2">Current Liabilities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="title" width="55%" colspan="2">Business Assets</th>
+                            <th class="title" width="45%" colspan="2">Business Liabilities</th>
+                        </tr>
+
+                        <tr>
+                            <td class="title" width="30%">
+                                Cash in hand / at Bank
+                                @(ViewBag.ALD.qtyAssetCashInHandAtBank == "" || ViewBag.ALD.qtyAssetCashInHandAtBank == null  ? "" : " ( "+ViewBag.ALD.qtyAssetCashInHandAtBank+" ) ")
+                            </td>
+                            <td class="text" width="25%">@(ViewBag.ALD.AssetCashInHandAtBank == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetCashInHandAtBank))</td>
+
+                            <td class="title" width="25%">Loans Payable - Bank @(ViewBag.ALD.qtyCurrLoanPayableBanks == "" || ViewBag.ALD.qtyCurrLoanPayableBanks == null  ? "" : " ( " + string.Format("{0:#,###}", ViewBag.ALD.qtyCurrLoanPayableBanks)  + " ) ")</td>
+                            <td class="text" width="20%">@(ViewBag.ALD.detailsCurrLoanPayableBanks == ""|| ViewBag.ALD.detailsCurrLoanPayableBanks == null ? "--" : ViewBag.ALD.detailsCurrLoanPayableBanks)</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Stock In Hand
+                                @(ViewBag.ALD.qtyAssetStockInHand == "" || ViewBag.ALD.qtyAssetStockInHand == null  ? "" : " ( " + ViewBag.ALD.qtyAssetStockInHand + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetStockInHand == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetStockInHand))</td>
+                            <td class="title">
+                                ACCOUNT PAYABLES
+                                @(ViewBag.ALD.qtyCurrAccountPayable == "" || ViewBag.ALD.qtyCurrAccountPayable == null  ? "" : " ( " + string.Format("{0:#,###}", ViewBag.ALD.qtyCurrAccountPayable) + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.detailsCurrAccountPayable == "0" || ViewBag.ALD.detailsCurrAccountPayable == null ? "--" : ViewBag.ALD.detailsCurrAccountPayable)</td>
+                            @*<td class="title">
+                                    Student Security Deposit
+                                    @(ViewBag.ALD.detailsStudentSecurityDeposit == "" || ViewBag.ALD.detailsStudentSecurityDeposit == null  ? "" : " ( " + ViewBag.ALD.detailsStudentSecurityDeposit + " ) ")
+                                </td>
+                                <td class="text">@(ViewBag.ALD.LiablityStudentSecurityDeposit == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityStudentSecurityDeposit))</td>*@
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Account Receivables
+                                @(ViewBag.ALD.qtyCurrAccountRecievable == "" || ViewBag.ALD.qtyCurrAccountRecievable == null  ? "" : " ( " + string.Format("{0:#,###}", ViewBag.ALD.qtyCurrAccountRecievable) + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.detailsCurrAccountRecievable == "" || ViewBag.ALD.qtyCurrAccountRecievable == null ? "--" : ViewBag.ALD.detailsCurrAccountRecievable)</td>
+                            <td class="title">Committee @(ViewBag.ALD.qtyCurrCommitteeLiabilities == "" || ViewBag.ALD.qtyCurrCommitteeLiabilities == null ? "" : string.Format("{0:#,###}", ViewBag.ALD.qtyCurrCommitteeLiabilities))</td>
+                            <td class="text">@(ViewBag.ALD.detailsCurrCommitteeLiabilities == "0" || ViewBag.ALD.detailsCurrCommitteeLiabilities == null  ? "--" : ViewBag.ALD.detailsCurrCommitteeLiabilities)</td>
+                            @*<td class="title">Advance Received @(ViewBag.ALD.detailsAdvanceReceived == "" || ViewBag.ALD.detailsAdvanceReceived == null  ? "" : " ( " + ViewBag.ALD.detailsAdvanceReceived + " ) ")</td>
+                                <td class="text">@(ViewBag.ALD.LiablityAdvanceReceived == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityAdvanceReceived))</td>*@
+
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Committee
+                                @(ViewBag.ALD.qtyCurrCommittee == "" || ViewBag.ALD.qtyCurrCommittee == null ? "" : string.Format("{0:#,###}", ViewBag.ALD.qtyCurrCommittee))
+                            </td>
+                            <td class="text">@(ViewBag.ALD.detailsCurrCommittee == "0" || ViewBag.ALD.detailsCurrCommittee == null  ? "--" : ViewBag.ALD.detailsCurrCommittee)</td>
+                            @*<td class="title">
+                                    Franchise Fee (Advances)
+                                    @(ViewBag.ALD.qtyAssetFranchiseFee == "" || ViewBag.ALD.qtyAssetFranchiseFee == null  ? "" : " ( " + ViewBag.ALD.qtyAssetFranchiseFee + " ) ")
+                                </td>
+                                <td class="text">@(ViewBag.ALD.AssetFranchiseFee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetFranchiseFee))</td>*@
+                            <td class="title">Advance Received @(ViewBag.ALD.qtyCurrAdvanceReceived == "" || ViewBag.ALD.qtyCurrAdvanceReceived == null ? "" : string.Format("{0:#,###}", ViewBag.ALD.qtyCurrAdvanceReceived))</td>
+                            <td class="text">@(ViewBag.ALD.detailsCurrAdvanceReceived == "0" || ViewBag.ALD.detailsCurrAdvanceReceived == null  ? "--" : ViewBag.ALD.detailsCurrAdvanceReceived)</td>
+                            @*<td class="title">Account Payables @(ViewBag.ALD.detailsAccountPayable == "" || ViewBag.ALD.detailsAccountPayable == null  ? "" : " ( " + ViewBag.ALD.detailsAccountPayable + " ) ")</td>
+                                <td class="text">@(ViewBag.ALD.LiablityAccountPayable == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityAccountPayable))</td>*@
+                        </tr>
+                        <tr>
+                            <td class="title"><b>Total Current Assets</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.CurrTotalCurrentAssets == "" || ViewBag.ALD.CurrTotalCurrentAssets == null ? "--" : string.Format("{0:#,###}", ViewBag.ALD.CurrTotalCurrentAssets))</b></td>
+                            <td class="title"><b>Total Current Liabilities</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.CurrTotalCurrentLiabilities == "" || ViewBag.ALD.CurrTotalCurrentLiabilities == null ? "--" : string.Format("{0:#,###}", ViewBag.ALD.CurrTotalCurrentLiabilities))</b></td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr>
+                            <th style="text-align: center" class="title" colspan="2">Fixed Assets</th>
+                            <th style="text-align: center" class="title" colspan="2">Long Term Liabilities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="title">
+                                Account Receivables
+                                @(ViewBag.ALD.qtyAssetAccountReceivable == "" || ViewBag.ALD.qtyAssetAccountReceivable == null  ? "" : " ( " + ViewBag.ALD.qtyAssetAccountReceivable + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetAccountReceivable == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetAccountReceivable))</td>
+                            <td class="title">Loan Payable - Banks @(ViewBag.ALD.detailsLoanPayableBank == "" || ViewBag.ALD.detailsLoanPayableBank == null  ? "" : " ( " + ViewBag.ALD.detailsLoanPayableBank+" ) ")</td>
+                            <td class="text">@(ViewBag.ALD.LiablityLoanPayebleBank == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityLoanPayebleBank))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                GIRVI / ADVANCE AMOUNT
+                                @(ViewBag.ALD.qtyAssetGirviAmount == "" || ViewBag.ALD.qtyAssetGirviAmount == null  ? "" : " ( " + ViewBag.ALD.qtyAssetGirviAmount + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetGirviAmount == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetGirviAmount))</td>
+                            <td class="title">Account Payables @(ViewBag.ALD.detailsAccountPayable == "" || ViewBag.ALD.detailsAccountPayable == null  ? "" : " ( " + ViewBag.ALD.detailsAccountPayable + " ) ")</td>
+                            <td class="text">@(ViewBag.ALD.LiablityAccountPayable == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityAccountPayable))</td>
+                        </tr>
+
+                        <tr>
+                            <td class="title">
+                                Committee
+                                @(ViewBag.ALD.qtyAssetCommittee == "" || ViewBag.ALD.qtyAssetCommittee == null  ? "" : " ( " + ViewBag.ALD.qtyAssetCommittee+ " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetCommittee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetCommittee))</td>
+                            <td class="title">Committee @(ViewBag.ALD.detailsCommittee == "" || ViewBag.ALD.detailsCommittee == null  ? "" : " ( " + ViewBag.ALD.detailsCommittee+ " ) ")</td>
+                            <td class="text">@(ViewBag.ALD.LiablityCommittee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityCommittee))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Franchise Fee (Advances) @(ViewBag.ALD.qtyAssetFranchiseFee == "" || ViewBag.ALD.qtyAssetFranchiseFee == null  ? "" :  " ( " +ViewBag.ALD.qtyAssetFranchiseFee + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetFranchiseFee == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetFranchiseFee))</td>
+                            <td class="title">Advance Received @(ViewBag.ALD.detailsAdvanceReceived == "" || ViewBag.ALD.detailsAdvanceReceived == null  ? "" : " ( " + ViewBag.ALD.detailsAdvanceReceived + " ) ")</td>
+                            <td class="text">@(ViewBag.ALD.LiablityAdvanceReceived == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityAdvanceReceived))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Furniture & Fixtures
+                                @(ViewBag.ALD.qtyAssetFurnitureFixture == "" || ViewBag.ALD.qtyAssetFurnitureFixture == null  ? "" : " ( " + ViewBag.ALD.qtyAssetFurnitureFixture+ " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetFurnitureFixture == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetFurnitureFixture))</td>
+                            <td class="title">
+                                Student Security Deposit
+                                @(ViewBag.ALD.detailsStudentSecurityDeposit == "" || ViewBag.ALD.detailsStudentSecurityDeposit == null  ? "" : " ( " + ViewBag.ALD.detailsStudentSecurityDeposit + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.LiablityStudentSecurityDeposit == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.LiablityStudentSecurityDeposit))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Vehicles
+                                @(ViewBag.ALD.qtyAssetVehicle == "" || ViewBag.ALD.qtyAssetVehicle == null  ? "" : " ( " + ViewBag.ALD.qtyAssetVehicle + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetVehicle == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetVehicle))</td>
+                            <td class="title">
+                                Other Liabilities
+                                @(ViewBag.ALD.detailsOtherLiabilities == "" || ViewBag.ALD.detailsOtherLiabilities == null  ? "" : " ( " + ViewBag.ALD.detailsOtherLiabilities + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.OtherLiablity == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.OtherLiablity))</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Air Conditioners
+                                @(ViewBag.ALD.qtyAssetAirConditioners == "" || ViewBag.ALD.qtyAssetAirConditioners == null  ? "" : " ( " + ViewBag.ALD.qtyAssetAirConditioners + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetAirConditioners == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetAirConditioners))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Computers
+                                @(ViewBag.ALD.qtyAssetComputers == "" || ViewBag.ALD.qtyAssetComputers == null  ? "" : " ( " + ViewBag.ALD.qtyAssetComputers + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetComputers == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetComputers))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Generator/UPS
+                                @(ViewBag.ALD.qtyAssetGeneratorUps == "" || ViewBag.ALD.qtyAssetGeneratorUps == null  ? "" : " ( " + ViewBag.ALD.qtyAssetGeneratorUps + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetGeneratorUps == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetGeneratorUps))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Solar
+                                @(ViewBag.ALD.qtyAssetSolar == "" || ViewBag.ALD.qtyAssetSolar == null  ? "" : " ( " + ViewBag.ALD.qtyAssetSolar + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetSolar == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetSolar))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Other Equipment (Fridge/Photo Copier/Printers etc)
+                                @(ViewBag.ALD.qtyAssetEquipment == "" || ViewBag.ALD.qtyAssetEquipment == null  ? "" : " ( " + ViewBag.ALD.qtyAssetEquipment + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetEquipment == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetEquipment))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td class="title">
+                                Land & Building
+                                @(ViewBag.ALD.qtyAssetLandBuliding == "" || ViewBag.ALD.qtyAssetLandBuliding == null  ? "" : " ( " + ViewBag.ALD.qtyAssetLandBuliding + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.AssetLandBuliding == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetLandBuliding))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td class="title">
+                                Other Assets
+                                @(ViewBag.ALD.qtyOtherAssets == "" || ViewBag.ALD.qtyOtherAssets == null  ? "" : " ( " + ViewBag.ALD.qtyOtherAssets + " ) ")
+                            </td>
+                            <td class="text">@(ViewBag.ALD.OtherAssets == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.OtherAssets))</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title text-left bg-gray" colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <td class="title"><b>Total Fixed Assets</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.TotalFixedAssets == ""|| ViewBag.ALD.TotalFixedAssets == null ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalFixedAssets))</b></td>
+                            <td class="title" style="text-align: right;"><b>Total long Term Liabilities</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.TotalLongTermLiabilities == "" || ViewBag.ALD.TotalLongTermLiabilities == null ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalLongTermLiabilities))</b></td>
+                        </tr>
+                        <tr>
+                            <td class="title"><b>Total Business Assets</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.TotalBusinessAsset == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalBusinessAsset))</b></td>
+                            <td class="title" style="text-align: right;"><b>Total Business Liabilities</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.TotalBusinessLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalBusinessLiability))</b></td>
+                        </tr>
+                        <tr>
+                            <td class="title"><b>Business Net Worth</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.AssetBusinessNetWorth == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetBusinessNetWorth))</b></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Total Household Assets</td>
+                            <td class="text" style="text-align: right;">@(ViewBag.ALD.TotalHouseholdAsset == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalHouseholdAsset))</td>
+                            <td class="title" style="text-align: right;">Total Household Liabilities</td>
+                            <td class="text" style="text-align: right;">@(ViewBag.ALD.TotalHouseholdLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.TotalHouseholdLiability))</td>
+                        </tr>
+                        <tr>
+                            <td class="title"><b>Household Net Worth</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.AssetHouseholdNetWorth == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.AssetHouseholdNetWorth))</b></td>
+                            <td class="title" style="text-align: right;"><b>Borrower's Net Worth</b></td>
+                            <td class="text" style="text-align: right;"><b>@(ViewBag.ALD.BorrowerNetWorthLiability == 0 ? "--" : string.Format("{0:#,###}", ViewBag.ALD.BorrowerNetWorthLiability))</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
 
         }
         @if (ViewBag.BI != null)
@@ -2618,7 +3026,7 @@
                             </tr>
 
                             @*@{item.AdditionalFieldLabel1 = "Hidden Expenses";}
-                            @{item.AdditionalFieldValue1 = "15545";}*@
+                                @{item.AdditionalFieldValue1 = "15545";}*@
 
                             <tr class="@(item.AdditionalFieldLabel1 == "" || item.AdditionalFieldLabel1 == null ? "d-none" : "")">
                                 <td class="title">
@@ -2770,7 +3178,7 @@
                                         <td class="text">@(Academy.OtherExpenses == null || Academy.OtherExpenses == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((Academy.OtherExpenses).Replace(",",""))))</td>
                                     </tr>
                                     @*@{Academy.AdditionalFieldLabel1 = "Hidden Expenses";}
-                                    @{Academy.AdditionalFieldValue1 = "15545";}*@
+                                        @{Academy.AdditionalFieldValue1 = "15545";}*@
 
                                     <tr class="@(Academy.AdditionalFieldLabel1 == "" || Academy.AdditionalFieldLabel1 == null ? "d-none" : "")">
                                         <td class="title">
@@ -2865,7 +3273,7 @@
                                 <td class="text">@(item.HouseholdOwnerName == null || item.HouseholdOwnerName == "0" ? "--" : item.HouseholdOwnerName)</td>
 
                                 <td class="title">HOUSE RENT</td>
-                                <td class="text">@(item.HouseRent == null || item.HouseRent == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.HouseRent).Replace(",", ""))))</td>
+                                <td class="text">@(item.HouseRent == null || item.HouseRent == "0" || item.HouseRent == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.HouseRent).Replace(",", ""))))</td>
                             </tr>
                             <tr>
                                 <td class="title">FOOD EXPENSE</td>
@@ -2901,9 +3309,9 @@
                                 <td class="text">@(item.VanTransportationOfDependents== null || item.VanTransportationOfDependents == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.VanTransportationOfDependents).Replace(",", ""))))</td>
                             </tr>
                             @*<tr>
-                                <td class="title">EDUCATIONAL Expense</td>
-                                <td class="text">@(item.Educational == null || item.Educational == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Educational).Replace(",", ""))))</td>
-                            </tr>*@
+                                    <td class="title">EDUCATIONAL Expense</td>
+                                    <td class="text">@(item.Educational == null || item.Educational == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Educational).Replace(",", ""))))</td>
+                                </tr>*@
                             <tr>
                                 <td class="title">Other Educational Expenses</td>
                                 <td class="text">@(item.OtherEducationalExpenses== null || item.OtherEducationalExpenses == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherEducationalExpenses).Replace(",", ""))))</td>
@@ -2995,20 +3403,20 @@
                 </thead>
                 <tbody>
                     @*<tr>
-                        <td class="text" colspan="4">I am applying for the loan as per details given below:</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            PURPOSE OF LOAN
-                        </td>
-                        <td class="text" colspan="3">@(ViewBag.LRD.LoanpurposeName == null || ViewBag.LRD.LoanpurposeName == "" ? "--" : ViewBag.LRD.LoanpurposeName)</td>
-                    </tr>
-                    <tr>
-                        <td class="title">
-                            Loan Purpose Details
-                        </td>
-                        <td class="text" colspan="3">@(ViewBag.LRD.PurposeOfLoanUtilization == null || ViewBag.LRD.PurposeOfLoanUtilization == "" ? "--" : ViewBag.LRD.PurposeOfLoanUtilization)</td>
-                    </tr>*@
+                            <td class="text" colspan="4">I am applying for the loan as per details given below:</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                PURPOSE OF LOAN
+                            </td>
+                            <td class="text" colspan="3">@(ViewBag.LRD.LoanpurposeName == null || ViewBag.LRD.LoanpurposeName == "" ? "--" : ViewBag.LRD.LoanpurposeName)</td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                Loan Purpose Details
+                            </td>
+                            <td class="text" colspan="3">@(ViewBag.LRD.PurposeOfLoanUtilization == null || ViewBag.LRD.PurposeOfLoanUtilization == "" ? "--" : ViewBag.LRD.PurposeOfLoanUtilization)</td>
+                        </tr>*@
 
                     <tr>
                         <td class="title" width="30%">loan amount requried</td>

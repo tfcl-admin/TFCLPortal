@@ -129,7 +129,20 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
 
             int? branchId = Branchid();
-            var mobilizationList = _applicationAppService.GetApplicationList(screenStatus, branchId, true, admin);
+
+            List<ApplicationDto> mobilizationList = new List<ApplicationDto>();
+
+
+            if(screenStatus=="Enhancement")
+            {
+                mobilizationList = _applicationAppService.GetApplicationList("", branchId, true, admin,true);
+            }
+            else
+            {
+                mobilizationList = _applicationAppService.GetApplicationList(screenStatus, branchId, true, admin);
+            }
+
+
 
             List<ApplicationDto> returnList = new List<ApplicationDto>();
             if (startDate != null && endDate != null)
@@ -155,7 +168,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             if (sde != "" && sde != null)
             {
-                returnList = returnList.Where(x => x.SDEName == sde).ToList();
+                returnList = returnList.Where(x => x.SDEName == sde || x.Transferred==sde).ToList();
             }
 
 

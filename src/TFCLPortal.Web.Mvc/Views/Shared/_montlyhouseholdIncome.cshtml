@@ -38,32 +38,32 @@
                                         </div>
                                         <div class="col-md-4">
                                             <p class="detailHeading">HOUSE RENT</p>
-                                            <p class="detailText">@(item.HouseRent == null || item.HouseRent == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.HouseRent).Replace(",", ""))))</p>
+                                            <p class="detailText">@(item.HouseRent == null || item.HouseRent == "0" || item.HouseRent == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.HouseRent).Replace(",", ""))))</p>
                                         </div>
                                         <div class="col-md-4">
                                             <p class="detailHeading">FOOD EXPENSE</p>
-                                            <p class="detailText">@(item.Food == null || item.Food == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Food).Replace(",", ""))))</p>
+                                            <p class="detailText">@(item.Food == null || item.Food == "0" || item.Food == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Food).Replace(",", ""))))</p>
                                         </div>
                                         <div class="col-md-4">
                                             <p class="detailHeading">UTILITIES</p>
-                                            <p class="detailText">@(item.Utilities == null || item.Utilities == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Utilities).Replace(",", ""))))</p>
+                                            <p class="detailText">@(item.Utilities == null || item.Utilities == "0" || item.Utilities == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Utilities).Replace(",", ""))))</p>
                                         </div>
                                         <div class="col-md-4">
                                             <p class="detailHeading">
                                                 Clothing Expense
                                             </p>
-                                            <p class="detailText">@(item.Clothing == null || item.Clothing == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Clothing).Replace(",", ""))))</p>
+                                            <p class="detailText">@(item.Clothing == null || item.Clothing == "0" || item.Clothing == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Clothing).Replace(",", ""))))</p>
                                         </div>
                                         <div class="col-md-4">
                                             <p class="detailHeading">
                                                 Medical Expense
                                             </p>
-                                            <p class="detailText">@(item.Medical == null || item.Medical == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Medical).Replace(",", ""))))</p>
+                                            <p class="detailText">@(item.Medical == null || item.Medical == "0" || item.Medical == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.Medical).Replace(",", ""))))</p>
                                         </div>
 
                                         <div class="col-md-4">
                                             <p class="detailHeading">Monthly EI Fee</p>
-                                            <p class="detailText">@(item.MonthlyEIfee== null || item.MonthlyEIfee == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyEIfee).Replace(",", ""))))</p>
+                                            <p class="detailText">@(item.MonthlyEIfee== null || item.MonthlyEIfee == "0" || item.MonthlyEIfee == "" ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.MonthlyEIfee).Replace(",", ""))))</p>
                                         </div>
                                         <div class="col-md-4">
                                             <p class="detailHeading">Monthly Tution Fee</p>

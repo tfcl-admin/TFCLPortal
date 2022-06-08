@@ -13,9 +13,7 @@ namespace TFCLPortal.Schedules
         Task<string> CreateSchedule(CreateScheduleDto input);
         Task<string> UpdateSchedule(UpdateScheduleDto input);
         Task<ScheduleListDto> GetScheduleByApplicationId(int ApplicationId);
-
         Task<List<ScheduleInstallmenttListDto>> GetInstallmentPaymentsByUserId(int UserId);
-        
         bool CheckScheduleByApplicationId(int ApplicationId);
         Task<List<ScheduleListDto>> GetScheduleList();
     }

@@ -71,6 +71,7 @@ namespace TFCLPortal.Mobilizations.Dto
         public string MonthlySalary { get; set; }
         public string JobTenure { get; set; }
         public int SchoolGoingDependants { get; set; }
+        public string MobilizationRecordId { get; set; }
 
         public int Gender { get; set; }
         public DateTime? CnicIssueDate { get; set; }
@@ -99,6 +100,8 @@ namespace TFCLPortal.Mobilizations.Dto
         public long CreatorUserId { get; set; }
         public string SDE_Name { get; set; }
         //-----
+        public string MobilizationRecordId { get; set; }
+
         public string ApplicantSource { get; set; }//Name Change
         public string PersonNotInterested { get; set; }
         public string PrefferedProduct { get; set; } //Name Change

@@ -42,8 +42,8 @@
         <!--<div class="row">
             <div class="col-md-4 text-left">
                 <img id="Imglogo" src="~/images/TFCLNoBg.png" width="100px">-->
-                @*<img id="Imglogo" src="~/Theame/images/bg.png" width="100px">*@
-            <!--</div>
+        @*<img id="Imglogo" src="~/Theame/images/bg.png" width="100px">*@
+        <!--</div>
             <div class="col-md-4 text-center" style="padding-top:30px">
                 <h3 style="text-transform:uppercase">AML CFT Search Report</h3>
             </div>
@@ -51,7 +51,7 @@
 
         <table style="margin-bottom:30px;width:100%">
             <tr>
-                <td ><img id="Imglogo" src="~/images/TFCLNoBg.png" width="100px"></td>
+                <td><img id="Imglogo" src="~/images/TFCLNoBg.png" width="100px"></td>
                 <td width="83%" style="padding-top: 30px;text-transform: uppercase;padding-left:16%">
                     <h3 style="font-weight:bold">AML CFT Search Report</h3>
                 </td>
@@ -67,6 +67,7 @@
                         <td style="padding:10px">
                             <h3 id="NactaCount" class="count">0</h3>
                             <h6 class="text-center">NACTA List</h6>
+                            <p id="NactaUpdate" class="text-center">--</p>
                         </td>
                         <td>
                             <h3 id="ApplicantsCount" class="count">0</h3>
@@ -85,12 +86,14 @@
                             <h6 class="text-center">CNIC Found</h6>
                         </td>
                         <td>
-                            <h3 id="CheckedCount" class="count">0</span>
-                            <h6 class="text-center">Total Checked</h6>
+                            <h3 id="CheckedCount" class="count">
+                                0
+                            </h3>
+                                <h6 class="text-center">Total Checked</h6>
                         </td>
                     </tr>
                 </table>
-            
+
                 <span id="results"></span>
             </div>
             <div class="col-md-12 text-center" style="margin-top:10px">
@@ -102,6 +105,8 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="~/js/printThis-master/printThis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+
     <script>
         var allResults = [];
         var ClientCNICs = [];
@@ -111,9 +116,10 @@
             $(".pageloader").toggleClass("d-none");
 
             var getJson = @Html.Raw(Json.Serialize(ViewBag.JsonData));
-            allResults = getJson.value;
+            allResults = getJson;
             //console.log(allResults);
             $("#NactaCount").html(allResults.length);
+            $("#NactaUpdate").html('Last updated on <u>'+moment(allResults[0].creationTime).format('DD MMM yyyy hh:mm A')+'</u>');
 
             $.ajax({
                 type: 'GET',
@@ -141,7 +147,7 @@
             var today = new Date();
 
             var content = "<table border='1' width='100%'>";
-            content += "<thead><tr><th colspan='4' class='text-center'>Searched at " + today.toString().substr(0, 24)+"</th></tr><thead><tbody>";
+            content += "<thead><tr><th colspan='4' class='text-center'>Searched at " + moment(today).format('DD MMM yyyy hh:mm A')+"</th></tr><thead><tbody>";
             var trCounter = 0;
             var foundCount = 0;
             ClientCNICs.forEach(function (item) {

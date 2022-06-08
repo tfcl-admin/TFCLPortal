@@ -35,6 +35,11 @@ namespace TFCLPortal.Schedules.Dto
         public string Outstanding { get; set; }
         public string LoanAmount { get; set; }
 
+        public DateTime? LastPaymentDate { get; set; }
+        public int DPD { get; set; }
+
+        public bool isMarkupPaid { get; set; }
+        public bool isPrincipalPaid { get; set; }
 
     }
 }

@@ -1,0 +1,255 @@
+﻿@model TFCLPortal.SchoolFinancials.Dto.SchoolFinancialListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <p class="detailHeading">Previous Academic Year</p>
+                    <p class="detailText">@(Model.PreviousYear == null || Model.PreviousYear == "" ? "--" : Model.PreviousYear)</p>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-3">
+                    <p class="detailHeading">Total No. of Classrooms</p>
+                    <p class="detailText">@(Model.NoOfClassrooms == null || Model.NoOfClassrooms == 0 ? "--" : Model.NoOfClassrooms.ToString())</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Total No. of Students</p>
+                    <p class="detailText">@(Model.NoOfStudents == null || Model.NoOfStudents == 0 ? "--" : Model.NoOfStudents.ToString())</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">No. of teaching staff </p>
+                    <p class="detailText">@(Model.NoOfTeachingStaff == null || Model.NoOfTeachingStaff == 0 ? "--" : Model.NoOfTeachingStaff.ToString())</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">No. of non teaching staff</p>
+                    <p class="detailText">@(Model.NoOfNonTeachingStaff == null || Model.NoOfNonTeachingStaff == 0 ? "--" : Model.NoOfNonTeachingStaff.ToString())</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Avg Monthly School Fee</p>
+                    <p class="detailText">@(Model.AvgMonthlyFee == ""||Model.AvgMonthlyFee==null  ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.AvgMonthlyFee)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Total Revenue (school & other sources)</p>
+                    <p class="detailText">@(Model.TotalRevenue == ""||Model.TotalRevenue == null  ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.TotalRevenue)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Total Expenses from salary</p>
+                    <p class="detailText">@(Model.TotalExpensesFromSalary == null || Model.TotalExpensesFromSalary == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.TotalExpensesFromSalary)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Total Expenses from rent/mortgage</p>
+                    <p class="detailText">@(Model.TotalExpensesFromRentMortgage == null || Model.TotalExpensesFromRentMortgage == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.TotalExpensesFromRentMortgage)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Total Expenses from debt</p>
+                    <p class="detailText">@(Model.TotalExpensesFromDebt == null || Model.TotalExpensesFromDebt == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.TotalExpensesFromDebt)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">All other expenses</p>
+                    <p class="detailText">@(Model.AllOtherExpenses == null || Model.AllOtherExpenses == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.AllOtherExpenses)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Total Profit</p>
+                    <p class="detailText">@(Model.TotalProfit == null || Model.TotalProfit == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.TotalProfit)))</p>
+                </div>
+
+                <div class="col-md-3">
+                    <p class="detailHeading">Total Assets</p>
+                    <p class="detailText">@(Model.TotalAsset == null || Model.TotalAsset == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.TotalAsset)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Current Assets</p>
+                    <p class="detailText">@(Model.CurrentAsset == null || Model.CurrentAsset == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.CurrentAsset)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Total Liabilities</p>
+                    <p class="detailText">@(Model.TotalLiabilities == null || Model.TotalLiabilities == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.TotalLiabilities)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Current Liabilities</p>
+                    <p class="detailText">@(Model.CurrentLiabilities == null || Model.CurrentLiabilities == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.CurrentLiabilities)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Working Capital/ Fund Balance</p>
+                    <p class="detailText">@(Model.WorkingCapital == null || Model.WorkingCapital == "" ? "--" : string.Format("{0:#,###}", Int32.Parse(Model.WorkingCapital)))</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="detailHeading">Spouse's/Family's other income</p>
+                    <p class="detailText">@(Model.spouseFamilyOtherIncomeName == null || Model.spouseFamilyOtherIncomeName == "" ? "--" : Model.spouseFamilyOtherIncomeName)</p>
+                </div>
+            </div>
+
+
+            <div class="col-md-12" style="text-align: right;">
+                <a id="screenBtnSF" href="" data-toggle="modal" data-target="#_ForSF_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                <a id="discrepentBtnSF" href="" data-toggle="modal" data-target="#_ForSF_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<!--Approved Modal -->
+<div class="modal fade" id="_ForSF_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenSF" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_ForSF_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdSF"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorSF">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentSF" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.SFAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnSF').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnSF').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnSF').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnSF').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnSF').toggleClass("d-none");
+            $('#discrepentBtnSF').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenSF').click(function () {
+        debugger;
+        var comment = $('#commentIdSF').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'SCHOOL FINANCIAL DETAILS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentSF').click(function () {
+        debugger;
+        if (!$('#commentIdSF').val()) {
+            $('#comment_errorSF').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorSF').css("display", "none");
+        }
+        var comment = $('#commentIdSF').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'SCHOOL FINANCIAL DETAILS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdSF').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

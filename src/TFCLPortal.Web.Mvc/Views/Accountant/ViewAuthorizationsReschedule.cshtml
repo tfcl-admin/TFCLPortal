@@ -74,8 +74,14 @@
                     <td>
                         <a href="/Accountant/ViewReSchedule?ApplicationId=@item.Id" title="View Re-Schedules" target="_blank"><i class="fa fa-calendar"></i> New</a>
                         -
-                        <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i> Old</a>
-
+                        @if (item.Comments == "Enhancement")
+                        {
+                            <a href="/Accountant/ViewSchedule?ApplicationId=@item.PrevApplicationId" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i> Old</a>
+                        }
+                        else
+                        {
+                            <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i> Old</a>
+                        }
                     </td>
                     @*<td>
             <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i> Details</a>

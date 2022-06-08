@@ -137,7 +137,7 @@
                     <td width="40%"><b>Loan Amount</b></td>
                     <td style="background-color:lightyellow" id="txtLoanAmount">
                         @(ViewBag.Input.LoanAmount == null || ViewBag.Input.LoanAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.LoanAmount)))
-                        <a title="Edit Loan Amount" href="" id="LoanAmountChangeBtn" data-toggle="modal" data-target="#_editLoanAmount"><i class="fa fa-edit"></i></a>
+                        @*<a title="Edit Loan Amount" href="" id="LoanAmountChangeBtn" data-toggle="modal" data-target="#_editLoanAmount"><i class="fa fa-edit"></i></a>*@
                     </td>
                 </tr>
                 <tr>
@@ -354,7 +354,7 @@
 
                             <div class="col-md-12">
                                 <p class="detailHeading">Amount</p>
-                                <input id="BaloonAmountText" type="number" class="form-control" />
+                                <input id="BaloonAmountText" type="number" value="@ViewBag.customerAcc.Result.Balance" max="@ViewBag.customerAcc.Result.Balance" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -610,7 +610,7 @@
                 Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
             }
 
-
+            alert('test');
             reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU);
             console.log("------------------------------------Apply Change Start------------------------------------");
             console.log("Tenure : " + tenure);
@@ -656,9 +656,15 @@
 
 
         $(document).on('click', '#applyBaloonPayment', function (e) {
+
+            var maxPayment = '@ViewBag.customerAcc.Result.Balance';
+
+
             var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
             var LastInstallmentP = installments[LastInstallmentIndex];
             var FirstInstallmentU = installments[LastInstallmentIndex + 1];
+            if (Number($('#BaloonAmountText').val()) <= maxPayment) {
+
             if (Number($('#BaloonAmountText').val()) < Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", ""))) {
                 var tenure = $('#NewRemainingInstallmentsText').val();
 
@@ -687,6 +693,10 @@
             }
             else {
                 alert('Baloon Payment can not be more than or equal to current outstanding amount : ' + FirstInstallmentU.osPrincipal_op);
+                }
+            }
+            else {
+                alert('Baloon Payment can not be more than Account Balance : ' + numberWithCommas(maxPayment));
             }
         });
 
@@ -731,7 +741,6 @@
             var Irr = parseFloat('@ViewBag.Input.IRR') / 100;
             var Markup = parseFloat('@ViewBag.Input.Markup')/100;
             var IrrFull = parseFloat('@ViewBag.IRR_full') / 100;
-
 
             if (Type == 'Standard') {
                 var counter = 0;
@@ -887,7 +896,159 @@
 
                 $('#installmentsTable').html(content);
             }
+            if (Type == 'Tranches') {
+                var counter = 0;
+                data = installments;
 
+                var content = "";
+                content += "<table  class='table table-striped table-bordered installments' cellspacing='0' width='100 %'>";
+                content += "<thead>";
+                content += " <th style='text-align: center'>Inst #</th>";
+                content += " <th style='text-align: center'>Bal Inst</th>";
+                content += " <th style='text-align: center'>Installment Due Date</th>";
+                content += " <th style='text-align: center'>O/S Principal - Op</th>";
+                content += " <th style='text-align: center'>Additional Tranche</th>";
+                content += " <th style='text-align: center'>O/S Principal - Opening</th>";
+                content += " <th style='text-align: center'>Markup</th>";
+                content += " <th style='text-align: center'>Principal</th>";
+                content += " <th style='text-align: center'>Installment Amount</th>";
+                content += " <th style='text-align: center'>O/S Principal - Closing</th>";
+                content += " <th style='text-align: center'>Paid</th>";
+                content += " <th style='text-align: center'>Payment Date</th>";
+                content += "</thead>";
+                content += "<tbody>";
+
+                var isGraceDaysExist = false;
+                for (i = 0; i < data.filter(x => x.isPaid == true).length; i++) {
+
+                    if (data[i].instNumber != 'G*') {
+                        counter++;
+                    }
+                    else {
+                        isGraceDaysExist = true;
+                    }
+
+                    if (data[i].isPaid == 1) {
+                        content += '<tr  style="background-color:lightgray">';
+
+                    }
+                    else {
+                        content += '<tr>';
+                    }
+                    content += '<td style="text-align: center">' + data[i].instNumber + '</td>';
+                    content += '<td style="text-align: center">' + data[i].balInst + '</td>';
+                    content += '<td style="text-align: center">' + data[i].installmentDueDate + '</td>';
+                    content += '<td style="text-align: center">' + data[i].osPrincipal_op + '</td>';
+                    if (data[i].additionalTranche != "--") {
+                        content += '<td style="text-align: center">' + data[i].additionalTranche + ' </td > ';
+                        //content += '<td style="text-align: center">' + data[i].additionalTranche + '  <a title="Edit Tranches" class="ChangeTranche" hidden-value=' + data[i].additionalTranche + ' hidden-date="' + data[i].installmentDueDate+'"><i class="fa fa-edit"></i></a></td > ';
+                    }
+                    else {
+                        content += '<td style="text-align: center">--</td>';
+                    }
+                    content += '<td style="text-align: center">' + data[i].osPrincipal_Opening + '</td>';
+                    content += '<td style="text-align: center">' + data[i].markup + '</td>';
+                    content += '<td style="text-align: center">' + data[i].principal + '</td>';
+                    content += '<td style="text-align: center">' + data[i].installmentAmount + '</td>';
+                    content += '<td style="text-align: center">' + data[i].osPrincipal_Closing + '</td>';
+                    content += '<td style="text-align: center">' + isPaidCheck(data[i].isPaid) + '</td>';
+                    if (isNullOrEmpty(data[i].paymentDate) != '--') {
+                        content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate).substr(0, 10)) + '</td>';
+                    } else {
+                        content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate)) + '</td>';
+                    }
+                    content += '</tr>';
+
+                }
+
+                Irr = formulajs.RATE(Tenure, (1 + ((1 * Markup) / 12 * Tenure)) / Tenure, -1, 0, 0) * 12;
+                //Irr = formulajs.RATE(Tenure, (1 + ((Markup / 12 * Tenure) / Tenure)), -1, 0, 0);
+                //alert(Irr);
+                //console.log('Markup : ' + Markup);
+                //console.log('Tenure : ' + Tenure);
+                //console.log('(1 + ((1 * ' + Markup + ') / 12 * ' + Tenure + ')) / ' + Tenure);
+
+
+                var osPrincipalAmount = LoanAmount;
+                var additionalTranch = Number(LoanAmount) - Number(FirstUnpaidInstallment.osPrincipal_op.replaceAll(",", ""));
+
+                var emi = pmt(Irr / 12, Tenure, osPrincipalAmount, 0, 0);
+
+
+                if (isGraceDaysExist == true) {
+                    var startingIndex = Number(data[counter + 1].instNumber);
+                }
+                else {
+                    var startingIndex = Number(data[counter].instNumber);
+                }
+                var startDate = Number(moment(LoanStartDate).add(counter, 'M'));
+                console.log(data[counter].installmentDueDate);
+
+                for (i = counter, counter = 0, j = (Tenure - 1); counter < Tenure; i++, counter++, j--) {
+
+                    content += '<tr  style="background-color: #FFFFE0">';
+                    content += '<td style="text-align: center">' + (startingIndex++) + '</td>';
+                    content += '<td style="text-align: center">' + j + '</td>';
+                    content += '<td style="text-align: center">' + getInstallmentDate(startDate) + '</td>';
+
+                    if (counter == 0) {
+                        content += '<td style="text-align: center">' + numberWithCommas(FirstUnpaidInstallment.osPrincipal_op.replaceAll(",", "")) + '</td>';
+                    }
+                    else {
+                        content += '<td style="text-align: center">' + numberWithCommas(osPrincipalAmount) + '</td>';
+                    }
+
+                    //content += '<td style="text-align: center">' + data[i].osPrincipal_op + '</td>';
+                    if (additionalTranch != 0) {
+                        content += '<td style="text-align: center">' + numberWithCommas(additionalTranch) + ' </td > ';
+                        additionalTranch = 0;
+                    }
+
+                    else {
+                        content += '<td style="text-align: center">--</td>';
+                    }
+                    content += '<td style="text-align: center">' + numberWithCommas(osPrincipalAmount) + '</td>';
+
+                    var resGetMarkup = getMarkup(osPrincipalAmount, Irr * 100);
+                    content += '<td style="text-align: center">' + numberWithCommas(resGetMarkup) + '</td>';
+
+                    var principal = emi - resGetMarkup;
+                    content += '<td style="text-align: center">' + numberWithCommas(principal) + '</td>';
+
+
+                    //content += '<td style="text-align: center">' + data[i].markup + '</td>';
+                    content += '<td style="text-align: center">' + numberWithCommas(emi) + '</td>';
+
+                    var osPrincipalClosing = (osPrincipalAmount - principal);
+                    if (j == 0 && osPrincipalClosing <= 10) {
+                        content += '<td style="text-align: center">' + 0 + '</td>';
+                    }
+                    else {
+                        content += '<td style="text-align: center">' + numberWithCommas(osPrincipalClosing) + '</td>';
+                    }
+
+                    content += '<td style="text-align: center">' + '<i class="fa fa-times" style="color:red"></i>' + '</td>';
+                    content += '<td style="text-align: center">' + '--' + '</td>';
+                    //if (isNullOrEmpty(data[i].paymentDate) != '--') {
+                    //    content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate).substr(0, 10)) + '</td>';
+                    //} else {
+                    //    content += '<td style="text-align: center">' + isNullOrEmpty((data[i].paymentDate)) + '</td>';
+                    //}
+                    content += '</tr>';
+
+                    osPrincipalAmount = osPrincipalClosing;
+                    $('#txtLastInstallmentDate').text(getInstallmentDate(startDate));
+                    $('#installmentDiv').text(numberWithCommas(emi));
+                    $('#txtIRR').text((Irr * 100).toFixed(2));
+                    startDate = Number(moment(startDate).add(1, 'M'));
+                }
+
+                content += "</tbody>";
+                content += "</table>"
+
+
+                $('#installmentsTable').html(content);
+            }
         }
 
 

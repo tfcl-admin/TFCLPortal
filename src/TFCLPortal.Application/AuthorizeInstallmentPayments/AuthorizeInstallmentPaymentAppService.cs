@@ -201,7 +201,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                             child.CompanyBankName = CompanyBank.Name;
                         }
 
-                        var app = applications.Where(x => x.Id == child.ApplicationId).SingleOrDefault();
+                        var app = applications.Where(x => x.Id == child.ApplicationId).FirstOrDefault();
                         if (app != null)
                         {
                             child.ClientID = app.ClientID;

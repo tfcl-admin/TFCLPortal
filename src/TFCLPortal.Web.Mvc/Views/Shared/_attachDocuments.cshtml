@@ -19,7 +19,7 @@
                 <div class="col-md-4">
 
                     <div class="heading text-capitalize">
-                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+" )"   )</p>
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
                     </div>
                     <div class="page-form">
                         <div class="form-group">

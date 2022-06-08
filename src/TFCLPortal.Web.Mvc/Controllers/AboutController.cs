@@ -93,6 +93,11 @@ namespace TFCLPortal.Web.Controllers
             return View();
         }
 
+        public ActionResult CalculationEntries()
+        {
+            return View();
+        }
+
         public JsonResult FetchFileTypes()
         {
             var FileTypes = _fileTypeAppService.GetAllList();

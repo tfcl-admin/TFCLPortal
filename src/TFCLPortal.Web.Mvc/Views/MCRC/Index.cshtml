@@ -54,6 +54,9 @@
                         <td> @{i = i + 1;} @i</td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ClientID)
+
+                            @(item.isEnhancementApplication==true ? " (E)" : "")
+
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ClientName)

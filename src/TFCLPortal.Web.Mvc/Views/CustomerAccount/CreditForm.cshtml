@@ -1,0 +1,198 @@
+﻿@model TFCLPortal.Transactions.Dto.CreateTransactionDto
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Credit
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Transactions > Credit
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+            <a href="~/CustomerAccount/ViewTransactions?accountId=@ViewBag.AccountId" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> <i class="fa fa-list"></i> Back To Transactions List</a>
+        </div>
+    </div>
+
+    <div class="row sticky-top">
+        <div class="col-md-12" style="padding-top: 20px; margin-bottom: 20px; background-color:#fff">
+            <table border="1" width="100%" class="text-center">
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th colspan="3">APPLICANT / RESPONDENT NAME</th>
+                        <th colspan="2">CLIENT / BUSINESS / SCHOOL NAME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">@ViewBag.ClientName</td>
+                        <td colspan="2">@ViewBag.SchoolName</td>
+                    </tr>
+                </tbody>
+                <thead style="background-color: #3bb54a; color:#fff">
+                    <tr>
+                        <th>CLIENT ID</th>
+                        <th>CNIC</th>
+                        <th>APPLICATION STATUS</th>
+                        <th>Branch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.ClientID</td>
+                        <td>@ViewBag.CNICNo</td>
+                        <td>@ViewBag.AppStatus</td>
+                        <td>@ViewBag.Branch</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="card p-10 mB-20">
+        <hr />
+
+        <form asp-action="Credit">
+            <input asp-for="Fk_AccountId" value="@ViewBag.AccountId" type="hidden" />
+            <input asp-for="BalBefore" value="@ViewBag.Bal" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h5 class="text-success">Balance</h5>
+                    <h1>@(ViewBag.Bal == 0 ? "0" : string.Format("{0:#,##0}", ViewBag.Bal))</h1>
+                    <h6 class="text-gray">Last Updated On @ViewBag.ModificationDate.ToString("dd MMM yyyy hh:mm tt")</h6>
+                </div>
+            </div>
+            <div class="row" style="margin-top:30px">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4 ">
+                    <div class="form-group">
+                        <label asp-for="Amount" class="control-label">Amount <font color="red">*</font></label>
+                        <input asp-for="Amount" required="required" class="form-control" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="form-group">
+                        <label asp-for="DepositDate" class="control-label">Deposit Date <font color="red">*</font></label>
+                        <input asp-for="DepositDate" type="date"  required="required" class="form-control" />
+                        <span asp-validation-for="DepositDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label asp-for="AmountWords" class="control-label">Amount in Words</label>
+                        <input asp-for="AmountWords" class="form-control" readonly="readonly" />
+                        <span asp-validation-for="AmountWords" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="ModeOfPayment" class="control-label">Mode Of Payment <font color="red">*</font></label>
+                        <select asp-for="ModeOfPayment" required="required"  class=" form-control">
+                            <option value="Bank Deposit">Bank Deposit</option>
+                            <option value="Pay Pro">Pay Pro</option>
+                            <option value="Online Payment">Online Payment</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <span asp-validation-for="ModeOfPayment" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="ModeOfPaymentOther" class="control-label">Others</label>
+                        <input asp-for="ModeOfPaymentOther" class="form-control" />
+                        <span asp-validation-for="ModeOfPaymentOther" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4 ">
+                    <div class="form-group">
+                        <label asp-for="Reference" class="control-label">Reference <font color="red">*</font></label>
+                        <input asp-for="Reference" class="form-control" />
+                        <span asp-validation-for="Reference" required="required"  class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="form-group">
+                        <label asp-for="ApplicationId" class="control-label">Application</label>
+                        @Html.DropDownListFor(m => m.ApplicationId, ViewBag.AppsList as SelectList, new { @class = "form-control text-capitalize" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                </div>
+
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label asp-for="Details" class="control-label">Details</label>
+                        <input asp-for="Details" class="form-control" />
+                        <span asp-validation-for="Details" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" value="Credit" class="btn btn-sm btn-outline-success bg1 eft-1 w-full" />
+                </div>
+                <div class="col-md-4">
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+    <script src="~/vendor/numwords/index.js" crossorigin="anonymous"></script>
+
+    <script>
+        $('#Amount').on('input', function (e) {
+
+            var amount = this.value.replaceAll(',', '');
+            $('#AmountWords').val(numWords(amount));
+            $('#Amount').val(numberWithCommas(amount));
+        });
+        function numberWithCommas(x) {
+            x = Math.round(x);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        $('#ModeOfPayment').on('input', function (e) {
+
+            var sel = this.value.replaceAll(',', '');
+            if (sel == "Others") {
+                $('#ModeOfPaymentOther').attr('readonly', false);
+            }
+            else {
+                $('#ModeOfPaymentOther').attr('readonly', true);
+            }
+        });
+        $('#ModeOfPaymentOther').attr('readonly', true);
+
+    </script>
+
+</main>

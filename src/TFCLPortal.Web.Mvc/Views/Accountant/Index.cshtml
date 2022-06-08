@@ -41,7 +41,9 @@
                     <th>
                         Client / School / Business Name
                     </th>
-
+                    <th colspan="1">
+                        Decline
+                    </th>
                     <th colspan="3">
                         Actions
                     </th>
@@ -50,59 +52,65 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td> @{i = i + 1;} @i</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ClientID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ClientName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SchoolName)
-                        </td>
+                <tr>
+                    <td> @{i = i + 1;} @i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientID)
 
-                        @if (item.Remarks == "OK")
-                        {
-                            <td colspan="2">
-                                <a href="/Accountant/Schedule?ApplicationId=@item.Id"><i class="fa fa-calendar"></i> Create Schedule</a>
-                            </td>
-                        }
-                        else if (item.Remarks == "Waiting")
-                        {
-                            <td>
-                                <a><i class="fa fa-hourglass-half"></i> Waiting for BM Authorization</a>
-                            </td>
-                            <td>
-                                <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i></a>
-                            </td>
-                        }
-                        else if (item.Remarks == "Authorized")
-                        {
-                            <td>
-                                @*<a href="/Accountant/DisburseApplication?ApplicationId=@item.Id" onclick="ConfirmDialog('Are you Sure!')"><i class="fa fa-check"></i> Disburse Application</a>*@
-                                <a clientid="@item.ClientID" appId="@item.Id" class="Disburse"><i class="fa fa-check"></i> Disburse Application</a>
-                            </td>
-                            <td>
-                                <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i></a>
-                            </td>
-                        }
-                        else if (item.Remarks == "Rejected")
-                        {
-                            <td>
-                                <a>Rejected By BM</a>
-                            </td>
-                            <td>
+                        @(item.isEnhancementApplication==true ? " (E)" : "")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SchoolName)
+                    </td>
 
-                                <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i></a>
-                                <a href="/Accountant/Schedule?ApplicationId=@item.Id"><i class="fa fa-calendar"></i> Create Schedule</a>
-                            </td>
-                        }
+                    <td>
+                        <a onclick="DeclineApp(@item.Id)"><i class="fa fa-times-circle text-danger"></i> Decline </a>
+                    </td>
 
-                        <td>
-                            <a href="/Dashboard/Application?id=@item.Id" title="View Application Details" target="_blank"><i class="fa fa-desktop"></i></a>
+                    @if (item.Remarks == "OK")
+                    {
+                        <td colspan="2">
+                            <a href="@(item.isEnhancementApplication==true ? "/Accountant/ScheduleEnhancement?ApplicationId="+@item.Id : "/Accountant/Schedule?ApplicationId="+@item.Id) "><i class="fa fa-calendar"></i> @(item.isEnhancementApplication==true ? "Enhance": "Create") Schedule</a>
                         </td>
-                    </tr>
+                    }
+                    else if (item.Remarks == "Waiting")
+                    {
+                        <td>
+                            <a><i class="fa fa-hourglass-half"></i> Waiting for BM Authorization</a>
+                        </td>
+                        <td>
+                            <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i></a>
+                        </td>
+                    }
+                    else if (item.Remarks == "Authorized")
+                    {
+                        <td>
+                            @*<a href="/Accountant/DisburseApplication?ApplicationId=@item.Id" onclick="ConfirmDialog('Are you Sure!')"><i class="fa fa-check"></i> Disburse Application</a>*@
+                            <a clientid="@item.ClientID" appId="@item.Id" class="Disburse"><i class="fa fa-check"></i> Disburse Application</a>
+                        </td>
+                        <td>
+                            <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i></a>
+                        </td>
+                    }
+                    else if (item.Remarks == "Rejected")
+                    {
+                        <td>
+                            <a>Rejected By BM</a>
+                        </td>
+                        <td>
+
+                            <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i></a>
+                            <a href="/Accountant/Schedule?ApplicationId=@item.Id"><i class="fa fa-calendar"></i> Create Schedule</a>
+                        </td>
+                    }
+
+                    <td>
+                        <a href="/Dashboard/Application?id=@item.Id" title="View Application Details" target="_blank"><i class="fa fa-desktop"></i></a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -124,4 +132,17 @@
         }
 
     });
+
+    function DeclineApp(appid) {
+        //let text;
+        let msg = prompt("Please enter reason for decline:", "");
+        $(".pageloader").toggleClass("d-none");
+
+        if (msg == null || msg == "") {
+            // text = "User cancelled the prompt.";
+        } else {
+            //text = msg;
+            window.location.href = '../Accountant/CreateAccdecline?Id=' + appid + '&&Reason=' + msg;
+        }
+    }
 </script>

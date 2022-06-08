@@ -1,0 +1,147 @@
+﻿@model TFCLPortal.DeceasedAuthorizations.Dto.CreateDeceasedAuthorization
+
+@{
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Mark Deceased
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Mark Deceased
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <form asp-action="CreateDeceasedAuthorization" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <input asp-for="ApplicationId" type="hidden" id="ApplicationId" value="@ViewBag.Applicationid" />
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Client ID</label>
+                            <input type="text" value="@ViewBag.ClientId" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Applicant Name</label>
+                            <input type="text" value="@ViewBag.ClientName" asp-for="ClientName" readonly="readonly" class="form-control text-uppercase" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>CNIC</label>
+                            <input type="text" value="@ViewBag.CNIC" asp-for="CNIC" readonly="readonly" class="form-control text-uppercase" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Verified By</label>
+                            <input type="text"  asp-for="VerifiedBy"  class="form-control text-uppercase" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Upload Document</label>
+                            <input asp-for="file" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Date Of Death</label>
+                            <input type="date" asp-for="DateOfDeath" class="form-control text-uppercase" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Reason Of Death</label>
+                            <input asp-for="ReasonOfDeath" class="form-control text-uppercase" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--Approved Modal -->
+    <div class="modal fade" id="DeceasedModal" tabindex="-1" role="dialog" style="z-index: 1100;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Mark Deceased</h4>
+                </div>
+                <div class="modal-body">
+                    The Client needs to be marked deceased first. Do you want to mark the client deceased?
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-outline-success" href="/Accountant/MarkDeceased">Yes</a>
+                    <a class="btn btn-outline-danger" href="/Accountant/ActiveSchedules">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.js"></script>
+
+<script>
+
+    $(function () {
+
+            $('#RebatePercentage').on('input', function (e) {
+            var rebate = Number(this.value);
+
+            if (rebate > 100) {
+                abp.notify.error("Rebate Percentage Value Should be less than 100%", "error");
+            }
+            else {
+
+                var payable = Number($('#TotalAmountPayable').val().replaceAll(",",""));
+
+                var afterRebate = payable - (payable * (rebate / 100));
+
+                $('#TotalAmountPayableRebate').val(numberWithCommas(afterRebate));
+            }
+
+
+        });
+
+        function numberWithCommas(x) {
+            x = Math.round(x);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+
+    });
+
+
+          var isDeceased = '@ViewBag.Deceased';
+
+    if (isDeceased == "No") {
+        $('#DeceasedModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        $('#DeceasedModal').modal('show');
+
+    }
+
+</script>

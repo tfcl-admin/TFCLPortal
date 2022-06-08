@@ -24,10 +24,26 @@
         background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
         opacity: .8;
     }
+    .pageloader h3{
+        text-align:center;
+        margin-top:280px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        opacity: .8;
+    }
+    .Deffered td, .Deffered {
+        color: blue !important;
+    }
+    .dataTables_wrapper {
+        overflow-x: scroll !important;
+    }
 </style>
 <!-- ### $App Screen Content ### -->
 <main class='main-content bgc-grey-100' style="padding-top:50px">
-    <div class="pageloader d-none"></div>
+    <div class="pageloader d-none">
+        <h3>Processing...</h3>
+    </div>
     <div class="row page-title">
         <div class="col-md-6 text-left">
             <h4 class="page-title-text">
@@ -52,6 +68,7 @@
                         <option value="1">Due Date</option>
                         <option value="2">Payment Date</option>
                         <option value="3">Over Due</option>
+                        @*<option value="4">Disbursed Applications</option>*@
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -137,7 +154,7 @@
     </div>
     <div class="card p-10 mB-20" style="border:0px">
         <div class="row text-center">
-            <div class="col-md-3 text-success">
+            <div class="col-md-2 text-success">
                 <h3> @ViewBag.monthName, @ViewBag.Year</h3>
                 @if (ViewBag.filterType == 1)
                 {
@@ -147,18 +164,30 @@
                 {
                     <h6>Paid Installments</h6>
                 }
+                else if (ViewBag.filterType == 3)
+                {
+                    <h6>Over Due Installments</h6>
+                }
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <h3> @(ViewBag.Due == null  || ViewBag.Due == 0 ? "--" : string.Format("{0:#,###}", ViewBag.Due))</h3>
                 <h6>Total Due Amount</h6>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <h3 class="text-success"> @(ViewBag.Paid == null  || ViewBag.Paid == 0 ? "--" : string.Format("{0:#,###}", ViewBag.Paid))</h3>
                 <h6>Total Paid Amount</h6>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <h3 class="text-danger"> @(ViewBag.UnPaid == null  || ViewBag.UnPaid == 0 ? "--" : string.Format("{0:#,###}", ViewBag.UnPaid))</h3>
                 <h6>Total Un-Paid Amount</h6>
+            </div>
+            <div class="col-md-2">
+                <h3 class="Deffered"> @(ViewBag.DefCount == null  || ViewBag.DefCount == 0 ? "--" : string.Format("{0:#,##0}", ViewBag.DefCount)) </h3>
+                <h6>Total Deffered Installments</h6>
+            </div>
+            <div class="col-md-2">
+                <h3 class="Deffered"> @(ViewBag.DefAmount == null  || ViewBag.DefAmount == 0 ? "--" : string.Format("{0:#,##0}", ViewBag.DefAmount))</h3>
+                <h6>Total Deffered Amount</h6>
             </div>
         </div>
     </div>
@@ -180,6 +209,7 @@
                         School / Business Name
                     </th>
                     <th>Inst. No.</th>
+                    <th>Bal. Inst.</th>
                     <th>Loan Amount</th>
                     <th>Outstanding Balance</th>
                     <th>Inst. Amount</th>
@@ -188,6 +218,8 @@
                     <th>Payment Date</th>
                     <th>Paid Amount</th>
                     <th>Excess/Short</th>
+                    <th>Last Payment Date</th>
+                    <th>DPD</th>
                     <th>Branch</th>
                     <th>SDE</th>
                 </tr>
@@ -195,7 +227,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr onclick="ViewSchedule(@item.Applicationid)">
+                <tr onclick="ViewSchedule(@item.Applicationid)" class="@(item.InstNumber=="0"?"Deffered":"Regular")">
                     <td> @{i = i + 1;} @i</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ClientId)
@@ -208,6 +240,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.InstNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BalInst)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.LoanAmount)
@@ -252,6 +287,12 @@
                         @(item.ExcessShort == null || item.ExcessShort == "" || item.ExcessShort == "0" || item.ExcessShort == "0.00" ? "--" : string.Format("{0:#,###}", Decimal.Parse(item.ExcessShort)))
                     </td>
                     <td>
+                        @(item.LastPaymentDate==null?"--":string.Format("{0:dd MMM yyyy}",item.LastPaymentDate))
+                    </td>
+                    <td>
+                        @(item.DPD==0?"--":item.DPD.ToString())
+                    </td>
+                    <td>
                         @(item.BranchName == null || item.BranchName == "" ? "--" : item.BranchName)
                     </td>
                     <td>
@@ -273,6 +314,8 @@
         var url = '/Accountant/viewSchedule?ApplicationId=' + id;
         window.open(url, '_blank').focus();
     }
+    var monthValue, yearValue, dayValue;
+
 
     $(document).ready(
         function () {
@@ -290,9 +333,30 @@
 
         });
 
+    $('#filterType').on('change', function () {
+
+        if (this.value == 3) {
+            $('#day').prop('disabled', true);
+            $('#day option[value=""]').attr('selected', true);
+            $('#month').prop('disabled', true);
+            $('#month option[value=""]').attr('selected', true);
+            $('#year').prop('disabled', true);
+            $('#year option[value=""]').attr('selected', true);
+
+        }
+        else {
+            $('#day').prop('disabled', false);
+            $('#day option[value=' + dayValue + ']').attr('selected', true);
+
+            $('#month').prop('disabled', false);
+            $('#month option[value=' + monthValue + ']').attr('selected', true);
+
+            $('#year').prop('disabled', false);
+            $('#year option[value=' + yearValue + ']').attr('selected', true);
+        }
+    });
 
 
-   
 
     $(document).ready(function () {
         $("#dataTable_length select").append($("<option></option>").attr("value", '500').text('500'));

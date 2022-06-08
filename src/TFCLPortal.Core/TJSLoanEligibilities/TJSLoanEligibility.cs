@@ -31,11 +31,11 @@ namespace TFCLPortal.TJSLoanEligibilities
 
         //public string GrossBusinessIncome { get; set; }
         //public string NetBusinessIncome { get; set; }
-        
-        //public string CollateralValue { get; set; }
-        //public string AllowedLtvPercentage { get; set; }
-        //public string MaxFinancingAllowedLTV { get; set; }
-        //public string ActualLtvPercentage { get; set; }
+
+        public string CollateralValue { get; set; }
+        public string AllowedLtvPercentage { get; set; }
+        public string MaxFinancingAllowedLTV { get; set; }
+        public string ActualLtvPercentage { get; set; }
 
         //public string LoanEligibilityStatusOnEMI { get; set; }
         //public string LoanEligibilityStatusOnLTV { get; set; }

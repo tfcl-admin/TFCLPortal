@@ -8,7 +8,6 @@
     <PackageId>TFCLPortal.Web.Mvc</PackageId>
     <UserSecretsId>AbpCompanyName-TFCLPortal-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId>
     <RootNamespace>TFCLPortal.Web</RootNamespace>
-    <ApplicationInsightsResourceId>/subscriptions/d5b5bce6-a53e-4306-9204-80427e80cb57/resourceGroups/TFCL-App/providers/microsoft.insights/components/tfclapp</ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>0</WarningLevel>
@@ -81,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
+    <Folder Include="Properties\ServiceDependencies\local\" />
     <Folder Include="wwwroot\Theame\fonts\fonts\" />
     <Folder Include="wwwroot\view-resources\Views\_Bundles\" />
   </ItemGroup>

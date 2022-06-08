@@ -276,7 +276,7 @@ namespace TFCLPortal.BusinessExpenses
                                             }
                                             if (ExistingBusinessExpenseSchoolAcademyClass.Gender != null && ExistingBusinessExpenseSchoolAcademyClass.Gender != 0)
                                             {
-                                                var Gender = _designationRepository.Get((int)ExistingBusinessExpenseSchoolAcademyClass.Gender);
+                                                var Gender = _genderRepository.Get((int)ExistingBusinessExpenseSchoolAcademyClass.Gender);
                                                 ExistingBusinessExpenseSchoolAcademyClass.GenderName = Gender.Name;
                                             }
 

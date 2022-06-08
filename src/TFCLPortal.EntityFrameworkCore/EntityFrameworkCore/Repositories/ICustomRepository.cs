@@ -12,9 +12,8 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
     public interface ICustomRepository : IRepository<BccState, int>
     {
         Task<bool> GetBccApplicationApprovedStaus(int applicationId);
-
         Task<double> GetIRR(int nper, double pmt, double pv, double fv, bool type);
-        List<ApplicationDto> GetAllApplicationList(string applicationState, int branchId, bool showAll = false, bool IsAdmin = false);
+        List<ApplicationDto> GetAllApplicationList(string applicationState, int branchId, bool showAll = false, bool IsAdmin = false,bool IsEnhancement = false);
         Task<DashboardDataDto> GetTFCLDashboardCountingData(int branchId);
         Task<List<HighChartWeeklyDto>> GetHighChartWeeklyData();
         Task<List<BranchPortfolioGraphDto>> GetBranchPortfolioGraphData();

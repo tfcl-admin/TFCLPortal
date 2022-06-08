@@ -3,6 +3,46 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
+
+
+}
+
+@functions {
+    public bool isLate = false;
+
+    public string TAT = "";
+    public int TATMinutes =0;
+
+    public string getTAT(int Minutes)
+    {
+        TATMinutes = Minutes;
+        TimeSpan t = TimeSpan.FromSeconds(Minutes * 60);
+
+        string answer = string.Format("{0:D2} Day(s), {1:D2} Hour(s), {2:D2} Minute(s)",
+                    t.Days,
+                    t.Hours,
+                    t.Minutes);
+
+        //string answer = Minutes.ToString("#,###");
+
+        int daysToCheck = 0;
+
+        if(ViewBag.LoanRequisitionDetails.CollateralGiven== "UNSECURED")
+        {
+            daysToCheck = 7;
+        }
+        else if (ViewBag.LoanRequisitionDetails.CollateralGiven == "SECURED")
+        {
+            daysToCheck = 14;
+        }
+
+        if(t.Days> daysToCheck)
+        {
+            isLate = true;
+        }
+        TAT = answer;
+        return answer;
+    }
 }
 
 <main class='main-content bgc-grey-100' style="padding-top:50px">
@@ -239,14 +279,20 @@
 
                         <p class="detailText">@(ViewBag.Decision.CheckName == "" || ViewBag.Decision.CheckName == null ? "--" : ViewBag.Decision.CheckName) </p>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                         <p class="detailHeading">
                             Comments
                         </p>
 
                         <p class="detailText">@(ViewBag.Decision.Comments == "" || ViewBag.Decision.Comments == null ? "--" : ViewBag.Decision.Comments) </p>
                     </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Turn Arround Time (TAT)
+                        </p>
 
+                        <p class="detailText" title="@ViewBag.Application.CreationTime to @DateTime.Now">@(@DateTime.Now.Subtract(ViewBag.Application.CreationTime).TotalMinutes == 0 ? "0" : getTAT(Convert.ToInt32(@DateTime.Now.Subtract(ViewBag.Application.CreationTime).TotalMinutes))) </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -264,6 +310,8 @@
                     <input type="hidden" asp-for="IRR_Full" value="@ViewBag.IRR_full" />
                     <input type="hidden" asp-for="LoanAmount" value="@ViewBag.LoanRequisitionDetails.LoanAmountRecommended" />
                     <input type="hidden" asp-for="Tenure" value="@ViewBag.LoanRequisitionDetails.LoanTenureRequestedName" />
+                    <input type="hidden" asp-for="TurnArroundTimeMins" value="@TATMinutes" />
+                    <input type="hidden" asp-for="ReasonForDelayTAT" value="" />
                     <div class="row">
                         <div class="col-md-4">
                             <p class="detailHeading">
@@ -341,11 +389,11 @@
                         </wdiv>
                         <div class="col-md-4">
                             <p class="detailHeading">Deferment Start Date</p>
-                            <input asp-for="DefermentStartDate" type="date" class="form-control"  readonly="readonly" />
+                            <input asp-for="DefermentStartDate" type="date" class="form-control" readonly="readonly" />
                         </div>
                         <div class="col-md-4">
                             <p class="detailHeading">Deferred Months</p>
-                            <input asp-for="DefermentMonths" type="number" max="10" min="0" value="0" class="form-control"  readonly="readonly" />
+                            <input asp-for="DefermentMonths" type="number" max="10" min="0" value="0" class="form-control" readonly="readonly" />
                         </div>
                         <div class="col-md-4">
                             <p class="detailHeading">Deferment End Date</p>
@@ -387,6 +435,23 @@
 
 <script>
 
+    var isLate = '@isLate';
+    var TAT = '@TAT';
+    var reasonForLateDisbursement = '';
+
+    if (isLate == 'True') {
+        let reasonForLateDisbursement = prompt("Turn Arround Time : " + TAT +"\n\nPlease Justify : ",'');
+        if (reasonForLateDisbursement == null || reasonForLateDisbursement == "") {
+            alert('Please Justify Late Disbursement!');
+            window.location.reload();
+        }
+        else {
+            $('#ReasonForDelayTAT').val(reasonForLateDisbursement);
+        }
+    }
+            //alert($('#ReasonForDelayTAT').val());
+
+
     $('#isDeferrment').on('change', function () {
         if ($('#isDeferrment').val() == "false") {
             $('#DefermentStartDate').val('');
@@ -409,7 +474,7 @@
         }
     });
 
-    $('#DisbursmentDate').on('input',function () {
+    $('#DisbursmentDate').on('input', function () {
         var date = $(this).val();
         var gDays = Number($('#GraceDays').val());
         var tenure = Number($('#Tenure').val());
@@ -418,23 +483,23 @@
 
         $('#LoanStartDate').val(moment(d).format('YYYY-MM-DD'));
 
-        var ld = moment(d).add((tenure + Months+1), 'M');
+        var ld = moment(d).add((tenure + Months + 1), 'M');
         $('#LastInstallmentDate').val(moment(ld).format('YYYY-MM-DD'));
     });
 
-    $('#DefermentStartDate').on('input',function () {
+    $('#DefermentStartDate').on('input', function () {
         var date = $('#DefermentStartDate').val();
         var Months = Number($('#DefermentMonths').val()) - 1;
         var d = moment(date).add(Months, 'M');
         var tenure = Number($('#Tenure').val());
 
         $('#DefermentEndDate').val(moment(d).format('YYYY-MM-DD'));
-        var ld = moment($('#LoanStartDate').val()).add(Months+1, 'M').add(tenure, 'M');
+        var ld = moment($('#LoanStartDate').val()).add(Months + 1, 'M').add(tenure, 'M');
 
         $('#LastInstallmentDate').val(moment(ld).format('YYYY-MM-DD'));
     });
 
-    $('#DefermentMonths').on('input',function () {
+    $('#DefermentMonths').on('input', function () {
         var date = $('#DefermentStartDate').val();
         var Months = Number($('#DefermentMonths').val()) - 1;
         var d = moment(date).add(Months, 'M');
@@ -442,11 +507,11 @@
 
         $('#DefermentEndDate').val(moment(d).format('YYYY-MM-DD'));
 
-        var ld = moment($('#LoanStartDate').val()).add(Months+1, 'M').add(tenure, 'M');
+        var ld = moment($('#LoanStartDate').val()).add(Months + 1, 'M').add(tenure, 'M');
         $('#LastInstallmentDate').val(moment(ld).format('YYYY-MM-DD'));
     });
 
-    $('#GraceDays').on('input',function () {
+    $('#GraceDays').on('input', function () {
         var date = $('#DisbursmentDate').val();
         var gDays = Number($('#GraceDays').val());
         var tenure = Number($('#Tenure').val());
@@ -455,7 +520,7 @@
 
         $('#LoanStartDate').val(moment(d).format('YYYY-MM-DD'));
 
-        var ld = moment(d).add((tenure + Months+1), 'M');
+        var ld = moment(d).add((tenure + Months + 1), 'M');
         $('#LastInstallmentDate').val(moment(ld).format('YYYY-MM-DD'));
     });
 

@@ -14,4 +14,7 @@
     <ProjectReference Include="..\TFCLPortal.Core\TFCLPortal.Core.csproj" />
     <ProjectReference Include="..\TFCLPortal.EntityFrameworkCore\TFCLPortal.EntityFrameworkCore.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Customs\Dtos\" />
+  </ItemGroup>
 </Project>

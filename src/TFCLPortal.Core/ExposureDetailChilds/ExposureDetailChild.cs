@@ -10,6 +10,7 @@ namespace TFCLPortal.ExposureDetailChilds
     public class ExposureDetailChild : FullAuditedEntity<Int32>
     {
         public int Fk_ExpoDetailID { get; set; }
+        public int LiabilityType { get; set; }
         public int? BankName { get; set; }
         public string Others { get; set; }
         public string CreditBureauReported { get; set; }

@@ -17,6 +17,7 @@ namespace TFCLPortal.DeceasedSettlements
 
         public bool? isAuthorized { get; set; }
         public string RejectionReason { get; set; }
+        public string ProofUrl { get; set; }
 
         public bool? isManagerAuthorized { get; set; }
         public string ManagerRejectionReason { get; set; }

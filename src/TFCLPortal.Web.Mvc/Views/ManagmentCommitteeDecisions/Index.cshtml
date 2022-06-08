@@ -22,9 +22,22 @@
         color: #416a2c;
         text-align: left;
     }
+
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
 </style>
 <!-- ### $App Screen Content ### -->
 <main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="pageloader d-none"></div>
+
     <div class="row page-title">
         <div class="col-md-6 text-left">
             <h4 class="page-title-text">
@@ -60,7 +73,10 @@
                     </th>
 
                     <th colspan="1">
-                        Action
+                        Approve
+                    </th>
+                    <th colspan="1">
+                        Decline
                     </th>
                     <th colspan="3">
                         Details
@@ -74,6 +90,8 @@
                         <td> @{i = i + 1;} @i</td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ClientID)
+
+                            @(item.isEnhancementApplication==true ? " (E)" : "")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ClientName)
@@ -83,7 +101,12 @@
                         </td>
 
                         <td>
-                            <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }"><i class="fa fa-check-circle"></i> Approve </a>
+                            <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }"><i class="fa fa-check-circle text-success"></i> Approve </a>
+                            @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
+                        </td>
+                        <td>
+                            @*<a onclick="if (confirm('Are you sure you want to decline this application?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }"><i class="fa fa-times-circle text-danger"></i> Decline </a>*@
+                            <a onclick="DeclineApp(@item.Id)"><i class="fa fa-times-circle text-danger"></i> Decline </a>
                             @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
                         </td>
                         <td>
@@ -154,64 +177,69 @@
                 @foreach (var Outeritem in Model.decisions.GroupBy(x => x.ApplicationId).ToList())
                 {
 
-                    var item = Model.decisions.Where(x => x.ApplicationId == Outeritem.Key).FirstOrDefault();
+                    var itemDecisions = Model.decisions.Where(x => x.ApplicationId == Outeritem.Key).ToList();
 
-                <tr>
-                    <td> @{n = n + 1;} @n</td>
-                    <td>
-                        @item.ClientID
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClientName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SchoolName)
-                    </td>
-                    @*<td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>*@
-                    @if (Outeritem.Count() < 3)
-                    {
-                        <td>Pending</td>
-                    }
-                    else
-                    {
-                        <td>Authorized</td>
-                    }
+                    //if(itemDecisions.Any(x=>x.Decision==""))
 
-                    <td width="10%">
-                        @if (Outeritem.Count() < 3)
-                        {
-                            @(Outeritem.Count())
-                        }
-                        else
-                        {
-                            @(3)
-                        }
-                    </td>
-                    <td>@item.CreationTime.ToString("dd MMM yyyy hh:mm tt")</td>
-                    <td>@(item.BccApprovalDate==null? "--": String.Format("{0:dd MMM yyyy hh:mm tt}", item.BccApprovalDate))</td>
-                    <td>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-list"></i>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                @if (item.productType == 1 || item.productType == 2)
+                    var item = itemDecisions.FirstOrDefault();
+
+
+                        <tr>
+                            <td> @{n = n + 1;} @n</td>
+                            <td>
+                                @item.ClientID
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ClientName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SchoolName)
+                            </td>
+                            @*<td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>*@
+                            @if (Outeritem.Count() < 3)
+                            {
+                                <td>Pending</td>
+                            }
+                            else
+                            {
+                                <td>Authorized</td>
+                            }
+
+                            <td width="10%">
+                                @if (Outeritem.Count() < 3)
                                 {
-                                    <a class="dropdown-item" href="/Dashboard/Application?id=@item.ApplicationId" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                                    @(Outeritem.Count())
                                 }
-                                else if (item.productType == 8 || item.productType == 9)
+                                else
                                 {
-                                    <a class="dropdown-item" href="/Dashboard/TdsApplication?id=@item.ApplicationId" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                                    @(3)
                                 }
-                                <a class="dropdown-item" href="/McrcDecisions/Index?ApplicationId=@item.ApplicationId" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
-                                <a class="dropdown-item" href="/BCCDecisions/Index?ApplicationId=@item.ApplicationId" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
+                            </td>
+                            <td>@item.CreationTime.ToString("dd MMM yyyy hh:mm tt")</td>
+                            <td>@(item.BccApprovalDate==null? "--": String.Format("{0:dd MMM yyyy hh:mm tt}", item.BccApprovalDate))</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-list"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @if (item.productType == 1 || item.productType == 2)
+                                        {
+                                            <a class="dropdown-item" href="/Dashboard/Application?id=@item.ApplicationId" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                                        }
+                                        else if (item.productType == 8 || item.productType == 9)
+                                        {
+                                            <a class="dropdown-item" href="/Dashboard/TdsApplication?id=@item.ApplicationId" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                                        }
+                                        <a class="dropdown-item" href="/McrcDecisions/Index?ApplicationId=@item.ApplicationId" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
+                                        <a class="dropdown-item" href="/BCCDecisions/Index?ApplicationId=@item.ApplicationId" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
 
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                 }
             </tbody>
         </table>
@@ -242,3 +270,19 @@
         </table>*@
 
 </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    function DeclineApp(appid) {
+        //let text;
+        let msg = prompt("Please enter reason for decline:", "");
+        $(".pageloader").toggleClass("d-none");
+
+        if (msg == null || msg == "") {
+            // text = "User cancelled the prompt.";
+        } else {
+            //text = msg;
+            window.location.href = '../ManagmentCommitteeDecisions/CreateMCdecline?Id=' + appid + '&&Reason=' + msg;
+        }
+    }
+</script>

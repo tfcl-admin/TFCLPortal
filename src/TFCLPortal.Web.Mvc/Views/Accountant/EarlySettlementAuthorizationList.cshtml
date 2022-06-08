@@ -47,7 +47,9 @@
                     <th>
                         amount Deposited
                     </th>
-                   
+                    <th>
+                        Settlement Date
+                    </th>
                     <th colspan="2">
                         Actions
                     </th>
@@ -73,17 +75,15 @@
                     <td>
                         @(string.Format("{0:#,##0}", item.amountDeposited))
                     </td>
-
                     <td>
-                        <a href="/Accountant/EarlySettlementAuthorization?Id=@item.Id" ><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>
-                        @*<a class="openModal" data-user-id="@item.Id" data-toggle="modal" data-target="#Modal"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>*@
+                        @string.Format("{0:dd MMM yyyy}", item.TentativeSettlementDate)
+                    </td>
+                    <td>
+                        <a href="/Accountant/EarlySettlementAuthorization?Id=@item.Id"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>
                     </td>
                     <td>
                         <a href="/Accountant/ViewSchedule?ApplicationId=@item.ApplicationId" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i></a>
                     </td>
-                    @*<td>
-            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i> Details</a>
-        </td>*@
                 </tr>
                 }
             </tbody>

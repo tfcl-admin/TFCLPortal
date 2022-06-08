@@ -26,9 +26,14 @@ namespace TFCLPortal.ExposureDetails
 
         public string guaranteedAmountFI { get; set; }
         public string GuaranteedFiLoan { get; set; }
+        public bool isNew { get; set; }
 
         public string AppNoTfclLoanGuarantee { get; set; }
         public string ApplicantNameTfclLoanGuarantee { get; set; }
 
+        public string CurrentTotalAmount { get; set; }
+        public string CurrentTotalInstallmentpayment { get; set; }
+        public string LongtermTotalAmount { get; set; }
+        public string LongtermInstallmentpayment { get; set; }
     }
 }

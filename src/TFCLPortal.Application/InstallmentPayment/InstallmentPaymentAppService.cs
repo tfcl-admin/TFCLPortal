@@ -119,7 +119,7 @@ namespace TFCLPortal.InstallmentPayments
         {
             try
             {
-                var InstallmentPayment = _InstallmentPaymentRepository.GetAllList().Where(x => x.ApplicationId == ApplicationId && x.isAuthorized==true).ToList();
+                var InstallmentPayment = _InstallmentPaymentRepository.GetAllList().Where(x => x.ApplicationId == ApplicationId && x.isAuthorized==true).OrderBy(x=>x.Id).ToList();
                 var payments = ObjectMapper.Map<List<InstallmentPaymentListDto>>(InstallmentPayment);
 
                 //var apps = _applicationRepository.GetAllList();

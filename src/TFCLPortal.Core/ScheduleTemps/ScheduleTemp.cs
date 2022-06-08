@@ -34,6 +34,7 @@ namespace TFCLPortal.ScheduleTemps
         public string PerDayMarkup { get; set; }
         public string UpdationReason { get; set; }
         public bool? isAuthorizedByBM { get; set; }
+        public int TurnArroundTimeMins { get; set; }
         public string Reason { get; set; }
     }
 }

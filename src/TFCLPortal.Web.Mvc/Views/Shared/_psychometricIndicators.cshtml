@@ -1,0 +1,219 @@
+﻿@model TFCLPortal.PsychometricIndicators.Dto.PsychometricIndicatorListDto
+<style>
+    .modal-title {
+        text-align: center;
+        width: 100%;
+    }
+</style>
+@if (@Model != null)
+{
+    <input type="hidden" id="Id" value="@Model.Id" />
+    <input type="hidden" id="ApplicationId" value="@Model.ApplicationId" />
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="tab_content">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <p class="detailHeading">In your opinion, what percentage of people are likely to steal?</p>
+                    <p class="detailText">@(Model.PercentageToStealName == null || Model.PercentageToStealName == "" ? "--" : Model.PercentageToStealName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">I prefer to avoid conflict. Agree or Disagree?</p>
+                    <p class="detailText">@(Model.AvoidConflictName == null || Model.AvoidConflictName =="" ? "--" : Model.AvoidConflictName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">My biggest motivation to run a school is</p>
+                    <p class="detailText">@(Model.MotivationToRunSchoolName == null || Model.MotivationToRunSchoolName == "" ? "--" : Model.MotivationToRunSchoolName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">A big part of a successful business is luck. Agree or Disagree? </p>
+                    <p class="detailText">@(Model.BusinessLuck == null ? "--" : (Model.BusinessLuck == 0 ? "False" : "True"))</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">I am always hopeful of the future. Agree or Disagree?</p>
+                    <p class="detailText">@(Model.HopefulForFutureName == null || Model.HopefulForFutureName == "" ? "--" : Model.HopefulForFutureName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">Digital initiatives are important for a school to undertake. Agree or Disagree?</p>
+                    <p class="detailText">@(Model.HopefulForFutureName == null || Model.HopefulForFutureName == "" ? "--" : Model.HopefulForFutureName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">Under normal circumstances, how many training days do your teachers attend per year?</p>
+                    <p class="detailText">@(Model.TeacherTrainingsName == null || Model.TeacherTrainingsName == "" ? "--" : Model.TeacherTrainingsName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">What initiatives have you taken to strengthen parent engagement?</p>
+                    <p class="detailText">@(Model.ParentEngagementName == null || Model.ParentEngagementName == "" ? "--" : Model.ParentEngagementName)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">Do you mix expenses of your family with those of your business?</p>
+                    <p class="detailText">@(Model.MixExpenses == null || Model.MixExpenses == "" ? "--" : Model.MixExpenses)</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="detailHeading">In the past 2 years, have you compared fees of other schools nearby?</p>
+                    <p class="detailText">@(Model.ComparedFee == null || Model.ComparedFee == "" ? "--" : Model.ComparedFee)</p>
+                </div>
+            </div>
+
+
+            <div class="col-md-12" style="text-align: right;">
+                <a id="screenBtnPI" href="" data-toggle="modal" data-target="#_ForPI_approved" class="btn btn-sm btn-outline-success" title="Screen">Screen<span></span></a>
+                <a id="discrepentBtnPI" href="" data-toggle="modal" data-target="#_ForPI_discrepant" class="btn btn-sm btn-outline-danger" title="Discrepent">Discrepent<span></span></a>
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="tab_content" style="padding: 15px 20px">
+        <div class="row">
+            <span style="text-align: center;width: 100%;color: black;font-weight: bold;">sorry, Data  is not available againt this application .</span>
+        </div>
+    </div>
+}
+
+<!--Approved Modal -->
+<div class="modal fade" id="_ForPI_approved" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Approved Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to mark this form Screened?
+            </div>
+            <div class="modal-footer">
+                <button id="btnScreenPI" type="button" class="btn btn-success bg1 ef1">Mark Screened</button>
+                <button data-dismiss="modal" type="button" class="btn btn-danger bg1 ef1">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!--discrepent Modal -->
+<div class="modal fade" id="_ForPI_discrepant" tabindex="-1" role="dialog" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Discrepent Confirmation</div>
+                <button type="button" class="close" data-dismiss="modal" aria-div="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea placeholder="Type Reason" id="commentIdPI"></textarea>
+                <span class="text-danger" style="display:none" id="comment_errorPI">this field is required</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btndiscrepentPI" class="btn btn-success bg1 ef1">Mark Discrepent</button>
+                <button type="button" class="btn btn-danger bg1 ef1" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#commentId').attr('required', 'required');
+
+    $(document).ready(function () {
+        //alert('@ViewBag.PersonalAction');
+        btnChange('@ViewBag.PIAction');
+    });
+
+
+    function btnChange(currentState) {
+        //alert(currentState);
+        if (currentState == "Screened") {
+            $('#screenBtnPI').html("<i class='fa fa-check'></i>  Marked Screened");
+            $('#discrepentBtnPI').html("Discrepent");
+        }
+        else if (currentState == "Discrepent") {
+            $('#discrepentBtnPI').html("<i class='fa fa-times'></i> Marked Discrepent");
+            $('#screenBtnPI').html("Screen");
+        }
+        else if (currentState == "Hide") {
+            $('#screenBtnPI').toggleClass("d-none");
+            $('#discrepentBtnPI').toggleClass("d-none");
+        }
+    }
+
+    $('#btnScreenPI').click(function () {
+        debugger;
+        var comment = $('#commentIdPI').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkScreened")',
+                data: { 'ApplicationId': Id, 'Screen': 'PSYCHOMETRIC INDICATORS'} ,
+                success: function (data) {
+
+
+
+                    $('.close').click();
+
+                    if (data.result.includes("successfully")) {
+                        abp.notify.success(data.result, 'Mark Screened');
+                    }
+                    else {
+                        abp.notify.info(data.result, 'Mark Screened');
+                    }
+
+                    btnChange("Screened");
+
+
+                    },
+                    error: function (data) {
+                        debugger
+                        abp.notify.error(data.result, 'Error');
+                     }
+
+
+                });
+    });
+    $('#btndiscrepentPI').click(function () {
+        debugger;
+        if (!$('#commentIdPI').val()) {
+            $('#comment_errorPI').css("display", "block");;
+            return false;
+        } else {
+            $('#comment_errorPI').css("display", "none");
+        }
+        var comment = $('#commentIdPI').val();
+        var Id = $('#ApplicationId').val();
+            $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Dashboard/MarkDiscrepent")',
+                data: { 'ApplicationId': Id, 'Screen': 'PSYCHOMETRIC INDICATORS','Reason': comment },
+                success: function (data) {
+
+                        $('.close').click();
+
+                        if (data.result.includes("successfully")) {
+                            abp.notify.success(data.result, 'Mark Discrepent');
+
+                        }
+                        else {
+                            abp.notify.info(data.result, 'Mark Discrepent');
+                    }
+
+                    btnChange("Discrepent");
+
+                    $('#commentIdPI').val("");
+
+                    },
+                    error: function (data) {
+                        debugger;
+                        abp.notify.error(data.result, 'Error');
+                    }
+                });
+        });
+</script>

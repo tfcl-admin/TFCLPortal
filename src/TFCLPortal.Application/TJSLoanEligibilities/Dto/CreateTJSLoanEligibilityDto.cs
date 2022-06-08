@@ -24,5 +24,10 @@ namespace TFCLPortal.TJSLoanEligibilities.Dto
         public string MaxIncomeForTfclPayment { get; set; }
         public string TfclEmiPayment { get; set; }
         public string InstallmentRatio { get; set; }
+
+        public string CollateralValue { get; set; }
+        public string AllowedLtvPercentage { get; set; }
+        public string MaxFinancingAllowedLTV { get; set; }
+        public string ActualLtvPercentage { get; set; }
     }
 }

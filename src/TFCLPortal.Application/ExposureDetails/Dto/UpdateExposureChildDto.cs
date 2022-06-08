@@ -16,7 +16,8 @@ namespace TFCLPortal.ExposureDetails.Dto
         public string Others { get; set; }
         public string CreditBureauReported { get; set; }
         public string TypeOfFacilityTE { get; set; }
-        
+        public int LiabilityType { get; set; }
+
         public DateTime? ExpiryDate { get; set; }
         public decimal LoanAmount { get; set; }
         public decimal OutstandingAmount { get; set; }

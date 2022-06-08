@@ -1,4 +1,4 @@
-﻿@model TFCLPortal.Applications.DashboardDataDto
+﻿@*@model TFCLPortal.Applications.DashboardDataDto*@
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
@@ -176,6 +176,17 @@
         height: 80px;
         text-transform: uppercase;
     }
+
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
 </style>
 <main class='main-content bgc-grey-100' id="widget" style="padding-top:70px">
 
@@ -191,7 +202,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">Mobilization</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.MobilizationCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="MobilizationCount"></div>
                             </div>
                         </div>
                     </a>
@@ -204,8 +215,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">Total Applications</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">
-                                    @(string.Format("{0:#,##0}", Model.TotalfileCount))
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="TotalfileCount">
                                 </div>
                             </div>
                         </div>
@@ -217,7 +227,7 @@
                             <i class="material-icons">date_range</i>
                         </div>
                         <div class="content">
-                            <div class="text"><div class="number count-to" id="demo" style="font-size:11px"></div></div>
+                            <div class="text"><div class=" count-to" id="demo" style="font-size:11px"></div></div>
 
                             <div class="number count-to" id="timeDiv" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20"></div>
                         </div>
@@ -231,7 +241,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">CREATED </div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.CreatedfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="CreatedfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -244,7 +254,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">IN-PROCESS </div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.InprocessfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="InprocessfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -257,7 +267,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">SUBMITTED </div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.SubmittedfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="SubmittedfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -270,7 +280,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">Declined </div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.DeclinefileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="DeclinefileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -284,7 +294,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">SCREENED </div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.ScreenedfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="ScreenedfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -297,7 +307,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">Discrepented </div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.DiscrepentedfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="DiscrepentedfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -310,7 +320,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">Under BCC Review</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.UnderBccReviewfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="UnderBccReviewfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -323,7 +333,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">BCC Reviewed</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.BccReviewedfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="BccReviewedfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -337,7 +347,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">Under MCRC Review</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.UnderMCRCreviewCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="UnderMCRCreviewCount"></div>
                             </div>
                         </div>
                     </a>
@@ -351,7 +361,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">MCRC Created </div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.UnderMcrcReviewfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="UnderMcrcReviewfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -366,7 +376,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">MCRC Reviewed </div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.McrcReviewedfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="McrcReviewedfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -379,7 +389,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">BCC Approved</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.BCCapprovedfileCoun))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="BCCapprovedfileCoun"></div>
                             </div>
                         </div>
                     </a>
@@ -392,7 +402,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">Management Approved</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.ManagementApprovedCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="ManagementApprovedCount"></div>
                             </div>
                         </div>
                     </a>
@@ -405,7 +415,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">Disbursed</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0}", Model.DisbursedfileCount))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="DisbursedfileCount"></div>
                             </div>
                         </div>
                     </a>
@@ -418,7 +428,61 @@
                             </div>
                             <div class="content">
                                 <div class="text">Disbursed Amount</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">@(string.Format("{0:#,##0.##}", (Model.LendingAmountCount)))</div>
+                                <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="LendingAmountCount"></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <a href="~/Application/Applications?screen=Settled">
+                        <div class="info-box bg-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">redeem</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Settled</div>
+                                <span class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="SettledfileCount"></span> -
+                                <span class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="SettledfileAmount"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @*<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <a href="~/Application/Applications?screen=Settled">
+                            <div class="info-box bg-cyan hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">redeem</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">Settled Amount</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>*@
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <a href="~/Application/Applications?screen=Early Settled">
+                        <div class="info-box bg-green    hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">redeem</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Early Settled</div>
+                                <span class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="EarlySettledfileCount"></span> -
+                                <span class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="EarlySettledfileAmount"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <a href="~/Application/Applications?screen=Deceased">
+                        <div class="info-box bg-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">redeem</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Deceased</div>
+                                <span class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="DeceasedfileCount"></span> -
+                                <span class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20" id="DeceasedfileAmount"></span>
                             </div>
                         </div>
                     </a>
@@ -428,26 +492,11 @@
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card bg-cyan" style="height:630px;">
+                    <div class="card bg-cyan" style="height:740px;">
                         <h5 class="font-bold m-b--35 text-center titleCard pt-4">Today's Updates</h5>
                         <div class="body text-white text-uppercase">
                             <ul class="dashboard-stat-list">
-                                @if (Model.TodayMobilizations != 0)
-                                {
-                                    <li> @Model.TodayMobilizations new Mobilizations <span class="pull-right"><i class="fa fa-clipboard"></i></span></li>
-                                }
-                                @if (Model.TodayApplications != 0)
-                                {
-                                    <li> @Model.TodayApplications new Customer Acquired <span class="pull-right"><i class="fa fa-user-plus"></i></span></li>
-                                }
-                                @if (Model.TodayMeetingWithClients != 0)
-                                {
-                                    <li> @Model.TodayMeetingWithClients meetings with clients <span class="pull-right"><i class="fa fa-calendar"></i></span></li>
-                                }
-                                @if (Model.TodayMobilizations == 0 && Model.TodayApplications == 0 && Model.TodayMeetingWithClients == 0)
-                                {
-                                    <li> No Updates Found... </li>
-                                }
+                                <div class="spinner-border text-light spinner-border-sm" role="status"></div> Loading ...
                             </ul>
                         </div>
                     </div>
@@ -503,7 +552,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-messaging.js"></script>
     @*<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase.js"></script>*@
 
-    <script>
+<script>
 
         var userid = '@ViewBag.userid';
         // Your web app's Firebase configuration
@@ -550,7 +599,102 @@
                 });
         }
 
+    getDashboardData();
 
+        function nullifyFeilds() {
+            $(".number").html('<div class="spinner-border text-light" role="status"></div >');
+        }
+
+    function getDashboardData() {
+        nullifyFeilds();
+        $.ajax({
+            type: 'Get',
+            datatype: "json",
+            contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Dashboard/GetDashboardData")',
+            data: {},
+            success: function (data) {
+                console.log(data.result);
+                var vals = data.result;
+                $('#MobilizationCount').html(numberWithCommas(vals.mobilizationCount));
+                $('#TotalfileCount').html(numberWithCommas(vals.totalfileCount));
+                $('#CreatedfileCount').html(numberWithCommas(vals.createdfileCount));
+                $('#InprocessfileCount').html(numberWithCommas(vals.inprocessfileCount));
+                $('#SubmittedfileCount').html(numberWithCommas(vals.submittedfileCount));
+                $('#DeclinefileCount').html(numberWithCommas(vals.declinefileCount));
+                $('#ScreenedfileCount').html(numberWithCommas(vals.screenedfileCount));
+                $('#DiscrepentedfileCount').html(numberWithCommas(vals.discrepentedfileCount));
+                $('#UnderBccReviewfileCount').html(numberWithCommas(vals.underBccReviewfileCount));
+                $('#BccReviewedfileCount').html(numberWithCommas(vals.bccReviewedfileCount));
+                $('#UnderMCRCreviewCount').html(numberWithCommas(vals.underMCRCreviewCount));
+                $('#UnderMcrcReviewfileCount').html(numberWithCommas(vals.underMcrcReviewfileCount));
+                $('#McrcReviewedfileCount').html(numberWithCommas(vals.mcrcReviewedfileCount));
+                $('#BCCapprovedfileCoun').html(numberWithCommas(vals.bcCapprovedfileCoun));
+                $('#ManagementApprovedCount').html(numberWithCommas(vals.managementApprovedCount));
+                $('#DisbursedfileCount').html(numberWithCommas(vals.disbursedfileCount));
+                $('#LendingAmountCount').html(numberWithCommas(vals.lendingAmountCount));
+                $('#SettledfileCount').html(numberWithCommas(vals.settledfileCount));
+                $('#SettledfileAmount').html(numberWithCommas(vals.settledfileAmount));
+                $('#EarlySettledfileCount').html(numberWithCommas(vals.earlySettledfileCount));
+                $('#EarlySettledfileAmount').html(numberWithCommas(vals.earlySettledfileAmount));
+                $('#DeceasedfileCount').html(numberWithCommas(vals.deceasedfileCount));
+                $('#DeceasedfileAmount').html(numberWithCommas(vals.deceasedfileAmount));
+
+                var sidebarcontent = '';
+                if (vals.todayMobilizations != 0) {
+                    sidebarcontent += '<li> '+vals.todayMobilizations+' new Mobilizations <span class="pull-right"><i class="fa fa-clipboard"></i></span></li>';
+                }
+                if (vals.todayApplications != 0) {
+                    sidebarcontent += '<li> ' + vals.todayApplications + ' new Customer Acquired <span class="pull-right"><i class="fa fa-user-plus"></i></span></li>';
+                }
+                if (vals.enhancementfileCount != 0) {
+                    sidebarcontent += '<li><a class="text-white" href="/Application/Applications?screen=Enhancement">' + vals.enhancementfileCount + ' App. under enhancement <span class="pull-right"><i class="fa fa-files-o"></i></span></a> </li>';
+                }
+                if (vals.enhancedfileCount != 0) {
+                    sidebarcontent += '<li><a class="text-white" href="/Application/Applications?screen=Enhanced">' + vals.enhancedfileCount + ' Enhanced <span class="pull-right"><i class="fa fa-files-o"></i></span></a> </li>';
+                }
+                if (sidebarcontent != '') {
+                    $('.dashboard-stat-list').html(sidebarcontent);
+                }
+                else {
+                    $('.dashboard-stat-list').html('<li> No Updates Found... </li>');
+                }
+            },
+            error: function (data) {
+                $('#MobilizationCount').html(numberWithCommas(vals.mobilizationCount));
+                $('#TotalfileCount').html(numberWithCommas(vals.totalfileCount));
+                $('#CreatedfileCount').html(numberWithCommas(vals.createdfileCount));
+                $('#InprocessfileCount').html(numberWithCommas(vals.inprocessfileCount));
+                $('#SubmittedfileCount').html(numberWithCommas(vals.submittedfileCount));
+                $('#DeclinefileCount').html(numberWithCommas(vals.declinefileCount));
+                $('#ScreenedfileCount').html(numberWithCommas(vals.screenedfileCount));
+                $('#DiscrepentedfileCount').html(numberWithCommas(vals.discrepentedfileCount));
+                $('#UnderBccReviewfileCount').html(numberWithCommas(vals.underBccReviewfileCount));
+                $('#BccReviewedfileCount').html(numberWithCommas(vals.bccReviewedfileCount));
+                $('#UnderMCRCreviewCount').html(numberWithCommas(vals.underMCRCreviewCount));
+                $('#UnderMcrcReviewfileCount').html(numberWithCommas(vals.underMcrcReviewfileCount));
+                $('#McrcReviewedfileCount').html(numberWithCommas(vals.mcrcReviewedfileCount));
+                $('#BCCapprovedfileCoun').html(numberWithCommas(vals.bcCapprovedfileCoun));
+                $('#ManagementApprovedCount').html(numberWithCommas(vals.managementApprovedCount));
+                $('#DisbursedfileCount').html(numberWithCommas(vals.disbursedfileCount));
+                $('#LendingAmountCount').html(numberWithCommas(vals.lendingAmountCount));
+                $('#SettledfileCount').html(numberWithCommas(vals.settledfileCount));
+                $('#SettledfileAmount').html(numberWithCommas(vals.settledfileAmount));
+                $('#EarlySettledfileCount').html(numberWithCommas(vals.earlySettledfileCount));
+                $('#EarlySettledfileAmount').html(numberWithCommas(vals.earlySettledfileAmount));
+                $('#DeceasedfileCount').html(numberWithCommas(vals.deceasedfileCount));
+                $('#DeceasedfileAmount').html(numberWithCommas(vals.deceasedfileAmount));
+                $('#SettledfileAmount').html(numberWithCommas(vals.settledfileAmount));
+                $('#SettledfileAmount').html(numberWithCommas(vals.settledfileAmount));
+                $('#SettledfileAmount').html(numberWithCommas(vals.settledfileAmount));
+            }
+       });
+        }
+
+    function numberWithCommas(x) {
+        x = Math.round(x);
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
         function saveToken(currentToken) {
             //alert(currentToken);
@@ -595,7 +739,7 @@
 
 
 
-    </script>
+</script>
 
 
 </main>

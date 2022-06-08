@@ -178,5 +178,27 @@ namespace TFCLPortal.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> CreateMCdecline(int Id,string Reason)
+        {
+            var app = _applicationAppService.GetApplicationById(Id);
+
+            if(app!=null)
+            {
+                CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
+                fWobj.ApplicationId = app.Id;
+                fWobj.Action = "Decline";
+                fWobj.ActionBy = (int)AbpSession.UserId;
+                fWobj.ApplicationState = ApplicationState.Decline;
+                fWobj.isActive = true;
+
+                _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
+
+                _applicationAppService.ChangeApplicationState(ApplicationState.Decline, app.Id, Reason);
+            }
+
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

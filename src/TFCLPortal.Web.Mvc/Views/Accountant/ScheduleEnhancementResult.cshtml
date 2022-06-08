@@ -1,0 +1,896 @@
+﻿@{
+    Layout = null;
+}
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<style>
+    .topTables td {
+        padding-top: 3px;
+        border: 1px solid;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .tblTopData td {
+        border: 1px solid;
+        padding: 3px;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    .installments thead {
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .installments tr {
+        font-size: 11px
+    }
+
+    .Tranchinstallments thead {
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .Tranchinstallments tr {
+        font-size: 11px
+    }
+
+    .signatures {
+        font-size: 11px;
+        font-weight: bold;
+        margin-top: 100px;
+        border-top: 1px solid;
+        text-transform: uppercase;
+    }
+
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
+
+    .paidInst {
+        background-color: lightgreen !important;
+        -webkit-print-color-adjust: exact;
+        font-weight: bold;
+    }
+
+    @@media print {
+        .paidInst {
+            background-color: lightgreen !important;
+            font-weight: bold;
+            -webkit-print-color-adjust: exact;
+        }
+    }
+</style>
+
+
+<div class=" text-right border-bottom p-3  mb-3" id="topMenu">
+    <div class="col-md-12">
+        <a class="btn btn-outline-primary" id="print"><i class="fa fa-print"></i> Print</a>
+        <a class="btn btn-outline-success" id="save"><i class="fa fa-forward"></i> Send To BM</a>
+    </div>
+</div>
+<div class="pageloader d-none"></div>
+
+<div class="container ">
+
+    <div class="row">
+        <div class="col-md-3 text-right">
+            <img id="Imglogo" src="~/Theame/images/bg.png" width="50px">
+        </div>
+        <div class="col-md-9" style="padding-top:30px">
+            <h1>Taleem Finance Company Limited</h1>
+        </div>
+        <div class="col-md-12 text-center">
+        <h6 class=""></h6>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:50px">
+        <div class="col-md-4 text-left">
+            <table width="100%" class="topTables">
+                <tr>
+                    <td><h6><b>Client ID</b></h6></td>
+                    <td style="background-color:lightyellow"><h6>@ViewBag.Application.ClientID</h6></td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-md-4">
+            <table width="100%" class="topTables">
+                <tr>
+                    <td style="background-color:lightyellow"><h6>Enhancement</h6></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4 text-right">
+            <table width="100%" class="topTables">
+                <tr>
+                    <td><h6><b>Schedule Type</b></h6></td>
+                    <td style="background-color:lightyellow"><h6>@ViewBag.Input.ScheduleType</h6></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-6 text-left">
+            <table width="100%" class="tblTopData">
+                <tr>
+                    <td width="40%"><b>Applicant Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.Application.ClientName</td>
+                </tr>
+                <tr>
+                    <td><b>Client/School Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.Application.SchoolName</td>
+                </tr>
+                <tr>
+                    <td><b>Product</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.Application.ProductTypeName</td>
+                </tr>
+                <tr>
+                    <td><b>A/C Title</b></td>
+                    <td id="txtAccountTitle" style="background-color:lightyellow">Taleem Finance Company</td">
+                </tr>
+                <tr>
+                    <td><b>Repayment A/C No</b></td>
+                    <td id="txtRepaymentACnumber" style="background-color:lightyellow">1087643581000566</td>
+                </tr>
+                <tr>
+                    <td><b>Bank/Branch Name</b></td>
+                    <td id="txtBankBranchName" style="background-color:lightyellow">MCB / Falcon Complex Br</td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-md-6 text-right">
+            <table width="100%" class="tblTopData">
+                <tr>
+                    <td width="40%"><b>Loan Amount</b></td>
+                    <td style="background-color:lightyellow" id="txtLoanAmount">@(ViewBag.Input.LoanAmount == null || ViewBag.Input.LoanAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.LoanAmount)))</td>
+                    <td class="paidInst" id="txtLoanAmountOld">@(ViewBag.Input.OldSchedule.LoanAmount == null || ViewBag.Input.OldSchedule.LoanAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.OldSchedule.LoanAmount)))</td>
+                </tr>
+                <tr>
+                    <td><b>Tenure (Months)</b></td>
+                    <td style="background-color:lightyellow" id="txtTenure">@(ViewBag.Input.Tenure == null || ViewBag.Input.Tenure == ""  ? "--" : ViewBag.Input.Tenure)</td>
+                    <td class="paidInst" id="txtTenureOld">@(ViewBag.Input.OldSchedule.Tenure == null || ViewBag.Input.OldSchedule.Tenure == ""  ? "--" : ViewBag.Input.OldSchedule.Tenure)</td>
+                </tr>
+                <tr>
+                    <td><b>Mark-up Rate</b></td>
+                    <td style="background-color:lightyellow" id="txtMarkup">@(ViewBag.Input.Markup == null || ViewBag.Input.Markup == ""  ? "--" : ViewBag.Input.Markup)</td>
+                    <td class="paidInst" id="txtMarkupOld">@(ViewBag.Input.OldSchedule.Markup == null || ViewBag.Input.OldSchedule.Markup == ""  ? "--" : ViewBag.Input.OldSchedule.Markup)</td>
+                </tr>
+                <tr>
+                    <td><b>Disbursement Date</b></td>
+                    <td style="background-color:lightyellow" id="txtDisbursmentDate">
+                        @(ViewBag.Input.DisbursmentDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.DisbursmentDate))
+                    </td>
+                    <td class="paidInst" id="txtDisbursmentDateOld">@(ViewBag.Input.OldSchedule.DisbursmentDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.OldSchedule.DisbursmentDate))</td>
+                </tr>
+                <tr>
+                    <td><b>Grace Days</b></td>
+                    <td style="background-color:lightyellow" id="txtGraceDays">@ViewBag.Input.GraceDays</td>
+                    <td class="paidInst" id="txtGraceDaysOld">@(ViewBag.Input.OldSchedule.GraceDays == null || ViewBag.Input.OldSchedule.GraceDays == ""  ? "--" : ViewBag.Input.OldSchedule.GraceDays)</td>
+                </tr>
+                <tr>
+                    <td><b>Deferment (Months)</b></td>
+                    <td style="background-color:lightyellow" id="txtDeferment">@(ViewBag.Input.DefermentMonths == null || ViewBag.Input.DefermentMonths == 0|| ViewBag.Input.isDeferrment == false ? "--" : ViewBag.Input.DefermentMonths)</td>
+                    <td class="paidInst" id="txtDefermentOld">@(ViewBag.Input.OldSchedule.Deferment == null || ViewBag.Input.OldSchedule.Deferment == ""  ? "--" : ViewBag.Input.OldSchedule.Deferment)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-6 text-left">
+            <table width="100%" class="tblTopData">
+                <tr>
+                    <td width="40%"><b>Branch</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.BranchCode</td>
+                </tr>
+                <tr>
+                    <td><b>Branch Manager Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.BMName</td>
+                </tr>
+                <tr>
+                    <td><b>SDE Name</b></td>
+                    <td style="background-color:lightyellow">@ViewBag.SDEName</td>
+                </tr>
+
+
+                @if (ViewBag.Input.isDeferrment == true)
+                {
+                    <tr>
+                        <td width="40%"><b>Deferment Start Date</b></td>
+                        <td style="background-color:lightyellow" id="txtDeffermentStartDate">
+                            @(ViewBag.Input.DefermentStartDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.DefermentStartDate))
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td><b>Deferred Months</b></td>
+                        <td style="background-color:lightyellow">@ViewBag.Input.DefermentMonths</td>
+                    </tr>
+                    <tr>
+                        <td><b>Deferment End Date</b></td>
+                        <td style="background-color:lightyellow" id="txtDeffermentEndDate">
+                            @(ViewBag.Input.DefermentEndDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.DefermentEndDate))
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+        <div class="col-md-6 text-right">
+            <table width="100%" class="tblTopData">
+                <tr>
+                    <td width="40%"><b>IRR %</b></td>
+                    <td style="background-color:lightyellow" id="txtIRR">@(ViewBag.Input.IRR == null || ViewBag.Input.IRR == ""  ? "--" : ViewBag.Input.IRR)</td>
+                    <td class="paidInst" id="txtIRROld">@(ViewBag.Input.OldSchedule.IRR == null || ViewBag.Input.OldSchedule.IRR == ""  ? "--" : ViewBag.Input.OldSchedule.IRR)</td>
+                </tr>
+                <tr>
+                    <td><b>Installment</b></td>
+                    <td style="background-color:lightyellow" id="installmentDiv">@(ViewBag.Input.InstallmentAmount == null || ViewBag.Input.InstallmentAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.InstallmentAmount)))</td>
+                    <td class="paidInst" id="installmentDivOld">@(ViewBag.Input.OldSchedule.Installment == null || ViewBag.Input.OldSchedule.Installment == ""  ? "--" : ViewBag.Input.OldSchedule.Installment)</td>
+                </tr>
+                <tr>
+                    <td><b>Loan Start Date</b></td>
+                    <td style="background-color:lightyellow" id="txtLoanStartDate">@(ViewBag.Input.LoanStartDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.LoanStartDate))</td>
+                    <td class="paidInst" id="txtLoanStartDateOld">@(ViewBag.Input.OldSchedule.LoanStartDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.OldSchedule.LoanStartDate))</td>
+
+                </tr>
+                <tr>
+                    <td><b>Last Inst Date</b></td>
+                    <td style="background-color:lightyellow" id="txtLastInstallmentDate">
+                        @(ViewBag.Input.LastInstallmentDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.LastInstallmentDate))
+                    </td>
+                    <td class="paidInst" id="txtLastInstallmentDateOld">@(ViewBag.Input.OldSchedule.LastInstallmentDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.OldSchedule.LastInstallmentDate))</td>
+                </tr>
+                <tr>
+                    <td><b>Yearly Mark-up</b></td>
+                    <td style="background-color:lightyellow" id="YearlyDiv">@(ViewBag.Input.YearlyMarkup == null || ViewBag.Input.YearlyMarkup == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.YearlyMarkup)))</td>
+                    <td class="paidInst" id="YearlyDivOld">@(ViewBag.Input.OldSchedule.YearlyMarkup == null || ViewBag.Input.OldSchedule.YearlyMarkup == ""  ? "--" : ViewBag.Input.OldSchedule.YearlyMarkup)</td>
+                </tr>
+                <tr>
+                    <td><b>Per Day Mark-up</b></td>
+                    <td style="background-color:lightyellow" id="DayDiv">@(ViewBag.Input.PerDayMarkup == null || ViewBag.Input.PerDayMarkup == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.PerDayMarkup)))</td>
+                    <td class="paidInst" id="DayDivOld">@(ViewBag.Input.OldSchedule.PerDayMarkup == null || ViewBag.Input.OldSchedule.PerDayMarkup == "" ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.OldSchedule.PerDayMarkup)))</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row" id="TranchesTbl" style="margin-top:20px">
+        <div class="col-md-12">
+            <div id="innerTranchesTbl"></div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+            <div id="installmentsTable"></div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+            <div id="SignaturesTable"></div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/abp.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js" asp-append-version="true"></script>
+<script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js" asp-append-version="true"></script>
+<script>
+    $(function () {
+
+        var Installments = Number('@ViewBag.Input.Tenure');
+        var InstallmentAmount = Number('@ViewBag.Input.InstallmentAmount.Replace(",","")');
+        var LoanAmount = Number('@ViewBag.Input.LoanAmount');
+        var graceDays = Number('@ViewBag.Input.GraceDays');
+        var DefermentMonths = Number('@ViewBag.Input.DefermentMonths');
+        var markupPercentage = parseFloat('@ViewBag.Input.Markup');
+        var LoanStartDate = new Date('@ViewBag.Input.LoanStartDate');
+        var PerDayMarkup = parseFloat('@ViewBag.Input.PerDayMarkup.Replace(",","")');
+        var YearlyMarkup = parseFloat('@ViewBag.Input.YearlyMarkup.Replace(",","")');
+        var Irr = parseFloat('@ViewBag.Input.IRR_Full');
+        var Type = '@ViewBag.Input.ScheduleType';
+        var newEnhancedAmount = Number('@ViewBag.newEnhancedAmount');
+        var newEnhancedTenure = Number('@ViewBag.newEnhancedTenure');
+        var newLoanAmountDiff = Number('@ViewBag.newLoanAmountDiff');
+        var tranches = @Html.Raw(Json.Serialize(ViewBag.Input.listForTranches));
+        var paidInstallments = @Html.Raw(Json.Serialize(ViewBag.Input.PaidInstallmentList));
+
+
+
+
+        console.log('paidInstallments');
+        console.log(paidInstallments);
+        console.log('paidInstallments');
+
+        var Signatories = @Html.Raw(Json.Serialize(ViewBag.Signatories));
+
+        LoanAmount = newEnhancedAmount;
+        Installments = newEnhancedTenure;
+
+        if (Type == 'Standard') {
+            var osPrincipalAmount = Number(LoanAmount);
+
+            var content = "<table  class='table table-striped table-bordered installments' cellspacing='0' width='100 %'>";
+            content += "<thead>";
+            content += " <th style='text-align: center'>Inst #</th>";
+            content += " <th style='text-align: center'>Bal Inst</th>";
+            content += " <th style='text-align: center'>Installment Due Date</th>";
+            content += " <th style='text-align: center'>Tranche</th>";
+            content += " <th style='text-align: center'>O/S Principal - Opening</th>";
+            content += " <th style='text-align: center'>Markup</th>";
+            content += " <th style='text-align: center'>Principal</th>";
+            content += " <th style='text-align: center'>Installment Amount</th>";
+            content += " <th style='text-align: center'>O/S Principal - Closing</th>";
+            content += " <th style='display:none'></th>";
+            content += " <th style='display:none'></th>";
+            content += "</thead>";
+            content += "<tbody>";
+            var lastPaidInstallment = 0;
+            paidInstallments.forEach(function (item, index) {
+                  content += '<tr class="paidInst">';
+                content += '<td style="text-align: center">' + item.instNumber + '</td>';
+                    content += '<td style="text-align: center">' + item.balInst+'</td>';
+                    content += '<td style="text-align: center">' + item.installmentDueDate+'</td>';
+
+                if (index == paidInstallments.length-1) {
+                    content += '<td style="text-align: center">' + numberWithCommas(newLoanAmountDiff) + '</td>';
+                }
+                else {
+                    content += '<td style="text-align: center">--</td>';
+                }
+
+                    content += '<td style="text-align: right">' + item.osPrincipal_op+'</td>';
+                    content += '<td style="text-align: right">' + item.markup+'</td>';
+                    content += '<td style="text-align: right">' + item.principal+'</td>';
+                content += '<td style="text-align: right">' + item.installmentAmount + '</td>';
+
+                if (index == paidInstallments.length - 1) {
+                    content += '<td style="text-align: right">' + numberWithCommas(newLoanAmountDiff + Number(item.osPrincipal_Closing.replace(',',''))) + '</td>';
+                }
+                else {
+                    content += '<td style="text-align: right">' + item.osPrincipal_Closing+'</td>';
+                }
+                content += '<td style="display:none">' + item.isPaid + '</td>';
+                content += '<td style="display:none">' + item.paymentDate + '</td>';
+                content += '</tr>';
+                lastPaidInstallment = Number(item.instNumber);
+
+                //osPrincipalAmount = Number(osPrincipal_Closing);
+
+        });
+
+
+            for (i = 1, j = (Installments - 1); i <= Installments; i++, j--) {
+                LoanStartDate = getInstallmentDate(LoanStartDate);
+
+
+                content += '<tr>';
+                content += '<td style="text-align: center">' + (++lastPaidInstallment) + '</td>';
+                content += '<td style="text-align: center">' + j + '</td>';
+                content += '<td style="text-align: center">' + LoanStartDate + '</td>';
+
+
+                    content += '<td style="text-align: center">--</td>';
+                content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+                var resGetMarkup = getMarkup(osPrincipalAmount, Irr).toFixed(2);
+                content += '<td style="text-align: right">' + numberWithCommas(resGetMarkup) + '</td>';
+                var principal = (InstallmentAmount - resGetMarkup).toFixed(2);
+                content += '<td style="text-align: right">' + numberWithCommas(principal) + '</td>';
+
+                content += '<td style="text-align: right">' + numberWithCommas(Number(Number(resGetMarkup) + Number(principal)).toFixed(2) ) + '</td>';
+                console.log(lastPaidInstallment + " : " + osPrincipalClosing);
+                graceDaysMarkup = 0;
+                var osPrincipalClosing = (osPrincipalAmount - principal).toFixed(2);
+                if (j == 0 && osPrincipalClosing <= 10) {
+                    content += '<td style="text-align: right">' + 0 + '</td>';
+                }
+                else {
+                    content += '<td style="text-align: right">' + numberWithCommas(osPrincipalClosing) + '</td>';
+                }
+                content += '<td style="display:none"></td>';
+                content += '<td style="display:none"></td>';
+                content += '</tr>';
+                osPrincipalAmount = osPrincipalClosing;
+
+            }
+            content += "</tbody>";
+            content += "</table>"
+
+            $('#installmentsTable').append(content);
+        }
+
+        else if (Type == 'Tranches') {
+
+            $('#installmentDiv').html("--");
+            $('#DayDiv').html("--");
+            $('#YearlyDiv').html("--");
+
+            var trancheTable = "<table class='table table-striped table-bordered text-center Tranchinstallments' cellspacing='0' width='100 %'>";
+            trancheTable += "<thead>";
+            trancheTable += " <th>Tranch</th>";
+            trancheTable += " <th>Date</th>";
+            trancheTable += " <th>Tenure</th>";
+            trancheTable += " <th>IRR %</th>";
+            trancheTable += " <th>Amount</th>";
+            trancheTable += " <th>Per Day Markup</th>";
+            //trancheTable += " <th>Installment</th>";
+            trancheTable += "</thead>";
+            trancheTable += "<tbody>";
+
+            tranches.forEach(function (item, index) {
+                trancheTable += '<tr>';
+                trancheTable += '<td>' + item.tranchId + '</td>';
+                trancheTable += '<td>' + formatDate(item.startDate) + '</td>';
+
+                ////Calculation of Tenure
+                //var tranchTenure = 0;
+
+                //if (item.tranchId == '1') { tranchTenure = Installments; }
+                //else {
+                //    var a = moment(item.startDate);
+                //    var b = moment(tranches[0].startDate);
+
+                //    tranchTenure =Installments-a.diff(b, 'months');
+                //}
+                trancheTable += '<td>' + item.tranchTenure + '</td>';
+
+                trancheTable += '<td>' + item.irr.toFixed(2) + '</td>';
+
+                trancheTable += '<td style="text-align: right">' + numberWithCommas(item.amount) + '</td>';
+                trancheTable += '<td>' + item.dailyMarkup.toFixed(2) + '</td>';
+                //trancheTable += '<td>' + numberWithCommas(item.tranchInstallment) + '</td>';
+                trancheTable += '</tr>';
+            });
+            $('#innerTranchesTbl').append(trancheTable);
+
+
+            //alert(Number(tranches[0].amount));
+
+            var osPrincipalAmount = Number(tranches[0].amount);
+            var instCalculationAmount = osPrincipalAmount;
+
+            var content = "<table  class='table table-striped table-bordered installments' cellspacing='0' width='100 %'>";
+            content += "<thead>";
+            content += " <th style='text-align: center'>Inst #</th>";
+            content += " <th style='text-align: center'>Bal Inst</th>";
+            content += " <th style='text-align: center'>Installment Due Date</th>";
+            content += " <th style='text-align: center'>O/S Principal - Op</th>";
+            content += " <th style='text-align: center'>Additional Tranche</th>";
+            content += " <th style='text-align: center'>O/S Principal - Opening</th>";
+            content += " <th style='text-align: center'>Markup</th>";
+            content += " <th style='text-align: center'>Principal</th>";
+            content += " <th style='text-align: center'>Installment Amount</th>";
+            content += " <th style='text-align: center'>O/S Principal - Closing</th>";
+            content += "</thead>";
+            content += "<tbody>";
+
+            var graceDaysMarkup = 0;
+            if (graceDays != 0) {
+
+                content += '<tr>';
+                content += '<td style="text-align: center">G*</td>';
+                content += '<td style="text-align: center">--</td>';
+                content += '<td style="text-align: center">--</td>';
+                content += '<td style="text-align: right">--</td>';
+                content += '<td style="text-align: right">--</td>';
+                content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+                graceDaysMarkup = removeNaN(graceDays * tranches[0].dailyMarkup);
+
+                content += '<td style="text-align: right">' + numberWithCommas(graceDaysMarkup) + '</td>';
+                content += '<td style="text-align: right">--</td>';
+                content += '<td style="text-align: right">--</td>';
+                content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+                content += '</tr>';
+            }
+            var tranch = null;
+
+            var deffermentMarkup = 0;
+            if (DefermentMonths != 0) {
+                for (var x = 0; x < DefermentMonths; x++)
+                {
+                    LoanStartDate = getInstallmentDate(LoanStartDate);
+
+                    content += '<tr>';
+                    content += '<td style="text-align: center">0</td>';
+                    content += '<td style="text-align: center">--</td>';
+                    content += '<td style="text-align: center">' + LoanStartDate + '</td>';
+                    content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+
+                    if (tranch == null) {
+                        tranch = tranches[0];
+                    }
+
+
+
+                    var tAmount = getTranchAmount(LoanStartDate);
+
+                    if (tAmount != "--") {
+                        content += '<td style="text-align: right">' + numberWithCommas(tAmount) + '</td>';
+                        osPrincipalAmount = Number(osPrincipalAmount) + Number(tAmount);
+                    }
+                    else {
+                        content += '<td  style="text-align: right">--</td>';
+
+                    }
+
+                    //content += '<td style="text-align: right">--</td>';
+                    content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+
+                    var oldLoanDate;
+                    if (x == 0) {
+                        var oldLoanDate = new Date('@ViewBag.Input.LoanStartDate');
+                    }
+                    var days = moment(LoanStartDate).diff(moment(oldLoanDate), 'days');
+                    if (tranches[0].dailyMarkup != tranch.dailyMarkup) {
+                        deffermentMarkup = removeNaN(days * PerDayMarkup);
+                    } else {
+                        deffermentMarkup = removeNaN(days * tranch.dailyMarkup);
+                    }
+
+                    content += '<td style="text-align: right">' + numberWithCommas(deffermentMarkup) + '</td>';
+                    content += '<td style="text-align: right">--</td>';
+                    content += '<td style="text-align: right">' + numberWithCommas(deffermentMarkup + graceDaysMarkup) + '</td>';
+                    graceDaysMarkup = 0;
+                    content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+
+                    content += '</tr>';
+
+                    oldLoanDate = LoanStartDate;
+
+                    if (getTranch(LoanStartDate) != "--") {
+                        tranch = getTranch(LoanStartDate);
+                    }
+                    instCalculationAmount = osPrincipalAmount;
+                }
+            }
+
+
+            for (i = 1, j = (Installments - 1); i <= Installments; i++, j--) {
+
+                LoanStartDate = getInstallmentDate(LoanStartDate);
+
+                content += '<tr>';
+                content += '<td style="text-align: center">' + i + '</td>';
+                content += '<td style="text-align: center">' + j + '</td>';
+                //content += '<td style="text-align: center">' + j + '</td>';
+                content += '<td style="text-align: center">' + LoanStartDate + '</td>';
+                content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+
+                if (tranch == null) {
+                    tranch = tranches[0];
+                }
+
+                var inst = getInstallment(tranch, instCalculationAmount) + graceDaysMarkup;
+                //console.log(instCalculationAmount+  " : " + inst);
+                //console.log(tranch);
+
+                var resGetMarkup = getMarkup(osPrincipalAmount, tranch.irr);
+
+                var principal = (inst - resGetMarkup - graceDaysMarkup).toFixed(2);
+                //console.log(inst + '-' + resGetMarkup + " = " + principal);
+
+                resGetMarkup = resGetMarkup.toFixed(2);
+
+                //alert(inst + '-' + resGetMarkup + '-' + graceDaysMarkup + '=' + principal);
+
+                graceDaysMarkup = 0;
+
+
+                if (getTranch(LoanStartDate) != "--") {
+                    tranch = getTranch(LoanStartDate);
+                }
+
+                var tAmount = getTranchAmount(LoanStartDate);
+
+                if (tAmount != "--") {
+                    content += '<td style="text-align: right">' + numberWithCommas(tAmount) + '</td>';
+                    osPrincipalAmount = Number(osPrincipalAmount) + Number(tAmount);
+                }
+                else {
+                    content += '<td  style="text-align: right">--</td>';
+
+                }
+                content += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmount) + '</td>';
+
+                content += '<td style="text-align: right">' + numberWithCommas(resGetMarkup) + '</td>';
+
+                // var resgetmarkup = getmarkup(osprincipalamount, tranch.irr).tofixed(2); OLD Markup
+                //content += '<td>' + numberwithcommas(resgetmarkup) + '</td>';
+
+                content += '<td style="text-align: right">' + numberWithCommas(principal) + '</td>';
+
+
+                //content += '<td>' + numberWithCommas(Number(Number(resGetMarkup) + Number(principal)).toFixed(2)) + '</td>'; OLD INSTALLMENT
+
+
+                var osPrincipalClosing = (osPrincipalAmount - principal).toFixed(2);
+
+                if (tAmount != "--") {
+                    instCalculationAmount = osPrincipalClosing;
+                }
+
+                content += '<td style="text-align: right">' + numberWithCommas(inst) + '</td>';
+
+
+                if (j == 0 && osPrincipalClosing <= 10) {
+                    content += '<td style="text-align: right">' + 0 + '</td>';
+                }
+                else {
+                    content += '<td style="text-align: right">' + numberWithCommas(osPrincipalClosing) + '</td>';
+                }
+                content += '</tr>';
+                osPrincipalAmount = osPrincipalClosing;
+
+            }
+            content += "</tbody>";
+            content += "</table>"
+
+            $('#installmentsTable').append(content);
+        }
+
+        if (Signatories.length > 0) {
+            var signHtml = "<div class='row text-center'>";
+
+
+            Signatories.forEach(function (item, index) {
+                if (Signatories.length <= 2) {
+                    signHtml += "<div class='col-md-6'>";
+                }
+                else {
+                    signHtml += "<div class='col-md-4'>";
+                }
+                signHtml += "<p class='signatures'>" + item.name + " " + item.detail + "</p>";
+                signHtml += "</div>";
+            });
+
+            signHtml += "</div>";
+            $('#SignaturesTable').append(signHtml);
+        }
+
+        function numberWithCommas(x) {
+            x = Math.round(x);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        function removeNaN(a) {
+            return a = a || 0;
+        }
+
+        function getInstallmentDate(loanStart) {
+            if (moment(loanStart).format('MM') == '01' && Number(moment(loanStart).format('DD')) > 28) {
+                var tempDate = moment(loanStart).add(1, 'M').format('DD-MM');
+                if (tempDate == '29-02') {
+                    return moment(loanStart).add(1, 'M').format('DD MMM YYYY');
+                }
+                else {
+                return '01 Mar ' + moment(loanStart).format('YYYY');
+                }
+            }
+            else {
+                if (Number(moment(loanStart).format('DD')) != Number(moment('@ViewBag.Input.LoanStartDate').format('DD'))) {
+                    return moment(loanStart).set("date", Number(moment('@ViewBag.Input.LoanStartDate').format('DD'))).format('DD MMM YYYY');
+                }
+                else {
+                    var d = moment(loanStart).add(1, 'M');
+                    return moment(d).format('DD MMM YYYY');
+                }
+            }
+        }
+        function formatDate(loanStart) {
+
+            return moment(loanStart).format('DD MMM YYYY');
+
+        }
+        function getMarkup(pa, irr) {
+            //console.log(pa + "*" + irr + "/12/100 = " + ((pa * irr) / 12) / 100);
+            return ((pa * irr) / 12) / 100;
+        }
+
+        function getTranch(LoanStartDate) {
+
+            var tranchAmount = "--";
+
+            tranches.forEach(function (item) {
+                var formattedDate = moment(item.startDate).format('DD MMM YYYY');
+                if (formattedDate == LoanStartDate) {
+                    tranchAmount = item;
+                }
+            });
+
+            return tranchAmount;
+        }
+        function getTranchAmount(LoanStartDate) {
+
+            var tranchAmount = "--";
+
+            tranches.forEach(function (item) {
+                var formattedDate = moment(item.startDate).format('DD MMM YYYY');
+                if (formattedDate == LoanStartDate) {
+                    tranchAmount = item.amount;
+                }
+            });
+
+            return  tranchAmount;
+        }
+
+        function pmt(monthlyRate, monthlyPayments, presentValue, residualValue, advancedPayments) {
+            var t1 = 1 + monthlyRate;
+            var t2 = Math.pow(t1, monthlyPayments);
+            var t3 = Math.pow(t1, (monthlyPayments - advancedPayments));
+            var t4 = (presentValue - (residualValue / t2)) / (((1 - (1 / (t3))) / monthlyRate) + advancedPayments);
+            return t4;
+        }
+
+        function getInstallment(tranch, osPrincipalAmount) {
+            debugger
+            var installment = pmt(tranch.irr / 12 / 100, tranch.tranchTenure, osPrincipalAmount, 0, 0);
+            return installment;
+            //return Math.round(installment);
+        }
+
+
+        //$("#print").click(function () {
+        //    $(".container").print();
+        //});
+
+        $("#print").click(function () {
+            //Hide all other elements other than printarea.
+            $("#topMenu").toggleClass("d-none");
+            $(".container").show();
+            window.print();
+            $("#topMenu").toggleClass("d-none");
+
+        });
+
+        $("#save").click(function () {
+
+            $(".pageloader").toggleClass("d-none");
+
+
+            var ScheduleInstallments = [];
+            var stype = '@ViewBag.Input.ScheduleType';
+
+            var tbl = $('table.installments tr').get().map(function (row) {
+                return $(row).find('td').get().map(function (cell) {
+                    return $(cell).html();
+                });
+            });
+
+
+            if (stype == 'Standard') {
+
+                tbl.forEach(function (item, index) {
+                    if (index != 0) {
+
+                        var list = {
+                            'InstNumber': item[0],
+                            'BalInst': item[1],
+                            'InstallmentDueDate': item[2],
+                            'OsPrincipal_op': item[4],
+                            'AdditionalTranche': item[3],
+                            'OsPrincipal_Opening': '--',
+                            'markup': item[5],
+                            'principal': item[6],
+                            'installmentAmount': item[7],
+                            'OsPrincipal_Closing': item[8],
+                            'isPaid': item[9],
+                            'PaymentDate': item[10]
+                        };
+
+                        ScheduleInstallments.push(list);
+                    }
+                });
+
+            }
+            else if (stype == 'Tranches') {
+
+                tbl.forEach(function (item, index) {
+                    if (index != 0) {
+
+                        var list = {
+                            'InstNumber': item[0],
+                            'BalInst': item[1],
+                            'InstallmentDueDate': item[2],
+                            'OsPrincipal_op': item[3],
+                            'AdditionalTranche': item[4],
+                            'OsPrincipal_Opening': item[5],
+                            'markup': item[6],
+                            'principal': item[7],
+                            'installmentAmount': item[8],
+                            'OsPrincipal_Closing': item[9]
+                        };
+
+                        ScheduleInstallments.push(list);
+                    }
+                });
+
+            }
+
+             var dataToSend = {
+                'ApplicationId':'@ViewBag.ApplicationId',
+                'ClientId':'@ViewBag.Application.ClientID',
+                'ScheduleType':'@ViewBag.Input.ScheduleType',
+                'LoanAmount': $("#txtLoanAmount").text(),
+                'Tenure': $("#txtTenure").text(),
+                'Markup': $("#txtMarkup").text(),
+                 'DisbursmentDate': $("#txtDisbursmentDate").text().trim(),
+                'GraceDays': $("#txtGraceDays").text(),
+                'Deferment': $("#txtDeferment").text(),
+                'AccountTitle': $("#txtAccountTitle").text(),
+                'RepaymentACnumber': $("#txtRepaymentACnumber").text(),
+                'BankBranchName': $("#txtBankBranchName").text(),
+                'TFCL_Branch': '@ViewBag.Input.BranchName',
+                'BranchManager':'@ViewBag.BMName',
+                'SDE': '@ViewBag.SDEName',
+                 'DeffermentStartDate': $("#txtDeffermentStartDate").text().trim(),
+                 'DeffermentEndDate': $("#txtDeffermentEndDate").text().trim(),
+                'IRR': $("#txtIRR").text(),
+                'Installment': $("#installmentDiv").text(),
+                 'LoanStartDate': $("#txtLoanStartDate").text().trim(),
+                 'LastInstallmentDate': $("#txtLastInstallmentDate").text().trim(),
+                'YearlyMarkup': $("#YearlyDiv").text(),
+                'PerDayMarkup': $("#DayDiv").text(),
+                'installmentList': ScheduleInstallments
+            };
+
+            $.ajax({
+                type: 'POST',
+                datatype: "json",
+                contenttype: 'application/json; charset=utf-8',
+                url: '@Url.Content("~/Accountant/SaveScheduleTempEnhancement")',
+                data: dataToSend,
+                  success: function (response) {
+                      alert(response.result);
+                      console.log(response);
+                      $(".pageloader").toggleClass("d-none");
+
+                  },
+                  error: function (error) {
+                      alert("Error : " + error);
+                      console.log(error);
+                      $(".pageloader").toggleClass("d-none");
+
+                  }
+                });
+
+
+            //console.log(tbl);
+            //$(".pageloader").toggleClass("d-none");
+
+
+
+        });
+
+    });
+
+
+</script>

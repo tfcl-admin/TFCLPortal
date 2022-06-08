@@ -36,6 +36,7 @@ namespace TFCLPortal.Applications.Dto
         public BranchDetailList Brances { get; set; }
 
         public List<DiscrepentScreensListDto> DescripentScreens { get; set; }
+        public string MobilizationRecordId { get; set; }
 
         //added new field to dto
 
@@ -65,7 +66,33 @@ namespace TFCLPortal.Applications.Dto
         public bool isFranchise { get; set; }//New
         public string Longitude { get; set; } // New
         public string Latitude { get; set; } // New
-        public int SchoolCategory { get; set; } // New Dropdown
+        public int PrevApplicationId { get; set; } // New Dropdown
+        public bool isEnhancementApplication { get; set; } // New Dropdown
 
+        public int SchoolCategory { get; set; } // New Dropdown
+        public bool isDeceased { get; set; }//New
+        public int FundingSource { get; set; } // New Dropdown
+        public int TAT { get; set; } // New Dropdown
+        //public string DueDate { get; set; }
+
+    }
+    [AutoMapFrom(typeof(Applicationz))]
+    public class ApplicationListCrsDto 
+    {
+        public int Id { get; set; }
+        public string ClientName { get; set; }
+        public string MobileNo { get; set; }
+        public string LandLineNo { get; set; }
+        public string CNICNo { get; set; }
+        public string Address { get; set; }
+        public string SchoolName { get; set; }
+        public int ProductType { get; set; }
+        public string ScreenStatus { get; set; }
+        public string Comments { get; set; }
+        public string ProductTypeShortCode { get; set; }
+        public string ProductTypeName { get; set; }
+        public int FK_branchid { get; set; }
+        public string BranchCode { get; set; }
+        public string ClientID { get; set; }
     }
 }

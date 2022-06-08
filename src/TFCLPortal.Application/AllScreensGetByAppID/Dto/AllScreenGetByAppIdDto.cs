@@ -37,6 +37,9 @@ using TFCLPortal.EmploymentDetails.Dto;
 using TFCLPortal.SalaryDetails.Dto;
 using TFCLPortal.TJSLoanEligibilities;
 using TFCLPortal.TJSLoanEligibilities.Dto;
+using TFCLPortal.SchoolFinancials.Dto;
+using TFCLPortal.SchoolNonFinancials.Dto;
+using TFCLPortal.PsychometricIndicators.Dto;
 
 namespace TFCLPortal.AllScreensGetByAppID.Dto
 {
@@ -75,6 +78,9 @@ namespace TFCLPortal.AllScreensGetByAppID.Dto
         public EmploymentList listForEmploymentDetail { get; set; }
         public SalaryDetailDto listForSalaryDetail { get; set; }
         public TJSLoanEligibilityListDto listForTJSLoanEligibility { get; set; }
+        public SchoolFinancialListDto listForSchoolFinancialDetails { get; set; }
+        public SchoolNonFinancialListDto listForSchoolNonFinancialDetails { get; set; }
+        public PsychometricIndicatorListDto listForPsychometricDetails { get; set; }
 
 
         //public OtherDetailListDto listOtherDetail { get; set; }

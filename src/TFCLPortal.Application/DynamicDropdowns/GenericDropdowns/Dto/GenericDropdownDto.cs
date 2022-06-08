@@ -3,15 +3,37 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TFCLPortal.DynamicDropdowns.AyasPresents;
+using TFCLPortal.DynamicDropdowns.BuildingConditions;
 using TFCLPortal.DynamicDropdowns.CompanyTypes;
 using TFCLPortal.DynamicDropdowns.Dto;
+using TFCLPortal.DynamicDropdowns.LoansPurpose;
 using TFCLPortal.DynamicDropdowns.NatureOfEmployments;
+using TFCLPortal.DynamicDropdowns.PowerBackups;
+using TFCLPortal.DynamicDropdowns.CleanWaters;
+using TFCLPortal.DynamicDropdowns.LearningAids;
+using TFCLPortal.DynamicDropdowns.TeacherTrainings;
+using TFCLPortal.DynamicDropdowns.SecurityGuards;
+using TFCLPortal.DynamicDropdowns.FinancialRecords;
+using TFCLPortal.DynamicDropdowns.BusinessRadiuses;
+using TFCLPortal.DynamicDropdowns.BankingTransactiones;
+using TFCLPortal.DynamicDropdowns.PeopleSteals;
+using TFCLPortal.DynamicDropdowns.AvoidConflicts;
+using TFCLPortal.DynamicDropdowns.BiggestMotivations;
+using TFCLPortal.DynamicDropdowns.HopefulFutures;
+using TFCLPortal.DynamicDropdowns.DigitalInitiatives;
+using TFCLPortal.DynamicDropdowns.TeacherTrainingDays;
+using TFCLPortal.DynamicDropdowns.ParentEngagements;
+using TFCLPortal.DynamicDropdowns.SpouseFamilyOtherIncomes;
+using TFCLPortal.DynamicDropdowns.OtherPaymentBehaviours;
+using TFCLPortal.LiabilityTypes;
 
 namespace TFCLPortal.DynamicDropdowns.GenericDropdowns.Dto
 {
     public class GenericDropdownDto
     {
         public List<LoanPurposeListDto> loanPurposeLists { get; set; }
+        //public List<LoanPurpose> loanPurposeRep { get; set; }
         public List<OwnershipStatusListDto> OwnershipStatusLists { get; set; }
         public List<OwnershipStatusListDto> BusinessPlaceOwnershipStatusLists { get; set; }
         public List<PaymentFrequencyListDto> paymentFrequencyLists { get; set; }
@@ -87,6 +109,29 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns.Dto
         public List<InventoryRecordMaintenanceListDto> inventoryRecordMaintenances { get; set; }
         public List<NatureOfEmploymentListDto> NatureOfEmployments { get; set; }
         public List<CompanyTypeListDto> CompanyTypes { get; set; }
+
+        public List<BuildingCondition> BuildingConditionsRep { get; set; }
+        public List<PowerBackup> PowerBackupRep { get; set; }
+        public List<AyasPresent> AyasPresentRep { get; set; }
+        public List<CleanWater> CleanWaterRep { get; set; }
+        public List<LearningAid> LearningAidRep { get; set; }
+        public List<TeacherTraining> TeacherTrainingRep { get; set; }
+        public List<SecurityGuard> SecurityGuardRep { get; set; }
+        public List<FinancialRecord> FinancialRecordRep { get; set; }
+        public List<BusinessRadius> BusinessRadiusRep { get; set; }
+        public List<BankingTransaction> BankingTransactionRep { get; set; }
+
+        public List<PeopleSteal> PeopleStealRep { get; set; }
+        public List<AvoidConflict> AvoidConflictRep { get; set; }
+        public List<BiggestMotivation> BiggestMotivationRep { get; set; }
+        public List<HopefulFuture> HopefulFutureRep { get; set; }
+        public List<DigitalInitiative> DigitalInitiativeRep { get; set; }
+        public List<TeacherTrainingDay> TeacherTrainingDayRep { get; set; }
+        public List<ParentEngagement> ParentEngagementRep { get; set; }
+        public List<SpouseFamilyOtherIncome> SpouseFamilyOtherIncomeRep { get; set; }
+        public List<OtherPaymentBehaviour> OtherPaymentBehaviourRep { get; set; }
+        public List<LiabilityType> LiabilityTypeRep { get; set; }
+
 
     }
 }

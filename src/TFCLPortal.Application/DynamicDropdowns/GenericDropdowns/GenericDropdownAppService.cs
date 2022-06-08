@@ -73,13 +73,31 @@ using TFCLPortal.DynamicDropdowns.InventoryRecordMaintenances;
 using TFCLPortal.DynamicDropdowns.InventoryEntrySources;
 using TFCLPortal.DynamicDropdowns.NatureOfEmployments;
 using TFCLPortal.DynamicDropdowns.CompanyTypes;
+using TFCLPortal.DynamicDropdowns.BuildingConditions;
+using TFCLPortal.DynamicDropdowns.PowerBackups;
+using TFCLPortal.DynamicDropdowns.AyasPresents;
+using TFCLPortal.DynamicDropdowns.CleanWaters;
+using TFCLPortal.DynamicDropdowns.LearningAids;
+using TFCLPortal.DynamicDropdowns.TeacherTrainings;
+using TFCLPortal.DynamicDropdowns.SecurityGuards;
+using TFCLPortal.DynamicDropdowns.FinancialRecords;
+using TFCLPortal.DynamicDropdowns.BusinessRadiuses;
+using TFCLPortal.DynamicDropdowns.BankingTransactiones;
+using TFCLPortal.DynamicDropdowns.PeopleSteals;
+using TFCLPortal.DynamicDropdowns.AvoidConflicts;
+using TFCLPortal.DynamicDropdowns.BiggestMotivations;
+using TFCLPortal.DynamicDropdowns.HopefulFutures;
+using TFCLPortal.DynamicDropdowns.DigitalInitiatives;
+using TFCLPortal.DynamicDropdowns.TeacherTrainingDays;
+using TFCLPortal.DynamicDropdowns.ParentEngagements;
+using TFCLPortal.DynamicDropdowns.SpouseFamilyOtherIncomes;
+using TFCLPortal.DynamicDropdowns.OtherPaymentBehaviours;
+using TFCLPortal.LiabilityTypes;
 
 namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
 {
     public class GenericDropdownAppService : TFCLPortalAppServiceBase, IGenericDropdownsAppService
     {
-
-
         private readonly ILoanPurposeAppService _loanPurposeAppService;
         private readonly IOwnershipAppService _ownershipAppService;
         private readonly IPaymentFrequencyAppService _paymentFrequencyAppService;
@@ -143,10 +161,46 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
         private readonly ICompanyTypeAppService _companyTypeAppService;
 
         private readonly ILoanNatureAppService _loanNatureAppService;
+        private readonly IRepository<LiabilityType> _LiabilityTypeRepository;
+        private readonly IRepository<OtherPaymentBehaviour> _OtherPaymentBehaviourRepository;
         private readonly IRepository<DropdownUpdateStatus> _dropdownUpdateStatusesRepository;
+        private readonly IRepository<BuildingCondition> _buildingConditionRepository;
+        private readonly IRepository<PowerBackup> _powerBackupRepository;
+        private readonly IRepository<AyasPresent> _ayasPresentRepository;
+        private readonly IRepository<CleanWater> _CleanWaterRepository;
+        private readonly IRepository<LearningAid> _LearningAidRepository;
+        private readonly IRepository<TeacherTraining> _TeacherTrainingRepository;
+        private readonly IRepository<SecurityGuard> _SecurityGuardRepository;
+        private readonly IRepository<FinancialRecord> _FinancialRecordRepository;
+        private readonly IRepository<BusinessRadius> _BusinessRadiusRepository;
+        private readonly IRepository<PeopleSteal> _PeopleStealRepository;
+        private readonly IRepository<AvoidConflict> _AvoidConflictRepository;
+        private readonly IRepository<BiggestMotivation> _BiggestMotivationRepository;
+        private readonly IRepository<HopefulFuture> _HopefulFutureRepository;
+        private readonly IRepository<DigitalInitiative> _DigitalInitiativeRepository;
+        private readonly IRepository<TeacherTrainingDay> _TeacherTrainingDayRepository;
+        private readonly IRepository<BankingTransaction> _bankingTransactionRepository;
+        private readonly IRepository<ParentEngagement> _ParentEngagementRepository;
+        private readonly IRepository<SpouseFamilyOtherIncome> _SpouseFamilyOtherIncomeRepository;
         public GenericDropdownAppService
         (ILoanPurposeAppService loanPurposeAppService,
-            IOwnershipAppService ownershipAppService,
+            IRepository<LearningAid> LearningAidRepository,
+            IRepository<CleanWater> CleanWaterRepository,
+            IRepository<TeacherTraining> TeacherTrainingRepository,
+            IRepository<SecurityGuard> SecurityGuardRepository,
+            IRepository<FinancialRecord> FinancialRecordRepository,
+            IRepository<BusinessRadius> BusinessRadiusRepository,
+            IRepository<BankingTransaction> BankingTransactionRepository,
+               IRepository<PeopleSteal> PeopleStealRepository,
+        IRepository<AvoidConflict> AvoidConflictRepository,
+        IRepository<BiggestMotivation> BiggestMotivationRepository,
+        IRepository<HopefulFuture> HopefulFutureRepository,
+        IRepository<DigitalInitiative> DigitalInitiativeRepository,
+        IRepository<TeacherTrainingDay> TeacherTrainingDayRepository,
+        IRepository<LiabilityType> LiabilityTypeRepository,
+        IRepository<ParentEngagement> ParentEngagementRepository,
+        IRepository<OtherPaymentBehaviour> OtherPaymentBehaviourRepository,
+        IOwnershipAppService ownershipAppService,
             IPaymentFrequencyAppService paymentFrequencyAppService,
             IInventoryRecordMaintenanceAppService inventoryRecordMaintenanceAppService,
             IInventoryEntrySourceAppService inventoryEntrySourceAppService,
@@ -204,12 +258,18 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
             INaSourceOfIncomeAppService naSourceOfIncomeAppService,
             IBankAppService bankAppService,
             IAgeOfVehicleAppService ageOfVehicleAppService,
-            
+            IRepository<BuildingCondition> buildingConditionRepository,
+            IRepository<AyasPresent> ayasPresentRepository,
+            IRepository<PowerBackup> powerBackupRepository,
+            IRepository<SpouseFamilyOtherIncome> SpouseFamilyOtherIncomeRepository,
             IBankRatingAppService bankRatingAppService,
             ICreditBureauReportedAppService creditBureauReportedAppService,
             IClientBusinessClassificationAppService clientBusinessClassificationAppService,
             INatureOfBusinessAppService natureOfBusinessAppService)
         {
+            _SpouseFamilyOtherIncomeRepository = SpouseFamilyOtherIncomeRepository;
+            _powerBackupRepository = powerBackupRepository;
+            _CleanWaterRepository = CleanWaterRepository;
             _loanPurposeAppService = loanPurposeAppService;
             _ownershipAppService = ownershipAppService;
             _paymentFrequencyAppService = paymentFrequencyAppService;
@@ -227,6 +287,8 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
             _natureOfEmploymentAppService = natureOfEmploymentAppService;
             _maritalStatusAppService = maritalStatusAppService;
             _loanNatureAppService = loanNatureAppService;
+            _OtherPaymentBehaviourRepository = OtherPaymentBehaviourRepository;
+            _LiabilityTypeRepository = LiabilityTypeRepository;
             _applicantTypeAppService = applicantTypeAppService;
             _contactSourceAppService = contactSourceAppService;
             _occupationAppService = occupationAppService;
@@ -273,6 +335,21 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
             _creditBureauReportedAppService = creditBureauReportedAppService;
             _ageOfVehicleAppService = ageOfVehicleAppService;
             _bankRatingAppService = bankRatingAppService;
+            _buildingConditionRepository = buildingConditionRepository;
+            _ayasPresentRepository = ayasPresentRepository;
+            _LearningAidRepository = LearningAidRepository;
+            _TeacherTrainingRepository = TeacherTrainingRepository;
+            _SecurityGuardRepository = SecurityGuardRepository;
+            _FinancialRecordRepository = FinancialRecordRepository;
+            _BusinessRadiusRepository = BusinessRadiusRepository;
+            _bankingTransactionRepository = BankingTransactionRepository;
+            _PeopleStealRepository = PeopleStealRepository;
+            _AvoidConflictRepository = AvoidConflictRepository;
+            _BiggestMotivationRepository = BiggestMotivationRepository;
+            _HopefulFutureRepository = HopefulFutureRepository;
+            _DigitalInitiativeRepository = DigitalInitiativeRepository;
+            _TeacherTrainingDayRepository = TeacherTrainingDayRepository;
+            _ParentEngagementRepository = ParentEngagementRepository;
         }
 
         public async Task<GenericDropdownDto> GetAllDropdownsDataAsync()
@@ -472,7 +549,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
 
                 var NumbersListDtos = ObjectMapper.Map<List<NumbersListDto>>(GetNumbersListDtos());
                 var PercentageListDtos = ObjectMapper.Map<List<NumbersListDto>>(GetPercentageListDtos());
-                var AvgFeeListDtos= ObjectMapper.Map<List<NumbersListDto>>(GetAvgFeeListDtos());
+                var AvgFeeListDtos = ObjectMapper.Map<List<NumbersListDto>>(GetAvgFeeListDtos());
 
                 var designations = _designationAppService.GetAllList();//.OrderBy(x => x.Name);
                 var designationListDtos = ObjectMapper.Map<List<DesignationListDto>>(designations);
@@ -504,7 +581,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
 
 
                 var EntrySources = _inventoryEntrySourceAppService.GetAllList();
-                var EntrySourcesDto= ObjectMapper.Map<List<InventoryEntrySourceListDto>>(EntrySources);
+                var EntrySourcesDto = ObjectMapper.Map<List<InventoryEntrySourceListDto>>(EntrySources);
 
                 var RecordMaintenances = _inventoryRecordMaintenanceAppService.GetAllList();
                 var RecordMaintenanceDto = ObjectMapper.Map<List<InventoryRecordMaintenanceListDto>>(RecordMaintenances);
@@ -586,6 +663,27 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
                 genericDropdownDto.AvgFeeLists = AvgFeeListDtos;
                 genericDropdownDto.CompanyTypes = CompanyTypeDtos;
                 genericDropdownDto.NatureOfEmployments = NatureOfEmploymentDtos;
+
+                genericDropdownDto.BuildingConditionsRep = _buildingConditionRepository.GetAllList();
+                genericDropdownDto.PowerBackupRep = _powerBackupRepository.GetAllList();
+                genericDropdownDto.AyasPresentRep = _ayasPresentRepository.GetAllList();
+                genericDropdownDto.CleanWaterRep = _CleanWaterRepository.GetAllList();
+                genericDropdownDto.LearningAidRep = _LearningAidRepository.GetAllList();
+                genericDropdownDto.TeacherTrainingRep = _TeacherTrainingRepository.GetAllList();
+                genericDropdownDto.SecurityGuardRep = _SecurityGuardRepository.GetAllList();
+                genericDropdownDto.FinancialRecordRep = _FinancialRecordRepository.GetAllList();
+                genericDropdownDto.BusinessRadiusRep = _BusinessRadiusRepository.GetAllList();
+                genericDropdownDto.BankingTransactionRep = _bankingTransactionRepository.GetAllList();
+                genericDropdownDto.PeopleStealRep = _PeopleStealRepository.GetAllList();
+                genericDropdownDto.AvoidConflictRep = _AvoidConflictRepository.GetAllList();
+                genericDropdownDto.BiggestMotivationRep = _BiggestMotivationRepository.GetAllList();
+                genericDropdownDto.HopefulFutureRep = _HopefulFutureRepository.GetAllList();
+                genericDropdownDto.DigitalInitiativeRep = _DigitalInitiativeRepository.GetAllList();
+                genericDropdownDto.TeacherTrainingDayRep = _TeacherTrainingDayRepository.GetAllList();
+                genericDropdownDto.ParentEngagementRep = _ParentEngagementRepository.GetAllList();
+                genericDropdownDto.SpouseFamilyOtherIncomeRep = _SpouseFamilyOtherIncomeRepository.GetAllList();
+                genericDropdownDto.OtherPaymentBehaviourRep = _OtherPaymentBehaviourRepository.GetAllList();
+                genericDropdownDto.LiabilityTypeRep = _LiabilityTypeRepository.GetAllList();
                 //new Mobiization Dropdowns
 
 
@@ -613,11 +711,11 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
         public List<NumbersListDto> GetPercentageListDtos()
         {
             List<NumbersListDto> numbersList = new List<NumbersListDto>();
-            for (int i=0;i<=20;i++)
+            for (int i = 0; i <= 20; i++)
             {
                 NumbersListDto n = new NumbersListDto();
                 n.Id = i + 1;
-                n.name = (i * 5).ToString()+"%";
+                n.name = (i * 5).ToString() + "%";
                 numbersList.Add(n);
             }
 

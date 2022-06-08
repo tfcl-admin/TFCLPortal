@@ -12,6 +12,8 @@ namespace TFCLPortal.ExposureDetails.Dto
     {
         public int Fk_ExpoDetailID { get; set; }
         public int? BankName { get; set; }
+        public int LiabilityType { get; set; }
+        public string LiabilityTypeName { get; set; }
         public string BankNameString { get; set; }
         public string Others { get; set; }
         public string CreditBureauReported { get; set; }

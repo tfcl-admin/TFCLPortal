@@ -206,56 +206,10 @@ namespace TFCLPortal.Mobilizations
             try
             {
 
-                //var mobilizations = _mobilizationRepository.GetAllList().OrderByDescending(x => x.ScreenStatus == "Mobilization").ToListAsync();
                 var mobilizations = _customRepository.GetMobilizationsByMaxInteractionNumber();
-                //var mobilizations = _mobilizationRepository.GetAllList().Where(x => x.ScreenStatus == "Mobilization");
 
                 var objmobilizationsList = ObjectMapper.Map<List<GetMobilizationListDto>>(mobilizations);
 
-             
-
-                //var initChat = (from mob in _mobilizationRepository.GetAllList()
-                //                join product in _productTypeRepository.GetAllList() on mob.ProductType equals product.Id
-                //                join mobilization in _mobStatusRepository.GetAllList() on mob.MobilizationStatus equals mobilization.Id
-                //                join  user in _userAppService.GetAllUsers() on mob.CreatorUserId equals user.Id
-                //                join  session in _academicSessionRepository.GetAllList() on mob.AcademicSession equals session.Id
-                //                join  otherincome in _otherSourceOfIncomeRepository.GetAllList() on mob.OtherSourceIncome equals otherincome.Id
-                //                join schoolCat in _schoolCategoryRepository.GetAllList() on mob.SchoolCategory equals schoolCat.Id
-                //                select new
-                //                {
-                //                    mob.Id,
-                //                    producttype = product.Name,
-                //                    MobilizationStatus = mobilization.Name,
-                //                    UserName = user.UserName,
-                //                    Session=session.Name,
-                //                    Income= otherincome.Name,
-                //                    Category= schoolCat.Name
-                //                }).ToList();
-
-
-
-                //List<MobilizationListDto> mobilizationListDtoList = new List<MobilizationListDto>();
-
-                //foreach (var objMob in objmobilizationsList)
-                //{
-                //    foreach (var objInitChat in initChat)
-                //    {
-                //        if (objMob.Id == objInitChat.Id)
-                //        {
-                //            objMob.ProductTypeName = objInitChat.producttype;
-                //            objMob.MobStatusName = objInitChat.MobilizationStatus;
-                //            objMob.SDE_Name = objInitChat.UserName;
-                //            objMob.AcademicSession = objInitChat.Session;
-                //            objMob.SchoolCategory = objInitChat.Category;
-                //            objMob.OtherSourceIncome = objInitChat.Income;
-                //            mobilizationListDtoList.Add(objMob);
-                //            break;
-
-                //        }
-                //    }
-
-                //}
-                //var list=mobilizationListDtoList.OrderByDescending(x => x.CreationTime).ToList();
                 var list = objmobilizationsList.OrderByDescending(x => x.CreationTime).ToList();
                 return list;
 

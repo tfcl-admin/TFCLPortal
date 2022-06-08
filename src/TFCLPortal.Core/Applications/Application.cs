@@ -61,6 +61,12 @@ namespace TFCLPortal.Applications
         public string Latitude { get; set; } // New
         public int SchoolCategory { get; set; } // New Dropdown
 
+        public bool isDeceased { get; set; }//New
+        public int FundingSource { get; set; } // New Dropdown
+
+        public bool isEnhancementApplication { get; set; } // New Dropdown
+        public int PrevApplicationId { get; set; } // New Dropdown
+        public string MobilizationRecordId { get; set; }
 
 
     }

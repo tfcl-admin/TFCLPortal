@@ -159,6 +159,37 @@ using TFCLPortal.ManagmentCommitteeDecisions;
 using TFCLPortal.SalaryDetails;
 using TFCLPortal.TaggedPortfolios;
 using TFCLPortal.Targets;
+using TFCLPortal.DeceasedAuthorizations;
+using TFCLPortal.PsychometricIndicators;
+using TFCLPortal.SchoolNonFinancials;
+using TFCLPortal.SchoolFinancials;
+using TFCLPortal.DynamicDropdowns.AyasPresents;
+using TFCLPortal.DynamicDropdowns.BuildingConditions;
+using TFCLPortal.DynamicDropdowns.PowerBackups;
+using TFCLPortal.DynamicDropdowns.CleanWaters;
+using TFCLPortal.DynamicDropdowns.LearningAids;
+using TFCLPortal.DynamicDropdowns.TeacherTrainings;
+using TFCLPortal.DynamicDropdowns.SecurityGuards;
+using TFCLPortal.DynamicDropdowns.FinancialRecords;
+using TFCLPortal.DynamicDropdowns.BusinessRadiuses;
+using TFCLPortal.DynamicDropdowns.BankingTransactiones;
+using TFCLPortal.DynamicDropdowns.PeopleSteals;
+using TFCLPortal.DynamicDropdowns.AvoidConflicts;
+using TFCLPortal.DynamicDropdowns.BiggestMotivations;
+using TFCLPortal.DynamicDropdowns.HopefulFutures;
+using TFCLPortal.DynamicDropdowns.DigitalInitiatives;
+using TFCLPortal.DynamicDropdowns.TeacherTrainingDays;
+using TFCLPortal.DynamicDropdowns.ParentEngagements;
+using TFCLPortal.DynamicDropdowns.SpouseFamilyOtherIncomes;
+using TFCLPortal.DynamicDropdowns.OtherPaymentBehaviours;
+using TFCLPortal.LiabilityTypes;
+using TFCLPortal.ProscribedPersons;
+using TFCLPortal.LoanStatuses;
+using TFCLPortal.FundingSources;
+using TFCLPortal.EnhancementRequests;
+using TFCLPortal.CustomerAccounts;
+using System.Transactions;
+using TFCLPortal.PostDisbursementForms;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -182,27 +213,36 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<WriteOff> WriteOffDbSet { get; set; }
         public DbSet<MobilizationStatus> MobilizationStatusDbSet { get; set; }
         public DbSet<DeviationMatrix> DeviationMatrixDbSet { get; set; }
+        public DbSet<PostDisbursementForm> PostDisbursementFormDbSet { get; set; }
         public DbSet<FinalWorkflow> FinalWorkflowDbSet { get; set; }
         public DbSet<DeviationApproval> DeviationApprovalDbSet { get; set; }
         public DbSet<BranchManagerAction> BranchManagerActionDbSet { get; set; }
         public DbSet<TJSLoanEligibility> TJSLoanEligibilityDbSet { get; set; }
+        public DbSet<SpouseFamilyOtherIncome> SpouseFamilyOtherIncomeDbSet { get; set; }
         public DbSet<DeceasedSettlement> DeceasedSettlementDbSet { get; set; }
+        public DbSet<DeceasedAuthorization> DeceasedAuthorizationDbSet { get; set; }
         public DbSet<ManagmentCommitteeDecision> ManagmentCommitteeDecisionDbSet { get; set; }
         public DbSet<LoanNature> LoanNatureDbSet { get; set; }
+        public DbSet<CustomerAccount> CustomerAccountDbSet { get; set; }
         public DbSet<BccDecision> BccDecisionDbSet { get; set; }
         public DbSet<EmploymentDetail> EmploymentDetailDbSet { get; set; }
+        public DbSet<EnhancementRequest> EnhancementRequestDbSet { get; set; }
         public DbSet<McrcDecision> McrcDecisionDbSet { get; set; }
         public DbSet<ApplicationWiseDeviationVariable> ApplicationWiseDeviationVariableDbSet { get; set; }
 
         //NEW DROPDOWN API ADDITION START
         public DbSet<RespondantDesignation> RespondantDesignationDbSet { get; set; }
         public DbSet<ApplicantSource> ApplicantSourceDbSet { get; set; }
+        public DbSet<FundingSource> FundingSourceDbSet { get; set; }
         public DbSet<ReasonForNotBeingInterested> ReasonForNotBeingInterestedDbSet { get; set; }
         public DbSet<AcademicSession> AcademicSessionDbSet { get; set; }
         public DbSet<OtherSourceOfIncome> OtherSourceOfIncomeDbSet { get; set; }
         public DbSet<BuildingStatus> BuildingStatusDbSet { get; set; }
+        public DbSet<LiabilityType> LiabilityTypeDbSet { get; set; }
         public DbSet<SchoolCategory> SchoolCategoryDbSet { get; set; }
         public DbSet<SalaryDetail> SalaryDetailDbSet { get; set; }
+        public DbSet<TFCLPortal.Transactions.Transaction> TransactionDbSet { get; set; }
+        public DbSet<OtherPaymentBehaviour> OtherPaymentBehaviourDbSet { get; set; }
         public DbSet<SalaryDetailChild> SalaryDetailChildDbSet { get; set; }
         public DbSet<LoanSchedule> LoanScheduleDbSet { get; set; }
         public DbSet<McrcRecord> McrcRecordDbSet { get; set; }
@@ -215,8 +255,12 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<CompanyBankAccount> CompanyBankAccountDbSet { get; set; }
         public DbSet<ProductType> ProductTypeDbSet { get; set; }
         public DbSet<SchoolClass> SchoolClassDbSet { get; set; }
+        public DbSet<PsychometricIndicator> PsychometricIndicatorDbSet { get; set; }
+        public DbSet<SchoolNonFinancial> SchoolNonFinancialDbSet { get; set; }
+        public DbSet<SchoolFinancial> SchoolFinancialDbSet { get; set; }
         public DbSet<Province> ProvinceDbSet { get; set; }
         public DbSet<District> DistrictDbSet { get; set; }
+        public DbSet<ProscribedPerson> ProscribedPersonDbSet { get; set; }
         public DbSet<FileType> FileTypeDbSet { get; set; }
         public DbSet<SchoolType> SchoolTypeDbSet { get; set; }
         public DbSet<Holiday> HolidayDbSet { get; set; }
@@ -270,6 +314,9 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<PurchaseDetail> PurchaseDetailDbSet { get; set; }
         public DbSet<PurchaseDetailChild> PurchaseDetailChildDbSet { get; set; }
         public DbSet<PurchaseDetailGrandChild> PurchaseDetailGrandChildDbSet { get; set; }
+        public DbSet<AyasPresent> AyasPresentDbSet { get; set; }
+        public DbSet<BuildingCondition> BuildingConditionDbSet { get; set; }
+        public DbSet<PowerBackup> PowerBackupDbSet { get; set; }
 
         public DbSet<TdsInventoryDetail> TdsInventoryDetailDbSet { get; set; }
         public DbSet<TdsInventoryDetailChild> TdsInventoryDetailChildDbSet { get; set; }
@@ -300,6 +347,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<DropdownUpdateStatus> DropdownUpdateStatusDbSet { get; set; }
         public DbSet<BankAccountChildDetail> BankAccountChildDetailDbSet { get; set; }
         public DbSet<FilesUpload> FilesUploadDbSet { get; set; }
+        public DbSet<LoanStatus> LoanStatusDbSet { get; set; }
         public DbSet<Mobilization> MobilizationDbSet { get; set; }
         public DbSet<MobilizationsLog> MobilizationLogDbSet { get; set; }
         public DbSet<TDSBusinessNature> TdsBusinessNatureDbSet { get; set; }
@@ -347,6 +395,26 @@ namespace TFCLPortal.EntityFrameworkCore
 
         /*Taleem dost Sahulat DBSets*/
         public DbSet<BusinessDetailTDS> BusinessDetailTDSDbSet { get; set; }
+
+        public DbSet<CleanWater> CleanWaterDbSet { get; set; }
+        public DbSet<LearningAid> LearningAidDbSet { get; set; }
+        public DbSet<TeacherTraining> TeacherTrainingDbSet { get; set; }
+        public DbSet<SecurityGuard> SecurityGuardDbSet { get; set; }
+        public DbSet<FinancialRecord> FinancialRecordDbSet { get; set; }
+        public DbSet<BusinessRadius> BusinessRadiusDbSet { get; set; }
+        public DbSet<BankingTransaction> BankingTransactionDbSet { get; set; }
+
+        public DbSet<PeopleSteal> PeopleStealDbSet { get; set; }
+        public DbSet<AvoidConflict> AvoidConflictDbSet { get; set; }
+        public DbSet<BiggestMotivation> BiggestMotivationDbSet { get; set; }
+        public DbSet<HopefulFuture> HopefulFutureDbSet { get; set; }
+        public DbSet<DigitalInitiative> DigitalInitiativeDbSet { get; set; }
+        public DbSet<TeacherTrainingDay> TeacherTrainingDayDbSet { get; set; }
+        public DbSet<ParentEngagement> ParentEngagementDbSet { get; set; }
+
+
+
+
         public DbSet<TDSLoanEligibility> TDSLoanEligibilityDbSet { get; set; }
         public DbSet<Bank> BankDbSet { get; set; }
         public DbSet<FinancialInformationTDS> FinancialInformationTDSDbSet { get; set; }

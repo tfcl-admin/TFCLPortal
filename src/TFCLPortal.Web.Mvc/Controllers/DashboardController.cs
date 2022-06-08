@@ -98,6 +98,9 @@ using TFCLPortal.BusinessDetailsTDS;
 using TFCLPortal.TDSBusinessExpenses;
 using TFCLPortal.PurchaseDetails;
 using Abp.Runtime.Validation;
+using TFCLPortal.SchoolFinancials;
+using TFCLPortal.SchoolNonFinancials;
+using TFCLPortal.PsychometricIndicators;
 
 namespace TFCLPortal.Web.Mvc.Controllers
 {
@@ -153,15 +156,20 @@ namespace TFCLPortal.Web.Mvc.Controllers
         private readonly IPurchaseDetailAppService _purchaseDetailAppService;
         private readonly ITDSBusinessExpenseAppService _tDSBusinessExpenseAppService;
         private readonly IDependentEducationDetailsAppService _dependentEducationDetailsAppService;
+        private readonly ISchoolFinancialAppService _schoolFinancialAppService;
+        private readonly ISchoolNonFinancialAppService _schoolNonFinancialAppService;
+        private readonly IPsychometricIndicatorAppService _psychometricIndicatorAppService;
 
         private readonly UserManager _userManager;
         private readonly IUserAppService _userAppService;
 
         private readonly IHostingEnvironment _env;
 
-        public DashboardController(IFcmTokenAppService fcmTokenAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, ITDSBusinessExpenseAppService tDSBusinessExpenseAppService, IBusinessDetailsTDSAppService businessDetailsTDSAppService, IPurchaseDetailAppService purchaseDetailAppService, ISalesDetailAppService salesDetailAppService, ITdsInventoryDetailAppService tdsInventoryDetailAppService, IDependentEducationDetailsAppService dependentEducationDetailsAppService, IMobilizationAppService mobilizationAppService, INotificationLogAppService notificationLogAppService, IHostingEnvironment env, IMcrcDecisionAppService McrcDecisionAppService, IMcrcRecordAppService mcrcRecordAppService, IMcrcStateAppService mcrcStateAppService, IBccStateAppService bccStateAppService, IFinalWorkflowAppService finalWorkflowAppService, IAssociatedIncomeAppService associatedIncomeAppService, IBranchManagerActionAppService branchManagerActionAppService, INonAssociatedIncomeAppService nonAssociatedIncomeAppService, IUserAppService userAppService, UserManager userManager)
+        public DashboardController(IPsychometricIndicatorAppService psychometricIndicatorAppService, ISchoolNonFinancialAppService schoolNonFinancialAppService, ISchoolFinancialAppService schoolFinancialAppService, IFcmTokenAppService fcmTokenAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, ITDSBusinessExpenseAppService tDSBusinessExpenseAppService, IBusinessDetailsTDSAppService businessDetailsTDSAppService, IPurchaseDetailAppService purchaseDetailAppService, ISalesDetailAppService salesDetailAppService, ITdsInventoryDetailAppService tdsInventoryDetailAppService, IDependentEducationDetailsAppService dependentEducationDetailsAppService, IMobilizationAppService mobilizationAppService, INotificationLogAppService notificationLogAppService, IHostingEnvironment env, IMcrcDecisionAppService McrcDecisionAppService, IMcrcRecordAppService mcrcRecordAppService, IMcrcStateAppService mcrcStateAppService, IBccStateAppService bccStateAppService, IFinalWorkflowAppService finalWorkflowAppService, IAssociatedIncomeAppService associatedIncomeAppService, IBranchManagerActionAppService branchManagerActionAppService, INonAssociatedIncomeAppService nonAssociatedIncomeAppService, IUserAppService userAppService, UserManager userManager)
         {
-
+            _psychometricIndicatorAppService = psychometricIndicatorAppService;
+            _schoolNonFinancialAppService = schoolNonFinancialAppService;
+            _schoolFinancialAppService = schoolFinancialAppService;
             _userManager = userManager;
             _userAppService = userAppService;
             _mcrcStateAppService = mcrcStateAppService;
@@ -217,7 +225,12 @@ namespace TFCLPortal.Web.Mvc.Controllers
             _env = env;
         }
 
-        public async Task<IActionResult> Dashboard()
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public async Task<JsonResult> GetDashboardData()
         {
             long? userid = _userManager.AbpSession.UserId;
             ViewBag.userid = (int)AbpSession.UserId;
@@ -269,12 +282,24 @@ namespace TFCLPortal.Web.Mvc.Controllers
             dashbardList.TodayMeetingWithClients = returnList.Where(x => x.NextMeeting.ToString("yyyy-MM-dd") == dt).ToList().Count;
             dashbardList.MobilizationCount = returnList.Count;
 
-            return View(dashbardList);
-            //return View();
+            return Json(dashbardList);
         }
 
         public IActionResult Analytics()
         {
+            return View();
+        }
+
+        public IActionResult CreatePDForm(int ApplicationId)
+        {
+            if(ApplicationId!=0)
+            {
+                ViewBag.Error = 0;
+            }
+            else
+            {
+                ViewBag.Error = 1;
+            }
             return View();
         }
 
@@ -391,7 +416,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             try
             {
-                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).Where(x=>x.isRead==false).Count();
+                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).Where(x => x.isRead == false).Count();
                 return Json(getNotifications);
 
             }
@@ -763,6 +788,11 @@ namespace TFCLPortal.Web.Mvc.Controllers
             if (_forSDEAppService.CheckForSDEByApplicationId(Id)) { ViewBag.isExistSR = 1; } else { ViewBag.isExistSR = 0; }
 
 
+            if (_schoolFinancialAppService.CheckSchoolFinancialByApplicationId(Id)) { ViewBag.isExistSF = 1; } else { ViewBag.isExistSF = 0; }
+            if (_schoolNonFinancialAppService.CheckSchoolNonFinancialByApplicationId(Id)) { ViewBag.isExistSNF = 1; } else { ViewBag.isExistSNF = 0; }
+            if (_psychometricIndicatorAppService.CheckPsychometricIndicatorByApplicationId(Id)) { ViewBag.isExistPI = 1; } else { ViewBag.isExistPI = 0; }
+
+
 
             //Checking existing Data in Tables END
 
@@ -879,7 +909,6 @@ namespace TFCLPortal.Web.Mvc.Controllers
             //ViewBag.isExistSR = 0;
             //var isExistSR = _forSDEAppService.GetForSDEByApplicationId(Id);
             if (_forSDEAppService.CheckForSDEByApplicationId(Id)) { ViewBag.isExistSR = 1; } else { ViewBag.isExistSR = 0; }
-
 
 
             //Checking existing Data in Tables END
@@ -1062,7 +1091,22 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     }
 
                     var data = _exposureDetailAppService.GetExposureDetailByApplicationId(ApplicationId);
-                    return PartialView("_exposuredetails", data.Result);
+
+                    if (data != null)
+                    {
+                        if (data.Result.isNew)
+                        {
+                            return PartialView("_exposuredetailsNew", data.Result);
+                        }
+                        else
+                        {
+                            return PartialView("_exposuredetails", data.Result);
+                        }
+                    }
+                    else
+                    {
+                        return PartialView("_exposuredetails", data.Result);
+                    }
                 }
                 else if (viewName == "INVENTORY DETAILS")
                 {
@@ -1324,6 +1368,63 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     var data = _forSDEAppService.GetForSDEByApplicationId(ApplicationId);
                     return PartialView("_forSde", data.Result);
                 }
+                else if (viewName == "SCHOOL FINANCIAL DETAILS")
+                {
+                    if (applicationData.ScreenStatus == ApplicationState.Submitted)
+                    {
+                        var Actions = _branchManagerActionAppService.GetBranchManagerActionByApplicationId(ApplicationId).Where(x => x.isActive == false && x.ScreenName == viewName.Replace(" ", "").ToLower()).FirstOrDefault();
+
+                        if (Actions != null)
+                        {
+                            ViewBag.SFAction = Actions.ActionType;
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.SFAction = "Hide";
+                    }
+
+                    var data = _schoolFinancialAppService.GetSchoolFinancialByApplicationId(ApplicationId);
+                    return PartialView("_schoolFinancialDetails", data.Result);
+                }
+                else if (viewName == "SCHOOL NON-FINANCIAL DETAILS")
+                {
+                    if (applicationData.ScreenStatus == ApplicationState.Submitted)
+                    {
+                        var Actions = _branchManagerActionAppService.GetBranchManagerActionByApplicationId(ApplicationId).Where(x => x.isActive == false && x.ScreenName == viewName.Replace(" ", "").ToLower()).FirstOrDefault();
+
+                        if (Actions != null)
+                        {
+                            ViewBag.SNFAction = Actions.ActionType;
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.SNFAction = "Hide";
+                    }
+
+                    var data = _schoolNonFinancialAppService.GetSchoolNonFinancialByApplicationId(ApplicationId);
+                    return PartialView("_schoolNonFinancialDetails", data.Result);
+                }
+                else if (viewName == "PSYCHOMETRIC INDICATORS")
+                {
+                    if (applicationData.ScreenStatus == ApplicationState.Submitted)
+                    {
+                        var Actions = _branchManagerActionAppService.GetBranchManagerActionByApplicationId(ApplicationId).Where(x => x.isActive == false && x.ScreenName == viewName.Replace(" ", "").ToLower()).FirstOrDefault();
+
+                        if (Actions != null)
+                        {
+                            ViewBag.PIAction = Actions.ActionType;
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.PIAction = "Hide";
+                    }
+
+                    var data = _psychometricIndicatorAppService.GetPsychometricIndicatorByApplicationId(ApplicationId);
+                    return PartialView("_psychometricIndicators", data.Result);
+                }
                 else if (viewName == "REFERENCES DETAILS")
                 {
                     if (applicationData.ScreenStatus == ApplicationState.Submitted)
@@ -1361,7 +1462,22 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     }
 
                     var data = _AssetLiabilityAppService.GetAssetLiabilityDetailByApplicationId(ApplicationId);
-                    return PartialView("_AssetLiablity", data.Result);
+
+                    if (data != null)
+                    {
+                        if (data.Result.isNew)
+                        {
+                            return PartialView("_AssetLiablityNew", data.Result);
+                        }
+                        else
+                        {
+                            return PartialView("_AssetLiablity", data.Result);
+                        }
+                    }
+                    else
+                    {
+                        return PartialView("_AssetLiablity", data.Result);
+                    }
                 }
                 else if (viewName == "LOAN REQUISITION DETAILS")
                 {
@@ -1962,52 +2078,52 @@ namespace TFCLPortal.Web.Mvc.Controllers
                 ViewBag.ApplicantPicUrl = "/images/noPic.jpg";
             }
 
-                var gd = _guarantorDetailAppService.GetGuarantorDetailByApplicationId(ApplicationId).Result;
+            var gd = _guarantorDetailAppService.GetGuarantorDetailByApplicationId(ApplicationId).Result;
 
-                var guarantorPhotos = files.Where(x => x.ScreenCode == "guarantor_photo");
+            var guarantorPhotos = files.Where(x => x.ScreenCode == "guarantor_photo");
 
-                foreach (var item in gd)
+            foreach (var item in gd)
+            {
+                var gPhotos = guarantorPhotos.Where(x => x.Fk_idForName == item.Id).FirstOrDefault();
+
+                if (gPhotos != null)
                 {
-                    var gPhotos = guarantorPhotos.Where(x => x.Fk_idForName == item.Id).FirstOrDefault();
-
-                    if (gPhotos != null)
-                    {
-                        item.imageUrl = gPhotos.BaseUrl;
-                        if (item.imageUrl == "" || item.imageUrl == null)
-                        {
-                            item.imageUrl = "/images/noPic.jpg";
-                        }
-                    }
-                    else
+                    item.imageUrl = gPhotos.BaseUrl;
+                    if (item.imageUrl == "" || item.imageUrl == null)
                     {
                         item.imageUrl = "/images/noPic.jpg";
                     }
-
                 }
-                ViewBag.GD = gd;
-                var cod = _coApplicantDetailAppService.GetCoApplicantDetailByApplicationId(ApplicationId).Result;
-
-                var coapplicantPhotos = files.Where(x => x.ScreenCode == "co_applicant_photo");
-
-                foreach (var item in cod)
+                else
                 {
-                    var cPhotos = coapplicantPhotos.Where(x => x.Fk_idForName == item.Id).FirstOrDefault();
-                    if (cPhotos != null)
-                    {
-                        item.imageUrl = cPhotos.BaseUrl;
-                        if (item.imageUrl == "" || item.imageUrl == null)
-                        {
-                            item.imageUrl = "/images/noPic.jpg";
-                        }
-                    }
-                    else
+                    item.imageUrl = "/images/noPic.jpg";
+                }
+
+            }
+            ViewBag.GD = gd;
+            var cod = _coApplicantDetailAppService.GetCoApplicantDetailByApplicationId(ApplicationId).Result;
+
+            var coapplicantPhotos = files.Where(x => x.ScreenCode == "co_applicant_photo");
+
+            foreach (var item in cod)
+            {
+                var cPhotos = coapplicantPhotos.Where(x => x.Fk_idForName == item.Id).FirstOrDefault();
+                if (cPhotos != null)
+                {
+                    item.imageUrl = cPhotos.BaseUrl;
+                    if (item.imageUrl == "" || item.imageUrl == null)
                     {
                         item.imageUrl = "/images/noPic.jpg";
                     }
-
+                }
+                else
+                {
+                    item.imageUrl = "/images/noPic.jpg";
                 }
 
-                ViewBag.COD = cod;
+            }
+
+            ViewBag.COD = cod;
 
 
 
@@ -2177,7 +2293,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
                 var Fileuploadpath = Path.Combine(_env.WebRootPath, "uploads");
                 string rootPath = Path.Combine(Fileuploadpath, ApplicationId.ToString());
                 string rootPath2 = Path.Combine(rootPath, "CreditBureau");
-                string fileName = "CreditBureau_" + DocumentType.Replace("/","").Replace(" ", "") + "_" + PersonName.Replace(" ", "") + "_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+                string fileName = "CreditBureau_" + DocumentType.Replace("/", "").Replace(" ", "") + "_" + PersonName.Replace(" ", "") + "_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
                 string extension = System.IO.Path.GetExtension(file.FileName);
                 //input.DecisionFile = "/uploads/" + input.ApplicationId.ToString() + "/" + fileName + extension;
 

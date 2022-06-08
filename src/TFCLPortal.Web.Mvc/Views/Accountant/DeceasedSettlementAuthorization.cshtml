@@ -16,6 +16,7 @@
         </div>
         <div class="col-md-6 text-right">
             @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Accountant/DeceasedSettlementAuthorizationList" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To List </a>
             <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
         </div>
     </div>
@@ -51,7 +52,7 @@
                         </div>
 
                     </div>
-                 
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Total Amount Payable (Rs)</label>
@@ -64,14 +65,28 @@
                             <input asp-for="AmountDeposited" value="@(string.Format("{0:#,##0}",Model.AmountDeposited))" readonly="readonly" class="form-control" />
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Uploaded Document</label>
+                            <br/>
+                            @if (Model.ProofUrl != "" && Model.ProofUrl != null)
+                            {
+                                <a href="../@Model.ProofUrl.Replace("wwwroot/","")" class="btn btn-outline-primary"><i class="fa fa-download"></i> Download Document</a>
+                            }
+                            else
+                            {
+                                <p>--</p>
+                            }
+                        </div>
+                    </div>
                     <div class="col-md-12 text-right">
                         <input id="RejectionReason" type="text" style="width:25%;" class="form-control d-inline" placeholder="Reason For Rejection" />
                         <a class="btn btn-outline-danger d-inline" style="color: red !important;padding:8px" id="rejectBtn"><i class="fa fa-times"></i> Reject Entry</a>
-                        <a   class="btn btn-outline-success d-inline" style="color: green !important;padding:8px" id="uploadBtn"><i class="fa fa-upload"></i> Authorize Entry</a>
+                        <a class="btn btn-outline-success d-inline" style="color: green !important;padding:8px" id="uploadBtn"><i class="fa fa-upload"></i> Authorize Entry</a>
                     </div>
                     @*<div class="col-md-12 text-right">
-                        <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
-                    </div>*@
+                            <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
+                        </div>*@
                 </div>
             </form>
         </div>
@@ -128,7 +143,7 @@
 
             var Id = $('#Id').val();
 
-           
+
                 var formData = new FormData();
                 formData.append('Id', Id);
                 formData.append('Decision', 'Authorize');
