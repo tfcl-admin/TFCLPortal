@@ -200,5 +200,28 @@ namespace TFCLPortal.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> CreateDiscrepancy(int Id, string Reason)
+        {
+            var app = _applicationAppService.GetApplicationById(Id);
+
+            if (app != null)
+            {
+                CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
+                fWobj.ApplicationId = app.Id;
+                fWobj.Action = "Sent to Submitted. Reason : "+Reason;
+                fWobj.ActionBy = (int)AbpSession.UserId;
+                fWobj.ApplicationState = ApplicationState.Submitted;
+                fWobj.isActive = true;
+
+                _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
+
+                _applicationAppService.ChangeApplicationState(ApplicationState.Submitted, app.Id, Reason);
+            }
+
+
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

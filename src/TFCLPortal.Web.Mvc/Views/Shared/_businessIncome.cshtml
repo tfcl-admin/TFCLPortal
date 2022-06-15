@@ -113,6 +113,12 @@
                                                 <div class="col-md-4">
                                                     <p class="detailHeading">
                                                         Total Fee Collection
+                                                        <a href="@ViewBag.ei_fee_voucher" class="@(ViewBag.ei_fee_voucher == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                            <i class="fa fa-picture-o"></i>
+                                                        </a>
+                                                        <a href="@ViewBag.ei_fee_register" class="@(ViewBag.ei_fee_register == "" ? "text-danger" : "" ) " style="float: right;margin-right:10px;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                            <i class="fa fa-picture-o"></i>
+                                                        </a>
                                                     </p>
                                                     <p class="detailText">@(item.totalFeeCollection == null || item.totalFeeCollection == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.totalFeeCollection).Replace(",",""))))</p>
                                                 </div>
@@ -147,6 +153,9 @@
                                                 <div class="col-md-4">
                                                     <p class="detailHeading">
                                                         Students Considered
+                                                        <a href="@ViewBag.ei_student_strength" class="@(ViewBag.ei_student_strength == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                            <i class="fa fa-picture-o"></i>
+                                                        </a>
                                                     </p>
                                                     <p class="detailText">@(item.StudentsConsidered == null || item.StudentsConsidered == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.StudentsConsidered).Replace(",",""))))</p>
                                                 </div>

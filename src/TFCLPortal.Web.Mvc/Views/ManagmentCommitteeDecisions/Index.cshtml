@@ -78,6 +78,9 @@
                     <th colspan="1">
                         Decline
                     </th>
+                    <th colspan="1">
+                        Discrepent
+                    </th>
                     <th colspan="3">
                         Details
                     </th>
@@ -86,46 +89,47 @@
             <tbody>
                 @foreach (var item in Model.applications)
                 {
-                    <tr>
-                        <td> @{i = i + 1;} @i</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ClientID)
+                <tr>
+                    <td> @{i = i + 1;} @i</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientID)
 
-                            @(item.isEnhancementApplication==true ? " (E)" : "")
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ClientName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SchoolName)
-                        </td>
+                        @(item.isEnhancementApplication==true ? " (E)" : "")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SchoolName)
+                    </td>
 
-                        <td>
-                            <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }"><i class="fa fa-check-circle text-success"></i> Approve </a>
-                            @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
-                        </td>
-                        <td>
-                            @*<a onclick="if (confirm('Are you sure you want to decline this application?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }"><i class="fa fa-times-circle text-danger"></i> Decline </a>*@
-                            <a onclick="DeclineApp(@item.Id)"><i class="fa fa-times-circle text-danger"></i> Decline </a>
-                            @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
-                        </td>
-                        <td>
-                            @if (item.ProductType == 1 || item.ProductType == 2)
-                            {
-                                <a href="/Dashboard/Application?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
-                            }
-                            else if (item.ProductType == 8 || item.ProductType == 9)
-                            {
-                                <a href="/Dashboard/TdsApplication?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
-                            }
-                        </td>
-                        <td>
-                            <a href="/McrcDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
-                        </td>
-                        <td>
-                            <a href="/BCCDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
-                        </td>
-                    </tr>
+                    <td>
+                        <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }"><i class="fa fa-check-circle text-success"></i> Approve </a>
+                        @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
+                    </td>
+                    <td>
+                        <a onclick="DeclineApp(@item.Id)"><i class="fa fa-times-circle text-danger"></i> Decline </a>
+                    </td>
+                    <td>
+                        <a onclick="DiscrepentApp(@item.Id)"><i class="fa fa-info-circle text-warning"></i> Discrepant </a>
+                    </td>
+                    <td>
+                        @if (item.ProductType == 1 || item.ProductType == 2)
+                        {
+                            <a href="/Dashboard/Application?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                        }
+                        else if (item.ProductType == 8 || item.ProductType == 9)
+                        {
+                            <a href="/Dashboard/TdsApplication?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                        }
+                    </td>
+                    <td>
+                        <a href="/McrcDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
+                    </td>
+                    <td>
+                        <a href="/BCCDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -283,6 +287,18 @@
         } else {
             //text = msg;
             window.location.href = '../ManagmentCommitteeDecisions/CreateMCdecline?Id=' + appid + '&&Reason=' + msg;
+        }
+    }
+    function DiscrepentApp(appid) {
+        //let text;
+        let msg = prompt("Please enter discrepancy:", "");
+        $(".pageloader").toggleClass("d-none");
+
+        if (msg == null || msg == "") {
+            // text = "User cancelled the prompt.";
+        } else {
+            //text = msg;
+            window.location.href = '../ManagmentCommitteeDecisions/CreateDiscrepancy?Id=' + appid + '&&Reason=' + msg;
         }
     }
 </script>

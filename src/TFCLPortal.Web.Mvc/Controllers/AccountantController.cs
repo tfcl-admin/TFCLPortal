@@ -59,6 +59,7 @@ using TFCLPortal.FundingSources;
 using TFCLPortal.EnhancementRequests;
 using TFCLPortal.CustomerAccounts;
 using TFCLPortal.Transactions;
+using TFCLPortal.CustomerAccounts.Dto;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -741,6 +742,28 @@ namespace TFCLPortal.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> CreateDiscrepancy(int Id, string Reason)
+        {
+            var app = _applicationAppService.GetApplicationById(Id);
+
+            if (app != null)
+            {
+                CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
+                fWobj.ApplicationId = app.Id;
+                fWobj.Action = "Sent to Submitted. Reason : " + Reason;
+                fWobj.ActionBy = (int)AbpSession.UserId;
+                fWobj.ApplicationState = ApplicationState.Submitted;
+                fWobj.isActive = true;
+
+                _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
+
+                _applicationAppService.ChangeApplicationState(ApplicationState.Submitted, app.Id, Reason);
+            }
+
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult ViewInstallmentPayment(int Id)
         {
             ViewBag.Id = Id;
@@ -1067,6 +1090,20 @@ namespace TFCLPortal.Web.Controllers
             var appData = _applicationAppService.GetApplicationById(ApplicationId);
             _notificationLogAppService.SendNotification((int)appData.CreatorUserId, appData.ClientID + " has been Disbursed.", "Click to Open the Application.");
 
+
+
+            var custAcc = _customerAccountAppAppService.GetCustomerAccountByCNIC(appData.CNICNo);
+            if(custAcc.Result==null)
+            {
+                CreateCustomerAccountDto acc = new CreateCustomerAccountDto();
+                acc.Balance = 0;
+                acc.CNIC = appData.CNICNo;
+                acc.Phone = appData.MobileNo;
+                acc.Name = appData.ClientName;
+                acc.isActive = true;
+                _customerAccountAppAppService.CreateCustomerAccount(acc);
+            }
+          
 
             return RedirectToAction("Applications", "Application");
         }

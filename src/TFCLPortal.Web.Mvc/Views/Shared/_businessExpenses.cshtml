@@ -97,12 +97,26 @@
                                             <div class="col-md-4">
                                                 <p class="detailHeading">
                                                     Teacher's Salary
+
+                                                    <a href="@ViewBag.staff_attendance_register" class="@(ViewBag.staff_attendance_register == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Attendance Register">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
+                                                    <a href="@ViewBag.staff_salary_document" class="@(ViewBag.staff_salary_document == "" ? "text-danger" : "" )" style="float: right;margin-right:10px" data-toggle="tooltip" target="_blank" title="Salary Document">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
                                                 </p>
                                                 <p class="detailText">@(item.TeacherSalary == null || item.TeacherSalary == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.TeacherSalary).Replace(",",""))))</p>
                                             </div>
                                             <div class="col-md-4">
                                                 <p class="detailHeading">
                                                     Other's Salary
+
+                                                    <a href="@ViewBag.staff_attendance_register" class="@(ViewBag.staff_attendance_register == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Attendance Register">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
+                                                    <a href="@ViewBag.staff_salary_document" class="@(ViewBag.staff_salary_document == "" ? "text-danger" : "" )" style="float: right;margin-right:10px" data-toggle="tooltip" target="_blank" title="Salary Document">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
                                                 </p>
                                                 <p class="detailText">@(item.OtherSalary == null || item.OtherSalary == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.OtherSalary).Replace(",",""))))</p>
                                             </div>
@@ -145,6 +159,9 @@
                                             <div class="col-md-4">
                                                 <p class="detailHeading">
                                                     Royalty Fee
+                                                    <a href="@ViewBag.royalty_fee_voucher" class="@(ViewBag.royalty_fee_voucher == "" ? "text-danger" : "" ) " style="float: right;margin-right:10px;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
                                                 </p>
                                                 <p class="detailText">@(item.RoyaltyFee == null || item.RoyaltyFee == ""  ? "--" : string.Format("{0:#,##0}", Int32.Parse((item.RoyaltyFee).Replace(",",""))))</p>
                                             </div>

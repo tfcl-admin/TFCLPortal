@@ -56,7 +56,12 @@
                                                 <p class="detailText">@(item.SDW == null || item.SDW == "" ? "--" : item.SDW)</p>
                                             </div>
                                             <div class="col-md-4">
-                                                <p class="detailHeading">CNIC Number</p>
+                                                <p class="detailHeading">
+                                                    CNIC Number
+                                                    <a href="/accountant/UploadedDocuments?applicationid=@ViewBag.ApplicationId" style="float: right;" data-toggle="tooltip" target="_blank" title="Click to Open Link">
+                                                        <i class="fa fa-link"></i>
+                                                    </a>
+                                                </p>
                                                 <p class="detailText">@(item.CNICNumber == null || item.CNICNumber == "" ? "--" : item.CNICNumber)</p>
                                             </div>
                                             <div class="col-md-4">
@@ -68,6 +73,14 @@
                                             <div class="col-md-4">
                                                 <p class="detailHeading">
                                                     Date of Birth
+
+                                                    <a href="@ViewBag.co_applicant_cnic_front" class="@(ViewBag.co_applicant_cnic_front == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="CNIC Back">
+                                                        <i class="fa fa-address-card"></i>F
+                                                    </a>
+                                                    <a href="@ViewBag.co_applicant_cnic_back" class="@(ViewBag.co_applicant_cnic_back == "" ? "text-danger" : "" )" style="float: right;margin-right:10px" data-toggle="tooltip" target="_blank" title="CNIC Front">
+                                                        <i class="fa fa-address-card"></i>B
+                                                    </a>
+
                                                 </p>
                                                 <p class="detailText">@string.Format("{0:dd MMM yyyy}", item.DateOfBirth)</p>
                                             </div>

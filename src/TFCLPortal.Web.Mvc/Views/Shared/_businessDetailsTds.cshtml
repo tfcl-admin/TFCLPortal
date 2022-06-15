@@ -49,6 +49,9 @@
                                         <div class="col-md-6">
                                             <p class="detailHeading">
                                                 Client/Business Name
+                                                <a href="@ViewBag.business_main_front_view" class="@(ViewBag.business_main_front_view == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                    <i class="fa fa-picture-o"></i>
+                                                </a>
                                             </p>
                                             <p class="detailText">@(item.BusinessName == null || item.BusinessName == "" ? "--" : item.BusinessName)</p>
                                         </div>
@@ -118,6 +121,9 @@
                                         <div class="col-md-3">
                                             <p class="detailHeading">
                                                 Legal Status
+                                                <a href="@ViewBag.business_proof_document" class="@(ViewBag.business_proof_document == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                    <i class="fa fa-picture-o"></i>
+                                                </a>
                                             </p>
                                             <p class="detailText">@(item.LegalStatusName == null || item.LegalStatusName == "" ? "--" : item.LegalStatusName)</p>
                                         </div>

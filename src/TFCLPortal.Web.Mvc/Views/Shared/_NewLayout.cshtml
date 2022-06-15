@@ -290,7 +290,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="https://cat.tfcl.app/" target="_blank">
+                                <a href="http://20.74.248.55:8585/" target="_blank">
                                     <span class="icon-holder">
                                         <i class="fa fa-calculator"></i>
                                     </span>
@@ -745,7 +745,8 @@
                             </a>
                             <ul id="BAO" class="collapse sidebar-menua">
 
-                                @if (User.Identity.Name == "nabeel")
+
+                                @if (User.Identity.Name == "nabeel"||User.Identity.Name=="Noor")
                                 {
                                     <li class="nav-item dropdown">
                                         <a href="~/Accountant/FundingSource" class="dropdown-toggle">
@@ -878,7 +879,7 @@
                         </li>
                     }
 
-                    @if (User.Identity.Name == "nabeel" || User.Identity.Name == "admin")
+                    @if (User.Identity.Name == "nabeel" || User.Identity.Name == "admin" || User.Identity.Name == "Noor")
                     {
 
                         <li class="nav-item dropdown">

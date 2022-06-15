@@ -12,7 +12,1919 @@
     <input type="hidden" id="ApplicationId" value="@Model[0].ApplicationId" />
     <div class="tab_content active" style="padding: 15px 20px">
         <div class="row">
+            <div class="col-md-12 text-center ">
+                <h4><u>Applicant Personal Documents</u></h4>
+            </div>
+            @if (Model.Where(x => x.ScreenCode == "applicant_photo").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_photo").FirstOrDefault();
+                <div class="col-md-4">
 
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_cnic_front").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_cnic_front").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_cnic_back").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_cnic_back").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "ntn-atl_document").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "ntn-atl_document").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "hh_rent_agreement").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "hh_rent_agreement").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>Dependant fee details</u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "dependent_fee_voucher").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "dependent_fee_voucher").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>applicant business documents</u></h4>
+            </div>
+
+
+            @if (Model.Where(x => x.ScreenCode == "business_main_front_view").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "business_main_front_view").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "business_proof_document").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "business_proof_document").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_school_reg_certification").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_school_reg_certification").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_school_affiliation").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_school_affiliation").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_mou_of_franchise").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_mou_of_franchise").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_school_front_view").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_school_front_view").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_school_inner_view").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_school_inner_view").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_stock_view").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_stock_view").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_rent_agreement").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_rent_agreement").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_partnership_documents").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_partnership_documents").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_others_one").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_others_one").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_others_two").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_others_two").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_others_three").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_others_three").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>collateral document</u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "picture").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "picture").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "ownership_document").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "ownership_document").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "valuation_certificate").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "valuation_certificate").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "collateral_all").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "collateral_all").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "collateral_all_documents").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "collateral_all_documents").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>Business Income</u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "ei_student_strength_(voucher)").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "ei_student_strength_(voucher)").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "ei_student_attendance").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "ei_student_attendance").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "ei_fee_register").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "ei_fee_register").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "ei_fee_voucher").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "ei_fee_voucher").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "sales_voucher").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "sales_voucher").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "academy_student_attendance").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "academy_student_attendance").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "academy_fee_register").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "academy_fee_register").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "academy_fee_voucher").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "academy_fee_voucher").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>Associated Income</u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "canteen_income_document").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "canteen_income_document").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "annual_fund").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "annual_fund").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "copies_income").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "copies_income").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "books_income").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "books_income").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "test_session_income").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "test_session_income").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "uniform_income").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "uniform_income").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "admission_charges").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "admission_charges").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>Other Income</u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "non-associated_income_document").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "non-associated_income_document").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>Business Expense</u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "staff_salary_document").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "staff_salary_document").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "staff_attendance_register").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "staff_attendance_register").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "royalty_fee_voucher").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "royalty_fee_voucher").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "applicant_utility_bil_one").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "applicant_utility_bil_one").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>Household Expense</u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "utility_bill_household").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "utility_bill_household").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>bank statement </u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "bank_statement").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "bank_statement").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>co-applicant documents</u></h4>
+            </div>
+
+
+            @if (Model.Where(x => x.ScreenCode == "co_applicant_photo").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "co_applicant_photo").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "co_applicant_cnic_front").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "co_applicant_cnic_front").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "co_applicant_cnic_back").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "co_applicant_cnic_back").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "other_documents").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "other_documents").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            <div class="col-md-12 text-center">
+                <h4><u>guarantor documents</u></h4>
+            </div>
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_photo").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_photo").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_cnic_front").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_cnic_front").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_cnic_back").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_cnic_back").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_salary_slip").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_salary_slip").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_business_related_documents").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_business_related_documents").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_utility_bill").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_utility_bill").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_others_one").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_others_one").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_others_two").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_others_two").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_others_three").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_others_three").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+            @if (Model.Where(x => x.ScreenCode == "guarantor_others_four").Any())
+            {
+                var items = Model.Where(x => x.ScreenCode == "guarantor_others_four").FirstOrDefault();
+                <div class="col-md-4">
+
+                    <div class="heading text-capitalize">
+                        <p class="detailHeading">@items.ScreenCode.Replace("_", " ")  @(items.RespectiveName==null || items.RespectiveName == "" ? "" : "( " +items.RespectiveName+ " )")  @(items.Comments == null || items.Comments == "" ? "" : "( " + items.Comments + " )") </p>
+                    </div>
+                    <div class="page-form">
+                        <div class="form-group">
+                            <a href="@Url.Content(items.BaseUrl)" target="_blank" data-rel="prettyPhoto">
+                                @if (items.BaseUrl.Contains(".pdf"))
+                                {
+                                    <img src="~/images/pdfimg.png" alt="Image">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(items.BaseUrl)" alt="Image">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="font-size:10px">
+                        <div class="col-md-4 text-left"><b>File Type : </b>@System.IO.Path.GetExtension(items.BaseUrl)</div>
+                        <div class="col-md-8 text-right"><b>Upload Date : </b> @(items.LastModificationTime==null ? items.CreationTime : items.LastModificationTime)</div>
+                    </div>
+                </div>
+
+                Model.Remove(items);
+            }
+
+     
+            <div class="col-md-12 text-center">
+                <h4><u>Other Documents</u></h4>
+            </div>
             @foreach (var items in @Model)
             {
 

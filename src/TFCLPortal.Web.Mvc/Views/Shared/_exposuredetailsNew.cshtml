@@ -30,6 +30,9 @@
                 <div class="col-md-4">
                     <p class="detailHeading">
                         Existing Exposure
+                        <a href="/accountant/UploadedDocuments?applicationid=@Model.ApplicationId" style="float: right;" data-toggle="tooltip" target="_blank" title="Click to Open Link">
+                            <i class="fa fa-link"></i>
+                        </a>
                     </p>
                     <p class="detailText">@(Model.ExistingBankExposure == null || Model.ExistingBankExposure == "" ? "--" : Model.ExistingBankExposure)</p>
                 </div>

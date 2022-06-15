@@ -19,7 +19,7 @@
                 <p class="detailHeading">
 
                     APPLICANT NAME
-                    <a href="@ViewBag.ApplicantPicUrl" class="@(ViewBag.ApplicantPicUrl == "" ? "d-none" : "" )" style="float: right" data-toggle="tooltip" target="_blank" title="Click to Open Picture">
+                    <a href="@ViewBag.ApplicantPicUrl" class="@(ViewBag.ApplicantPicUrl == "" ? "text-danger" : "" )" style="float: right" data-toggle="tooltip" target="_blank" title="Click to Open Picture">
                         <i class="fa fa-picture-o"></i>
                     </a>
                 </p>
@@ -30,7 +30,12 @@
                 <p class="detailText">@(Model.ParentName == null ? "--" : Model.ParentName)</p>
             </div>
             <div class="col-md-3">
-                <p class="detailHeading">CNIC Number</p>
+                <p class="detailHeading">
+                    CNIC Number
+                    <a href="/accountant/UploadedDocuments?applicationid=@Model.ApplicationId" style="float: right;" data-toggle="tooltip" target="_blank" title="Click to Open Link">
+                        <i class="fa fa-link"></i>
+                    </a>
+                </p>
                 <p class="detailText">@(Model.CNIC == null ? "--" : Model.CNIC)</p>
             </div>
             @*@{ Model.CNICExpiry = DateTime.Parse("12/5/2020");}*@
@@ -41,7 +46,15 @@
                 <p class="detailText @( DateTime.Compare(NotNullableDT, DateTime.Now.Date) < 0 ? "text-danger" : (DateTime.Compare(NotNullableDT, DateTime.Now.Date) == 0 ? "text-orange" : ""))"> @string.Format("{0:dd MMM yyyy}", Model.CNICExpiry)</p>
             </div>
             <div class="col-md-3">
-                <p class="detailHeading">DATE OF BIRTH</p>
+                <p class="detailHeading">
+                    DATE OF BIRTH
+                    <a href="@ViewBag.applicant_cnic_back" class="@(ViewBag.applicant_cnic_back == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="CNIC Back">
+                        <i class="fa fa-address-card"></i>B
+                    </a>
+                    <a href="@ViewBag.applicant_cnic_front" class="@(ViewBag.applicant_cnic_front == "" ? "text-danger" : "" )" style="float: right;margin-right:10px" data-toggle="tooltip" target="_blank" title="CNIC Front">
+                        <i class="fa fa-address-card"></i>F
+                    </a>
+                </p>
                 <p class="detailText">@string.Format("{0:dd MMM yyyy}", Model.BirthDate)</p>
             </div>
             <div class="col-md-3">
@@ -152,7 +165,12 @@
                 <p class="detailText">@(Model.MotherMaidenName == null || Model.MotherMaidenName == "" ? "--" : Model.MotherMaidenName)</p>
             </div>
             <div class="col-md-3">
-                <p class="detailHeading">Personal NTN Number</p>
+                <p class="detailHeading">
+                    Personal NTN Number
+                    <a href="@ViewBag.ntn_atl_document" class="@(ViewBag.ntn_atl_document == "" ? "d-none" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="NTN Document">
+                        <i class="fa fa-file"></i>
+                    </a>
+                </p>
                 <p class="detailText">@(Model.PersonalNTN == null || Model.PersonalNTN == "" ? "--" : Model.PersonalNTN)</p>
             </div>
             <div class="col-md-3">

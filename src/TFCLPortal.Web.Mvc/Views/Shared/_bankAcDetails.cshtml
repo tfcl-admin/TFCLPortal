@@ -43,7 +43,12 @@
                                                     <p class="detailText">@(items.BankFullName == null || items.BankFullName == "" ? "--" : items.BankFullName)</p>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <p class="detailHeading">BRANCH NAME</p>
+                                                    <p class="detailHeading">
+                                                        BRANCH NAME
+                                                        <a href="@ViewBag.bank_statement" class="@(ViewBag.bank_statement == "" ? "text-danger" : "" )" style="float: right;margin-right:10px" data-toggle="tooltip" target="_blank" title="CNIC Front">
+                                                            <i class="fa fa-picture-o"></i>F
+                                                        </a>
+                                                    </p>
                                                     <p class="detailText">@(items.BranchName == null || items.BranchName == "" ? "--" : items.BranchName)</p>
                                                 </div>
                                                 <div class="col-md-4">

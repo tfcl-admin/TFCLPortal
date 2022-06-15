@@ -13,7 +13,12 @@
     <div class="tab_content" style="padding: 15px 20px">
         <div class="row">
             <div class="col-md-6">
-                <p class="detailHeading">PRESENT ADDRESS</p>
+                <p class="detailHeading">
+                    PRESENT ADDRESS
+                    <a href="@ViewBag.applicant_cnic_back" class="@(ViewBag.applicant_cnic_back == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="CNIC Back">
+                        <i class="fa fa-address-card"></i>
+                    </a>
+                </p>
                 <p class="detailText">@(Model.PresentAddress == null || Model.PresentAddress == "" ? "--" : Model.PresentAddress) </p>
             </div>
             <div class="col-md-3">
@@ -45,7 +50,12 @@
 
 
             <div class="col-md-3">
-                <p class="detailHeading">Residence PLACE STATUS</p>
+                <p class="detailHeading">
+                    Residence PLACE STATUS
+                    <a href="@ViewBag.hh_rent_agreement" class="@(ViewBag.hh_rent_agreement == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Rent Agreement">
+                        <i class="fa fa-file"></i>
+                    </a>
+                </p>
                 <p class="detailText">@(Model.OwnershipStatusName == null || Model.OwnershipStatusName == "" ? "--" : Model.OwnershipStatusName)</p>
             </div>
 
@@ -75,12 +85,6 @@
 
             <div class="col-md-3">
                 <p class="detailHeading">Monthly Share (Rs)</p>
-                @*@if (Model.MonthlyShare == null)
-                    {<p class="detailText">N/A</p> }
-                    else if (Model.MonthlyShare == 0)
-                    {<p class="detailText">N/A</p> }
-                    else
-                    {<p class="detailText">@Convert.ToDecimal(Model.).ToString("#,##0")</p>}*@
                 <p class="detailText">@(Model.MonthlyShare == null || Model.MonthlyShare == 0 ? "--" : Convert.ToDecimal(Model.MonthlyShare).ToString("#,##0"))</p>
 
             </div>
@@ -99,7 +103,12 @@
                 <p class="detailText">@string.Format("{0:dd MMM yyyy}", Model.CurrentAddressSince) @(Model.currentAddressDuration==""?"":"("+Model.currentAddressDuration+")")</p>
             </div>
             <div class="col-md-6 fwidth">
-                <p class="detailHeading">PERMANENT ADDRESS</p>
+                <p class="detailHeading">
+                    PERMANENT ADDRESS
+                    <a href="@ViewBag.applicant_cnic_back" class="@(ViewBag.applicant_cnic_back == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="CNIC Back">
+                        <i class="fa fa-address-card"></i>
+                    </a>
+                </p>
                 <p class="detailText">@(Model.permanentAddress == null || Model.permanentAddress == "" ? "--" : Model.permanentAddress)</p>
             </div>
             <div class="col-md-3">

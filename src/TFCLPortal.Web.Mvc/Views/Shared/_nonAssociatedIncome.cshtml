@@ -58,6 +58,9 @@
                                                 <div class="col-md-3">
                                                     <p class="detailHeading">
                                                         Source Of Income
+                                                        <a href="@ViewBag.non_associated_income_document" class="@(ViewBag.non_associated_income_document == "" ? "text-danger" : "" ) " style="float: right;margin-right:10px;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                            <i class="fa fa-picture-o"></i>
+                                                        </a>
                                                     </p>
                                                     <p class="detailText">@(item.SourceOfIncomeName == null || item.SourceOfIncomeName == "" ? "--" : item.SourceOfIncomeName)</p>
                                                 </div>

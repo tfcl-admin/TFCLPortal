@@ -292,7 +292,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
         public IActionResult CreatePDForm(int ApplicationId)
         {
-            if(ApplicationId!=0)
+            if (ApplicationId != 0)
             {
                 ViewBag.Error = 0;
             }
@@ -821,6 +821,25 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             return View();
         }
+
+        public string getFileUrl(string code, int ApplicationId)
+        {
+            string rtnstr = "";
+            var fileUploads = _FilesUploadAppService.GetFilesByApplicationId(ApplicationId);
+
+            var Pic = fileUploads.Where(x => x.ScreenCode == code).LastOrDefault();
+            if (Pic != null)
+            {
+                rtnstr = Pic.BaseUrl;
+            }
+            else
+            {
+                rtnstr = "";
+
+            }
+
+            return rtnstr;
+        }
         public IActionResult TDSApplication(int Id)
         {
             var applicationDetail = _applicationAppService.GetApplicationById(Id);
@@ -975,44 +994,12 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     }
 
                     var data = _personalDetailAppService.GetPersonalDetailByApplicationId(ApplicationId);
-                    var fileUploads = _FilesUploadAppService.GetFilesByApplicationId(ApplicationId);
-                    if (fileUploads != null)
-                    {
-                        var ApplicantPic = fileUploads.Where(x => x.ScreenCode == "applicant_photo").LastOrDefault();
-                        if (ApplicantPic != null)
-                        {
-                            ViewBag.ApplicantPicUrl = ApplicantPic.BaseUrl;
-                        }
-                        else
-                        {
-                            ViewBag.ApplicantPicUrl = "";
 
-                        }
-                    }
-                    else
-                    {
-                        ViewBag.ApplicantPicUrl = "";
+                    ViewBag.ApplicantPicUrl = getFileUrl("applicant_photo", ApplicationId);
+                    ViewBag.applicant_cnic_back = getFileUrl("applicant_cnic_back", ApplicationId);
+                    ViewBag.applicant_cnic_front = getFileUrl("applicant_cnic_front", ApplicationId);
+                    ViewBag.ntn_atl_document = getFileUrl("ntn-atl_document", ApplicationId);
 
-                    }
-                    //var currentApp = _applicationAppService.GetApplicationByApplicationId(ApplicationId);
-                    //var IsVo = User.IsInRole("VO");
-                    //var IsBm = User.IsInRole("BM");
-                    //if (IsBm)
-                    //{
-                    //    if (currentApp.ScreenStatus == ApplicationState.VO_Verified)
-                    //    {
-                    //        ///change application state to  bm screening
-                    //        _applicationAppService.ChangeApplicationState(ApplicationState.Screening, ApplicationId, "");
-                    //    }
-                    //}
-                    //else if (IsVo)
-                    //{
-                    //    if (currentApp.ScreenStatus == ApplicationState.Submitted)
-                    //    {
-                    //        ///change application state to  verifcation
-                    //        _applicationAppService.ChangeApplicationState(ApplicationState.Verification, ApplicationId, "");
-                    //    }
-                    //}
                     return PartialView("_personaldetails", data.Result);
                 }
                 else if (viewName == "DEPENDENTS EDUCATION DETAILS")
@@ -1049,6 +1036,19 @@ namespace TFCLPortal.Web.Mvc.Controllers
                         ViewBag.ContactAction = "Hide";
                     }
                     var data = _contactDetailAppService.GetContactDetailByApplicationId(ApplicationId);
+
+                    if (data.Result.OwnershipStatus == 3)
+                    {
+                        ViewBag.hh_rent_agreement = getFileUrl("hh_rent_agreement", ApplicationId);
+                    }
+                    else
+                    {
+                        ViewBag.hh_rent_agreement = "";
+                    }
+
+                    ViewBag.applicant_cnic_back = getFileUrl("applicant_cnic_back", ApplicationId);
+
+
                     return PartialView("_contactdetails", data.Result);
                 }
                 else if (viewName == "OTHER DETAILS")
@@ -1072,6 +1072,8 @@ namespace TFCLPortal.Web.Mvc.Controllers
                         ViewBag.BankAccountDetailAction = "Hide";
                     }
                     var data = _bankAccountAppService.GetBankAccountDetailByApplicationId(ApplicationId);
+                    ViewBag.bank_statement = getFileUrl("bank_statement", ApplicationId);
+
                     return PartialView("_bankAcDetails", data.Result);
                 }
                 else if (viewName == "EXPOSURE DETAILS")
@@ -1162,6 +1164,10 @@ namespace TFCLPortal.Web.Mvc.Controllers
                         ViewBag.BusinessIncomeAction = "Hide";
                     }
 
+                    ViewBag.ei_student_strength = getFileUrl("ei_student_strength_(voucher)", ApplicationId);
+                    ViewBag.ei_fee_register = getFileUrl("ei_fee_register", ApplicationId);
+                    ViewBag.ei_fee_voucher = getFileUrl("ei_fee_voucher", ApplicationId);
+
                     var data = _businessIncomeAppService.GetBusinessIncomeByApplicationId(ApplicationId);
                     //var abc = data.businessChlid.Select(x => x.ClassName).FirstOrDefault();
                     return PartialView("_businessIncome", data);
@@ -1205,11 +1211,17 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     if (applicationData.ProductType == 8 || applicationData.ProductType == 9)
                     {
                         var data = _tDSBusinessExpenseAppService.GetTDSBusinessExpenseByApplicationId(ApplicationId);
+                        ViewBag.staff_salary_document = getFileUrl("staff_salary_document", ApplicationId);
+                        ViewBag.staff_attendance_register = getFileUrl("staff_attendance_register", ApplicationId);
+
                         return PartialView("_businessExpensesTds", data.Result);
                     }
                     else
                     {
                         var data = _businessExpenseAppService.GetBusinessExpenseByApplicationId(ApplicationId);
+                        ViewBag.staff_salary_document = getFileUrl("staff_salary_document", ApplicationId);
+                        ViewBag.staff_attendance_register = getFileUrl("staff_attendance_register", ApplicationId);
+                        ViewBag.royalty_fee_voucher = getFileUrl("royalty_fee_voucher", ApplicationId);
 
                         return PartialView("_businessExpenses", data.Result);
                     }
@@ -1240,6 +1252,9 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     }
 
                     var data = _nonAssociatedIncomeAppService.GetNonAssociatedIncomeDetailByApplicationId(ApplicationId);
+                    ViewBag.non_associated_income_document = getFileUrl("non-associated_income_document", ApplicationId);
+
+
                     return PartialView("_nonAssociatedIncome", data);
                 }
                 else if (viewName == "ASSOCIATED INCOME")
@@ -1313,6 +1328,9 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     }
                     ViewBag.ApplicationId = ApplicationId;
 
+                    ViewBag.co_applicant_cnic_front = getFileUrl("co_applicant_cnic_front", ApplicationId);
+                    ViewBag.co_applicant_cnic_back = getFileUrl("co_applicant_cnic_back", ApplicationId);
+
                     return PartialView("_coapplicantdetails", data.Result);
                 }
                 else if (viewName == "GUARANTOR DETAILS")
@@ -1342,10 +1360,14 @@ namespace TFCLPortal.Web.Mvc.Controllers
                             if (guarantor != null)
                             {
                                 guarantor.imageUrl = fileUpload.BaseUrl;
+
                             }
                         }
                     }
                     ViewBag.ApplicationId = ApplicationId;
+
+                    ViewBag.guarantor_cnic_front = getFileUrl("guarantor_cnic_front", ApplicationId);
+                    ViewBag.guarantor_cnic_back = getFileUrl("guarantor_cnic_back", ApplicationId);
 
                     return PartialView("_guarantordetails", data.Result);
                 }
@@ -1463,6 +1485,9 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
                     var data = _AssetLiabilityAppService.GetAssetLiabilityDetailByApplicationId(ApplicationId);
 
+                    ViewBag.applicant_stock_view = getFileUrl("applicant_stock_view", ApplicationId);
+
+
                     if (data != null)
                     {
                         if (data.Result.isNew)
@@ -1522,11 +1547,77 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     if (applicationData.ProductType == 8 || applicationData.ProductType == 9)
                     {
                         var data = _businessDetailsTDSAppService.GetBusinessDetailTDSByApplicationId(ApplicationId);
+
+                        if (data.Result.businessDetailTds.Count > 0)
+                        {
+                            if (data.Result.businessDetailTds[0].BusinessPlaceOwnership == 3)
+                            {
+                                ViewBag.applicant_rent_agreement = getFileUrl("applicant_rent_agreement", ApplicationId);
+                            }
+                            else
+                            {
+                                ViewBag.applicant_rent_agreement = "";
+                            }
+
+                        }
+                        else
+                        {
+                            ViewBag.applicant_rent_agreement = "";
+                        }
+                        ViewBag.business_proof_document = getFileUrl("business_proof_document", ApplicationId);
+                        ViewBag.business_main_front_view = getFileUrl("business_main_front_view", ApplicationId);
                         return PartialView("_businessDetailsTds", data.Result);
                     }
                     else
                     {
                         var data = _businesDetailAppService.GetBusinessDetailByApplicationId(ApplicationId);
+
+                        if (data.Result.school_Branches.Count > 0)
+                        {
+                            if (data.Result.school_Branches[0].SchoolPlaceOwnership == 3)
+                            {
+                                ViewBag.applicant_rent_agreement = getFileUrl("applicant_rent_agreement", ApplicationId);
+                            }
+                            else
+                            {
+                                ViewBag.applicant_rent_agreement = "";
+                            }
+
+                            if ((bool)data.Result.school_Branches[0].isFranchise)
+                            {
+                                ViewBag.applicant_mou_of_franchise = getFileUrl("applicant_mou_of_franchise", ApplicationId);
+                            }
+                            else
+                            {
+                                ViewBag.applicant_mou_of_franchise = "";
+                            }
+
+                            if ((bool)data.Result.school_Branches[0].isBoardAffiliation)
+                            {
+                                ViewBag.applicant_school_affiliation = getFileUrl("applicant_school_affiliation", ApplicationId);
+                            }
+                            else
+                            {
+                                ViewBag.applicant_school_affiliation = "";
+                            }
+
+                            if (data.Result.school_Branches[0].RegistrationStatus == null || data.Result.school_Branches[0].RegistrationStatus == "")
+                            {
+                                ViewBag.applicant_school_reg_certification = "";
+                            }
+                            else
+                            {
+                                ViewBag.applicant_school_reg_certification = getFileUrl("applicant_school_reg_certification", ApplicationId);
+                            }
+
+                            ViewBag.business_proof_document = getFileUrl("business_proof_document", ApplicationId);
+                            ViewBag.business_main_front_view = getFileUrl("business_main_front_view", ApplicationId);
+                        }
+                        else
+                        {
+                            ViewBag.applicant_rent_agreement = "";
+                        }
+
                         return PartialView("_businessDetails", data.Result);
                     }
 
@@ -1550,6 +1641,11 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     }
 
                     var data = _collateralDetailAppService.GetCollateralDetailByApplicationId(ApplicationId);
+
+                    ViewBag.ownership_document = getFileUrl("ownership_document", ApplicationId);
+                    ViewBag.picture = getFileUrl("picture", ApplicationId);
+
+
                     return PartialView("_collateralValuationDetails", data.Result);
                 }
                 else if (viewName == "Uploaded Documents")

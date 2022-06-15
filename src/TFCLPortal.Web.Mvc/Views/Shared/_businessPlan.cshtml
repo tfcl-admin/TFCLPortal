@@ -43,7 +43,12 @@
                 <p class="detailText">@(Model.ReasonOfDecineOthers == null || Model.ReasonOfDecineOthers == "" ? "--" : Model.ReasonOfDecineOthers)</p>
             </div>
             <div class="col-md-3">
-                <p class="detailHeading">Credit Bureau Status</p>
+                <p class="detailHeading">
+                    Credit Bureau Status
+                    <a href="/accountant/UploadedDocuments?applicationid=@Model.ApplicationId" style="float: right;" data-toggle="tooltip" target="_blank" title="Click to Open Link">
+                        <i class="fa fa-link"></i>
+                    </a>
+                </p>
                 <p class="detailText">@(Model.CreditBureauCheckName == null || Model.CreditBureauCheckName == "0" ? "--" : Model.CreditBureauCheckName)</p>
             </div>
             <div class="col-md-3">
@@ -70,6 +75,9 @@
             <div class="col-md-3">
                 <p class="detailHeading">
                     AML/CFT Check
+                    <a href="/accountant/UploadedDocuments?applicationid=@Model.ApplicationId" style="float: right;" data-toggle="tooltip" target="_blank" title="Click to Open Link">
+                        <i class="fa fa-link"></i>
+                    </a>
                 </p>
                 @if (Model.AmlCftCheck == null)
                 {<p class="detailText">N/A</p> }

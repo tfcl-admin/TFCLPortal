@@ -68,6 +68,9 @@
                     <tr>
                         <td>
                             Stock In Hand
+                            <a href="@ViewBag.applicant_stock_view" class="@(ViewBag.applicant_stock_view == "" ? "text-danger" : "" )" style="float: right;margin-right:10px" data-toggle="tooltip" target="_blank" title="CNIC Front">
+                                <i class="fa fa-address-card"></i>B
+                            </a>
                         </td>
                         <td>@(Model.qtyAssetStockInHand == "" || Model.qtyAssetStockInHand == null  ? "--" : Model.qtyAssetStockInHand)</td>
                         <td>@(Model.AssetStockInHand == 0 || Model.AssetStockInHand == null ? "--" : string.Format("{0:#,###}", Model.AssetStockInHand))</td>

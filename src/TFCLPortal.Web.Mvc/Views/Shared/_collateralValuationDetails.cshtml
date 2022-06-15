@@ -76,8 +76,10 @@
                                             <div class="col-md-4">
                                                 <p class="detailHeading">
                                                     Property Owner Name
+                                                    <a href="@ViewBag.ownership_document" class="@(ViewBag.ownership_document == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
                                                 </p>
-                                                @*<p class="detailText">@(item.PropertyOwnerName == null || item.PropertyOwnerName == "" ? "--" : item.PropertyOwnerName)</p>*@
                                                 <p class="detailText">@(item.PropertyOwnerName == null || item.PropertyOwnerName == "" ? "--" : item.PropertyOwnerName)</p>
                                             </div>
 
@@ -99,6 +101,9 @@
                                             <div class="col-md-12">
                                                 <p class="detailHeading">
                                                     Property Address
+                                                    <a href="@ViewBag.picture" class="@(ViewBag.picture == "" ? "text-danger" : "" ) " style="float: right;" data-toggle="tooltip" target="_blank" title="Click to View Image">
+                                                        <i class="fa fa-picture-o"></i>
+                                                    </a>
                                                 </p>
                                                 <p class="detailText">@(item.PropertyAddress == null || item.PropertyAddress == "" ? "--" : item.PropertyAddress)</p>
                                             </div>
