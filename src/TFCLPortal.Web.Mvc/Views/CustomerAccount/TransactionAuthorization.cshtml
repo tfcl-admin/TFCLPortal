@@ -75,7 +75,8 @@
                         <td>@(item.Amount == 0 ? "0" : string.Format("{0:#,##0}", item.Amount))</td>
                         <td><a href="/CustomerAccount/ViewTransactions?accountid=@item.Fk_AccountId"> View</a></td>
                         <td>
-                            @item.isAuthorized
+                            <a class="text-success" href="/CustomerAccount/AuthorizeTransaction?id=@item.Id&&authorize=true"> Authorize </a> -
+                            <a class="text-danger" onclick="if (confirm('Are you sure you want to reject this entry?')) { window.location = '/CustomerAccount/AuthorizeTransaction?id=@item.Id&&authorize=false';}"> Reject </a>
                         </td>
 
                     </tr>
