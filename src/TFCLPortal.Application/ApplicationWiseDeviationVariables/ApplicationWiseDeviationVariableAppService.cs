@@ -220,10 +220,6 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables
                             {
                                 isFresh = true;
                             }
-                            else
-                            {
-                                isFresh = false;
-                            }
                         }
                         else
                         {

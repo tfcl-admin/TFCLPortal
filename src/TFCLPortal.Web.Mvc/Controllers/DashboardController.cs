@@ -101,6 +101,10 @@ using Abp.Runtime.Validation;
 using TFCLPortal.SchoolFinancials;
 using TFCLPortal.SchoolNonFinancials;
 using TFCLPortal.PsychometricIndicators;
+using TFCLPortal.Schedules;
+using Abp.Domain.Repositories;
+using TFCLPortal.PostDisbursementForms.Dto;
+using TFCLPortal.PostDisbursementForms;
 
 namespace TFCLPortal.Web.Mvc.Controllers
 {
@@ -159,19 +163,23 @@ namespace TFCLPortal.Web.Mvc.Controllers
         private readonly ISchoolFinancialAppService _schoolFinancialAppService;
         private readonly ISchoolNonFinancialAppService _schoolNonFinancialAppService;
         private readonly IPsychometricIndicatorAppService _psychometricIndicatorAppService;
+        private readonly IPostDisbursementFormAppService _postDisbursementFormAppService;
 
         private readonly UserManager _userManager;
         private readonly IUserAppService _userAppService;
 
         private readonly IHostingEnvironment _env;
 
-        public DashboardController(IPsychometricIndicatorAppService psychometricIndicatorAppService, ISchoolNonFinancialAppService schoolNonFinancialAppService, ISchoolFinancialAppService schoolFinancialAppService, IFcmTokenAppService fcmTokenAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, ITDSBusinessExpenseAppService tDSBusinessExpenseAppService, IBusinessDetailsTDSAppService businessDetailsTDSAppService, IPurchaseDetailAppService purchaseDetailAppService, ISalesDetailAppService salesDetailAppService, ITdsInventoryDetailAppService tdsInventoryDetailAppService, IDependentEducationDetailsAppService dependentEducationDetailsAppService, IMobilizationAppService mobilizationAppService, INotificationLogAppService notificationLogAppService, IHostingEnvironment env, IMcrcDecisionAppService McrcDecisionAppService, IMcrcRecordAppService mcrcRecordAppService, IMcrcStateAppService mcrcStateAppService, IBccStateAppService bccStateAppService, IFinalWorkflowAppService finalWorkflowAppService, IAssociatedIncomeAppService associatedIncomeAppService, IBranchManagerActionAppService branchManagerActionAppService, INonAssociatedIncomeAppService nonAssociatedIncomeAppService, IUserAppService userAppService, UserManager userManager)
+        private readonly IRepository<Schedule, int> _scheduleRepository;
+        public DashboardController(IPostDisbursementFormAppService postDisbursementFormAppService, IRepository<Schedule, int> scheduleRepository, IPsychometricIndicatorAppService psychometricIndicatorAppService, ISchoolNonFinancialAppService schoolNonFinancialAppService, ISchoolFinancialAppService schoolFinancialAppService, IFcmTokenAppService fcmTokenAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, ITDSBusinessExpenseAppService tDSBusinessExpenseAppService, IBusinessDetailsTDSAppService businessDetailsTDSAppService, IPurchaseDetailAppService purchaseDetailAppService, ISalesDetailAppService salesDetailAppService, ITdsInventoryDetailAppService tdsInventoryDetailAppService, IDependentEducationDetailsAppService dependentEducationDetailsAppService, IMobilizationAppService mobilizationAppService, INotificationLogAppService notificationLogAppService, IHostingEnvironment env, IMcrcDecisionAppService McrcDecisionAppService, IMcrcRecordAppService mcrcRecordAppService, IMcrcStateAppService mcrcStateAppService, IBccStateAppService bccStateAppService, IFinalWorkflowAppService finalWorkflowAppService, IAssociatedIncomeAppService associatedIncomeAppService, IBranchManagerActionAppService branchManagerActionAppService, INonAssociatedIncomeAppService nonAssociatedIncomeAppService, IUserAppService userAppService, UserManager userManager)
         {
             _psychometricIndicatorAppService = psychometricIndicatorAppService;
+            _postDisbursementFormAppService = postDisbursementFormAppService;
             _schoolNonFinancialAppService = schoolNonFinancialAppService;
             _schoolFinancialAppService = schoolFinancialAppService;
             _userManager = userManager;
             _userAppService = userAppService;
+            _scheduleRepository = scheduleRepository;
             _mcrcStateAppService = mcrcStateAppService;
             _mcrcRecordAppService = mcrcRecordAppService;
             _fcmTokenAppService = fcmTokenAppService;
@@ -294,6 +302,58 @@ namespace TFCLPortal.Web.Mvc.Controllers
         {
             if (ApplicationId != 0)
             {
+                ViewBag.ApplicationId = ApplicationId;
+                int product = 0;
+
+                var app = _applicationAppService.GetApplicationById(ApplicationId);
+                if (app != null)
+                {
+                    ViewBag.ClientId = app.ClientID;
+                    ViewBag.ApplicantName = app.ClientName;
+                    ViewBag.SchoolName = app.SchoolName;
+                    ViewBag.Cnic = app.CNICNo;
+                    ViewBag.SDE = app.SDE_Name;
+
+                    product = app.ProductType;
+                }
+
+                var schedule = _scheduleRepository.GetAllList(x => x.ApplicationId == ApplicationId).FirstOrDefault();
+                if (schedule != null)
+                {
+                    ViewBag.DisbDate = schedule.DisbursmentDate;
+                }
+
+                var businessPlan = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId);
+                if (businessPlan.Result != null)
+                {
+                    ViewBag.LoanAmountToBeUtilized = businessPlan.Result.PurposeOfLoanUtilization;
+                }
+
+                if (product == 1 || product == 2)
+                {
+                    var le = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId).Result;
+                    if (le != null)
+                    {
+                        ViewBag.MonthlyIncome = le.GrossIncome;
+                        ViewBag.NetIncomeBeforeHHexp = le.NetIncomeBeforeHHexp;
+                        ViewBag.MaxIncomeForTFCL = le.MaxIncomeForTFCL;
+                        ViewBag.AllCollateralMarketValue = le.AllCollateralMarketValue;
+                    }
+                }
+                else if (product == 8 || product == 9)
+                {
+                    var le = _tDSLoanEligibilityAppService.GetTDSLoanEligibilityListByApplicationId(ApplicationId).Result;
+                    if (le != null)
+                    {
+                        ViewBag.MonthlyIncome = le.MonthlyIncome;
+                        ViewBag.NetIncomeBeforeHHexp = le.GrossBusinessIncome;
+                        ViewBag.MaxIncomeForTFCL = le.MaxIncomeForTfclPayment;
+                        ViewBag.AllCollateralMarketValue = le.CollateralValue;
+                    }
+                }
+
+
+
                 ViewBag.Error = 0;
             }
             else
@@ -340,6 +400,102 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             return View();
 
+        }
+
+        [DisableValidation]
+        public IActionResult CreatePostDisbursementForm(CreatePostDisbursementFormDto input)
+        {
+            string response = "";
+            try
+            {
+                _postDisbursementFormAppService.CreatePostDisbursementForm(input);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return RedirectToAction("CreatePDForm", "Dashboard", new { ApplicationId = input.ApplicationId });
+        }
+
+        [DisableValidation]
+        public JsonResult getAllPostDisbursements(int ApplicationId)
+        {
+            try
+            {
+                var getAllPostDisbursements = _postDisbursementFormAppService.GetPostDisbursementFormByApplicationId(ApplicationId).Result;
+                return Json(getAllPostDisbursements);
+            }
+            catch (Exception ex)
+            {
+                return Json("");
+
+            }
+        }
+
+        public IActionResult ViewPDForm(int ApplicationId)
+        {
+            ViewBag.Error = 0;
+            var getAllPostDisbursements = _postDisbursementFormAppService.GetPostDisbursementFormByApplicationId(ApplicationId).Result;
+            if (getAllPostDisbursements == null)
+            {
+                ViewBag.Error = 1;
+            }
+
+            if (ApplicationId != 0)
+            {
+                ViewBag.ApplicationId = ApplicationId;
+                int product = 0;
+
+                var app = _applicationAppService.GetApplicationById(ApplicationId);
+                if (app != null)
+                {
+                    ViewBag.ClientId = app.ClientID;
+                    ViewBag.ApplicantName = app.ClientName;
+                    ViewBag.SchoolName = app.SchoolName;
+                    ViewBag.Cnic = app.CNICNo;
+                    ViewBag.SDE = app.SDE_Name;
+
+                    product = app.ProductType;
+                }
+
+                var schedule = _scheduleRepository.GetAllList(x => x.ApplicationId == ApplicationId).FirstOrDefault();
+                if (schedule != null)
+                {
+                    ViewBag.DisbDate = schedule.DisbursmentDate;
+                }
+
+                var businessPlan = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId);
+                if (businessPlan.Result != null)
+                {
+                    ViewBag.LoanAmountToBeUtilized = businessPlan.Result.PurposeOfLoanUtilization;
+                }
+
+                if (product == 1 || product == 2)
+                {
+                    var le = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId).Result;
+                    if (le != null)
+                    {
+                        ViewBag.MonthlyIncome = le.GrossIncome;
+                        ViewBag.NetIncomeBeforeHHexp = le.NetIncomeBeforeHHexp;
+                        ViewBag.MaxIncomeForTFCL = le.MaxIncomeForTFCL;
+                        ViewBag.AllCollateralMarketValue = le.AllCollateralMarketValue;
+                    }
+                }
+                else if (product == 8 || product == 9)
+                {
+                    var le = _tDSLoanEligibilityAppService.GetTDSLoanEligibilityListByApplicationId(ApplicationId).Result;
+                    if (le != null)
+                    {
+                        ViewBag.MonthlyIncome = le.MonthlyIncome;
+                        ViewBag.NetIncomeBeforeHHexp = le.GrossBusinessIncome;
+                        ViewBag.MaxIncomeForTFCL = le.MaxIncomeForTfclPayment;
+                        ViewBag.AllCollateralMarketValue = le.CollateralValue;
+                    }
+                }
+
+            }
+
+            return View(getAllPostDisbursements);
         }
 
         [HttpPost]

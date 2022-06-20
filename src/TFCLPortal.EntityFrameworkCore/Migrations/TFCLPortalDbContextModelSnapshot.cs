@@ -7593,6 +7593,55 @@ namespace TFCLPortal.Migrations
                     b.ToTable("PersonalDetail");
                 });
 
+            modelBuilder.Entity("TFCLPortal.PostDisbursementForms.PostDisbursementForm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationId");
+
+                    b.Property<string>("Comments");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<string>("CurrentCollateral");
+
+                    b.Property<string>("CurrentIncomeAfterHHexp");
+
+                    b.Property<string>("CurrentMonthlyIncome");
+
+                    b.Property<string>("CurrentNetBusinessIncome");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("FileCollateral");
+
+                    b.Property<string>("FileIncomeAfterHHexp");
+
+                    b.Property<string>("FileMonthlyIncome");
+
+                    b.Property<string>("FileNetBusinessIncome");
+
+                    b.Property<string>("GuarantorBusinessCondition");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("LoanAmountUtilization");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostDisbursementForm");
+                });
+
             modelBuilder.Entity("TFCLPortal.Preferences.Preference", b =>
                 {
                     b.Property<int>("Id")

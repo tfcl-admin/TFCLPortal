@@ -1,34 +1,266 @@
 ﻿@model TFCLPortal.PostDisbursementForms.Dto.CreatePostDisbursementFormDto
 @{
     ViewData["Title"] = "Post Disbursment Form";
-    Layout = "~/Views/Shared/_NewLayout.cshtml";
+    Layout = null;
 }
 
-<main class='main-content bgc-grey-100' style="padding-top:50px">
-    <div class="row page-title">
-        <div class="col-md-12 text-left">
-            <h4 class="page-title-text">Application Detail</h4>
-            <h6 class="page-title-breadcrumbs"><a href="~/Dashboard/Dashboard">Home</a> > Track Loan Application > Application Detail</h6>
-        </div>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="~/Theame/css/style.css" rel="stylesheet" asp-append-version="true" />
+
+</head>
+<body>
+
+    <div class="tab_content" style="padding: 15px 20px">
+
+        @if (ViewBag.Error == 0)
+        {
+            <div class="row">
+
+                <form action="CreatePostDisbursementForm" method="get">
+
+                    <input type="hidden" id="ApplicationId" asp-for="ApplicationId" value="@ViewBag.ApplicationId" />
+
+                    <div class="col-md-12 text-center">
+                        <h3><b>Post Disbursement Form</b></h3>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <p class="detailHeading">
+                            Client ID
+                        </p>
+                        <p class="detailText">@ViewBag.ClientId</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="detailHeading">
+                            APPLICANT / RESPONDENT NAME
+                        </p>
+                        <p class="detailText">@ViewBag.ApplicantName</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="detailHeading">
+                            CLIENT / SCHOOL / BUSINESS NAME
+                        </p>
+                        <p class="detailText">@ViewBag.SchoolName</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="detailHeading">
+                            CNIC No.
+                        </p>
+                        <p class="detailText">@ViewBag.Cnic</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="detailHeading">
+                            SDE
+                        </p>
+                        <p class="detailText">@ViewBag.SDE</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="detailHeading">
+                            Disbursement Date
+                        </p>
+                        <p class="detailText">@ViewBag.DisbDate</p>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                        <h3>Loan Purpose Monitoring</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="detailHeading">
+                            Loan Amount to be Utilized
+                        </p>
+                        <p class="detailText">@ViewBag.LoanAmountToBeUtilized</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="detailHeading">
+                            Loan Amount Actually Utilized
+                        </p>
+                        <select class="form-control" required="required" asp-for="LoanAmountUtilization" id="ActuallyUtilized">
+                            <option value="">Select Actual Utilization</option>
+                            <option value="Utilized as Stated in LAF">Utilized as Stated in LAF</option>
+                            <option value="Mis Utilized">Mis Utilized</option>
+                            <option value="Partially Mis Utilized">Partially Mis Utilized</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12 text-center mt-3 mb-3">
+                        <h3>Overall Financial Condition</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:left;width:30%">Particulars</th>
+                                    <th>Details (According to File)</th>
+                                    <th>Current Condition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:left;">Monthly Business Income</td>
+                                    <td><input type="text" class="form-control" required="required" readonly="readonly" asp-for="FileMonthlyIncome" value="@(ViewBag.MonthlyIncome == null || ViewBag.MonthlyIncome == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.MonthlyIncome)))" /></td>
+                                    <td>
+                                        <select class="form-control" asp-for="CurrentMonthlyIncome" required="required">
+                                            <option value="">Select Current Condition</option>
+                                            <option value="Improved After Loan">Improved After Loan</option>
+                                            <option value="No Significant Change Observed">No Significant Change Observed</option>
+                                            <option value="Decreased After Loan">Decreased After Loan</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;">Net Business Income</td>
+                                    <td><input type="text" class="form-control" readonly="readonly" required="required" asp-for="FileNetBusinessIncome" value="@(ViewBag.NetIncomeBeforeHHexp == null || ViewBag.NetIncomeBeforeHHexp == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.NetIncomeBeforeHHexp)))" /></td>
+                                    <td>
+                                        <select class="form-control" required="required" asp-for="CurrentNetBusinessIncome">
+                                            <option value="">Select Current Condition</option>
+                                            <option value="Improved After Loan">Improved After Loan</option>
+                                            <option value="No Significant Change Observed">No Significant Change Observed</option>
+                                            <option value="Decreased After Loan">Decreased After Loan</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;">Income After Household Expenses</td>
+                                    <td><input type="text" required="required" class="form-control" readonly="readonly" asp-for="FileIncomeAfterHHexp" value="@(ViewBag.MaxIncomeForTFCL == null || ViewBag.MaxIncomeForTFCL == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.MaxIncomeForTFCL)))" /></td>
+                                    <td>
+                                        <select class="form-control" required="required" asp-for="CurrentIncomeAfterHHexp">
+                                            <option value="">Select Current Condition</option>
+                                            <option value="Improved After Loan">Improved After Loan</option>
+                                            <option value="No Significant Change Observed">No Significant Change Observed</option>
+                                            <option value="Decreased After Loan">Decreased After Loan</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;">Collateral Amount</td>
+                                    <td><input type="text" required="required" class="form-control" readonly="readonly" asp-for="FileCollateral" value="@(ViewBag.AllCollateralMarketValue == null || ViewBag.AllCollateralMarketValue == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.AllCollateralMarketValue)))" /></td>
+                                    <td>
+                                        <select class="form-control" required="required" asp-for="CurrentCollateral">
+                                            <option value="">Select Current Condition</option>
+                                            <option value="Improved After Loan">Improved After Loan</option>
+                                            <option value="No Significant Change Observed">No Significant Change Observed</option>
+                                            <option value="Decreased After Loan">Decreased After Loan</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;">Guarantor Business/Income Condition</td>
+                                    <td colspan="2">
+                                        <select class="form-control" required="required" asp-for="GuarantorBusinessCondition">
+                                            <option value="">Select Current Condition</option>
+                                            <option value="Improved After Loan">Improved After Loan</option>
+                                            <option value="No Significant Change Observed">No Significant Change Observed</option>
+                                            <option value="Decreased After Loan">Decreased After Loan</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @*<div class="col-md-6" style="margin-top:30px">
+                            <a href="/Dashboard/ViewApplication?id=@ViewBag.AppId" target="_blank" class="btn btn-sm btn-primary" title="View Application"><i class="fa fa-search"></i> View Application<span></span></a>
+                        </div>*@
+
+                    <div class="col-md-12" style="text-align: center; margin-top:30px; margin-bottom:30px">
+                        <button id="Submit" class="btn btn-sm btn-success" title="Submit">Submit<span></span></button>
+                    </div>
+                </form>
+
+                    <div class="col-md-12">
+                        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Loan Amount Utilization</th>
+                                    <th>MONTHLY B.I</th>
+                                    <th>NET  B.I</th>
+                                    <th>Income after H.E</th>
+                                    <th>Collateral</th>
+                                    <th>Guarantor B.I Condition</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+            </div>
+        }
+        else if (ViewBag.Error == 1)
+        {
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Error while getting Application Id</h3>
+                </div>
+            </div>
+
+        }
+
+
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    @if (ViewBag.Error == 0)
-    {
+    <script>
 
-        <div class="row" style="padding-top:50px">
-            <div class="col-md-12">
+        $(function () {
+            var ApplicationId = $('#ApplicationId').val();
+            $.ajax({
+                type: 'GET',
+                datatype: "json",
+                processData: false,
+                contentType: false,
+                url: '/Dashboard/getAllPostDisbursements?ApplicationId=' + ApplicationId,
+                data: '',
+                success: function (data) {
+                    var res = data.result;
+                    console.log(res);
 
-            </div>
-        </div>
+                    var html = '';
 
-    }
-    else
-    {
-        <div class="row" style="padding-top:50px">
-            <div class="col-md-12 text-center">
-                <h1><i class="fa fa-times-circle text-danger"></i> No Application Selected ! </h1>
-            </div>
-        </div>
-    }
+                    html += '<tr>';
+                    html += '<td>';
+                    html += res.loanAmountUtilization;
+                    html += '</td>';
+                    html += '<td>';
+                    html += res.currentMonthlyIncome;
+                    html += '</td>';
+                    html += '<td>';
+                    html += res.currentNetBusinessIncome;
+                    html += '</td>';
+                    html += '<td>';
+                    html += res.currentIncomeAfterHHexp;
+                    html += '</td>';
+                    html += '<td>';
+                    html += res.currentCollateral;
+                    html += '</td>';
+                    html += '<td>';
+                    html += res.guarantorBusinessCondition;
+                    html += '</td>';
+                    html += '<td><a href="\ViewPDForm?Applicationid='+ApplicationId+'">View</a></td>';
+                    html += '</tr>';
 
-</main>
+
+                    $('#tbody').append(html);
+                },
+                error: function (data) {
+
+                    abp.notify.error("Some error occure contact with admin..!", "error");
+                    console.log(data);
+                }
+            });
+        });
+
+
+    </script>
+
+</body>
+</html>
+

@@ -41,43 +41,49 @@
                                         <input type="hidden" id="Id" value="@item.ApplicationId" />
                                         @{index++;}
 
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <p class="detailHeading">NAME</p>
-                                                <p class="detailText">@(item.FullName == null || item.FullName == "" ? "--" : item.FullName)</p>
-                                            </div>
-
-                                            <div class="col-md-3 ">
-                                                <p class="detailHeading">PRESENT ADDRESS</p>
-                                                <p class="detailText">@(item.PresentAddress == null || item.PresentAddress == "" ? "--" : item.PresentAddress)</p>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <p class="detailHeading">MOBILE / Phone Number</p>
-                                                <p class="detailText">@(item.MobileNumber == null || item.MobileNumber == "" ? "--" : item.MobileNumber)</p>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <p class="detailHeading">KNOW APPLICANT SINCE</p>
-                                                <p class="detailText">@string.Format("{0:dd MMM yyyy}", DateTime.Parse(item.KnowApplicantSince))</p>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <p class="detailHeading">Relationship With Applicant</p>
-                                                <p class="detailText">@(item.RelationshipWithApplicantName == null || item.RelationshipWithApplicantName == "" ? "--" : item.RelationshipWithApplicantName)</p>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <p class="detailHeading">Others</p>
-                                                <p class="detailText">@(item.RelationshipWithApplicantOthers == null || item.RelationshipWithApplicantOthers == "" ? "--" : item.RelationshipWithApplicantOthers)</p>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <p class="detailHeading">Comments</p>
-                                                <p class="detailText">@(item.Comments == null || item.Comments == "" ? "--" : item.Comments)</p>
-                                            </div>
-
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">NAME</p>
+                                            <p class="detailText">@(item.FullName == null || item.FullName == "" ? "--" : item.FullName)</p>
                                         </div>
+
+                                        <div class="col-md-6 ">
+                                            <p class="detailHeading">PRESENT ADDRESS</p>
+                                            <p class="detailText">@(item.PresentAddress == null || item.PresentAddress == "" ? "--" : item.PresentAddress)</p>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">MOBILE / Phone Number</p>
+                                            <p class="detailText">@(item.MobileNumber == null || item.MobileNumber == "" ? "--" : item.MobileNumber)</p>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">Business Name</p>
+                                            <p class="detailText">@(item.BusinessName == null || item.BusinessName == "" ? "--" : item.BusinessName)</p>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">KNOW APPLICANT SINCE</p>
+                                            <p class="detailText">@string.Format("{0:dd MMM yyyy}", DateTime.Parse(item.KnowApplicantSince))</p>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">Relationship With Applicant</p>
+                                            <p class="detailText">@(item.RelationshipWithApplicantName == null || item.RelationshipWithApplicantName == "" ? "--" : item.RelationshipWithApplicantName)</p>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">Others</p>
+                                            <p class="detailText">@(item.RelationshipWithApplicantOthers == null || item.RelationshipWithApplicantOthers == "" ? "--" : item.RelationshipWithApplicantOthers)</p>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <p class="detailHeading">Comments</p>
+                                            <p class="detailText">@(item.Comments == null || item.Comments == "" ? "--" : item.Comments)</p>
+                                        </div>
+
+                                    </div>
                                     </div>
                                 </div>
                             </div>

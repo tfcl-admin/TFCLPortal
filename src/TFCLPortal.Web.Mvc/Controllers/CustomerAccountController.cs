@@ -65,6 +65,7 @@ namespace TFCLPortal.Web.Controllers
             if (appDetails.Count > 0)
             {
                 latestLoan = appDetails[appDetails.Count - 1];
+                ViewBag.ApplicationId = latestLoan.Id;
                 ViewBag.ClientID = latestLoan.ClientID;
                 ViewBag.Balance = acc.Balance;
                 ViewBag.ClientName = latestLoan.ClientName;
@@ -137,6 +138,7 @@ namespace TFCLPortal.Web.Controllers
             {
                 latestLoan = appDetails[appDetails.Count - 1];
                 ViewBag.ClientID = latestLoan.ClientID;
+                ViewBag.ApplicationId = latestLoan.Id;
                 ViewBag.ClientName = latestLoan.ClientName;
                 ViewBag.SchoolName = latestLoan.SchoolName;
                 ViewBag.CNICNo = latestLoan.CNICNo;

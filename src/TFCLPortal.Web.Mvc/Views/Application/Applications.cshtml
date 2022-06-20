@@ -199,6 +199,7 @@
                                         @if (item.AppStatus == "Early Settled" || item.AppStatus == "Disbursed" || item.AppStatus == "Deceased" || item.AppStatus == "Settled" || item.AppStatus == "Enhanced")
                                         {
                                             <a class="dropdown-item" href="/Accountant/ViewSchedule?ApplicationId=@item.Id" target="_blank"><i class="fa fa-calendar"></i> View Schedule</a>
+                                            <a class="dropdown-item" href="/dashboard/CreatePDForm?ApplicationId=@item.Id" target="_blank"><i class="fa fa-files-o"></i> Post Disbursement Form</a>
                                             @if (item.AppStatus == "Early Settled")
                                             {
                                                 <a class="dropdown-item" href="/Accountant/getEarlySettlement?ApplicationId=@item.Id" target="_blank"><i class="fa fa-money"></i> View Settlement</a>

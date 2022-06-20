@@ -749,6 +749,11 @@ namespace TFCLPortal.Applications
                             var Mobilization = _mobilizationStatusRepository.Get(obj.MobilizationStatus);
                             obj.MobilizationStatusName = Mobilization.Name;
                         }
+                        if (obj.CreatorUserId != 0)
+                        {
+                            var user = _userAppService.GetAllUsers().Where(x=>x.Id==obj.CreatorUserId).FirstOrDefault();
+                            obj.SDE_Name = user.FullName;
+                        }
                         return obj;
                     }
                     else

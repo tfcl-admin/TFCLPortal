@@ -68,8 +68,8 @@
                     <tr>
                         <td>
                             Stock In Hand
-                            <a href="@ViewBag.applicant_stock_view" class="@(ViewBag.applicant_stock_view == "" ? "text-danger" : "" )" style="float: right;margin-right:10px" data-toggle="tooltip" target="_blank" title="CNIC Front">
-                                <i class="fa fa-address-card"></i>B
+                            <a href="@ViewBag.applicant_stock_view" class="@(ViewBag.applicant_stock_view == "" ? "text-danger" : "" )" style="float: right;margin-right:10px" data-toggle="tooltip" target="_blank" title="Stock View">
+                                <i class="fa fa-picture-o"></i>
                             </a>
                         </td>
                         <td>@(Model.qtyAssetStockInHand == "" || Model.qtyAssetStockInHand == null  ? "--" : Model.qtyAssetStockInHand)</td>
@@ -102,9 +102,9 @@
                     </tr>
                     <tr>
                         <td colspan="2"><b>Total Current Assets</b></td>
-                        <td style="text-align: right;"><b>@(Model.CurrTotalCurrentAssets == "" || Model.CurrTotalCurrentAssets == null ? "--" : string.Format("{0:#,###}", Model.CurrTotalCurrentAssets))</b></td>
+                        <td style="text-align: right;"><b>@(Model.CurrTotalCurrentAssets == "" || Model.CurrTotalCurrentAssets == null ? "--" : string.Format("{0:#,###}", Decimal.Parse(Model.CurrTotalCurrentAssets)))</b></td>
                         <td colspan="2" style="text-align: right;"><b>Total Current Liabilities</b></td>
-                        <td style="text-align: right;"><b>@(Model.CurrTotalCurrentLiabilities == "" || Model.CurrTotalCurrentLiabilities == null ? "--" : string.Format("{0:#,###}", Model.CurrTotalCurrentLiabilities))</b></td>
+                        <td style="text-align: right;"><b>@(Model.CurrTotalCurrentLiabilities == "" || Model.CurrTotalCurrentLiabilities == null ? "--" : string.Format("{0:#,###}", Decimal.Parse(Model.CurrTotalCurrentLiabilities)))</b></td>
                     </tr>
                 </tbody>
                 <thead>
@@ -267,9 +267,9 @@
                     </tr>
                     <tr>
                         <td colspan="2"><b>Total Fixed Assets</b></td>
-                        <td style="text-align: right;"><b>@(Model.TotalFixedAssets == "" || Model.TotalFixedAssets == null ? "--" : string.Format("{0:#,###}", Model.TotalFixedAssets))</b></td>
+                        <td style="text-align: right;"><b>@(Model.TotalFixedAssets == "" || Model.TotalFixedAssets == null ? "--" : string.Format("{0:#,###}", Decimal.Parse(Model.TotalFixedAssets)))</b></td>
                         <td colspan="2" style="text-align: right;"><b>Total long Term Liabilities</b></td>
-                        <td style="text-align: right;"><b>@(Model.TotalLongTermLiabilities == "" || Model.TotalLongTermLiabilities == null ? "--" : string.Format("{0:#,###}", Model.TotalLongTermLiabilities))</b></td>
+                        <td style="text-align: right;"><b>@(Model.TotalLongTermLiabilities == "" || Model.TotalLongTermLiabilities == null ? "--" : string.Format("{0:#,###}", Decimal.Parse(Model.TotalLongTermLiabilities)))</b></td>
                     </tr>
                     <tr>
                         <td colspan="2"><b>Total Business Assets</b></td>

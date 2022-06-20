@@ -8,7 +8,6 @@ namespace TFCLPortal.PostDisbursementForms.Dto
     [AutoMapTo(typeof(PostDisbursementForm))]
     public class CreatePostDisbursementFormDto
     {
-
         public int ApplicationId { get; set; }
         public string FileMonthlyIncome { get; set; }
         public string FileNetBusinessIncome { get; set; }
