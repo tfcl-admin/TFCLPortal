@@ -14,7 +14,7 @@
 
         //string answer = Minutes.ToString("#,###");
 
-    
+
         return answer;
     }
 }
@@ -72,6 +72,13 @@
         background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
         opacity: .8;
     }
+
+    @@media print {
+        .printInNewDiv {
+            page-break-after: always;
+            margin-top: 1000px;
+        }
+    }
 </style>
 
 
@@ -82,6 +89,8 @@
     </div>
 </div>
 <div class="pageloader d-none"></div>
+
+<p>&nbsp;</p>
 
 <div class="container ">
 
@@ -559,6 +568,8 @@
                 }
             }
 
+            tranches.pop();
+            tranches.pop();
 
             for (i = 1, j = (Installments - 1); i <= Installments; i++, j--) {
 
@@ -736,7 +747,7 @@
         }
 
         function getInstallment(tranch, osPrincipalAmount) {
-            debugger
+           // debugger
             var installment = pmt(tranch.irr / 12 / 100, tranch.tranchTenure, osPrincipalAmount, 0, 0);
             return installment;
             //return Math.round(installment);
@@ -878,3 +889,557 @@
 
 
 </script>
+
+
+@if (@ViewBag.Input.ScheduleType == "Tranches")
+{
+    <div class="container printInNewDiv">
+
+        <div class="row">
+            <div class="col-md-3 text-right">
+                <img id="Imglogo" src="~/Theame/images/bg.png" width="50px">
+            </div>
+            <div class="col-md-9" style="padding-top:30px">
+                <h1>Taleem Finance Company Limited</h1>
+            </div>
+
+            <div class="col-md-12 text-center">
+                <h5 class="text-center">Loan Schedule (Planned)</h5>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:50px">
+            <div class="col-md-4 text-left">
+                <table width="100%" class="topTables">
+                    <tr>
+                        <td><h6><b>Client ID</b></h6></td>
+                        <td style="background-color:lightyellow"><h6>@ViewBag.Application.ClientID</h6></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-right">
+                <table width="100%" class="topTables">
+                    <tr>
+                        <td><h6><b>Schedule Type</b></h6></td>
+                        <td style="background-color:lightyellow"><h6>@ViewBag.Input.ScheduleType</h6></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6 text-left">
+                <table width="100%" class="tblTopData">
+                    <tr>
+                        <td width="40%"><b>Applicant Name</b></td>
+                        <td style="background-color:lightyellow">@ViewBag.Application.ClientName</td>
+                    </tr>
+                    <tr>
+                        <td><b>Client/School Name</b></td>
+                        <td style="background-color:lightyellow">@ViewBag.Application.SchoolName</td>
+                    </tr>
+                    <tr>
+                        <td><b>Product</b></td>
+                        <td style="background-color:lightyellow">@ViewBag.Application.ProductTypeName</td>
+                    </tr>
+                    <tr>
+                        <td><b>A/C Title</b></td>
+                        <td id="txtAccountTitle" style="background-color:lightyellow">Taleem Finance Company</td">
+                    </tr>
+                    <tr>
+                        <td><b>Repayment A/C No</b></td>
+                        <td id="txtRepaymentACnumber" style="background-color:lightyellow">1087643581000566</td>
+                    </tr>
+                    <tr>
+                        <td><b>Bank/Branch Name</b></td>
+                        <td id="txtBankBranchName" style="background-color:lightyellow">MCB / Falcon Complex Br</td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="col-md-6 text-right">
+                <table width="100%" class="tblTopData">
+                    <tr>
+                        <td width="40%"><b>Loan Amount</b></td>
+                        <td style="background-color:lightyellow" id="txtLoanAmountPlanned">@(ViewBag.Input.LoanAmount == null || ViewBag.Input.LoanAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.LoanAmount)))</td>
+                    </tr>
+                    <tr>
+                        <td><b>Tenure (Months)</b></td>
+                        <td style="background-color:lightyellow" id="txtTenurePlanned">@(ViewBag.Input.Tenure == null || ViewBag.Input.Tenure == ""  ? "--" : ViewBag.Input.Tenure)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Mark-up Rate</b></td>
+                        <td style="background-color:lightyellow" id="txtMarkupPlanned">@(ViewBag.Input.Markup == null || ViewBag.Input.Markup == ""  ? "--" : ViewBag.Input.Markup)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Disbursement Date</b></td>
+                        <td style="background-color:lightyellow" id="txtDisbursmentDatePlanned">
+                            @(ViewBag.Input.DisbursmentDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.DisbursmentDate))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Grace Days</b></td>
+                        <td style="background-color:lightyellow" id="txtGraceDaysPlanned">@ViewBag.Input.GraceDays</td>
+                    </tr>
+                    <tr>
+                        <td><b>Deferment (Months)</b></td>
+                        <td style="background-color:lightyellow" id="txtDefermentPlanned">@(ViewBag.Input.DefermentMonths == null || ViewBag.Input.DefermentMonths == 0|| ViewBag.Input.isDeferrment == false ? "--" : ViewBag.Input.DefermentMonths)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-6 text-left">
+                <table width="100%" class="tblTopData">
+                    <tr>
+                        <td width="40%"><b>Branch</b></td>
+                        <td style="background-color:lightyellow">@ViewBag.BranchCode</td>
+                    </tr>
+                    <tr>
+                        <td><b>Branch Manager Name</b></td>
+                        <td style="background-color:lightyellow">@ViewBag.BMName</td>
+                    </tr>
+                    <tr>
+                        <td><b>SDE Name</b></td>
+                        <td style="background-color:lightyellow">@ViewBag.SDEName</td>
+                    </tr>
+                    <tr>
+                        <td><b>TAT</b></td>
+                        <td style="background-color:lightyellow">@(getTAT(ViewBag.Input.TurnArroundTimeMins))</td>
+                    </tr>
+
+                    @if (ViewBag.Input.isDeferrment == true)
+                    {
+                        <tr>
+                            <td width="40%"><b>Deferment Start Date</b></td>
+                            <td style="background-color:lightyellow" id="txtDeffermentStartDatePlanned">
+                                @(ViewBag.Input.DefermentStartDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.DefermentStartDate))
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td><b>Deferred Months</b></td>
+                            <td style="background-color:lightyellow">@ViewBag.Input.DefermentMonths</td>
+                        </tr>
+                        <tr>
+                            <td><b>Deferment End Date</b></td>
+                            <td style="background-color:lightyellow" id="txtDeffermentEndDatePlanned">
+                                @(ViewBag.Input.DefermentEndDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.DefermentEndDate))
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+            <div class="col-md-6 text-right">
+                <table width="100%" class="tblTopData">
+                    <tr>
+                        <td width="40%"><b>IRR %</b></td>
+                        <td style="background-color:lightyellow" id="txtIRRPlanned">@(ViewBag.Input.IRR == null || ViewBag.Input.IRR == ""  ? "--" : ViewBag.Input.IRR)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Installment</b></td>
+                        <td style="background-color:lightyellow" id="installmentDivPlanned">@(ViewBag.Input.InstallmentAmount == null || ViewBag.Input.InstallmentAmount == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.InstallmentAmount)))</td>
+                    </tr>
+                    <tr>
+                        <td><b>Loan Start Date</b></td>
+                        <td style="background-color:lightyellow" id="txtLoanStartDatePlanned">@(ViewBag.Input.LoanStartDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.LoanStartDate))</td>
+
+                    </tr>
+                    <tr>
+                        <td><b>Last Inst Date</b></td>
+                        <td style="background-color:lightyellow" id="txtLastInstallmentDatePlanned">
+                            @(ViewBag.Input.LastInstallmentDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.LastInstallmentDate))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Yearly Mark-up</b></td>
+                        <td style="background-color:lightyellow" id="YearlyDivPlanned">@(ViewBag.Input.YearlyMarkup == null || ViewBag.Input.YearlyMarkup == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.YearlyMarkup)))</td>
+                    </tr>
+                    <tr>
+                        <td><b>Per Day Mark-up</b></td>
+                        <td style="background-color:lightyellow" id="DayDivPlanned">@(ViewBag.Input.PerDayMarkup == null || ViewBag.Input.PerDayMarkup == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.PerDayMarkup)))</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row" id="TranchesTblPlanned" style="margin-top:20px">
+            <div class="col-md-12">
+                <div id="innerTranchesTblPlanned"></div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-12">
+                <div id="installmentsTablePlanned"></div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-12">
+                <div id="SignaturesTablePlanned"></div>
+            </div>
+        </div>
+
+
+        <script>
+    $(function () {
+
+        var InstallmentsPlanned = Number('@ViewBag.Input.Tenure');
+        var InstallmentAmountPlanned = Number('@ViewBag.Input.InstallmentAmount.Replace(",","")');
+        var LoanAmountPlanned = Number('@ViewBag.Input.LoanAmount');
+        var graceDaysPlanned = Number('@ViewBag.Input.GraceDays');
+        var DefermentMonthsPlanned = Number('@ViewBag.Input.DefermentMonths');
+        var markupPercentagePlanned = parseFloat('@ViewBag.Input.Markup');
+        var LoanStartDatePlanned = new Date('@ViewBag.Input.LoanStartDate');
+        var PerDayMarkupPlanned = parseFloat('@ViewBag.Input.PerDayMarkup.Replace(",","")');
+        var YearlyMarkupPlanned = parseFloat('@ViewBag.Input.YearlyMarkup.Replace(",","")');
+        var IrrPlanned = parseFloat('@ViewBag.Input.IRR_Full');
+        var TypePlanned = '@ViewBag.Input.ScheduleType';
+
+        var tranchesPlanned = @Html.Raw(Json.Serialize(ViewBag.Input.listForTranches));
+
+        console.log(tranchesPlanned);
+        var SignatoriesPlanned = @Html.Raw(Json.Serialize(ViewBag.Signatories));
+
+        $('#installmentDivPlanned').html("--");
+        $('#DayDivPlanned').html("--");
+        $('#YearlyDivPlanned').html("--");
+
+        var trancheTablePlanned = "<table class='table table-striped table-bordered text-center Tranchinstallments' cellspacing='0' width='100 %'>";
+        trancheTablePlanned += "<thead>";
+        trancheTablePlanned += " <th>Tranch</th>";
+        trancheTablePlanned += " <th>Date</th>";
+        trancheTablePlanned += " <th>Tenure</th>";
+        trancheTablePlanned += " <th>IRR %</th>";
+        trancheTablePlanned += " <th>Amount</th>";
+        trancheTablePlanned += " <th>Per Day Markup</th>";
+            //trancheTable += " <th>Installment</th>";
+        trancheTablePlanned += "</thead>";
+        trancheTablePlanned += "<tbody>";
+
+        tranchesPlanned.forEach(function (item, index) {
+            trancheTablePlanned += '<tr>';
+            trancheTablePlanned += '<td>' + item.tranchId + '</td>';
+            trancheTablePlanned += '<td>' + formatDate(item.startDate) + '</td>';
+
+                ////Calculation of Tenure
+                //var tranchTenure = 0;
+
+                //if (item.tranchId == '1') { tranchTenure = Installments; }
+                //else {
+                //    var a = moment(item.startDate);
+                //    var b = moment(tranches[0].startDate);
+
+                //    tranchTenure =Installments-a.diff(b, 'months');
+                //}
+            trancheTablePlanned += '<td>' + item.tranchTenure + '</td>';
+
+            trancheTablePlanned += '<td>' + item.irr.toFixed(2) + '</td>';
+
+            trancheTablePlanned += '<td style="text-align: right">' + numberWithCommas(item.amount) + '</td>';
+            trancheTablePlanned += '<td>' + item.dailyMarkup.toFixed(2) + '</td>';
+                //trancheTable += '<td>' + numberWithCommas(item.tranchInstallment) + '</td>';
+            trancheTablePlanned += '</tr>';
+            });
+        $('#innerTranchesTblPlanned').append(trancheTablePlanned);
+
+
+            //alert(Number(tranches[0].amount));
+
+        var osPrincipalAmountPlanned = Number(tranchesPlanned[0].amount);
+        var instCalculationAmountPlanned = osPrincipalAmountPlanned;
+
+        var contentPlanned = "<table  class='table table-striped table-bordered installments' cellspacing='0' width='100 %'>";
+        contentPlanned += "<thead>";
+        contentPlanned += " <th style='text-align: center'>Inst #</th>";
+        contentPlanned += " <th style='text-align: center'>Bal Inst</th>";
+        contentPlanned += " <th style='text-align: center'>Installment Due Date</th>";
+        contentPlanned += " <th style='text-align: center'>O/S Principal - Op</th>";
+        contentPlanned += " <th style='text-align: center'>Additional Tranche</th>";
+        contentPlanned += " <th style='text-align: center'>O/S Principal - Opening</th>";
+        contentPlanned += " <th style='text-align: center'>Markup</th>";
+        contentPlanned += " <th style='text-align: center'>Principal</th>";
+        contentPlanned += " <th style='text-align: center'>Installment Amount</th>";
+        contentPlanned += " <th style='text-align: center'>O/S Principal - Closing</th>";
+        contentPlanned += "</thead>";
+        contentPlanned += "<tbody>";
+
+        var graceDaysMarkupPlanned = 0;
+        if (graceDaysPlanned != 0) {
+
+            contentPlanned += '<tr>';
+            contentPlanned += '<td style="text-align: center">G*</td>';
+            contentPlanned += '<td style="text-align: center">--</td>';
+            contentPlanned += '<td style="text-align: center">--</td>';
+            contentPlanned += '<td style="text-align: right">--</td>';
+            contentPlanned += '<td style="text-align: right">--</td>';
+            contentPlanned += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmountPlanned) + '</td>';
+            graceDaysMarkup = removeNaN(graceDaysPlanned * tranchesPlanned[0].dailyMarkup);
+
+            contentPlanned += '<td style="text-align: right">' + numberWithCommas(graceDaysMarkupPlanned) + '</td>';
+            contentPlanned += '<td style="text-align: right">--</td>';
+            contentPlanned += '<td style="text-align: right">--</td>';
+            contentPlanned += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmountPlanned) + '</td>';
+            contentPlanned += '</tr>';
+            }
+        var tranchPlanned = null;
+
+        var deffermentMarkupPlanned = 0;
+        if (DefermentMonthsPlanned != 0) {
+            for (var x = 0; x < DefermentMonthsPlanned; x++)
+                {
+                LoanStartDatePlanned = getInstallmentDate(LoanStartDatePlanned);
+
+                contentPlanned += '<tr>';
+                contentPlanned += '<td style="text-align: center">0</td>';
+                contentPlanned += '<td style="text-align: center">--</td>';
+                contentPlanned += '<td style="text-align: center">' + LoanStartDatePlanned + '</td>';
+                contentPlanned += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmountPlanned) + '</td>';
+
+                if (tranchPlanned == null) {
+                    tranchPlanned = tranchesPlanned[0];
+                    }
+
+
+
+                var tAmountPlanned = getTranchAmount(LoanStartDatePlanned);
+
+                if (tAmountPlanned != "--") {
+                    contentPlanned += '<td style="text-align: right">' + numberWithCommas(tAmountPlanned) + '</td>';
+                    osPrincipalAmountPlanned = Number(osPrincipalAmountPlanned) + Number(tAmountPlanned);
+                    }
+                    else {
+                    contentPlanned += '<td  style="text-align: right">--</td>';
+
+                    }
+
+                    //content += '<td style="text-align: right">--</td>';
+                contentPlanned += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmountPlanned) + '</td>';
+
+                var oldLoanDatePlanned;
+                    if (x == 0) {
+                        var oldLoanDatePlanned = new Date('@ViewBag.Input.LoanStartDate');
+                    }
+                var daysPlanned = moment(LoanStartDatePlanned).diff(moment(oldLoanDatePlanned), 'days');
+                if (tranchesPlanned[0].dailyMarkup != tranchPlanned.dailyMarkup) {
+                    deffermentMarkupPlanned = removeNaN(daysPlanned * PerDayMarkupPlanned);
+                    } else {
+                    deffermentMarkupPlanned = removeNaN(daysPlanned * tranchPlanned.dailyMarkup);
+                    }
+
+                contentPlanned += '<td style="text-align: right">' + numberWithCommas(deffermentMarkupPlanned) + '</td>';
+                contentPlanned += '<td style="text-align: right">--</td>';
+                contentPlanned += '<td style="text-align: right">' + numberWithCommas(deffermentMarkupPlanned + graceDaysMarkupPlanned) + '</td>';
+                graceDaysMarkupPlanned = 0;
+                contentPlanned += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmountPlanned) + '</td>';
+                contentPlanned += '</tr>';
+
+                oldLoanDatePlanned = LoanStartDatePlanned;
+
+                if (getTranchPlanned(LoanStartDatePlanned) != "--") {
+                    tranchPlanned = getTranchPlanned(LoanStartDatePlanned);
+                    }
+                instCalculationAmountPlanned = osPrincipalAmountPlanned;
+                }
+            }
+
+
+        for (i = 1, j = (InstallmentsPlanned - 1); i <= InstallmentsPlanned; i++, j--) {
+
+            LoanStartDatePlanned = getInstallmentDate(LoanStartDatePlanned);
+
+            contentPlanned += '<tr>';
+            contentPlanned += '<td style="text-align: center">' + i + '</td>';
+            contentPlanned += '<td style="text-align: center">' + j + '</td>';
+                //content += '<td style="text-align: center">' + j + '</td>';
+            contentPlanned += '<td style="text-align: center">' + LoanStartDatePlanned + '</td>';
+            contentPlanned += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmountPlanned) + '</td>';
+
+                if (tranchPlanned == null) {
+                    tranchPlanned = tranchesPlanned[0];
+                }
+
+            var instPlanned = getInstallment(tranchPlanned, instCalculationAmountPlanned) + graceDaysMarkupPlanned;
+                //console.log(instCalculationAmount+  " : " + inst);
+                //console.log(tranch);
+
+            var resGetMarkupPlanned = getMarkup(osPrincipalAmountPlanned, tranchPlanned.irr);
+
+            var principalPlanned = (instPlanned - resGetMarkupPlanned - graceDaysMarkupPlanned).toFixed(2);
+                //console.log(inst + '-' + resGetMarkup + " = " + principal);
+
+            resGetMarkupPlanned = resGetMarkupPlanned.toFixed(2);
+
+                //alert(inst + '-' + resGetMarkup + '-' + graceDaysMarkup + '=' + principal);
+
+            graceDaysMarkupPlanned = 0;
+
+
+            if (getTranchPlanned(LoanStartDatePlanned) != "--") {
+                tranchPlanned = getTranchPlanned(LoanStartDatePlanned);
+                }
+
+            var tAmountPlanned = getTranchAmount(LoanStartDatePlanned);
+
+            if (tAmountPlanned != "--") {
+                contentPlanned += '<td style="text-align: right">' + numberWithCommas(tAmountPlanned) + '</td>';
+                osPrincipalAmountPlanned = Number(osPrincipalAmountPlanned) + Number(tAmountPlanned);
+                }
+                else {
+                    contentPlanned += '<td  style="text-align: right">--</td>';
+
+                }
+            contentPlanned += '<td style="text-align: right">' + numberWithCommas(osPrincipalAmountPlanned) + '</td>';
+
+            contentPlanned += '<td style="text-align: right">' + numberWithCommas(resGetMarkupPlanned) + '</td>';
+
+                // var resgetmarkup = getmarkup(osprincipalamount, tranch.irr).tofixed(2); OLD Markup
+                //content += '<td>' + numberwithcommas(resgetmarkup) + '</td>';
+
+            contentPlanned += '<td style="text-align: right">' + numberWithCommas(principalPlanned) + '</td>';
+
+
+                //content += '<td>' + numberWithCommas(Number(Number(resGetMarkup) + Number(principal)).toFixed(2)) + '</td>'; OLD INSTALLMENT
+
+
+            var osPrincipalClosingPlanned = (osPrincipalAmountPlanned - principalPlanned).toFixed(2);
+
+            if (tAmountPlanned != "--") {
+                    instCalculationAmountPlanned = osPrincipalClosingPlanned;
+                }
+
+            contentPlanned += '<td style="text-align: right">' + numberWithCommas(instPlanned) + '</td>';
+
+
+            if (j == 0 && osPrincipalClosingPlanned <= 10) {
+                    contentPlanned += '<td style="text-align: right">' + 0 + '</td>';
+                }
+                else {
+                contentPlanned += '<td style="text-align: right">' + numberWithCommas(osPrincipalClosingPlanned) + '</td>';
+                }
+            contentPlanned += '</tr>';
+            osPrincipalAmountPlanned = osPrincipalClosingPlanned;
+
+            }
+        contentPlanned += "</tbody>";
+        contentPlanned += "</table>"
+
+        $('#installmentsTablePlanned').append(contentPlanned);
+
+        if (Signatories.length > 0) {
+            var signHtml = "<div class='row text-center'>";
+
+
+            Signatories.forEach(function (item, index) {
+                if (Signatories.length <= 2) {
+                    signHtml += "<div class='col-md-6'>";
+                }
+                else {
+                    signHtml += "<div class='col-md-4'>";
+                }
+                signHtml += "<p class='signatures'>" + item.name + " " + item.detail + "</p>";
+                signHtml += "</div>";
+            });
+
+            signHtml += "</div>";
+            $('#SignaturesTablePlanned').append(signHtml);
+        }
+
+
+
+        function numberWithCommas(x) {
+            x = Math.round(x);
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        function removeNaN(a) {
+            return a = a || 0;
+        }
+
+        function getInstallmentDate(loanStart) {
+            if (moment(loanStart).format('MM') == '01' && Number(moment(loanStart).format('DD')) > 28) {
+                var tempDate = moment(loanStart).add(1, 'M').format('DD-MM');
+                if (tempDate == '29-02') {
+                    return moment(loanStart).add(1, 'M').format('DD MMM YYYY');
+                }
+                else {
+                return '01 Mar ' + moment(loanStart).format('YYYY');
+                }
+            }
+            else {
+                if (Number(moment(loanStart).format('DD')) != Number(moment('@ViewBag.Input.LoanStartDate').format('DD'))) {
+                    return moment(loanStart).set("date", Number(moment('@ViewBag.Input.LoanStartDate').format('DD'))).format('DD MMM YYYY');
+                }
+                else {
+                    var d = moment(loanStart).add(1, 'M');
+                    return moment(d).format('DD MMM YYYY');
+                }
+            }
+        }
+        function formatDate(loanStart) {
+
+            return moment(loanStart).format('DD MMM YYYY');
+
+        }
+        function getMarkup(pa, irr) {
+            //console.log(pa + "*" + irr + "/12/100 = " + ((pa * irr) / 12) / 100);
+            return ((pa * irr) / 12) / 100;
+        }
+
+        function getTranchPlanned(LoanStartDatePlanned) {
+
+            var tranchAmount = "--";
+            tranchesPlanned.forEach(function (item) {
+                var formattedDate = moment(item.startDate).format('DD MMM YYYY');
+                if (formattedDate == LoanStartDatePlanned) {
+                    tranchAmount = item;
+                }
+            });
+            //alert('test');
+
+            return tranchAmount;
+        }
+        function getTranchAmount(LoanStartDatePlanned) {
+
+            var tranchAmount = "--";
+
+            tranchesPlanned.forEach(function (item) {
+                var formattedDate = moment(item.startDate).format('DD MMM YYYY');
+                if (formattedDate == LoanStartDatePlanned) {
+                    tranchAmount = item.amount;
+                }
+            });
+
+            return  tranchAmount;
+        }
+
+        function pmt(monthlyRate, monthlyPayments, presentValue, residualValue, advancedPayments) {
+            var t1 = 1 + monthlyRate;
+            var t2 = Math.pow(t1, monthlyPayments);
+            var t3 = Math.pow(t1, (monthlyPayments - advancedPayments));
+            var t4 = (presentValue - (residualValue / t2)) / (((1 - (1 / (t3))) / monthlyRate) + advancedPayments);
+            return t4;
+        }
+
+        function getInstallment(tranch, osPrincipalAmount) {
+            //debugger
+            var installment = pmt(tranch.irr / 12 / 100, tranch.tranchTenure, osPrincipalAmount, 0, 0);
+            return installment;
+            //return Math.round(installment);
+        }
+
+
+    });
+
+        </script>
+
+    </div>
+
+}
+

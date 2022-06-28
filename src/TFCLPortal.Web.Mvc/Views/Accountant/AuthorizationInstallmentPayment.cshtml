@@ -106,7 +106,7 @@
                         @item.ModeOfPayment
                     </td>
                     <td>
-                        <a href="/Accountant/ViewInstallmentPayment?Id=@item.Id"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>
+                        <a class="preventNewTab" oncontextmenu="return false" href="/Accountant/ViewInstallmentPayment?Id=@item.Id"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>
                         @*<a class="openModal" data-user-id="@item.Id" data-toggle="modal" data-target="#Modal"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Authorize / Reject</a>*@
                     </td>
                     <td>
@@ -146,6 +146,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
 
 <script>
+
+    $('.preventNewTab').click(function (e) {
+        if (e.ctrlKey) {
+            return false;
+        }
+    });
 
     $('.openModal').click(function () {
 

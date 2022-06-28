@@ -2247,6 +2247,162 @@ namespace TFCLPortal.Web.Controllers
 
 
 
+        public ActionResult releaseTranche(int ApplicationId)
+        {
+            List<signatories> listForSignatories = new List<signatories>();
+
+            ViewBag.ApplicationId = ApplicationId;
+            var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
+            ViewBag.BMName = schedule.BranchManager;
+            ViewBag.SDEName = schedule.SDE;
+
+            var application = _applicationAppService.GetApplicationById(ApplicationId);
+            ViewBag.Application = application;
+            if (application != null)
+            {
+
+                var customerAcc = _customerAccountAppAppService.GetCustomerAccountByCNIC(application.CNICNo);
+                ViewBag.customerAcc = customerAcc;
+
+                signatories applicant = new signatories();
+                applicant.Name = application.ClientName;
+                applicant.Detail = "(Applicant)";
+                listForSignatories.Add(applicant);
+
+                signatories bm = new signatories();
+                bm.Name = ViewBag.BMName;
+                bm.Detail = "(Branch Manager)";
+                listForSignatories.Add(bm);
+
+                var getCoApplicants = _coApplicantDetailAppService.GetCoApplicantDetailByApplicationId(ApplicationId).Result.ToList();
+                if (getCoApplicants != null)
+                {
+                    foreach (var coapplicant in getCoApplicants)
+                    {
+                        signatories CoApplicant = new signatories();
+                        CoApplicant.Name = coapplicant.FullName;
+                        CoApplicant.Detail = "(Co-Applicant)";
+                        listForSignatories.Add(CoApplicant);
+                    }
+                }
+
+                var getGuarantors = _guarantorDetailAppService.GetGuarantorDetailByApplicationId(ApplicationId).Result.ToList();
+                if (getGuarantors != null)
+                {
+                    foreach (var Guarantor in getGuarantors)
+                    {
+                        signatories GuarantorObj = new signatories();
+                        GuarantorObj.Name = Guarantor.FullName;
+                        GuarantorObj.Detail = "(Guarantor)";
+                        listForSignatories.Add(GuarantorObj);
+                    }
+                }
+
+
+            }
+            ViewBag.Signatories = listForSignatories;
+
+
+            if (schedule.ScheduleType == "Tranches")
+            {
+                int LoanAmountT = 0;
+                int Installments = 0;
+                double markupT = 0;
+
+                var getLRD = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId).Result;
+                if (getLRD != null)
+                {
+                    ViewBag.LoanRequisitionDetails = getLRD;
+                    Installments = Int32.Parse(getLRD.LoanTenureRequestedName);
+                }
+
+                var getLE = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId).Result;
+                if (getLE != null)
+                {
+                    ViewBag.LoanEligibility = getLE;
+                    markupT = double.Parse(getLE.Mark_Up);
+                }
+
+                markupT = markupT / 100;
+
+                int sumOfAmounts = 0;
+
+            }
+
+
+
+            ViewBag.Input = schedule;
+
+
+            int tenure = 0;
+            double markup = 0.00;
+            int LoanAmount = 0;
+            if (application != null)
+            {
+                var getLRD = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId).Result;
+                if (getLRD != null)
+                {
+                    ViewBag.LoanRequisitionDetails = getLRD;
+                    tenure = Int32.Parse(getLRD.LoanTenureRequestedName);
+                    LoanAmount = Int32.Parse(getLRD.LoanAmountRecommended.Replace(",", ""));
+                }
+                if (application.ProductType == 1 || application.ProductType == 2)
+                {
+                    var getLE = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId);
+                    if (getLE != null)
+                    {
+                        ViewBag.LoanEligibility = getLE.Result;
+                        markup = double.Parse(getLE.Result.Mark_Up);
+                    }
+                }
+                else if (application.ProductType == 8 || application.ProductType == 9)
+                {
+                    var getLE = _tDSLoanEligibilityAppService.GetTDSLoanEligibilityListByApplicationId(ApplicationId);
+                    if (getLE != null)
+                    {
+                        ViewBag.LoanEligibility = getLE.Result;
+                        markup = double.Parse(getLE.Result.Mark_Up);
+                    }
+                }
+                var decision = _bccDecisionAppService.GetBccDecisionList().Where(x => x.ApplicationId == ApplicationId).FirstOrDefault();
+                if (decision != null)
+                {
+                    decision.ApplicantName = application.ClientName;
+                    decision.ClientId = application.ClientID;
+                    decision.SchoolName = application.SchoolName;
+                    decision.CNIC = application.CNICNo;
+                    ViewBag.Decision = decision;
+                }
+
+                ViewBag.BranchManager = _userAppService.GetUserById((long)decision.CreatorUserId).Result.FullName;
+                ViewBag.BranchManagerId = (long)decision.CreatorUserId;
+                ViewBag.SdeName = _userAppService.GetUserById((long)application.CreatorUserId).Result.FullName;
+                ViewBag.SdeId = (long)application.CreatorUserId;
+            }
+
+            //Calculating IRR
+            double markupPercentage = markup / 100;
+            double IRR = (Rate(tenure, (1 + ((1 * markupPercentage) / 12 * tenure)) / tenure, -1, 0, 0) * 12);
+            ViewBag.IRR = Math.Round(IRR * 100, 2);
+            ViewBag.IRR_full = IRR * 100;
+
+            //Calculating installment Amount
+            double installmentAmount = -PMT(IRR / 12, tenure, LoanAmount, 0, 0);
+            ViewBag.InstallmentAmount = Math.Round(installmentAmount, 2);
+
+            //Calculating Yearly Markup Amount
+            double yearlyMarkup = LoanAmount * markupPercentage;
+            ViewBag.YearlyMarkup = yearlyMarkup;
+
+            //Calculating Daily Markup Amount
+            double dailyMarkup = yearlyMarkup / 365;
+            ViewBag.DailyMarkup = dailyMarkup;
+
+            ViewBag.Application = application;
+
+
+            return View();
+        }
 
 
         [HttpPost]

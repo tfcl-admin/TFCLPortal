@@ -129,7 +129,7 @@
                 </thead>
                 <tbody>
                     @{ int i = 1;}
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.OrderBy(x=>x.CreationTime))
                     {
                         <tr class="@(item.Type=="Credit"?"text-credit":"text-debit")">
                             <td>@(i++)</td>
