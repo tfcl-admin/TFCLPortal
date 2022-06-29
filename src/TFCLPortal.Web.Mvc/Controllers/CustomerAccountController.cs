@@ -24,6 +24,7 @@ using TFCLPortal.Applications.Dto;
 using Abp.Domain.Repositories;
 using TFCLPortal.Branches;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using TFCLPortal.AuthorizeInstallmentPayments;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -35,8 +36,10 @@ namespace TFCLPortal.Web.Controllers
         private readonly IRepository<Branch> _BranchRepository;
         private readonly IRepository<Transaction> _TransactionRepository;
         private readonly IRepository<CustomerAccount> _CustomerAccountRepository;
-        public CustomerAccountController(IRepository<Applicationz> ApplicationzRepository, IRepository<CustomerAccount> CustomerAccountRepository, IRepository<Transaction> TransactionRepository, IRepository<Branch> BranchRepository, ITransactionAppService TransactionAppService, ICustomerAccountAppService CustomerAccountAppService, IHostingEnvironment env, IFileTypeAppService fileTypeAppService, IGuarantorDetailAppService guarantorDetailAppService, ICoApplicantDetailAppService coApplicantDetailAppService)
+        private readonly IRepository<AuthorizeInstallmentPayment> _AuthorizeInstallmentPaymentRepository;
+        public CustomerAccountController(IRepository<AuthorizeInstallmentPayment> AuthorizeInstallmentPaymentRepository,IRepository<Applicationz> ApplicationzRepository, IRepository<CustomerAccount> CustomerAccountRepository, IRepository<Transaction> TransactionRepository, IRepository<Branch> BranchRepository, ITransactionAppService TransactionAppService, ICustomerAccountAppService CustomerAccountAppService, IHostingEnvironment env, IFileTypeAppService fileTypeAppService, IGuarantorDetailAppService guarantorDetailAppService, ICoApplicantDetailAppService coApplicantDetailAppService)
         {
+            _AuthorizeInstallmentPaymentRepository = AuthorizeInstallmentPaymentRepository;
             _ApplicationzRepository = ApplicationzRepository;
             _CustomerAccountRepository = CustomerAccountRepository;
             _TransactionRepository = TransactionRepository;
@@ -173,18 +176,25 @@ namespace TFCLPortal.Web.Controllers
         public IActionResult TransactionAuthorization()
         {
             var schedules = _TransactionAppService.GetUnAuthTransactionListDetail();
-
+            var authPayments = _AuthorizeInstallmentPaymentRepository.GetAllList(x => x.isAuthorized == null);
+            var apps = _ApplicationzRepository.GetAllList();
             if (schedules != null)
             {
-
-
-                foreach (var transaction in schedules)
+                foreach (var transaction in schedules.ToArray())
                 {
                     if (transaction.ApplicationId != 0)
                     {
-                        var app = _ApplicationzRepository.Get(transaction.ApplicationId);
-                        transaction.ClientID = app.ClientID;
-                        transaction.Branch = app.BranchCode;
+                        var getpayments = authPayments.Find(x => x.ApplicationId == transaction.ApplicationId);
+                        if(getpayments==null)
+                        {
+                            var app = apps.Find(x=>x.Id==transaction.ApplicationId);
+                            transaction.ClientID = app.ClientID;
+                            transaction.Branch = app.BranchCode;
+                        }
+                        else
+                        {
+                            schedules.Remove(transaction);
+                        }
                     }
                 }
 
