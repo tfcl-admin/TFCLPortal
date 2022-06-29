@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<TFCLPortal.Applications.ApplicationDto>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "Applications";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
@@ -11,7 +13,7 @@
     {
         string answer = "";
 
-        if (Minutes!=0)
+        if (Minutes != 0)
         {
             TimeSpan t = TimeSpan.FromSeconds(Minutes * 60);
 
@@ -57,6 +59,7 @@
         <div class="col-md-6 text-left">
             <h4 class="page-title-text">
                 @ViewBag.ScreenTitle
+
             </h4>
             <h6 class="page-title-breadcrumbs">
                 <a href="~/Dashboard/Dashboard">Home</a> > Loan Applications > @ViewBag.ScreenTitle
@@ -94,6 +97,19 @@
                 <tr>
                     <th>Sr#</th>
                     <th>Acquired On</th>
+                    @if ((HttpContextAccessor.HttpContext.Request.Query["screen"]).ToString().ToLower() == "disbursed")
+                    {
+                        <th>disbursed on</th>
+                    }
+                    else if ((HttpContextAccessor.HttpContext.Request.Query["screen"]).ToString().ToLower() == "settled")
+                    {
+                        <th>settled on</th>
+                    }
+                    else if ((HttpContextAccessor.HttpContext.Request.Query["screen"]).ToString().ToLower() == "early settled")
+                    {
+                        <th>early settled on</th>
+                    }
+
                     <th style="width: 80px !important">Client Id</th>
                     <th>CNIC</th>
                     <th>Applicant / Respondent Name</th>
@@ -117,6 +133,19 @@
                             @*<td>@item.Id</td>*@
                             @*<td>@item.ClientID</td>*@
                             <td>@item.AppDate.ToString("dd MMM yyyy hh:mm tt")</td>
+                            @if ((HttpContextAccessor.HttpContext.Request.Query["screen"]).ToString().ToLower() == "disbursed")
+                            {
+                            <td>@(item.SpecifiedDate== DateTime.MinValue ? "--": item.SpecifiedDate.ToString("dd MMM yyyy hh:mm tt"))</td>
+                            }
+                            else if ((HttpContextAccessor.HttpContext.Request.Query["screen"]).ToString().ToLower() == "settled")
+                            {
+                            <td>@(item.SpecifiedDate== DateTime.MinValue ? "--": item.SpecifiedDate.ToString("dd MMM yyyy hh:mm tt"))</td>
+                            }
+                            else if ((HttpContextAccessor.HttpContext.Request.Query["screen"]).ToString().ToLower() == "early settled")
+                            {
+                            <td>@(item.SpecifiedDate== DateTime.MinValue ? "--": item.SpecifiedDate.ToString("dd MMM yyyy hh:mm tt"))</td>
+                            }
+
                             <td>@(String.IsNullOrEmpty(item.ClientID) ? item.ShortCode+"-"+item.AppNumber : item.ClientID)</td>
                             <td>@item.CNICNo</td>
                             <td>@item.ApplicantName</td>

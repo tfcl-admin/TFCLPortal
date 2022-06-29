@@ -108,5 +108,18 @@ namespace TFCLPortal.FinalWorkflows
                 throw new UserFriendlyException(L("GetMethodError{0}", "Final Workflow"));
             }
         }
+
+        public List<FinalWorkflowListDto> getAllFinalWorkFlows()
+        {
+            try
+            {
+                var fileTypeList = _FinalWorkflowRepository.GetAllList();
+                return ObjectMapper.Map<List<FinalWorkflowListDto>>(fileTypeList);
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", "Final Workflow"));
+            }
+        }
     }
 }

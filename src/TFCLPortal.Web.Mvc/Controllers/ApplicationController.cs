@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TFCLPortal.Users.Dto;
 using TFCLPortal.DynamicDropdowns.ProductTypes;
 using TFCLPortal.Branches;
+using TFCLPortal.FinalWorkflows;
 
 namespace TFCLPortal.Web.Mvc.Controllers
 {
@@ -33,9 +34,11 @@ namespace TFCLPortal.Web.Mvc.Controllers
         private readonly IProductTypeAppService _productTypeAppService;
         private readonly IBranchDetailAppService _branchDetailAppService;
         private readonly UserManager _userManager;
+        private readonly IFinalWorkflowAppService _finalWorkflowAppService;
         private readonly IUserAppService _userAppService;
-        public ApplicationController(UserManager userManager, IBranchDetailAppService branchDetailAppService, IProductTypeAppService productTypeAppService, IUserAppService userAppService, IBranchManagerActionAppService branchManagerActionAppService)
+        public ApplicationController(IFinalWorkflowAppService finalWorkflowAppService, UserManager userManager, IBranchDetailAppService branchDetailAppService, IProductTypeAppService productTypeAppService, IUserAppService userAppService, IBranchManagerActionAppService branchManagerActionAppService)
         {
+            _finalWorkflowAppService = finalWorkflowAppService;
             _userAppService = userAppService;
             _branchDetailAppService = branchDetailAppService;
             _productTypeAppService = productTypeAppService;
@@ -66,7 +69,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Applications(DateTime? startdate, DateTime? enddate, string screenText, string sdeText)
         {
-            return RedirectToAction("Applications", "Application", new { screen = screenText, startDate = startdate, endDate = enddate, sde=sdeText });
+            return RedirectToAction("Applications", "Application", new { screen = screenText, startDate = startdate, endDate = enddate, sde = sdeText });
         }
 
 
@@ -92,21 +95,21 @@ namespace TFCLPortal.Web.Mvc.Controllers
             return StrList;
         }
 
-       
-        public IActionResult Applications(string screen,string sde, DateTime? startDate, DateTime? endDate)
+
+        public IActionResult Applications(string screen, string sde, DateTime? startDate, DateTime? endDate)
         {
             if (screen == null) { screen = ""; }
             string screenStatus = screen;
-            
+
             if (screen == "") { ViewBag.ScreenTitle = "Track Loan Application"; } else { ViewBag.ScreenTitle = screen + " Applications"; }
-            
+
             var IsVo = User.IsInRole("VO");
             var IsBm = User.IsInRole("BM");
             var IsAdmin = User.IsInRole("Admin");
             bool admin = false;
 
             ViewBag.ApplicationStateList = new SelectList(getApplicationStateList());
-            
+
 
             if (IsVo)
             {
@@ -125,7 +128,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             var sdesList = getSDEs();
 
-            ViewBag.SDEUserList = new SelectList(sdesList,"FullName", "FullName");
+            ViewBag.SDEUserList = new SelectList(sdesList, "FullName", "FullName");
 
 
             int? branchId = Branchid();
@@ -133,9 +136,9 @@ namespace TFCLPortal.Web.Mvc.Controllers
             List<ApplicationDto> mobilizationList = new List<ApplicationDto>();
 
 
-            if(screenStatus=="Enhancement")
+            if (screenStatus == "Enhancement")
             {
-                mobilizationList = _applicationAppService.GetApplicationList("", branchId, true, admin,true);
+                mobilizationList = _applicationAppService.GetApplicationList("", branchId, true, admin, true);
             }
             else
             {
@@ -149,7 +152,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
             {
                 ViewBag.StartDate = startDate;
                 ViewBag.EndDate = endDate;
-                returnList=mobilizationList.Where(x => x.AppDate >= startDate && x.AppDate <= endDate).ToList();
+                returnList = mobilizationList.Where(x => x.AppDate >= startDate && x.AppDate <= endDate).ToList();
             }
             if (startDate != null)
             {
@@ -168,8 +171,39 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             if (sde != "" && sde != null)
             {
-                returnList = returnList.Where(x => x.SDEName == sde || x.Transferred==sde).ToList();
+                returnList = returnList.Where(x => x.SDEName == sde || x.Transferred == sde).ToList();
             }
+
+            var finalWorkFlows = _finalWorkflowAppService.getAllFinalWorkFlows();
+
+            foreach (var item in returnList)
+            {
+                if (screen.ToLower() == "disbursed")
+                {
+                    var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "disbursed").FirstOrDefault();
+                    if (flow != null)
+                    {
+                        item.SpecifiedDate = flow.CreationTime;
+                    }
+                }
+                else if (screen.ToLower() == "settled")
+                {
+                    var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "settled").FirstOrDefault();
+                    if (flow != null)
+                    {
+                        item.SpecifiedDate = flow.CreationTime;
+                    }
+                }
+                else if (screen.ToLower() == "early settled")
+                {
+                    var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "early settled").FirstOrDefault();
+                    if (flow != null)
+                    {
+                        item.SpecifiedDate = flow.CreationTime;
+                    }
+                }
+            }
+
 
 
             return View(returnList);

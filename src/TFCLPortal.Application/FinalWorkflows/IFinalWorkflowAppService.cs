@@ -12,6 +12,7 @@ namespace TFCLPortal.FinalWorkflows
         Task<string> CreateFinalWorkflow(CreateFinalWorkflowDto Input);
         List<FinalWorkflowListDto> GetAllList();
         List<FinalWorkflowListDto> GetFinalWorkflowByApplicationId(int ApplicationId);
+        List<FinalWorkflowListDto> getAllFinalWorkFlows();
         FinalWorkflowListDto GetLastFinalWorkflowByApplicationId(int ApplicationId);
         //string CreateFinalWorkflow(CreateFinalWorkflowDto Input, bool test);
     }

@@ -25,6 +25,7 @@ namespace TFCLPortal.Applications
         public string Transferred { get; set; }
         public int branchId { get; set; }
         public DateTime AppDate { get; set; }
+        public DateTime SpecifiedDate { get; set; }
         public bool isDeceased { get; set; }//New
 
         public int FundingSource { get; set; } // New Dropdown
