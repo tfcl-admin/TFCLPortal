@@ -41,7 +41,7 @@
         background-position: center center;
     }
 </style>
-<div class="container">
+<div class="container" id="printContainer">
 
     <div class="row">
         <div class="col-md-4 text-left">
@@ -323,10 +323,31 @@
             </div>
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <a onclick="print()" class="btn btn-success">Print</a>
+                    <a onclick="printFunc()" class="btn btn-success">Print</a>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    function printFunc() {
+        var element = document.getElementById('printContainer');
+
+        var opt = {
+            margin: 0,
+            filename: 'Schedule for '+ '@ViewBag.AppNo',
+            image: { type: 'jpeg', quality: 0.98 },
+
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        // New Promise-based usage:
+        html2pdf().set(opt).from(element).save();
+
+        // Old monolithic-style usage:
+        html2pdf(element, opt);
+    }
+
+</script>
