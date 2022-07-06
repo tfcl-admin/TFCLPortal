@@ -325,8 +325,19 @@
                     </div>
                 </div>
             }
-
-
+            @if (Model.Decision.ToUpper() == "DISCREPENT & REPRESENT")
+            {
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <p class="detailHeading">
+                            Uploaded Decision File
+                        </p>
+                        <p class="detailText">
+                            <a href="@Model.DecisionFile" target="_blank" download><i class="fa fa-file-archive-o"></i> Click to Open</a>
+                        </p>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </main>

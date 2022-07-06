@@ -269,6 +269,7 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables
                         }
 
 
+
                         // Updates Markup
                         //save markup
                         UpdateApplicationWiseDeviationVariableDto updateObj = new UpdateApplicationWiseDeviationVariableDto();
@@ -304,6 +305,7 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables
                         updateObj.NoOfInstallments = input.NoOfInstallments;
                         updateObj.LoanTenure = input.LoanTenure;
                         updateObj.Markup = Markup;
+                        updateObj.InitialMarkup = Markup;
                         updateObj.Security = input.Security;
 
 

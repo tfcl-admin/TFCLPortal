@@ -48,6 +48,7 @@ namespace TFCLPortal.ApplicationWiseDeviationVariables.Dto
 
 
         //From Product Detail Table
+        public string InitialMarkup { get; set; }
         public string Markup { get; set; }
         public string LoanAmount { get; set; }
         public string LoanTenure { get; set; }

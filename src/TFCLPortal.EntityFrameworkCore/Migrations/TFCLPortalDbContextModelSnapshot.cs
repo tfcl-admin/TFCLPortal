@@ -968,6 +968,8 @@ namespace TFCLPortal.Migrations
 
                     b.Property<string>("GuarantorMinAge");
 
+                    b.Property<string>("InitialMarkup");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LTVForAgriculturalLand");

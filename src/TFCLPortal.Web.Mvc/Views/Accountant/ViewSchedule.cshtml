@@ -6,7 +6,7 @@
     int totalInterest = 0;
     int totalInstallment = 0;
     //CultureInfo provider = CultureInfo.InvariantCulture;
-
+    ViewData["Title"] = "Schedule for " + ViewBag.AppNo;
 }
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
@@ -173,9 +173,9 @@
                             </td>
                         }
 
-                    <td style="text-align:right">
-                        <font class="@(item.isPrincipalPaid?"text-success":"text-gray")">@item.principal</font>
-                    </td>
+                        <td style="text-align:right">
+                            <font class="@(item.isPrincipalPaid?"text-success":"text-gray")">@item.principal</font>
+                        </td>
                         <td style="text-align:right">
                             <font class="@(item.isMarkupPaid?"text-success":"text-gray")">@item.markup</font>
                         </td>
@@ -320,6 +320,11 @@
             <div class="row">
                 <div class="col-md-8" style="padding-top: 40px;font-size: 12px;"><i>*IRR for this loan is @Model.IRR%</i></div>
                 <div class="col-md-4 text-right" style="padding-top: 40px;font-size: 12px;"><i>Print Date : @ViewBag.PrintDate</i></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a onclick="print()" class="btn btn-success">Print</a>
+                </div>
             </div>
         </div>
     </div>

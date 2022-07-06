@@ -416,7 +416,7 @@
             success: function (response) {
                 $(".pageloader").toggleClass("d-none");
                 installments = response.result;
-                console.table(response.result);
+                //console.table(response.result);
                 displayInstallmentsTable(installments);
 
                 //reDisplayTable();
@@ -560,66 +560,6 @@
             console.log(LastInstallment);
             //$('#OutstandingPrincipalText').val(Principal);
         });
-        //$(document).on('click', '#applyAmountChange', function (e) {
-        //    var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
-        //    var LastInstallmentP = installments[LastInstallmentIndex];
-        //    var FirstInstallmentU = installments[LastInstallmentIndex + 1];
-
-        //    var tenure = $('#NewRemainingInstallmentsText').val();
-
-        //    if (tenure == "" || tenure == null) {
-        //        tenure = LastInstallmentP.balInst;
-        //    }
-
-        //    var Amount = $('#NewOutstandingPrincipalText').val();
-
-        //    if (Amount == "" || Amount == null) {
-        //        Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
-        //    }
-
-        //    alert('test');
-        //    reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU);
-        //    console.log("------------------------------------Apply Change Start------------------------------------");
-        //    console.log("Tenure : " + tenure);
-        //    console.log("Amount : " + Amount);
-        //    console.log("LastInstallmentP : ");
-        //    console.log(LastInstallmentP);
-        //    console.log("FirstInstallmentU : ");
-        //    console.log(FirstInstallmentU);
-        //    console.log("------------------------------------Apply Change End------------------------------------");
-        //    $('#_editLoanAmount').modal('hide');
-        //});
-
-
-        //$(document).on('click', '#applyTenureChange', function (e) {
-        //    var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
-        //    var LastInstallmentP = installments[LastInstallmentIndex];
-        //    var FirstInstallmentU = installments[LastInstallmentIndex + 1];
-
-        //    var tenure = $('#NewRemainingInstallmentsText').val();
-
-        //    if (tenure == "" || tenure == null) {
-        //        tenure = LastInstallmentP.balInst;
-        //    }
-
-        //    var Amount = $('#NewOutstandingPrincipalText').val();
-
-        //    if (Amount == "" || Amount == null) {
-        //        Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
-        //    }
-
-
-        //    reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU);
-        //    console.log("------------------------------------Apply Change Start------------------------------------");
-        //    console.log("Tenure : " + tenure);
-        //    console.log("Amount : " + Amount);
-        //    console.log("LastInstallmentP : ");
-        //    console.log(LastInstallmentP);
-        //    console.log("FirstInstallmentU : ");
-        //    console.log(FirstInstallmentU);
-        //    console.log("------------------------------------Apply Change End------------------------------------");
-        //    $('#_editTenure').modal('hide');
-        //});
 
 
         $(document).on('click', '#applyTranches', function (e) {
@@ -629,12 +569,20 @@
             var LastInstallmentP = installments[LastInstallmentIndex];
             var FirstInstallmentU = installments[LastInstallmentIndex + 1];
 
+            if (FirstInstallmentU.osPrincipal_op == "--") {
+                FirstInstallmentU.osPrincipal_op = FirstInstallmentU.osPrincipal_Opening;
+            }
 
                 if (Number($('#TrancheAmountText').val()) < Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", ""))) {
                 var tenure = $('#NewRemainingInstallmentsText').val();
 
-                if (tenure == "" || tenure == null) {
-                    tenure = LastInstallmentP.balInst;
+                    if (tenure == "" || tenure == null) {
+                        if (LastInstallmentP != null) {
+                            tenure = LastInstallmentP.balInst;
+                        }
+                        else {
+                     tenure = $('#txtTenure').val();
+                        }
                 }
 
                 //var Amount = Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", "")) - Number($('#TrancheAmountText').val());
@@ -657,37 +605,6 @@
 
         });
 
-        //$(document).on('click', '#applyTopUpPayment', function (e) {
-
-        //    var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
-        //    var LastInstallmentP = installments[LastInstallmentIndex];
-        //    var FirstInstallmentU = installments[LastInstallmentIndex + 1];
-
-        //        var tenure = $('#NewRemainingInstallmentsText').val();
-
-        //        if (tenure == "" || tenure == null) {
-        //            tenure = LastInstallmentP.balInst;
-        //        }
-
-        //        var Amount = Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", "")) + Number($('#TopUpAmountText').val());
-
-        //        if (Amount == "" || Amount == null) {
-        //            Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
-        //        }
-
-
-        //        reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU);
-        //        console.log("------------------------------------Apply Change Start------------------------------------");
-        //        console.log("Tenure : " + tenure);
-        //        console.log("Amount : " + Amount);
-        //        console.log("LastInstallmentP : ");
-        //        console.log(LastInstallmentP);
-        //        console.log("FirstInstallmentU : ");
-        //        console.log(FirstInstallmentU);
-        //        console.log("------------------------------------Apply Change End------------------------------------");
-        //        $('#_AddTopUpPayment').modal('hide');
-
-        //});
 
 
         function reDisplayTable(Tenure,LoanAmountPar,LastPaidInstallment,FirstUnpaidInstallment,tDate) {
@@ -695,11 +612,14 @@
             var Tenure = Number(Tenure);
             var LoanAmount = Number(LoanAmountPar);
 
+            if (installments[0].instNumber != "G*") {
+                var LoanStartDate = moment(installments[0].installmentDueDate).add(-1, 'M');
+            }
+            else {
+                var LoanStartDate = moment(installments[1].installmentDueDate).add(-1, 'M');
+            }
 
-            var LoanStartDate = moment(installments[0].installmentDueDate).add(-1, 'M');
-            //var LoanStartDate = new Date('@ViewBag.Input.LoanStartDate');
-
-            console.log("installmentDueDate : " + moment(installments[0].installmentDueDate).add(-1, 'M'));
+            //console.log("installmentDueDate : " + moment(installments[0].installmentDueDate).add(-1, 'M'));
 
             var Irr = parseFloat('@ViewBag.Input.IRR') / 100;
             var Markup = parseFloat('@ViewBag.Input.Markup')/100;
@@ -1006,7 +926,75 @@
                 }
                 var startDate = Number(moment(LoanStartDate).add(counter, 'M'));
 
+                if (installments.find(x => x.instNumber === 'G*')) {
+                    Tenure = installments.length-1;
+                    counter = 0;
+                }
+
                 for (i = counter, counter = 0, j = (Tenure - 1); counter < Tenure; i++, counter++, j--) {
+
+
+                    console.log("counter : " + counter + " Tenure : " + Tenure + " i : " + i + " j : " + j);
+
+                    var amountToDeductInMarkup = 0;
+                    var DateDiff = 0;
+                    if (data[i].instNumber != "G*") {
+                        DateDiff = (moment(tDate) - moment(data[i].installmentDueDate));
+                    }
+                    else {
+                        DateDiff = (moment(tDate) - moment(data[i+1].installmentDueDate));
+                    }
+
+                    console.log("moment(tDate) - moment(data[i].installmentDueDate) : " + DateDiff);
+
+                    if (DateDiff < 1 && trancheDisplayed == 0) {
+                        //console.log(tDate + " matching " + data[i].installmentDueDate);
+                        //console.log(" startDate : " + startDate);
+                        trancheDisplayed = 1;
+                        content += '<tr  style="background-color: #f8f8b0">';
+                        content += '<td style="text-align: center">G*</td>';
+                        content += '<td style="text-align: center">--</td>';
+                        content += '<td style="text-align: center">' + moment(tDate).format('DD MMM YYYY') + '</td>';
+
+                        if (counter == 0) {
+                            content += '<td style="text-align: center">' + numberWithCommas(FirstUnpaidInstallment.osPrincipal_op.replaceAll(",", "")) + '</td>';
+                        }
+                        else {
+                            content += '<td style="text-align: center">' + numberWithCommas(osPrincipalAmount) + '</td>';
+                        }
+
+                        content += '<td style="text-align: center">' + numberWithCommas(LoanAmountPar) + '</td>';
+                        var newprincipalamountop = Number(osPrincipalAmount) + Number(LoanAmountPar);
+                        content += '<td style="text-align: center">' + numberWithCommas(newprincipalamountop) + '</td>';
+
+                        var dateDiff = moment(data[i].installmentDueDate).diff(moment(tDate), 'days');
+
+                        //alert(dateDiff);
+
+                        var resGetMarkup = ((Markup * newprincipalamountop) / 365) * dateDiff;
+                        amountToDeductInMarkup = resGetMarkup;
+                        content += '<td style="text-align: center">-' + numberWithCommas(resGetMarkup) + '</td>';
+                        content += '<td style="text-align: center">--</td>';
+                        content += '<td style="text-align: center">--</td>';
+                        var principal = emi - resGetMarkup;
+                        var osPrincipalClosing = (osPrincipalAmount - principal);
+                        //if (j == 0 && osPrincipalClosing <= 10) {
+                        //    content += '<td style="text-align: center">' + 0 + '</td>';
+                        //}
+                        //else {
+                        //    content += '<td style="text-align: center">' + numberWithCommas(osPrincipalClosing) + '</td>';
+                        //}
+                        content += '<td style="text-align: center">' + numberWithCommas(newprincipalamountop) + '</td>';
+                        content += '<td style="text-align: center">--</td>';
+                        content += '<td style="text-align: center">--</td>';
+                        content += '</tr>';
+
+                        osPrincipalAmount = newprincipalamountop;
+                        emi = pmt(Irr / 12, Tenure, osPrincipalAmount, 0, 0);
+
+                    }
+
+
 
                     content += '<tr  style="background-color: #FFFFE0">';
                     content += '<td style="text-align: center">' + (startingIndex++) + '</td>';

@@ -25,6 +25,10 @@
         cursor: default;
     }
 
+    .disableHeaderButOpen {
+        background-color: #bbbbbb !important;
+    }
+
     .mb-0 {
         text-transform: uppercase;
     }
@@ -637,7 +641,7 @@
                 <div class="card">
 
                     <!-- Card header -->
-                    <div class="card-header  @Html.Raw(ViewBag.isExistCAD == 0 ? "disableHeader" : "")" role="tab" id="headingSixteen16">
+                    <div class="card-header  @Html.Raw(ViewBag.isExistCAD == 0 ? "disableHeaderButOpen" : "")" role="tab" id="headingSixteen16">
                         <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseSixteen16"
                            aria-expanded="false" aria-controls="collapseSixteen16">
 
@@ -668,7 +672,7 @@
                 <div class="card">
 
                     <!-- Card header -->
-                    <div class="card-header  @Html.Raw(ViewBag.isExistGD == 0 ? "disableHeader" : "")" role="tab" id="headingSeventeen17">
+                    <div class="card-header  @Html.Raw(ViewBag.isExistGD == 0 ? "disableHeaderButOpen" : "")" role="tab" id="headingSeventeen17">
                         <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseSeventeen17"
                            aria-expanded="false" aria-controls="collapseSeventeen17">
                             <div class="row">
@@ -698,7 +702,7 @@
                 <div class="card">
 
                     <!-- Card header -->
-                    <div class="card-header  @Html.Raw(ViewBag.isExistRD == 0 ? "disableHeader" : "")" role="tab" id="headingEighteen18">
+                    <div class="card-header  @Html.Raw(ViewBag.isExistRD == 0 ? "disableHeaderButOpen" : "")" role="tab" id="headingEighteen18">
                         <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseEighteen18"
                            aria-expanded="false" aria-controls="collapseEighteen18">
 
