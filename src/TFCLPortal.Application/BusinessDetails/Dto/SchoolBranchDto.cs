@@ -16,8 +16,8 @@ namespace TFCLPortal.BusinessDetails.Dto
         public string UC_NO { get; set; }
         public string Moza_Town { get; set; }
         public string NearestLandmark { get; set; }
-        public decimal Longitude { get; set; }
-        public decimal Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
         public int SchoolPlaceOwnership { get; set; }
         public int Fk_BusinessDetailID { get; set; }
 
