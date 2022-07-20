@@ -16,5 +16,6 @@ namespace TFCLPortal.Schedules
         Task<List<ScheduleInstallmenttListDto>> GetInstallmentPaymentsByUserId(int UserId);
         bool CheckScheduleByApplicationId(int ApplicationId);
         Task<List<ScheduleListDto>> GetScheduleList();
+        List<ScheduleInstallmenttListDto> GetInstallmentPaymentsList(int? filterType, int? branchFilter, int? day, int? month, int? year);
     }
 }

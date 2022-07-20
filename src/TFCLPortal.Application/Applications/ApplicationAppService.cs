@@ -1005,6 +1005,44 @@ namespace TFCLPortal.Applications
             }
         }
 
+        public List<ApplicationDto> GetEnhancementApplicationList(string applicationState, int? branchId, bool showAll = false, bool IsAdmin = false, bool isEnhanced = false)
+        {
+            try
+            {
+                if (branchId == null)
+                {
+                    var apps= _customRepository.GetAllApplicationList(applicationState, 0, showAll, IsAdmin, true);
+
+                    if(apps!=null)
+                    {
+                        foreach(var app in apps)
+                        {
+                            app.ClientID = app.ClientID + " (E)";
+                        }
+                    }
+
+                    return apps;
+                }
+                else
+                {
+                    var apps = _customRepository.GetAllApplicationList(applicationState, (int)branchId, showAll, IsAdmin, true);
+                    if (apps != null)
+                    {
+                        foreach (var app in apps)
+                        {
+                            app.ClientID = app.ClientID + " (E)";
+                        }
+                    }
+
+                    return apps;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", application));
+            }
+        }
+
         public List<ApplicationListDto> GetAllApplicationsList()
         {
             try

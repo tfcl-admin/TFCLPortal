@@ -91,6 +91,17 @@
                 </div>
             </div>
 
+            @{
+                var modelPrevBal = Model.Where(y => y.Details!="" && y.Details != null && y.Details.Contains("Collection from Previous Balance")).ToList().FirstOrDefault();
+            }
+            @if (modelPrevBal != null)
+            {
+                <div class="row">
+                    <div class="col-md-12 text-right text-success" style="text-align:center">
+                        <h5>Starting Balance : @string.Format("{0:#,##0}", modelPrevBal.Amount)</h5>
+                    </div>
+                </div>
+            }
 
             <table class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
@@ -129,7 +140,7 @@
                 </thead>
                 <tbody>
                     @{ int i = 1;}
-                    @foreach (var item in Model.OrderBy(x=>x.CreationTime))
+                    @foreach (var item in Model.OrderBy(x => x.CreationTime))
                     {
                         <tr class="@(item.Type=="Credit"?"text-credit":"text-debit")">
                             <td>@(i++)</td>
@@ -155,8 +166,8 @@
                                     <i class="fa fa-times" title="Rejected" alt="N"></i>
 
                                 }
-                                </td>
-</tr>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

@@ -17,6 +17,7 @@ namespace TFCLPortal.Applications
         Task<string> UpdateApplication(UpdateApplicationDto input);
         ApplicationListDto GetApplicationByApplicationId(int ApplicationId);
         List<ApplicationDto> GetApplicationList(string applicationState, int? branchId, bool showAll = false,bool IsAdmin=false, bool IsEnhanced = false);
+        List<ApplicationDto> GetEnhancementApplicationList(string applicationState, int? branchId, bool showAll = false,bool IsAdmin=false, bool IsEnhanced = false);
         List<ApplicationListDto> GetAllApplicationsList();
         List<ApplicationListCrsDto> GetAllApplicationsListForCRS();
         List<ApplicationListCrsDto> GetAllApplicationsListforcrsTSSTSA();

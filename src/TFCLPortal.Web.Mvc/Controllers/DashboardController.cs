@@ -2275,9 +2275,15 @@ namespace TFCLPortal.Web.Mvc.Controllers
             var mobilizationList = _applicationAppService.GetApplicationList(ApplicationState.InProcess, branchId);
             var mobilizationListCreated = _applicationAppService.GetApplicationList(ApplicationState.Created, branchId);
             var mobilizationListSubmitted = _applicationAppService.GetApplicationList(ApplicationState.Submitted, branchId);
+            var mobilizationListEnhancedCreated = _applicationAppService.GetEnhancementApplicationList(ApplicationState.Created, branchId);
+            var mobilizationListEnhancedInProcess = _applicationAppService.GetEnhancementApplicationList(ApplicationState.InProcess, branchId);
+            var mobilizationListEnhancedSubmitted = _applicationAppService.GetEnhancementApplicationList(ApplicationState.Submitted, branchId);
 
             mobilizationList.AddRange(mobilizationListCreated);
             mobilizationList.AddRange(mobilizationListSubmitted);
+            mobilizationList.AddRange(mobilizationListEnhancedCreated);
+            mobilizationList.AddRange(mobilizationListEnhancedInProcess);
+            mobilizationList.AddRange(mobilizationListEnhancedSubmitted);
 
             return View(mobilizationList.OrderByDescending(x => x.AppDate).ToList());
         }
