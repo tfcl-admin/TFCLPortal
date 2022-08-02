@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TFCLPortal.Transactions.Dto
+namespace TFCLPortal.TransactionLogs.Dto
 {
-    [AutoMapFrom(typeof(Transaction))]
-    public class TransactionListDto : FullAuditedEntityDto
+    [AutoMapFrom(typeof(TransactionLog))]
+    public class TransactionLogListDto : FullAuditedEntityDto
     {
         public string Name { get; set; }
         public DateTime DepositDate { get; set; }
@@ -25,8 +25,11 @@ namespace TFCLPortal.Transactions.Dto
         public string ModeOfPayment { get; set; }
         public string ModeOfPaymentOther { get; set; }
         public bool? isAuthorized { get; set; }
-        public bool isReversed { get; set; }
         public decimal BalBefore { get; set; }
         public decimal BalAfter { get; set; }
+
+        public int TransactionTableId { get; set; }
+        public bool isReversalEntry { get; set; }
+        public int fk_reversalId { get; set; }
     }
 }

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace TFCLPortal.Transactions
+namespace TFCLPortal.TransactionLogs
 {
-    [Table("Transaction")]
-    public class Transaction : FullAuditedEntity<int>
+    [Table("TransactionLog")]
+    public class TransactionLog : FullAuditedEntity<int>
     {
         public DateTime DepositDate { get; set; }
         public decimal Amount { get; set; }
@@ -23,7 +23,9 @@ namespace TFCLPortal.Transactions
         public bool? isAuthorized { get; set; }
         public decimal BalBefore { get; set; }
         public decimal BalAfter { get; set; }
-        public bool isReversed { get; set; }
-
+        public int TransactionTableId { get; set; }
+        public bool isReversalEntry { get; set; }
+        public int fk_reversalId { get; set; }
     }
+
 }

@@ -14,26 +14,33 @@ using TFCLPortal.DynamicDropdowns.Districts;
 using TFCLPortal.DynamicDropdowns.Ownership;
 using TFCLPortal.DynamicDropdowns.Provinces;
 using TFCLPortal.DynamicDropdowns.RentAgreementSignatories;
+using TFCLPortal.Transactions;
 
 namespace TFCLPortal.CustomerAccounts
 {
     public class CustomerAccountAppService : TFCLPortalAppServiceBase, ICustomerAccountAppService
     {
         private readonly IRepository<CustomerAccount, Int32> _CustomerAccountRepository;
+        private readonly IRepository<Transaction, Int32> _TransactionRepository;
         private readonly IApiCallLogAppService _apiCallLogAppService;
         private readonly IApplicationAppService _applicationAppService;
+        private readonly ITransactionAppService _transactionAppService;
         private string CustomerAccounts = "Contact Detail";
         public CustomerAccountAppService(IRepository<CustomerAccount, Int32> CustomerAccountRepository,
             IRepository<OwnershipStatus> ownershipStatusRepository,
             IRepository<Province> provinceRepository,
+            ITransactionAppService transactionAppService,
             IApiCallLogAppService apiCallLogAppService,
+            IRepository<Transaction, Int32> TransactionRepository,
             IApplicationAppService applicationAppService,
             IRepository<RentAgreementSignatory> rentAgreementSignatoryRepository,
             IRepository<District> districtRepository)
         {
+            _transactionAppService = transactionAppService;
             _CustomerAccountRepository = CustomerAccountRepository;
             _applicationAppService = applicationAppService;
             _apiCallLogAppService = apiCallLogAppService;
+            _TransactionRepository = TransactionRepository;
 
         }
         public async Task<string> CreateCustomerAccount(CreateCustomerAccountDto input)
@@ -173,6 +180,25 @@ namespace TFCLPortal.CustomerAccounts
             }
         }
 
+        public CustomerAccountListDto GetCustomerAccountByCNICwithTransactions(string CNIC)
+        {
+            try
+            {
+                var CustomerAccount = _CustomerAccountRepository.FirstOrDefault(x => x.CNIC == CNIC);
+
+                var contact = ObjectMapper.Map<CustomerAccountListDto>(CustomerAccount);
+
+                if (contact != null)
+                {
+                    contact.transactions = _transactionAppService.GetTransactionByAccountId(contact.Id);
+                }
+                return contact;
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", CustomerAccounts));
+            }
+        }
 
         public bool CheckCustomerAccountByCNIC(string CNIC)
         {

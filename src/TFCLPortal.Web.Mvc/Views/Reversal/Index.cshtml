@@ -1,0 +1,393 @@
+﻿@model List<TFCLPortal.Applications.ApplicationDto>
+@{ int i = 0;}
+
+@{
+    ViewData["Title"] = "Reversal";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+
+    .select2-selection__rendered {
+        text-transform: uppercase;
+    }
+
+    .select2-results__option {
+        text-transform: uppercase;
+    }
+</style>
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Reversal Module
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Accountant Operations > Reversal Module
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20 mT-20">
+        @*<p>
+                <a asp-action="Create">Create New</a>
+            </p>*@
+        <div class="row">
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Client ID
+                </p>
+                <select id="ClientId" class="form-control select2 ">
+                    <option value="">Select Client ID</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.ClientID">@item.ClientID</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    CNIC number
+                </p>
+                <select id="CNICNo" class="form-control select2">
+                    <option value="">Select CNIC</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.CNICNo">@item.CNICNo</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">
+                    Applicant Name
+                </p>
+                <select id="ApplicantName" class="form-control select2">
+                    <option value="">Select Applicant Name</option>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.ApplicantName">@item.ApplicantName</option>
+                        }
+                    }
+                </select>
+            </div>
+            @*<div class="col-md-3 pt-4">
+                    <a class="btn btn-outline-warning btn-sm dis-inline" onClick="window.location.reload();" style="width:100%">Clear Filter</a>
+                </div>*@
+
+        </div>
+        <input type="hidden" id="cnic" value="0" />
+
+        <div class="row resultDiv d-none" style=" margin-top: 20px; ">
+            <div class="col-md-4">
+                <p class="detailHeading">Client ID</p>
+                <p class="detailText" id="selectedClientId">--</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">CNIC</p>
+                <p class="detailText" id="selectedCnic">--</p>
+            </div>
+            <div class="col-md-4">
+                <p class="detailHeading">Applicant Name</p>
+                <p class="detailText" id="selectedApplicant">--</p>
+            </div>
+            <div class="col-md-4">
+            </div>
+
+            <div class="col-md-4">
+                <a id="fetchDetails" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px">Fetch Transactions</a>
+            </div>
+
+
+        </div>
+
+        <div class="row TransactionsDiv d-none" style=" margin-top: 20px; ">
+            <div class="col-md-12">
+
+                <div class="col-md-12 text-center text-success" style="text-align:center">
+                    <h6>Account Balance</h6>
+                    <h1 id="BalanceText"></h1>
+                </div>
+
+                <div class="transactions">
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal -->
+    <div id="Modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Modal header</h3>
+        </div>
+        <div class="modal-body">
+            <p>One fine body…</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+
+<script>
+    $('.select2').select2();
+
+    var custAccData;
+
+    $('#fetchDetails').on('click', function () {
+        let cnic = $('#cnic').val();
+
+        $('.TransactionsDiv').removeClass('d-none');
+           $.ajax({
+            type: 'POST',
+            datatype: "json",
+            contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Reversal/getCustomerTransactions")',
+            data: {'cnic':cnic} ,
+               success: function (data) {
+                    var returnData = data.result;
+                   if (returnData != null) {
+                       DisplayData(returnData);
+                       custAccData = returnData;
+                       $('#BalanceText').text(numberWithCommas(returnData.balance));
+                       console.log(returnData);
+                   }
+                   else {
+                       abp.notify.error("Some error occure contact with admin..!", "error");
+                   }
+            },
+            error: function (data) {
+
+                abp.notify.error("Some error occure contact with admin..!", "error");
+            }
+        });
+
+        //alert(cnic);
+    });
+
+    function DisplayData(data)
+        {
+
+        var html = '<table class="table table-striped table-bordered" cellspacing="0" width="100%">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>' +
+            'Sr' +
+            '</th>' +
+            '<th>' +
+            'Entry Date & Time' +
+            '</th>' +
+            '<th>' +
+            'Deposit Date & Time' +
+            '</th>' +
+            '<th>' +
+            'Client ID' +
+            '</th>' +
+            '<th>' +
+            'Narration' +
+            '</th>' +
+            '<th>' +
+            'Reference' +
+            '</th>' +
+            '<th style="text-align:right">' +
+            'Debit' +
+            '</th>' +
+            '<th style="text-align:right">' +
+            'Credit' +
+            '</th>' +
+            '<th style="text-align:right">' +
+            'Balance' +
+            '</th>' +
+            '<th class="statusCol">' +
+            'Status' +
+            '</th>' +
+            '<th class="statusCol">' +
+            'Reverse' +
+            '</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>';
+
+        var i = 1;
+
+        data.transactions.forEach(function (item, index) {
+            html += '<tr>';
+            html += '<td>' + (i++) + '</td>';
+            html += '<td>' + moment(item.creationTime).format('DD MMM YYYY') + '</td>';
+            html += '<td>' + (item.type == "Credit" ? moment(item.depositDate).format('DD MMM YYYY') : "--") + '</td>';
+            html += '<td>' + item.applicationId + '</td>';
+            html += '<td>' + (item.details == "" || item.details == null ? item.modeOfPayment : item.details) + '</td>';
+            html += '<td>' + (item.reference == "" || item.reference == null ? "--" : item.reference) + '</td>';
+            html += '<td>' + (item.type == "Debit" ? (item.amount == 0 ? "0" : numberWithCommas(item.amount)) : "--") + '</td>';
+            html += '<td>' + (item.type == "Credit" ? (item.amount == 0 ? "0" : numberWithCommas(item.amount)) : "--") + '</td>';
+            html += '<td>' + (item.balAfter == 0 ? "0" : numberWithCommas(item.balAfter)) + '</td>';
+            if (item.isAuthorized == true) {
+                html += '<td><i class="fa fa-check" title="Authorized" alt="Y"></i></td>';
+            }
+            else if (item.isAuthorized == null) {
+                html += '<td><i class="fa fa-info-circle" title="Pending" alt="P"></i></td>';
+            }
+            else {
+                html += '<td><i class="fa fa-times" title="Rejected" alt="N"></i></td>';
+
+            }
+
+            if (item.type == "Debit") {
+            html += '<td>--</td>';
+            }
+            else {
+            html += '<td><a onclick="SelectReverse(\''+item.id+'\');"><i class="fa fa-refresh" title="Rejected" alt="N"></i> Reverse</a></td>';
+            }
+
+            html += '</tr>';
+
+        });
+        html += '</tbody></table>';
+
+        $('.transactions').html(html);
+
+    }
+
+
+
+    $('#ApplicantName').on('change', function () {
+        if (this.value != "") {
+            search("ApplicantName", this.value);
+
+        }
+    });
+    $('#CNICNo').on('change', function () {
+        if (this.value != "") {
+            search("CNICNo", this.value);
+        }
+    });
+    $('#ClientId').on('change', function () {
+        if (this.value != "") {
+            search("ClientId", this.value);
+
+        }
+    });
+
+    function SelectReverse(id) {
+        var requiredTransaction = custAccData.transactions.find(x => x.id == id);
+        var promptText = "Are you sure you want to Reverse this Deposit?\n";
+        promptText += "Deposit Date : " + moment(requiredTransaction.depositDate).format('DD MMM YYYY') + "\n";
+        promptText += "Narration : " + (requiredTransaction.details == "" || requiredTransaction.details == null ? requiredTransaction.modeOfPayment : requiredTransaction.details)+"\n";
+        promptText += "Reference : " + (requiredTransaction.reference == "" || requiredTransaction.reference == null ? "--" : requiredTransaction.reference)+"\n";
+        promptText += "Amount : " + (requiredTransaction.amount == 0 ? "0" : numberWithCommas(requiredTransaction.amount))+"\n";
+        promptText += "\n\Please explain the reason:";
+        let msg = prompt(promptText, "");
+
+        $(".pageloader").toggleClass("d-none");
+
+        if (msg == null || msg == "") {
+            // text = "User cancelled the prompt.";
+        } else {
+            //text = msg;
+            window.location.href = '../Reversal/CreateReversal?TransactionId=' + id + '&&Reason=' + msg;
+        }
+    }
+
+
+
+    function search(filter, value) {
+
+        var items = @Html.Raw(Json.Serialize(Model));
+
+        var ApplicationID=0;
+        var CNIC="";
+        var ApplicantName="";
+        var ClientId="";
+
+        if (filter == "ClientId") {
+            items.forEach(function (item, index) {
+                if (item.clientID == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                }
+            });
+        }
+        else if (filter == "CNICNo") {
+            items.forEach(function (item, index) {
+                if (item.cnicNo == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                }
+            });
+        }
+        else if (filter == "ApplicantName") {
+            items.forEach(function (item, index) {
+                if (item.applicantName == value) {
+                    ApplicationID = item.id;
+                    CNIC = item.cnicNo;
+                    ClientId = item.clientID;
+                    ApplicantName = item.applicantName;
+                }
+            });
+        }
+        else {
+            ApplicationID = 0;
+            CNIC = "--";
+            ClientId = "--";
+            ApplicantName = "--";
+        }
+
+        //$(".select2").prop('selectedIndex',0);
+
+        $("#selectedClientId").text(ClientId);
+        $("#selectedCnic").text(CNIC);
+        $("#selectedApplicant").text(ApplicantName);
+        $('#cnic').val(CNIC);
+
+        if (ApplicationID != 0) {
+            $("#LoanRecoveryUrl").attr("href", "../Accountant/InstallmentPayment?Applicationid="+ApplicationID);
+            $("#EarlySettlementUrl").attr("href", "../Accountant/EarlySettlement?Applicationid="+ApplicationID);
+            //$("#WriteOffUrl").attr("href", "../Accountant/WriteOff?Applicationid="+ApplicationID);
+            $("#DeceasedUrl").attr("href", "../Accountant/DeceasedSettlement?Applicationid="+ApplicationID);
+            $("#ScheduleUrl").attr("href", "../Accountant/ViewSchedule?ApplicationId="+ApplicationID);
+            $("#ApplicationDetailsUrl").attr("href", "../Dashboard/Application?id="+ApplicationID);
+            $("#RescheduleApplicationURL").attr("href", "../RescheduleApplication/reschedule?ApplicationId="+ApplicationID);
+            $("#ReleaseTrancheURL").attr("href", "../Accountant/releaseTranche?ApplicationId="+ApplicationID);
+        }
+
+
+
+        $(".resultDiv").removeClass('d-none');
+
+
+    }
+
+    function numberWithCommas(x) {
+        x = Math.round(x);
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+
+</script>

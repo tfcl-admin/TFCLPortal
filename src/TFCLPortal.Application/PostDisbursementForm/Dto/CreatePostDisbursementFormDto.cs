@@ -13,6 +13,7 @@ namespace TFCLPortal.PostDisbursementForms.Dto
         public string FileNetBusinessIncome { get; set; }
         public string FileIncomeAfterHHexp { get; set; }
         public string FileCollateral { get; set; }
+        public string ReportChangeinLaf { get; set; }
         public string GuarantorBusinessCondition { get; set; }
         public string Comments { get; set; }
         public string LoanAmountUtilization { get; set; }

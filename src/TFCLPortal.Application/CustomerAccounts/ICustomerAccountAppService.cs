@@ -15,6 +15,7 @@ namespace TFCLPortal.CustomerAccounts
         Task<string> CreateCustomerAccount(CreateCustomerAccountDto input);
         Task<string> UpdateCustomerAccount(UpdateCustomerAccountDto input);
         Task<CustomerAccountListDto> GetCustomerAccountByCNIC(string CNIC);
+        CustomerAccountListDto GetCustomerAccountByCNICwithTransactions(string CNIC);
         List<CustomerAccountListDto> GetAllCustomerAccounts();
         bool CheckCustomerAccountByCNIC(string CNIC);
         List<ApplicationListDto> GetApplicationDetailsByAccountId(int AccountId);

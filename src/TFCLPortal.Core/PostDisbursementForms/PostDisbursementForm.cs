@@ -19,6 +19,7 @@ namespace TFCLPortal.PostDisbursementForms
         public string LoanAmountUtilization { get; set; }
         public string CurrentMonthlyIncome { get; set; }
         public string CurrentNetBusinessIncome { get; set; }
+        public string ReportChangeinLaf { get; set; }
         public string CurrentIncomeAfterHHexp { get; set; }
         public string CurrentCollateral { get; set; }
     }

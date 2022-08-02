@@ -163,9 +163,16 @@
                         </table>
                     </div>
 
+                    <div class="col-md-12">
+                        <p class="detailHeading">
+                            Report any change in LAF
+                        </p>
+                      <input asp-for="ReportChangeinLaf" class="form-control" />
+                    </div>
+
                     @*<div class="col-md-6" style="margin-top:30px">
-                            <a href="/Dashboard/ViewApplication?id=@ViewBag.AppId" target="_blank" class="btn btn-sm btn-primary" title="View Application"><i class="fa fa-search"></i> View Application<span></span></a>
-                        </div>*@
+            <a href="/Dashboard/ViewApplication?id=@ViewBag.AppId" target="_blank" class="btn btn-sm btn-primary" title="View Application"><i class="fa fa-search"></i> View Application<span></span></a>
+        </div>*@
 
                     <div class="col-md-12" style="text-align: center; margin-top:30px; margin-bottom:30px">
                         <button id="Submit" class="btn btn-sm btn-success" title="Submit">Submit<span></span></button>
@@ -182,6 +189,7 @@
                                     <th>Income after H.E</th>
                                     <th>Collateral</th>
                                     <th>Guarantor B.I Condition</th>
+                                    <th>Reported Change</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -222,6 +230,7 @@
                 success: function (data) {
                     var res = data.result;
                     console.log(res);
+                    if (res != "") {
 
                     var html = '';
 
@@ -244,11 +253,16 @@
                     html += '<td>';
                     html += res.guarantorBusinessCondition;
                     html += '</td>';
+                    html += '<td>';
+                    html += res.reportChangeinLaf;
+                    html += '</td>';
+                    
                     html += '<td><a href="\ViewPDForm?Applicationid='+ApplicationId+'">View</a></td>';
                     html += '</tr>';
 
 
-                    $('#tbody').append(html);
+                        $('#tbody').append(html);
+                    }
                 },
                 error: function (data) {
 

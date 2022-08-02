@@ -190,6 +190,8 @@ using TFCLPortal.EnhancementRequests;
 using TFCLPortal.CustomerAccounts;
 using System.Transactions;
 using TFCLPortal.PostDisbursementForms;
+using TFCLPortal.Reversals;
+using TFCLPortal.TransactionLogs;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -215,6 +217,8 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<DeviationMatrix> DeviationMatrixDbSet { get; set; }
         public DbSet<PostDisbursementForm> PostDisbursementFormDbSet { get; set; }
         public DbSet<FinalWorkflow> FinalWorkflowDbSet { get; set; }
+        public DbSet<Reversal> ReversalDbSet { get; set; }
+        public DbSet<TransactionLog> TransactionLogDbSet { get; set; }
         public DbSet<DeviationApproval> DeviationApprovalDbSet { get; set; }
         public DbSet<BranchManagerAction> BranchManagerActionDbSet { get; set; }
         public DbSet<TJSLoanEligibility> TJSLoanEligibilityDbSet { get; set; }

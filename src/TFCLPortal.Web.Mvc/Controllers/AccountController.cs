@@ -574,7 +574,7 @@ namespace TFCLPortal.Web.Controllers
             }
             else
             {
-                var result = "Link has been Expired,try with new one";
+                var result = "Link has been Expired, try with new one";
                 return View(result);
             }
             ViewBag.userid = TempData["userId"];

@@ -323,35 +323,35 @@
 
 
                     @*<li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#MB">
-                            <a>
-                                <span class="icon-holder">
-                                    <i class="fa fa-users"></i>
-                                </span>
-                                <span class="title">Mobilizations<i class="fa fa-caret-down"></i></span>
+            <a>
+                <span class="icon-holder">
+                    <i class="fa fa-users"></i>
+                </span>
+                <span class="title">Mobilizations<i class="fa fa-caret-down"></i></span>
 
-                            </a>
-                            <ul id="MB" class="collapse sidebar-menua">
+            </a>
+            <ul id="MB" class="collapse sidebar-menua">
 
-                                <li>
-                                    <a class="sidebar-link" href="~/About/Entries">
-                                        <span class="icon-holder">
-                                            <i class="ti-help-alt"></i>
-                                        </span>
-                                        <h6>Website Queries</h6>
-                                    </a>
-                                </li>
+                <li>
+                    <a class="sidebar-link" href="~/About/Entries">
+                        <span class="icon-holder">
+                            <i class="ti-help-alt"></i>
+                        </span>
+                        <h6>Website Queries</h6>
+                    </a>
+                </li>
 
-                                <li>
-                                    <a class='sidebar-link' href="~/Mobilization/Mobilizations">
-                                        <span class="icon-holder">
-                                            <i class="fa fa-users"></i>
-                                        </span>
-                                        <h6>Mobilization</h6>
-                                    </a>
-                                </li>
+                <li>
+                    <a class='sidebar-link' href="~/Mobilization/Mobilizations">
+                        <span class="icon-holder">
+                            <i class="fa fa-users"></i>
+                        </span>
+                        <h6>Mobilization</h6>
+                    </a>
+                </li>
 
-                            </ul>
-                        </li>*@
+            </ul>
+        </li>*@
 
                     <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#CA">
                         <a>
@@ -713,17 +713,17 @@
                                     </a>
                                 </li>
                                 @*<li class="nav-item dropdown">
-                                        <a href="~/Accountant/InstallmentPaymentList">
-                                            <span class="icon-holder">
-                                                <i class="fa fa-list"></i>
-                                            </span>
-                                            <h6>Loan Installments</h6>
-                                        </a>
-                                    </li>*@
+                        <a href="~/Accountant/InstallmentPaymentList">
+                            <span class="icon-holder">
+                                <i class="fa fa-list"></i>
+                            </span>
+                            <h6>Loan Installments</h6>
+                        </a>
+                    </li>*@
                             </ul>
                         </li>
                     }
-                    @if (IsGranted(PermissionNames.Pages_MCRC)|| IsGranted(PermissionNames.Pages_BM))
+                    @if (IsGranted(PermissionNames.Pages_MCRC) || IsGranted(PermissionNames.Pages_BM))
                     {
                         <li class="nav-item ">
                             <a class='sidebar-link' href="~/ManagmentCommitteeDecisions/Index">
@@ -746,7 +746,7 @@
                             <ul id="BAO" class="collapse sidebar-menua">
 
 
-                                @if (User.Identity.Name == "nabeel"||User.Identity.Name=="Noor")
+                                @if (User.Identity.Name == "nabeel" || User.Identity.Name == "Noor")
                                 {
                                     <li class="nav-item dropdown">
                                         <a href="~/Accountant/FundingSource" class="dropdown-toggle">
@@ -795,6 +795,22 @@
                                             <i class="fa fa-credit-card"></i>
                                         </span>
                                         <h6>Loan Repayment Module</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Reversal/Index">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-refresh"></i>
+                                        </span>
+                                        <h6>Reversal Module</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="~/Reversal/List">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-refresh"></i>
+                                        </span>
+                                        <h6>Reversal Entries</h6>
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
@@ -848,13 +864,13 @@
 
 
                     @*<li class="nav-item">
-                            <a class='sidebar-link' href="~/Search/Index">
-                                <span class="icon-holder">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </span>
-                                <span class="title">Search</span>
-                            </a>
-                        </li>*@
+            <a class='sidebar-link' href="~/Search/Index">
+                <span class="icon-holder">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </span>
+                <span class="title">Search</span>
+            </a>
+        </li>*@
                     @if (!IsGranted(PermissionNames.Pages_BA))
                     {
                         <li class="nav-item">
@@ -897,6 +913,15 @@
                                     <i class="fa fa-money"></i>
                                 </span>
                                 <h6>Transaction Authorizations</h6>
+                            </a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a href="~/Reversal/AuthList" class="dropdown-toggle">
+                                <span class="icon-holder">
+                                    <i class="fa fa-refresh"></i>
+                                </span>
+                                <h6>Reversal Authorization</h6>
                             </a>
                         </li>
                     }
@@ -1156,29 +1181,29 @@
                     </li>
 
                     @*
-                        <li class="nav-item">
-                            <a class='sidebar-link' href="#">
-                                <span class="icon-holder">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                                <span class="title">
-                                    PAR Monitoring & Management Reports
-                                </span>
-                            </a>
-                        </li>
+        <li class="nav-item">
+            <a class='sidebar-link' href="#">
+                <span class="icon-holder">
+                    <i class="fa fa-bell"></i>
+                </span>
+                <span class="title">
+                    PAR Monitoring & Management Reports
+                </span>
+            </a>
+        </li>
                     *@
 
                     @if (IsGranted(PermissionNames.Pages_BA))
                     {
                         @*<li class="nav-item">
-                                <a class='sidebar-link' href="#">
-                                    <span class="icon-holder">
-                                        <i class="fa fa-bell"></i>
+                <a class='sidebar-link' href="#">
+                    <span class="icon-holder">
+                        <i class="fa fa-bell"></i>
 
-                                    </span>
-                                    <span class="title">Notifications</span>
-                                </a>
-                            </li>*@
+                    </span>
+                    <span class="title">Notifications</span>
+                </a>
+            </li>*@
                     }
 
                     @if (IsGranted(PermissionNames.Pages_BM))

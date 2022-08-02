@@ -186,152 +186,163 @@
                             @item.OsPrincipal_Closing
                         </td>
 
-                        <td style="text-align:center">
-                            @(item.PaymentDate == null  ? "--" : string.Format("{0:dd MMM yyyy}", item.PaymentDate))
+                        @if (ViewBag.ScreenStatus.ToUpper() == "EARLY SETTLED" && item.isPaid!=true)
+                        {
+                            <td colspan="6" style="background-color:#28a745;text-align:center"> Early Settled </td>
+
+                        }
+                        else
+                        {
+
+                            <td style="text-align:center">
+                                @(item.PaymentDate == null  ? "--" : string.Format("{0:dd MMM yyyy}", item.PaymentDate))
                         </td>
+
                         <td style="text-align:center">
-                            @*@item.InstNumber*@
-                            @if (item.PaymentDate != null && item.InstallmentDueDate != null && item.InstallmentDueDate != "" && item.InstallmentDueDate != "--")
+                                @*@item.InstNumber*@
+                                @if (item.PaymentDate != null && item.InstallmentDueDate != null && item.InstallmentDueDate != "" && item.InstallmentDueDate != "--")
+                                {
+                                    <font>
+                                        @{ int lateDays = (item.PaymentDate - DateTime.ParseExact(item.InstallmentDueDate, "dd MMM yyyy", null)).Value.Days;}
+                                        @(lateDays<=0?"--":lateDays.ToString())
+                                    </font>
+                                }
+                                else
+                                {
+                                    <font>--</font>
+                                }
+                            </td>
+
+                            <td style="text-align:center">
+                                @(item.PaidAmount == null ||item.PaidAmount=="" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,##0}", Decimal.Parse((item.PaidAmount).Replace(",", ""))))
+                            </td>
+                            <td style="text-align:center">
+                                @(item.ExcessShort == null ||item.ExcessShort == "" || item.ExcessShort == "0.00" || item.ExcessShort == "0" ? "--" : string.Format("{0:##,###}", Decimal.Parse((item.ExcessShort).Replace(",", ""))))
+                            </td>
+
+
+                            <td style="text-align:center">
+                                @if (item.isPaid == null)
+                                {
+                                    if (x != 1)
+                                    {
+                                        x = 1;
+                                        <i class="fa fa-times text-danger"></i>
+                                    }
+                                    else
+                                    {
+                                        <font>--</font>
+                                    }
+                                }
+                                else if (item.isPaid == false)
+                                {
+                                    if (x != 1)
+                                    {
+                                        x = 1;
+                                        <i class="fa fa-times text-danger"></i>
+                                    }
+                                    else
+                                    {
+                                        <font>--</font>
+                                    }
+                                }
+                                else if (item.isPaid == true)
+                                {
+                                    <i class="fa fa-check text-success"></i>
+                                }
+                            </td>
+
+
+                    }
+
+                        </tr>
+
+                        @if (item.principal == "--" || item.principal == "" || item.principal == null)
+                        {
+                            totalPrincipal += 0;
+                        }
+                        else
+                        {
+                            totalPrincipal += decimal.Parse(item.principal.Replace(",", ""));
+                        }
+
+                        @if (item.markup == "--" || item.markup == "" || item.markup == null)
+                        {
+                            totalInterest += 0;
+                        }
+                        else
+                        {
+                            totalInterest += int.Parse(item.markup.Replace(",", ""));
+                        }
+
+                        @if (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null)
+                        {
+                            totalInstallment += 0;
+                        }
+                        else
+                        {
+                            totalInstallment += int.Parse(item.installmentAmount.Replace(",", ""));
+                        }
+
+                        @*@{
+                    totalPrincipal = totalPrincipal + (item.principal == "--" || item.principal == "" || item.principal == null ? 0 : int.Parse(item.principal.Replace(",", "")));
+                    totalInterest = totalInterest + (item.markup == "--" || item.markup == "" || item.markup == null ? 0 : int.Parse(item.markup.Replace(",", "")));
+                    totalInstallment = totalInstallment + (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null ? 0 : int.Parse(item.installmentAmount.Replace(",", "")));
+                }*@
+
+
+                        }
+
+                        <tr>
+                            @if (Model.ScheduleType != "Standard")
                             {
-                                <font>
-                                    @{ int lateDays = (item.PaymentDate - DateTime.ParseExact(item.InstallmentDueDate, "dd MMM yyyy", null)).Value.Days;}
-                                    @(lateDays<=0?"--":lateDays.ToString())
-                                </font>
+                                <th style="text-align:center" colspan="3">Grand Total</th>
+
                             }
                             else
                             {
-                                <font>--</font>
+                                <th style="text-align:center" colspan="2">Grand Total</th>
                             }
-                        </td>
 
-                        <td style="text-align:center">
-                            @(item.PaidAmount == null ||item.PaidAmount=="" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,##0}", Decimal.Parse((item.PaidAmount).Replace(",", ""))))
-                        </td>
-                        <td style="text-align:center">
-                            @(item.ExcessShort == null ||item.ExcessShort == "" || item.ExcessShort == "0.00" || item.ExcessShort == "0" ? "--" : string.Format("{0:##,###}", Decimal.Parse((item.ExcessShort).Replace(",", ""))))
-                        </td>
-
-
-                        <td style="text-align:center">
-                            @if (item.isPaid == null)
+                            @if (totalPrincipal > 999999)
                             {
-                                if (x != 1)
-                                {
-                                    x = 1;
-                                    <i class="fa fa-times text-danger"></i>
-                                }
-                                else
-                                {
-                                    <font>--</font>
-                                }
+                                totalPrincipal = totalPrincipal / 100000;
+                                totalPrincipal = Math.Round(totalPrincipal);
+                                totalPrincipal = totalPrincipal * 100000;
                             }
-                            else if (item.isPaid == false)
+                            else if (totalPrincipal > 99999)
                             {
-                                if (x != 1)
-                                {
-                                    x = 1;
-                                    <i class="fa fa-times text-danger"></i>
-                                }
-                                else
-                                {
-                                    <font>--</font>
-                                }
+                                totalPrincipal = totalPrincipal / 10000;
+                                totalPrincipal = Math.Round(totalPrincipal);
+                                totalPrincipal = totalPrincipal * 10000;
                             }
-                            else if (item.isPaid == true)
-                            {
-                                <i class="fa fa-check text-success"></i>
-                            }
-                        </td>
+
+
+                            <th style="text-align:right">@string.Format("{0:#,##0}", totalPrincipal)</th>
+
+                            <th style="text-align:right">@string.Format("{0:#,##0}", totalInterest)</th>
+                            <th style="text-align:right">@string.Format("{0:#,##0}", totalInstallment)</th>
+                            <th style="text-align:right"></th>
+                        </tr>
 
 
 
-                    </tr>
-                    @if (item.principal == "--" || item.principal == "" || item.principal == null)
-                    {
-                        totalPrincipal += 0;
-                    }
-                    else
-                    {
-                        totalPrincipal += decimal.Parse(item.principal.Replace(",", ""));
-                    }
-
-                    @if (item.markup == "--" || item.markup == "" || item.markup == null)
-                    {
-                        totalInterest += 0;
-                    }
-                    else
-                    {
-                        totalInterest += int.Parse(item.markup.Replace(",", ""));
-                    }
-
-                    @if (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null)
-                    {
-                        totalInstallment += 0;
-                    }
-                    else
-                    {
-                        totalInstallment += int.Parse(item.installmentAmount.Replace(",", ""));
-                    }
-
-                    @*@{
-                            totalPrincipal = totalPrincipal + (item.principal == "--" || item.principal == "" || item.principal == null ? 0 : int.Parse(item.principal.Replace(",", "")));
-                            totalInterest = totalInterest + (item.markup == "--" || item.markup == "" || item.markup == null ? 0 : int.Parse(item.markup.Replace(",", "")));
-                            totalInstallment = totalInstallment + (item.installmentAmount == "--" || item.installmentAmount == "" || item.installmentAmount == null ? 0 : int.Parse(item.installmentAmount.Replace(",", "")));
-                        }*@
-
-
-                }
-
-                <tr>
-                    @if (Model.ScheduleType != "Standard")
-                    {
-                        <th style="text-align:center" colspan="3">Grand Total</th>
-
-                    }
-                    else
-                    {
-                        <th style="text-align:center" colspan="2">Grand Total</th>
-                    }
-
-                    @if (totalPrincipal > 999999)
-                    {
-                        totalPrincipal = totalPrincipal / 100000;
-                        totalPrincipal = Math.Round(totalPrincipal);
-                        totalPrincipal = totalPrincipal * 100000;
-                    }
-                    else if (totalPrincipal > 99999)
-                    {
-                        totalPrincipal = totalPrincipal / 10000;
-                        totalPrincipal = Math.Round(totalPrincipal);
-                        totalPrincipal = totalPrincipal * 10000;
-                    }
-
-
-                    <th style="text-align:right">@string.Format("{0:#,##0}", totalPrincipal)</th>
-
-                    <th style="text-align:right">@string.Format("{0:#,##0}", totalInterest)</th>
-                    <th style="text-align:right">@string.Format("{0:#,##0}", totalInstallment)</th>
-                    <th style="text-align:right"></th>
-                </tr>
-
-
-
-            </table>
-            <div class="row">
-                <div class="col-md-8" style="padding-top: 40px;font-size: 12px;"><i>*IRR for this loan is @Model.IRR%</i></div>
-                <div class="col-md-4 text-right" style="padding-top: 40px;font-size: 12px;"><i>Print Date : @ViewBag.PrintDate</i></div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <a onclick="printFunc()" class="btn btn-success">Print</a>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-8" style="padding-top: 40px;font-size: 12px;"><i>*IRR for this loan is @Model.IRR%</i></div>
+                        <div class="col-md-4 text-right" style="padding-top: 40px;font-size: 12px;"><i>Print Date : @ViewBag.PrintDate</i></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <a onclick="printFunc()" class="btn btn-success">Print</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
     function printFunc() {
         var element = document.getElementById('printContainer');
 
@@ -350,4 +361,4 @@
         html2pdf(element, opt);
     }
 
-</script>
+        </script>

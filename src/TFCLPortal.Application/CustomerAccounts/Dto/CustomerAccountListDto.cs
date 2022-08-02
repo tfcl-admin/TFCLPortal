@@ -3,6 +3,8 @@ using Abp.AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TFCLPortal.Transactions;
+using TFCLPortal.Transactions.Dto;
 
 namespace TFCLPortal.CustomerAccounts.Dto
 {
@@ -18,5 +20,7 @@ namespace TFCLPortal.CustomerAccounts.Dto
         public bool isPhoneVerified { get; set; }
         public bool isEmailVerified { get; set; }
         public bool isActive { get; set; }
+
+        public List<TransactionListDto> transactions { get; set; }
     }
 }
