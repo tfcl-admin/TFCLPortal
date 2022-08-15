@@ -142,7 +142,7 @@
                 </thead>
                 <tbody>
                     @{ int i = 1;}
-                    @foreach (var item in Model.OrderBy(x => x.CreationTime))
+                    @foreach (var item in Model.Where(x=>x.isAuthorized!=false).OrderBy(x => x.CreationTime))
                     {
                         <tr class="@(item.Type=="Credit"?"text-credit":"text-debit") @(item.isReversed?"text-reversed":"") @(item.Type== "Reversal"?"text-reversal":"")">
                             <td>@(i++)</td>

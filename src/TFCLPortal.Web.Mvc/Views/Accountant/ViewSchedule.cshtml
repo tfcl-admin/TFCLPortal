@@ -7,7 +7,27 @@
     int totalInstallment = 0;
     //CultureInfo provider = CultureInfo.InvariantCulture;
     ViewData["Title"] = "Schedule for " + ViewBag.AppNo;
-}
+
+    decimal totalDisbursedAmount = 0;
+    if(Model!=null)
+    {
+        if(Model.installmentList[0].InstNumber=="G*")
+        {
+            totalDisbursedAmount = Decimal.Parse(Model.installmentList[0].OsPrincipal_Closing.Replace(",",""));
+        }
+        else
+        {
+            totalDisbursedAmount = Decimal.Parse(Model.installmentList[0].OsPrincipal_Opening.Replace(",", ""));
+        }
+        foreach (var item in Model.installmentList)
+        {
+            if(item.AdditionalTranche!="--")
+            {
+                totalDisbursedAmount+=Decimal.Parse(item.AdditionalTranche.Replace(",", ""));
+            }
+        }
+    }
+            }
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" asp-append-version="true" />
@@ -24,7 +44,7 @@
             text-transform: uppercase
         }
 
-    tr {
+        tr {
         border-left: 2px solid;
         border-right: 2px solid;
     }
@@ -36,7 +56,7 @@
     }
 
     .container {
-        background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url("/Theame/images/bg.png");
+    background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url("/Theame/images/bg.png");
         background-repeat: no-repeat;
         background-position: center center;
     }
@@ -59,52 +79,41 @@
             <table border="1" width="100%" class="tbl" style="border: 2px solid">
                 <tr>
                     <td>
-                        <b>School/Business Name</b>
-                    </td>
-                    <td colspan="1">
-                        @ViewBag.SchoolName
-                    </td>
-                    <td>
-                        <b>Loan Cycle</b>
-                    </td>
-                    <td colspan="1">
-                        @ViewBag.LoanCycles
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <b>Product Name</b>
                     </td>
                     <td>
                         @ViewBag.Product
                     </td>
                     <td>
-                        <b>Applicant Name</b>
-                    </td>
-                    <td>
-                        @ViewBag.ApplicantName
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Loan Amount</b>
+                        <b>Loan Amount **</b>
                     </td>
                     <td>
                         @Model.LoanAmount
                     </td>
+                   
+
+                </tr>
+                <tr>
                     <td>
                         <b>Client ID</b>
                     </td>
                     <td>
                         @ViewBag.AppNo
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <b>Tenure</b>
                     </td>
                     <td>
                         @Model.Tenure
+                    </td>
+                   
+                </tr>
+                <tr>
+                    <td>
+                        <b>Loan Cycle</b>
+                    </td>
+                    <td colspan="1">
+                        @ViewBag.LoanCycles
                     </td>
                     <td>
                         <b>Loan Disbursement Date</b>
@@ -112,21 +121,53 @@
                     <td>
                         @ViewBag.DisbursmentDate
                     </td>
+
                 </tr>
                 <tr>
+                  
                     <td>
-                        <b>APR *</b>
+                        <b>Applicant Name</b>
+                    </td>
+                    <td>
+                        @ViewBag.ApplicantName
+                    </td>
+                    <td>
+                        <b>APR ***</b>
                     </td>
                     <td>
                         @Model.Markup%
                     </td>
+
+
+
+                </tr>
+                <tr>
+                  
+                    <td>
+                        <b>EI/Business Name</b>
+                    </td>
+                    <td colspan="1">
+                        @ViewBag.SchoolName
+                    </td>
+
                     <td>
                         <b>Current Status</b>
                     </td>
                     <td>
                         @ViewBag.ScreenStatus
                     </td>
+
+
                 </tr>
+                <tr>
+                    <td>
+                        <b>Disbursed Amount *</b>
+                    </td>
+                    <td>
+                        @string.Format("{0:#,##0}", totalDisbursedAmount)
+                    </td>
+                </tr>
+              
             </table>
         </div>
     </div>
@@ -137,19 +178,16 @@
                 <tr>
                     <th style="text-align:center">Inst</th>
                     <th style="text-align:center">Due Date</th>
-                    @if (Model.ScheduleType != "Standard")
-                    {
                         <th style="text-align:center">Tranche</th>
-                    }
                     <th style="text-align:center">Principal</th>
-                    <th style="text-align:center">Int</th>
+                    <th style="text-align:center">M.Up</th>
                     <th style="text-align:center">Installment</th>
                     <th style="text-align:center">Outstanding P.</th>
                     <th rowspan="@(Model.installmentList.Count+1)" style="border:none; border-top:1px solid white;"></th>
                     <th style="text-align:center">Paid Date</th>
                     <th style="text-align:center">Late Days (DPD)</th>
                     <th style="text-align:center">Amount Paid</th>
-                    <th style="text-align:center">Excess/Short</th>
+                    <th style="text-align:center;display:none;">Excess/Short</th>
                     <th rowspan="@(Model.installmentList.Count+1)" style="border:none;"></th>
                     <th style="text-align:center">Payment Status</th>
                 </tr>
@@ -166,12 +204,9 @@
                             @(item.InstallmentDueDate == null || item.InstallmentDueDate == "--" ? "--" : string.Format("{0:dd MMM yyyy}", DateTime.ParseExact(item.InstallmentDueDate, "dd MMM yyyy",null)))
 
                         </td>
-                        @if (Model.ScheduleType != "Standard")
-                        {
                             <td style="text-align:right">
                                 @item.AdditionalTranche
                             </td>
-                        }
 
                         <td style="text-align:right">
                             <font class="@(item.isPrincipalPaid?"text-success":"text-gray")">@item.principal</font>
@@ -216,7 +251,7 @@
                             <td style="text-align:center">
                                 @(item.PaidAmount == null ||item.PaidAmount=="" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,##0}", Decimal.Parse((item.PaidAmount).Replace(",", ""))))
                             </td>
-                            <td style="text-align:center">
+                            <td style="text-align:center;display:none;">
                                 @(item.ExcessShort == null ||item.ExcessShort == "" || item.ExcessShort == "0.00" || item.ExcessShort == "0" ? "--" : string.Format("{0:##,###}", Decimal.Parse((item.ExcessShort).Replace(",", ""))))
                             </td>
 
@@ -329,12 +364,16 @@
 
                     </table>
                     <div class="row">
-                        <div class="col-md-8" style="padding-top: 40px;font-size: 12px;"><i>*IRR for this loan is @Model.IRR%</i></div>
+                        <div class="col-md-8" style="padding-top: 40px;font-size: 12px;">
+                        <i>* Disbursed amount includes all/any enhancement(s) during loan period.</i><br/>
+                        <i>** The amount at which due installments are being calculated.</i><br />
+                        <i>*** IRR for this loan is @Model.IRR%</i></div>
                         <div class="col-md-4 text-right" style="padding-top: 40px;font-size: 12px;"><i>Print Date : @ViewBag.PrintDate</i></div>
+                        @*<div class="col-md-12" style="padding-top: 40px;font-size: 12px;"><i>*IRR for this loan is @Model.IRR%</i></div>*@
                     </div>
-                    <div class="row">
+                    <div class="row d-none">
                         <div class="col-md-12 text-center">
-                            <a onclick="printFunc()" class="btn btn-success">Print</a>
+                            <a onclick="printFunc()" class="btn btn-success">Download PDF</a>
                         </div>
                     </div>
                 </div>
