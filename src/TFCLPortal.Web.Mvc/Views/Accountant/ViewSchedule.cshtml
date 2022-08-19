@@ -17,7 +17,15 @@
         }
         else
         {
-            totalDisbursedAmount = Decimal.Parse(Model.installmentList[0].OsPrincipal_Opening.Replace(",", ""));
+            if(Model.installmentList[0].OsPrincipal_Opening=="--")
+            {
+                totalDisbursedAmount = Decimal.Parse(Model.LoanAmount.Replace(",", ""));
+
+            }
+            else
+            {
+                totalDisbursedAmount = Decimal.Parse(Model.installmentList[0].OsPrincipal_Opening.Replace(",", ""));
+            }
         }
         foreach (var item in Model.installmentList)
         {
@@ -331,14 +339,13 @@
                         <tr>
                             @if (Model.ScheduleType != "Standard")
                             {
-                                <th style="text-align:center" colspan="3">Grand Total</th>
+                                <th style="text-align:center" colspan="4">Grand Total</th>
 
                             }
                             else
                             {
-                                <th style="text-align:center" colspan="2">Grand Total</th>
+                                <th style="text-align:center" colspan="3">Grand Total</th>
                             }
-
                             @if (totalPrincipal > 999999)
                             {
                                 totalPrincipal = totalPrincipal / 100000;
