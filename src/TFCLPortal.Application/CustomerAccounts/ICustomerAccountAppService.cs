@@ -20,5 +20,7 @@ namespace TFCLPortal.CustomerAccounts
         bool CheckCustomerAccountByCNIC(string CNIC);
         List<ApplicationListDto> GetApplicationDetailsByAccountId(int AccountId);
         bool UpdateAccountBalance(int accountid, decimal balance);
+
+        bool Debit(int accountid, int Applicationid, decimal amount, string Narration, string modeOfPayment);
     }
 }

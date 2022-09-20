@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TFCLPortal.AuthorizeInstallmentPayments.Dto;
+using TFCLPortal.InstallmentPayments.Dto;
 
 namespace TFCLPortal.AuthorizeInstallmentPayments
 {
@@ -16,6 +17,9 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
         Task<List<AuthorizeInstallmentPaymentListDto>> GetAuthorizeInstallmentPaymentByApplicationId(int ApplicationId);
         Task<List<AuthorizeInstallmentPaymentListDto>> GetAllAuthorizeInstallmentPaymentByApplicationId(int ApplicationId);
         Task<List<AuthorizeInstallmentPaymentListDto>> GetAllAuthorizeInstallmentPayments();
+
+        Task<string> DeductInstallmentPayment(CreateInstallmentPayment payment);
+        Task<string> DeductInstallmentPaymentRevised(CreateInstallmentPayment payment);
         bool CheckAuthorizeInstallmentPaymentByApplicationId(int ApplicationId);
     }
 }

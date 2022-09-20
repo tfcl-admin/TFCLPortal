@@ -192,6 +192,7 @@ using System.Transactions;
 using TFCLPortal.PostDisbursementForms;
 using TFCLPortal.Reversals;
 using TFCLPortal.TransactionLogs;
+using TFCLPortal.BaloonPayments;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -205,6 +206,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<FundSource> FundSourceDbSet { get; set; }
         public DbSet<CollateralOwnership> CollateralOwnershipDbSet { get; set; }
         public DbSet<CollateralType> CollateralTypeDbSet { get; set; }
+        public DbSet<BaloonPayment> BaloonPaymentDbSet { get; set; }
         public DbSet<LandType> LandTypeDbSet { get; set; }
         public DbSet<CreditCommettee> CreditCommetteeDbSet { get; set; }
         public DbSet<ApplicantReputation> ApplicantReputationDbSet { get; set; }

@@ -10,6 +10,7 @@ namespace TFCLPortal.Schedules
     public interface IScheduleAppService : IApplicationService
     {
         Task<ScheduleListDto> GetScheduleById(int Id);
+        bool SetPaid(int InstId, string Type, DateTime paymentDate);
         Task<string> CreateSchedule(CreateScheduleDto input);
         Task<string> UpdateSchedule(UpdateScheduleDto input);
         Task<ScheduleListDto> GetScheduleByApplicationId(int ApplicationId);

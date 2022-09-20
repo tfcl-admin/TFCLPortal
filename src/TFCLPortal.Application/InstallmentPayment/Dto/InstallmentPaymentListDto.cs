@@ -1,5 +1,6 @@
 ﻿using Abp.AutoMapper;
 using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Text;
 namespace TFCLPortal.InstallmentPayments.Dto
 {
    [ AutoMapFrom(typeof(InstallmentPayment))]
-   public class InstallmentPaymentListDto : Entity<int>
+   public class InstallmentPaymentListDto : FullAuditedEntity<int>
     {
         public DateTime EntryDate { get; set; }
         public int ApplicationId { get; set; }

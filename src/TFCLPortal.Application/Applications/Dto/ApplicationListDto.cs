@@ -71,6 +71,7 @@ namespace TFCLPortal.Applications.Dto
 
         public int SchoolCategory { get; set; } // New Dropdown
         public bool isDeceased { get; set; }//New
+        public bool isBaloon { get; set; }//New
         public int FundingSource { get; set; } // New Dropdown
         public int TAT { get; set; } // New Dropdown
         //public string DueDate { get; set; }

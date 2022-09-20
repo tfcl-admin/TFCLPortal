@@ -1657,6 +1657,49 @@ namespace TFCLPortal.Migrations
                     b.ToTable("AuthorizeInstallmentPayment");
                 });
 
+            modelBuilder.Entity("TFCLPortal.BaloonPayments.BaloonPayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("AccountBalance");
+
+                    b.Property<int>("ApplicationId");
+
+                    b.Property<decimal>("BaloonPaymentAmount");
+
+                    b.Property<decimal>("BpcAmount");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<decimal>("FEDonBPC");
+
+                    b.Property<int>("Fk_ScheduleTempId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<decimal>("TaxPercentage");
+
+                    b.Property<decimal>("TotalPayableBP");
+
+                    b.Property<bool>("isPaid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BaloonPayment");
+                });
+
             modelBuilder.Entity("TFCLPortal.BankAccountChildDetails.BankAccountChildDetail", b =>
                 {
                     b.Property<int>("Id")
@@ -8450,6 +8493,8 @@ namespace TFCLPortal.Migrations
                     b.Property<string>("YearlyMarkup");
 
                     b.Property<bool?>("isAuthorizedByBM");
+
+                    b.Property<bool>("isBaloon");
 
                     b.HasKey("Id");
 

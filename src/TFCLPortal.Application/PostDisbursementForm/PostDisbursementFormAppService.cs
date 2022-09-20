@@ -65,22 +65,22 @@ namespace TFCLPortal.PostDisbursementForms
             try
             {
 
-                var bp = _PostDisbursementFormRepository.GetAllList().Where(x => x.ApplicationId == input.ApplicationId).FirstOrDefault();
+                //var bp = _PostDisbursementFormRepository.GetAllList().Where(x => x.ApplicationId == input.ApplicationId).FirstOrDefault();
 
-                if (bp != null)
-                {
-                    var PostDisbursementForms = _PostDisbursementFormRepository.Get(bp.Id);
+                //if (bp != null)
+                //{
+                //    var PostDisbursementForms = _PostDisbursementFormRepository.Get(bp.Id);
 
-                    await _PostDisbursementFormRepository.DeleteAsync(PostDisbursementForms);
+                //    await _PostDisbursementFormRepository.DeleteAsync(PostDisbursementForms);
 
-                    var PostDisbursement = ObjectMapper.Map<PostDisbursementForm>(input);
-                    _PostDisbursementFormRepository.Insert(PostDisbursement);
-                }
-                else
-                {
+                //    var PostDisbursement = ObjectMapper.Map<PostDisbursementForm>(input);
+                //    _PostDisbursementFormRepository.Insert(PostDisbursement);
+                //}
+                //else
+                //{
                     var PostDisbursementForms = ObjectMapper.Map<PostDisbursementForm>(input);
                     _PostDisbursementFormRepository.Insert(PostDisbursementForms);
-                }
+                //}
 
                 return ResponseString = "Success";
             }

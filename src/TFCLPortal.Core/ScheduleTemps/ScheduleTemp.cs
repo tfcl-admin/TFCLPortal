@@ -36,5 +36,6 @@ namespace TFCLPortal.ScheduleTemps
         public bool? isAuthorizedByBM { get; set; }
         public int TurnArroundTimeMins { get; set; }
         public string Reason { get; set; }
+        public bool isBaloon { get; set; }
     }
 }

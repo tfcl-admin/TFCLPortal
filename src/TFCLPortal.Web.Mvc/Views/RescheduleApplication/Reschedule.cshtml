@@ -336,7 +336,7 @@
 <!-- Modal -->
 <!--Deferment Modal -->
 <div class="modal fade" id="_AddBaloonPayment" tabindex="-1" role="dialog" style="z-index: 1100;">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Add Baloon Payment</h4>
@@ -347,26 +347,68 @@
             <div class="modal-body">
 
                 <div class="row">
-
                     <div class="col-md-12">
 
-                        <div class=" row">
 
-                            <div class="col-md-12">
-                                <p class="detailHeading">Amount</p>
-                                <input id="BaloonAmountText" type="number" value="@ViewBag.customerAcc.Result.Balance" max="@ViewBag.customerAcc.Result.Balance" class="form-control" />
-                            </div>
-                        </div>
+                        <table border="1" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Particular</th>
+                                    <th>Applicable %age</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Baloon Payment Amount</td>
+                                    <td></td>
+                                    <td>
+                                        <input id="BaloonPaymentAmountText" onchange="setBPCamount()" onkeyup="setBPCamount()" type="number" value="0" class="form-control" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Balloon Payment Charges</td>
+                                    <td>
+                                        <input id="TaxPercentageText" onchange="setBPCamount()" onkeyup="setBPCamount()" type="number" value="1" min="0" max="100" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <input id="BPCamount" readonly="readonly" type="number" value="0" min="0" max="100" class="form-control" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>FED On BPC</td>
+                                    <td></td>
+                                    <td>
+                                        <input id="FEDonBPCtext" type="number" value="0" min="0" readonly="readonly" class="form-control" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total Payable Amount</td>
+                                    <td></td>
+                                    <td>
+                                        <input id="TotalPayableBPtext" readonly="readonly" type="number" value="0" min="0" max="100" class="form-control" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Account Balance</td>
+                                    <td></td>
+                                    <td>
+                                        <input id="AccountBalanceText" readonly="readonly" type="number" value="@ViewBag.customerAcc.Result.Balance" min="0" max="100" class="form-control" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                 </div>
-
-
             </div>
+
+
             <div class="modal-footer">
                 <button id="applyBaloonPayment" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
                 <button data-dismiss="modal" type="button" class="btn btn-outline-danger bg1 ef1">Cancel</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -421,9 +463,38 @@
 
 <script>
 
+    $('#BaloonPaymentAmountText').on('change', 'input', function () {
+        alert('BaloonPaymentAmountText');
+        setBPCamount();
+    });
+    $('#TaxPercentageText').on('change', 'input', function () {
+        alert('TaxPercentageText');
+        setBPCamount();
+    });
 
+
+    function setBPCamount() {
+        var bpAmount = Number($('#BaloonPaymentAmountText').val());
+        var percentage = Number($('#TaxPercentageText').val());
+
+        var result = bpAmount * (percentage / 100);
+
+        $('#BPCamount').val(result.toFixed(0));
+
+        var fed = result * 0.16;
+
+        $('#FEDonBPCtext').val(fed.toFixed(0));
+
+        var total = bpAmount + result + fed;
+
+        $('#TotalPayableBPtext').val(total.toFixed(0));
+
+
+    }
 
     $(function () {
+
+
 
 
         var Signatories = @Html.Raw(Json.Serialize(ViewBag.Signatories));
@@ -663,16 +734,16 @@
             var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
             var LastInstallmentP = installments[LastInstallmentIndex];
             var FirstInstallmentU = installments[LastInstallmentIndex + 1];
-            if (Number($('#BaloonAmountText').val()) <= maxPayment) {
+            if (Number($('#TotalPayableBPtext').val()) <= maxPayment) {
 
-            if (Number($('#BaloonAmountText').val()) < Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", ""))) {
+                if (Number($('#TotalPayableBPtext').val()) < Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", ""))) {
                 var tenure = $('#NewRemainingInstallmentsText').val();
 
                 if (tenure == "" || tenure == null) {
                     tenure = LastInstallmentP.balInst;
                 }
 
-                var Amount = Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", "")) - Number($('#BaloonAmountText').val());
+                    var Amount = Number(FirstInstallmentU.osPrincipal_op.replaceAll(",", "")) - Number($('#BaloonPaymentAmountText').val());
 
                 if (Amount == "" || Amount == null) {
                     Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
@@ -1208,6 +1279,7 @@
 
             $(".pageloader").toggleClass("d-none");
 
+            SaveBaloonPayment();
 
             var ScheduleInstallments = [];
             var stype = '@ViewBag.Input.ScheduleType';
@@ -1301,6 +1373,12 @@
                     }
                 });
 
+            var isBaloon = 'false';
+            var baloonpayment = Number($('#BaloonPaymentAmountText').val());
+            if (baloonpayment != 0) {
+                isBaloon = 'true';
+            }
+
 
              var dataToSend = {
                 'ApplicationId':'@ViewBag.ApplicationId',
@@ -1327,6 +1405,7 @@
                 'YearlyMarkup': $("#YearlyDiv").text(),
                 'PerDayMarkup': $("#DayDiv").text(),
                 'UpdationReason': 'Reschedule',
+                 'isBaloon': isBaloon,
                 'installmentList': ScheduleInstallments
             };
 
@@ -1359,6 +1438,46 @@
 
 
         });
+
+        function SaveBaloonPayment() {
+            var TaxPercentage = Number($('#TaxPercentageText').val());
+            var TaxPercentage = Number($('#TaxPercentageText').val());
+            var BPCamount = Number($('#BPCamount').val());
+            var FEDonBPCtext = Number($('#FEDonBPCtext').val());
+            var TotalPayableBPtext = Number($('#TotalPayableBPtext').val());
+            var AccountBalanceText = Number($('#AccountBalanceText').val());
+
+            var baloonpayment = Number($('#BaloonPaymentAmountText').val());
+            if (baloonpayment != 0) {
+                $.ajax({
+                    type: 'POST',
+                    datatype: "json",
+                    contenttype: 'application/json; charset=utf-8',
+                    url: '@Url.Content("~/Accountant/CreateBaloonPayment")',
+                    data: {
+                        'ApplicationId':'@ViewBag.ApplicationId',
+                        'BaloonPaymentAmount': baloonpayment,
+                        'TaxPercentage': TaxPercentage,
+                        'BpcAmount': BPCamount,
+                        'FEDonBPC': FEDonBPCtext,
+                        'TotalPayableBP': TotalPayableBPtext,
+                        'AccountBalance': AccountBalanceText
+                    },
+                      success: function (response) {
+                          //alert(response.result);
+                          //console.log(response);
+                          //$(".pageloader").toggleClass("d-none");
+
+                      },
+                      error: function (error) {
+                          //alert("Error : " + error);
+                          console.log(error);
+                          //$(".pageloader").toggleClass("d-none");
+
+                      }
+                    });
+            }
+        }
 
     });
 

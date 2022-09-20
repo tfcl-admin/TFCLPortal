@@ -35,6 +35,7 @@ namespace TFCLPortal.ScheduleTemps.Dto
         public string UpdationReason { get; set; }
         public bool? isAuthorizedByBM { get; set; }
         public string Reason { get; set; }
+        public bool isBaloon { get; set; }
         public int TurnArroundTimeMins { get; set; }
         public string ReasonForDelayTAT { get; set; }
 

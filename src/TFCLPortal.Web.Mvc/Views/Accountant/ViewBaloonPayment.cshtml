@@ -1,0 +1,86 @@
+﻿@Model TFCLPortal.BaloonPayments.Dto.BaloonPaymentListDto
+@{ int i = 0;}
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+<!-- ### $App Screen Content ### -->
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Baloon Payment
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Schedule Update > Baloon Payment
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Accountant/ViewAuthorizationsReschedule" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-list"></i> Back To List </a>
+        </div>
+    </div>
+    <div class="card p-10 mB-20">
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <table border="1" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Particular</th>
+                            <th>Applicable %age</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Baloon Payment Amount</td>
+                            <td></td>
+                            <td>
+                                @(Model.BaloonPaymentAmount == 0?"--": string.Format("{0:#,##0}", Model.BaloonPaymentAmount))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Balloon Payment Charges</td>
+                            <td>
+                                @(Model.TaxPercentage == 0?"--": string.Format("{0:#,##0} %", Model.TaxPercentage))
+                            </td>
+                            <td>
+                                @(Model.BpcAmount == 0?"--": string.Format("{0:#,##0}", Model.BpcAmount))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>FED On BPC</td>
+                            <td></td>
+                            <td>
+                                @(Model.FEDonBPC == 0?"--": string.Format("{0:#,##0}", Model.FEDonBPC))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total Payable Amount</td>
+                            <td></td>
+                            <td>
+                                @(Model.TotalPayableBP == 0?"--": string.Format("{0:#,##0}", Model.TotalPayableBP))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Account Balance</td>
+                            <td></td>
+                            <td>
+                                @(Model.AccountBalance == 0?"--": string.Format("{0:#,##0}", Model.AccountBalance))
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+
+
+    </div>
+
+</main>

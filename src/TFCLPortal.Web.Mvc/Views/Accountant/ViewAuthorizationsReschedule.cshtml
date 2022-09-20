@@ -52,41 +52,46 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td> @{i = i + 1;} @i</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClientID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClientName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SchoolName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Comments)
-                    </td>
-                    <td>
+                    <tr>
+                        <td> @{i = i + 1;} @i</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SchoolName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comments)
+                        </td>
+                        <td>
 
-                        <a class="openModal" data-user-id="@item.Id" data-toggle="modal" data-target="#Modal"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Enter Decision</a>
+                            <a class="openModal" data-user-id="@item.Id" data-toggle="modal" data-target="#Modal"><i class="fa fa-check"></i> <i class="fa fa-times"></i> Enter Decision</a>
 
-                    </td>
-                    <td>
-                        <a href="/Accountant/ViewReSchedule?ApplicationId=@item.Id" title="View Re-Schedules" target="_blank"><i class="fa fa-calendar"></i> New</a>
-                        -
-                        @if (item.Comments == "Enhancement")
-                        {
-                            <a href="/Accountant/ViewSchedule?ApplicationId=@item.PrevApplicationId" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i> Old</a>
-                        }
-                        else
-                        {
-                            <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i> Old</a>
-                        }
-                    </td>
-                    @*<td>
-            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i> Details</a>
-        </td>*@
-                </tr>
+                        </td>
+                        <td>
+                            <a href="/Accountant/ViewReSchedule?ApplicationId=@item.Id" title="View Re-Schedules" target="_blank"><i class="fa fa-calendar"></i> New</a>
+                            -
+                            @if (item.Comments == "Enhancement")
+                            {
+                                <a href="/Accountant/ViewSchedule?ApplicationId=@item.PrevApplicationId" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i> Old</a>
+                            }
+                            else
+                            {
+                                <a href="/Accountant/ViewSchedule?ApplicationId=@item.Id" title="View Schedule" target="_blank"><i class="fa fa-calendar"></i> Old</a>
+                            }
+
+                            @if (item.isBaloon)
+                            {
+                                <a href = "/Accountant/ViewBaloonPayment?ApplicationId=@item.Id" title = "View Baloon Payment Details" target = "_blank" ><i class="fa fa-eye"></i>Baloon Payment </a>
+                            }
+                        </td>
+                        @*<td>
+                                <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i> Details</a>
+                            </td>*@
+                    </tr>
                 }
             </tbody>
         </table>

@@ -22,6 +22,7 @@ namespace TFCLPortal.ScheduleTemps.Dto
         public string installmentAmount { get; set; }
         public string OsPrincipal_Closing { get; set; }
         public bool? isPaid { get; set; }
+        public bool isBaloon { get; set; }
         public DateTime? PaymentDate { get; set; }
     }
 }

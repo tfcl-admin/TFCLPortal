@@ -219,7 +219,7 @@ namespace TFCLPortal.Schedules
 
                 var result = ObjectMapper.Map<List<ScheduleListDto>>(Schedule);
 
-                foreach(var item in result)
+                foreach (var item in result)
                 {
                     if (result != null)
                     {
@@ -269,7 +269,7 @@ namespace TFCLPortal.Schedules
 
 
 
-                var getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed && x.CreatorUserId==UserId).ToList();
+                var getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed && x.CreatorUserId == UserId).ToList();
                 if (getDisbursedApplications.Count > 0)
                 {
                     foreach (var app in getDisbursedApplications)
@@ -336,7 +336,7 @@ namespace TFCLPortal.Schedules
                                     inst.ClientName = app.ClientName;
                                     inst.BusinessName = app.SchoolName;
                                     inst.Applicationid = app.Id;
-                                 
+
 
                                     scheduleInstallments.Add(inst);
                                 }
@@ -620,7 +620,7 @@ namespace TFCLPortal.Schedules
                 //ViewBag.DefCount = DefCount;
                 //ViewBag.DefAmount = DefAmount;
 
-               
+
 
                 return scheduleInstallments;
 
@@ -631,5 +631,54 @@ namespace TFCLPortal.Schedules
             }
         }
 
+        public bool SetPaid(int InstId, string Type,DateTime paymentDate)
+        {
+            try
+            {
+                var schedule = _childRepository.GetAllList(x=>x.Id==InstId).FirstOrDefault();
+                if(schedule!=null)
+                {
+                    if (Type == "Markup")
+                    {
+                        schedule.isMarkupPaid = true;
+                        _childRepository.Update(schedule);
+                        CurrentUnitOfWork.SaveChanges();
+
+                        return true;
+                    }
+                    else if (Type == "Principal")
+                    {
+                        schedule.isPrincipalPaid = true;
+                        _childRepository.Update(schedule);
+                        CurrentUnitOfWork.SaveChanges();
+
+                        return true;
+                    }
+                    else if (Type == "Installment")
+                    {
+                        schedule.isMarkupPaid = true;
+                        schedule.isPrincipalPaid = true;
+                        schedule.isPaid = true;
+                        schedule.PaymentDate = paymentDate;
+                        _childRepository.Update(schedule);
+                        CurrentUnitOfWork.SaveChanges();
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", Schedules));
+            }
+        }
     }
 }
