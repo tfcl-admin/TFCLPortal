@@ -1515,7 +1515,7 @@ namespace TFCLPortal.Web.Controllers
                         var lastpayment = payments.Where(x=>x.NoOfInstallment== payment.NoOfInstallment).OrderByDescending(x => x.Id).FirstOrDefault();
                         if(lastpayment!=null)
                         {
-                            if ((DateTime.Now - lastpayment.CreationTime).TotalMinutes <= 10)
+                            if ((DateTime.Now - lastpayment.CreationTime).TotalMinutes >= 10)
                             {
                                 AuthorizeInstallmentPayment(payment.AuthorizationId);
 
