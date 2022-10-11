@@ -15,6 +15,7 @@ namespace TFCLPortal.CustomerAccounts.Dto
         public string Phone { get; set; }
         public string Name { get; set; }
         public string ProfilePicUrl { get; set; }
+        public string ClientId { get; set; }
         public string Email { get; set; }
         public decimal Balance { get; set; }
         public bool isPhoneVerified { get; set; }

@@ -227,7 +227,37 @@ namespace TFCLPortal.CustomerAccounts
             {
                 var CustomerAccount = _CustomerAccountRepository.GetAllList();
 
+                var apps = _applicationAppService.GetAllApplicationsList();
+
                 var contact = ObjectMapper.Map<List<CustomerAccountListDto>>(CustomerAccount);
+
+                foreach(var acc in contact)
+                {
+                    var app = apps.Where(x => x.CNICNo == acc.CNIC && x.ScreenStatus == "Disbursed").FirstOrDefault();
+                    if(app!=null)
+                    {
+                        acc.ClientId = app.ClientID;
+                    }
+                    else
+                    {
+                        app = apps.Where(x => x.CNICNo == acc.CNIC && x.ScreenStatus.Contains("Settled")).FirstOrDefault();
+                        if (app != null)
+                        {
+                            if(app.ScreenStatus=="Settled")
+                            {
+                                acc.ClientId = app.ClientID+" (s)";
+                            }
+                            else if (app.ScreenStatus == "Early Settled")
+                            {
+                                acc.ClientId = app.ClientID + " (es)";
+                            }
+                            else
+                            {
+                                acc.ClientId = app.ClientID;
+                            }
+                        }
+                    }
+                }
                
                 return contact;
             }
