@@ -55,15 +55,15 @@ namespace TFCLPortal.Transactions.Dto
             try
             {
                 var Transaction = _TransactionRepository.GetAllList(x => x.Fk_AccountId == AccountId).ToList();
-                var returnList=ObjectMapper.Map<List<TransactionListDto>>(Transaction);
+                var returnList = ObjectMapper.Map<List<TransactionListDto>>(Transaction);
                 var apps = _ApplicationzRepository.GetAllList();
-                if (returnList.Count>0)
+                if (returnList.Count > 0)
                 {
-                    foreach(var tr in returnList)
+                    foreach (var tr in returnList)
                     {
-                        if(tr.ApplicationId!=0)
+                        if (tr.ApplicationId != 0)
                         {
-                            var app= apps.Where(x => x.Id == tr.ApplicationId).FirstOrDefault();
+                            var app = apps.Where(x => x.Id == tr.ApplicationId).FirstOrDefault();
                             tr.ClientID = app.ClientID;
                         }
                     }
@@ -102,6 +102,35 @@ namespace TFCLPortal.Transactions.Dto
             }
         }
 
+        public string AuthorizeTransaction(int id, bool authorize)
+        {
+            try
+            {
+                var transaction = _TransactionRepository.Get(id);
+                transaction.isAuthorized = authorize;
+
+                if (authorize)
+                {
+                    var acc = _CustomerAccountRepository.Get(transaction.Fk_AccountId);
+                    
+                    transaction.BalBefore = acc.Balance;
+
+                    acc.Balance += transaction.Amount;
+                    _CustomerAccountRepository.Update(acc);
+
+                    transaction.BalAfter = acc.Balance;
+                }
+
+                _TransactionRepository.Update(transaction);
+
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                return "Error : " + ex.Message;
+            }
+
+        }
         public async Task<string> UpdateTransaction(UpdateTransactionDto input)
         {
             string ResponseString = "";

@@ -188,9 +188,11 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 text-right">
+                    <div class="col-md-12 text-right @(DateTime.Parse(ViewBag.InstallmentDueDate).Year<=DateTime.Now.Year && DateTime.Parse(ViewBag.InstallmentDueDate).Month<=DateTime.Now.Month?"":"d-none")">
                         <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
                     </div>
+
+
                 </div>
             </form>
         </div>
@@ -460,6 +462,11 @@
                              var installmentAmount = "";
                              var OldExcess = "";
                              var PaidAmount = 0;
+
+                             returnData.sort(function (a, b) {
+                                 return a.noOfInstallment - b.noOfInstallment;
+                             });
+
                              returnData.forEach(function (item) {
 
                                  if (oldInstallment != item.noOfInstallment) {
@@ -474,9 +481,9 @@
 
                                          PaidAmount = 0;
                                      }
-                                        
-
                                  }
+
+
                                  installmentAmount = numberWithCommas(item.installmentAmount);
                                  OldExcess = item.excessShortPayment;
 

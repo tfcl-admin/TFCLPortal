@@ -16,5 +16,8 @@ namespace TFCLPortal.Transactions
         List<TransactionListDto> GetTransactionListDetail();
         List<TransactionListDto> GetTransactionByAccountId(int AccountId);
         List<TransactionListDto> GetUnAuthTransactionListDetail();
+
+        string AuthorizeTransaction(int id, bool authorize);
+
     }
 }

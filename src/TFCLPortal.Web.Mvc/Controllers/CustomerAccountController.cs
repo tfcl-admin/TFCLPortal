@@ -205,19 +205,7 @@ namespace TFCLPortal.Web.Controllers
 
         public IActionResult AuthorizeTransaction(int id, bool authorize)
         {
-            var transaction = _TransactionRepository.Get(id);
-            transaction.isAuthorized = authorize;
-
-
-            if (authorize)
-            {
-                var acc = _CustomerAccountRepository.Get(transaction.Fk_AccountId);
-                acc.Balance += transaction.Amount;
-                _CustomerAccountRepository.Update(acc);
-            }
-
-            _TransactionRepository.Update(transaction);
-
+            _TransactionAppService.AuthorizeTransaction(id, authorize);
             return RedirectToAction("TransactionAuthorization", "CustomerAccount");
         }
     }
