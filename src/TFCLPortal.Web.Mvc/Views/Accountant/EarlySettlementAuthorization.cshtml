@@ -89,14 +89,19 @@
                             <input type="text" value="@(Model.DaysConsumed.ToString().Replace(".00",""))" class="form-control" readonly="readonly" />
                         </div>
                     </div>
-
-                    <div class="col-md-5">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>ESC %age</label>
+                            <input value="@(string.Format("{0:#,##0}",Model.EarlySettlementPercentage))" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Early Settlement Charges</label>
                             <input value="@(string.Format("{0:#,##0}",Model.EarlySettlmentCharges))" readonly="readonly" class="form-control" />
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>FED on Early Settlement Charges</label>
                             <input value="@(string.Format("{0:#,##0}",Model.FEDonESC))" readonly="readonly" class="form-control" />

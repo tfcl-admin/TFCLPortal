@@ -110,18 +110,8 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             ViewBag.ApplicationStateList = new SelectList(getApplicationStateList());
 
-
-            if (IsVo)
+            if (IsAdmin)
             {
-                //screenStatus = ApplicationState.Submitted;
-            }
-            else if (IsBm)
-            {
-                //screenStatus = ApplicationState.Submitted;
-            }
-            else if (IsAdmin)
-            {
-                //screenStatus = ApplicationState.Submitted;
                 admin = true;
             }
 
@@ -133,77 +123,10 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             int? branchId = Branchid();
 
-            List<ApplicationDto> mobilizationList = new List<ApplicationDto>();
+            var returnList= _applicationAppService.getApplicationsListing(admin, (int)branchId,screenStatus, sde, startDate, endDate);
 
-
-            if (screenStatus == "Enhancement")
-            {
-                mobilizationList = _applicationAppService.GetApplicationList("", branchId, true, admin, true);
-            }
-            else
-            {
-                mobilizationList = _applicationAppService.GetApplicationList(screenStatus, branchId, true, admin);
-            }
-
-
-
-            List<ApplicationDto> returnList = new List<ApplicationDto>();
-            if (startDate != null && endDate != null)
-            {
-                ViewBag.StartDate = startDate;
-                ViewBag.EndDate = endDate;
-                returnList = mobilizationList.Where(x => x.AppDate >= startDate && x.AppDate <= endDate).ToList();
-            }
-            if (startDate != null)
-            {
-                ViewBag.StartDate = startDate;
-                returnList = mobilizationList.Where(x => x.AppDate >= startDate).ToList();
-            }
-            if (endDate != null)
-            {
-                ViewBag.EndDate = endDate;
-                returnList = mobilizationList.Where(x => x.AppDate <= endDate).ToList();
-            }
-            else
-            {
-                returnList = mobilizationList.ToList();
-            }
-
-            if (sde != "" && sde != null)
-            {
-                returnList = returnList.Where(x => x.SDEName == sde || x.Transferred == sde).ToList();
-            }
-
-            var finalWorkFlows = _finalWorkflowAppService.getAllFinalWorkFlows();
-
-            foreach (var item in returnList)
-            {
-                if (screen.ToLower() == "disbursed")
-                {
-                    var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "disbursed").FirstOrDefault();
-                    if (flow != null)
-                    {
-                        item.SpecifiedDate = flow.CreationTime;
-                    }
-                }
-                else if (screen.ToLower() == "settled")
-                {
-                    var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "settled").FirstOrDefault();
-                    if (flow != null)
-                    {
-                        item.SpecifiedDate = flow.CreationTime;
-                    }
-                }
-                else if (screen.ToLower() == "early settled")
-                {
-                    var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "early settled").FirstOrDefault();
-                    if (flow != null)
-                    {
-                        item.SpecifiedDate = flow.CreationTime;
-                    }
-                }
-            }
-
+            ViewBag.StartDate = startDate;
+            ViewBag.EndDate = endDate;
 
 
             return View(returnList);

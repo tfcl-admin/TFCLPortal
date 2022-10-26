@@ -42,6 +42,8 @@ namespace TFCLPortal.Applications
 
         DateTime getLastWorkFlowStateDate(int ApplicationId, string State);
         List<Applicationz> GetBCCShortApplicationList(int userid);
+
+        List<ApplicationDto> getApplicationsListing(bool admin, int branchId,string screen, string sde, DateTime? startDate, DateTime? endDate);
         Task<CnicCheckResponse> CheckCNIC(string cnic);
         List<Applicationz> GetAllApplicationsByUserId(int userid);
         List<Applicationz> GetAllBCCReviewedApplicationsByUserId(int userid);

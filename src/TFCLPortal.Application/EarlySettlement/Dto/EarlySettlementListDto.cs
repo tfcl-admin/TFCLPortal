@@ -21,6 +21,7 @@ namespace TFCLPortal.EarlySettlements.Dto
         public DateTime LastPaidInstallmentDate { get; set; }
         public DateTime TentativeSettlementDate { get; set; }
         public decimal OneDayMarkup { get; set; }
+        public decimal EarlySettlementPercentage { get; set; }
         public decimal DaysConsumed { get; set; }
         public bool isEarlySettlementCharges { get; set; }
         public decimal EarlySettlmentCharges { get; set; }

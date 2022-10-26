@@ -99,6 +99,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label>Early Settlement Charges %age</label>
+                            <input asp-for="EarlySettlementPercentage" type="number" min="0" max="100" value="3" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label>Early Settlement Charges</label>
                             <input asp-for="EarlySettlmentCharges" value="@ViewBag.ESC" readonly="readonly" class="form-control" />
                         </div>
@@ -178,18 +186,29 @@
 
 
 
-        //$('#inlineCheckbox0').change(function (e) {
-        //    if (this.checked) {
-        //        $("#isEarlySettlementCharges").val(true);
-        //    }
-        //    else {
-        //        $("#isEarlySettlementCharges").val(false);
-        //    }
-        //});
+        $('#EarlySettlementPercentage').change(function (e) {
+            var principal = Number($('#OsPrincipalAmount').val().replaceAll(',',''));
+            var percentage = Number(this.value) / 100;
+            var result = principal * percentage;
 
-        $('#TentativeSettlementDate').change(function (e) {
-            var StartDate = moment($("#LastPaidInstallmentDate").val());
-            var EndDate = moment($("#TentativeSettlementDate").val());
+            $('#EarlySettlmentCharges').val(numberWithCommas(result.toFixed(0)));
+
+            var fed = result.toFixed(0) * 0.16;
+
+            $('#FEDonESC').val(numberWithCommas(fed.toFixed(0)));
+
+            if ($('#isEarlySettlementCharges').is(":checked")) {
+                calculatePayableAmount();
+            }
+
+        });
+
+        SetMarkupPayable(getDate());
+
+        function SetMarkupPayable(givenDate) {
+
+            var StartDate = moment('@ViewBag.PaymentDate'); // moment($("#LastPaidInstallmentDate").val());
+            var EndDate = moment(givenDate);
 
             var diff = EndDate.diff(StartDate, 'days');
 
@@ -203,6 +222,10 @@
 
             $("#MarkupPayable").val((Number(diff) * Number(OneDayMarkup)).toFixed(2));
             calculatePayableAmount();
+        }
+
+        $('#TentativeSettlementDate').change(function (e) {
+            SetMarkupPayable($("#TentativeSettlementDate").val());
         });
 
         function calculatePayableAmount() {

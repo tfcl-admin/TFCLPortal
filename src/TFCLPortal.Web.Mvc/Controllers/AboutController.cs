@@ -319,6 +319,11 @@ namespace TFCLPortal.Web.Controllers
             ViewBag.Message = Message;
             return View();
         }
+        public IActionResult Error(string Message)
+        {
+            ViewBag.Message = Message;
+            return View();
+        }
 
     }
 }

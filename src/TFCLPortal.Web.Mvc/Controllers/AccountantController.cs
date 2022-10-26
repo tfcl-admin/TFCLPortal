@@ -116,7 +116,7 @@ namespace TFCLPortal.Web.Controllers
 
         private readonly INotificationLogAppService _notificationLogAppService;
 
-        public AccountantController(IRepository<BaloonPayment, int> BaloonPaymentrepository,IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService)
+        public AccountantController(IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService)
         {
             _BaloonPaymentrepository = BaloonPaymentrepository;
             _baloonPaymentAppService = baloonPaymentAppService;
@@ -1053,7 +1053,7 @@ namespace TFCLPortal.Web.Controllers
                                     var ts2 = _transactionRepository.Insert(transactions2);
                                     var cs2 = _customerAccountAppAppService.UpdateAccountBalance(custAcc2.Id, transactions2.BalAfter);
 
-                                    var bpr=_BaloonPaymentrepository.Get(bp.Id);
+                                    var bpr = _BaloonPaymentrepository.Get(bp.Id);
                                     bpr.isPaid = true;
                                     _BaloonPaymentrepository.Update(bpr);
                                 }
@@ -1499,12 +1499,12 @@ namespace TFCLPortal.Web.Controllers
         public IActionResult CreateInstallmentPayment(CreateInstallmentPayment payment)
         {
             var schedule = _scheduleAppService.GetScheduleByApplicationId(payment.ApplicationId).Result;
-            if(schedule!=null)
+            if (schedule != null)
             {
-                if(schedule.installmentList.Where(x=>x.InstNumber==payment.NoOfInstallment.ToString()).FirstOrDefault().isPaid!=true)
+                if (schedule.installmentList.Where(x => x.InstNumber == payment.NoOfInstallment.ToString()).FirstOrDefault().isPaid != true)
                 {
                     var payments = _installmentPaymentAppService.GetAllInstallmentPaymentByApplicationId(payment.ApplicationId).Result;
-                    if(payments==null)
+                    if (payments == null)
                     {
                         AuthorizeInstallmentPayment(payment.AuthorizationId);
 
@@ -1512,8 +1512,8 @@ namespace TFCLPortal.Web.Controllers
                     }
                     else
                     {
-                        var lastpayment = payments.Where(x=>x.NoOfInstallment== payment.NoOfInstallment).OrderByDescending(x => x.Id).FirstOrDefault();
-                        if(lastpayment!=null)
+                        var lastpayment = payments.Where(x => x.NoOfInstallment == payment.NoOfInstallment).OrderByDescending(x => x.Id).FirstOrDefault();
+                        if (lastpayment != null)
                         {
                             if ((DateTime.Now - lastpayment.CreationTime).TotalMinutes >= 10)
                             {
@@ -1529,7 +1529,7 @@ namespace TFCLPortal.Web.Controllers
                             _authorizeInstallmentPaymentAppService.DeductInstallmentPaymentRevised(payment);
                         }
                     }
-                    
+
                 }
             }
 
@@ -2678,7 +2678,7 @@ namespace TFCLPortal.Web.Controllers
         {
             var entry = _earlySettlementRepository.Get(Id);
 
-            if(Decision== "Authorize")
+            if (Decision == "Authorize")
             {
                 decimal amountToDeduct = entry.amountDeposited;
 
@@ -2803,7 +2803,7 @@ namespace TFCLPortal.Web.Controllers
                 _earlySettlementRepository.Update(entry);
                 CurrentUnitOfWork.SaveChanges();
             }
-          
+
 
             return Json("");
         }
@@ -2812,9 +2812,17 @@ namespace TFCLPortal.Web.Controllers
         [DisableValidation]
         public IActionResult CreateEarlySettlement(CreateEarlySettlement input)
         {
-            _earlySettlementAppService.Create(input);
+            if (input.amountDeposited >= input.totalAmountPayable)
+            {
+                _earlySettlementAppService.Create(input);
+                return RedirectToAction("Success", "About", new { Message = "Early Settlement Entry Sent to BM for Authorization!" });
+            }
+            else
+            {
+                return RedirectToAction("Error", "About", new { Message = "Account Balance is not sufficient!" });
+            }
 
-            return RedirectToAction("Success", "About", new { Message = "Early Settlement Entry Sent to BM for Authorization!" });
+
         }
 
         public IActionResult EarlySettlementAuthorizationList(int ApplicationId)

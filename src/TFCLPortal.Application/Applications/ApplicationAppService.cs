@@ -1620,5 +1620,93 @@ namespace TFCLPortal.Applications
                 return ex.Message.ToString();
             }
         }
+
+        public List<ApplicationDto> getApplicationsListing(bool admin, int branchId,string screen, string sde, DateTime? startDate, DateTime? endDate)
+        {
+            try
+            {
+                List<ApplicationDto> mobilizationList = new List<ApplicationDto>();
+
+
+                if (screen == "Enhancement")
+                {
+                    mobilizationList = GetApplicationList("", branchId, true, admin, true);
+                }
+                else
+                {
+                    mobilizationList = GetApplicationList(screen, branchId, true, admin);
+                }
+
+
+
+                List<ApplicationDto> returnList = new List<ApplicationDto>();
+                if (startDate != null && endDate != null)
+                {
+                    returnList = mobilizationList.Where(x => x.AppDate >= startDate && x.AppDate <= endDate).ToList();
+                }
+                if (startDate != null)
+                {
+                    returnList = mobilizationList.Where(x => x.AppDate >= startDate).ToList();
+                }
+                if (endDate != null)
+                {
+                    returnList = mobilizationList.Where(x => x.AppDate <= endDate).ToList();
+                }
+                else
+                {
+                    returnList = mobilizationList.ToList();
+                }
+
+                if (sde != "" && sde != null)
+                {
+                    returnList = returnList.Where(x => x.SDEName == sde || x.Transferred == sde).ToList();
+                }
+
+                var finalWorkFlows = _finalWorkflowAppService.getAllFinalWorkFlows();
+
+                for ( int i=0;i<returnList.Count;i++)//  var item in returnList)
+                {
+                    var item = returnList[i];
+
+                    if (screen.ToLower() == "disbursed")
+                    {
+                        var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "disbursed").FirstOrDefault();
+                        if (flow != null)
+                        {
+                            item.SpecifiedDate = flow.CreationTime;
+                        }
+                    }
+                    else if (screen.ToLower() == "settled")
+                    {
+                        if(item.AppStatus=="Early Settled")
+                        {
+                            returnList.Remove(item);
+                        }
+                        else
+                        {
+                            var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "settled").FirstOrDefault();
+                            if (flow != null)
+                            {
+                                item.SpecifiedDate = flow.CreationTime;
+                            }
+                        }
+                    }
+                    else if (screen.ToLower() == "early settled")
+                    {
+                        var flow = finalWorkFlows.Where(x => x.ApplicationId == item.Id && x.ApplicationState.ToLower() == "early settled").FirstOrDefault();
+                        if (flow != null)
+                        {
+                            item.SpecifiedDate = flow.CreationTime;
+                        }
+                    }
+                }
+
+                return returnList;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

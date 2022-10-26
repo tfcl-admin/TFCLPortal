@@ -20,6 +20,7 @@ namespace TFCLPortal.EarlySettlements
         public decimal DaysConsumed { get; set; }
         public bool isEarlySettlementCharges { get; set; }
         public decimal EarlySettlmentCharges { get; set; }
+        public decimal EarlySettlementPercentage { get; set; }
         public decimal FEDonESC { get; set; }
         public decimal MarkupPayable { get; set; }
         public decimal PrincipalPayable { get; set; }

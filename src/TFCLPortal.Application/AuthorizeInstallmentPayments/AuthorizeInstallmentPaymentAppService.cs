@@ -471,6 +471,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
 
                             string n1 = "Previous Installment Deduction";
                             _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n1, payment.ModeOfPayment);
+                            actualPayment -= excessShortForLastPaidInstallment;
                         }
 
                         string n2 = "Markup Collection Inst No # " + scheduleInstallment.InstNumber;

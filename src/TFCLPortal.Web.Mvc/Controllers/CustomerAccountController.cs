@@ -67,7 +67,13 @@ namespace TFCLPortal.Web.Controllers
             ApplicationListDto latestLoan = new ApplicationListDto();
             if (appDetails.Count > 0)
             {
-                latestLoan = appDetails[appDetails.Count - 1];
+                latestLoan = appDetails.Find(x=>x.ScreenStatus=="Disbursed");
+
+                if(latestLoan==null)
+                {
+                    latestLoan = appDetails[appDetails.Count-1];
+                }
+
                 ViewBag.ApplicationId = latestLoan.Id;
                 ViewBag.ClientID = latestLoan.ClientID;
                 ViewBag.Balance = acc.Balance;

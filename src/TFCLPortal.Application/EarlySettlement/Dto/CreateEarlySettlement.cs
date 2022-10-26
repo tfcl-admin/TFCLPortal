@@ -18,6 +18,7 @@ namespace TFCLPortal.EarlySettlements.Dto
         public decimal OneDayMarkup { get; set; }
         public decimal DaysConsumed { get; set; }
         public bool isEarlySettlementCharges { get; set; }
+        public decimal EarlySettlementPercentage { get; set; }
         public decimal EarlySettlmentCharges { get; set; }
         public decimal FEDonESC { get; set; }
         public decimal PrincipalPayable { get; set; }
