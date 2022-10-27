@@ -27,6 +27,10 @@ namespace TFCLPortal.Transactions.Dto
         {
             try
             {
+                input.BalBefore = getBalance(input.Fk_AccountId);
+                input.BalAfter = input.BalBefore + input.Amount;
+                input.Type = "Credit";
+
                 var Transaction = ObjectMapper.Map<Transaction>(input);
                 await _TransactionRepository.InsertAsync(Transaction);
             }
@@ -107,21 +111,24 @@ namespace TFCLPortal.Transactions.Dto
             try
             {
                 var transaction = _TransactionRepository.Get(id);
-                transaction.isAuthorized = authorize;
-
-                if (authorize)
+                if (transaction.isAuthorized == null)
                 {
-                    var acc = _CustomerAccountRepository.Get(transaction.Fk_AccountId);
-                    
-                    transaction.BalBefore = acc.Balance;
+                    transaction.isAuthorized = authorize;
 
-                    acc.Balance += transaction.Amount;
-                    _CustomerAccountRepository.Update(acc);
+                    if (authorize)
+                    {
+                        var acc = _CustomerAccountRepository.Get(transaction.Fk_AccountId);
 
-                    transaction.BalAfter = acc.Balance;
+                        transaction.BalBefore = acc.Balance;
+
+                        acc.Balance += transaction.Amount;
+                        _CustomerAccountRepository.Update(acc);
+
+                        transaction.BalAfter = acc.Balance;
+                    }
+
+                    _TransactionRepository.Update(transaction);
                 }
-
-                _TransactionRepository.Update(transaction);
 
                 return "Success";
             }
@@ -174,5 +181,19 @@ namespace TFCLPortal.Transactions.Dto
                 throw new UserFriendlyException(L("GetMethodError{0}", company));
             }
         }
+
+        public decimal getBalance(int id)
+        {
+            try
+            {
+                var acc = _CustomerAccountRepository.Get(id);
+                return acc.Balance;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

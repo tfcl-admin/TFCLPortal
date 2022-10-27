@@ -173,7 +173,7 @@ namespace TFCLPortal.Web.Controllers
 
         public IActionResult Credit(CreateTransactionDto transaction)
         {
-            transaction.BalAfter = transaction.BalBefore + transaction.Amount;
+            //transaction.BalAfter = transaction.BalBefore + transaction.Amount;
             transaction.Type = "Credit";
             _TransactionAppService.CreateTransaction(transaction);
             return RedirectToAction("ViewTransactions", "CustomerAccount", new { accountid = transaction.Fk_AccountId });

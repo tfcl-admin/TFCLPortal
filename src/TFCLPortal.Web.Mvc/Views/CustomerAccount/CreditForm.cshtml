@@ -63,7 +63,7 @@
 
         <form asp-action="Credit">
             <input asp-for="Fk_AccountId" value="@ViewBag.AccountId" type="hidden" />
-            <input asp-for="BalBefore" value="@ViewBag.Bal" type="hidden" />
+            @*<input asp-for="BalBefore" value="@ViewBag.Bal" type="hidden" />*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="col-md-12 text-center">
