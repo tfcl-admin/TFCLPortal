@@ -376,11 +376,12 @@
                 content += '<td style="text-align: right">' + item.installmentAmount + '</td>';
 
                 if (index == paidInstallments.length - 1) {
-                    content += '<td style="text-align: right">' + numberWithCommas(newLoanAmountDiff + Number(item.osPrincipal_Closing.replace(',',''))) + '</td>';
+                    content += '<td style="text-align: right">' + numberWithCommas(newLoanAmountDiff + Number(item.osPrincipal_Closing.replaceAll(',',''))) + '</td>';
                 }
                 else {
                     content += '<td style="text-align: right">' + item.osPrincipal_Closing+'</td>';
                 }
+
                 content += '<td style="display:none">' + item.isPaid + '</td>';
                 content += '<td style="display:none">' + item.paymentDate + '</td>';
                 content += '</tr>';
@@ -409,15 +410,19 @@
                 content += '<td style="text-align: right">' + numberWithCommas(principal) + '</td>';
 
                 content += '<td style="text-align: right">' + numberWithCommas(Number(Number(resGetMarkup) + Number(principal)).toFixed(2) ) + '</td>';
-                console.log(lastPaidInstallment + " : " + osPrincipalClosing);
                 graceDaysMarkup = 0;
                 var osPrincipalClosing = (osPrincipalAmount - principal).toFixed(2);
+
+                console.log(lastPaidInstallment + " : " + osPrincipalClosing);
+
                 if (j == 0 && osPrincipalClosing <= 10) {
                     content += '<td style="text-align: right">' + 0 + '</td>';
                 }
                 else {
                     content += '<td style="text-align: right">' + numberWithCommas(osPrincipalClosing) + '</td>';
                 }
+
+
                 content += '<td style="display:none"></td>';
                 content += '<td style="display:none"></td>';
                 content += '</tr>';
