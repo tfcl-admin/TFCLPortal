@@ -568,8 +568,12 @@
                 }
             }
 
-            tranches.pop();
-            tranches.pop();
+            tranches.forEach(function (index) {
+                if (index != 0) {
+                    tranches.pop();
+                }
+            })
+
 
             for (i = 1, j = (Installments - 1); i <= Installments; i++, j--) {
 

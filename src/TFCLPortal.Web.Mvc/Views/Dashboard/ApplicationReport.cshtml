@@ -1945,15 +1945,15 @@
                             }
                             <tr>
                                 <td class="title">Total (Current Liabilities) Outstanding Amount</td>
-                                <td class="text">@(ViewBag.ED.CurrentTotalAmount == null || ViewBag.ED.CurrentTotalAmount == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.CurrentTotalAmount).Replace(",", ""))))</td>
+                                <td class="text">@(ViewBag.ED.CurrentTotalAmount == null || ViewBag.ED.CurrentTotalAmount == "null" || ViewBag.ED.CurrentTotalAmount == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.CurrentTotalAmount).Replace(",", ""))))</td>
                                 <td class="title">Total (Current Liabilities) Instalment / Min. Payment</td>
-                                <td class="text">@(ViewBag.ED.CurrentTotalInstallmentpayment == null || ViewBag.ED.CurrentTotalInstallmentpayment == "" ? "0" : string.Format("{0:#,##0}", ViewBag.ED.CurrentTotalInstallmentpayment))</td>
+                                <td class="text">@(ViewBag.ED.CurrentTotalInstallmentpayment == null || ViewBag.ED.CurrentTotalInstallmentpayment == "null" || ViewBag.ED.CurrentTotalInstallmentpayment == "" ? "0" : string.Format("{0:#,##0}", ViewBag.ED.CurrentTotalInstallmentpayment))</td>
                             </tr>
                             <tr>
                                 <td class="title">Total (Long-Term Liabilities) Outstanding Amount</td>
-                                <td class="text">@(ViewBag.ED.LongtermTotalAmount == null || ViewBag.ED.LongtermTotalAmount == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.LongtermTotalAmount).Replace(",", ""))))</td>
+                                <td class="text">@(ViewBag.ED.LongtermTotalAmount == null || ViewBag.ED.LongtermTotalAmount == "null" || ViewBag.ED.LongtermTotalAmount == "" ? "0" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.ED.LongtermTotalAmount).Replace(",", ""))))</td>
                                 <td class="title">Total (Long-Term Liabilities) Instalment / Min. Payment</td>
-                                <td class="text">@(ViewBag.ED.LongtermInstallmentpayment == null || ViewBag.ED.LongtermInstallmentpayment == "" ? "0" : string.Format("{0:#,##0}", ViewBag.ED.LongtermInstallmentpayment))</td>
+                                <td class="text">@(ViewBag.ED.LongtermInstallmentpayment == null || ViewBag.ED.LongtermInstallmentpayment == "null" || ViewBag.ED.LongtermInstallmentpayment == "" ? "0" : string.Format("{0:#,##0}", ViewBag.ED.LongtermInstallmentpayment))</td>
                             </tr>
                             <tr>
                                 <td class="title">Total Outstanding Amount</td>

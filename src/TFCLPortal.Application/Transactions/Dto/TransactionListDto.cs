@@ -11,6 +11,7 @@ namespace TFCLPortal.Transactions.Dto
     {
         public string Name { get; set; }
         public DateTime DepositDate { get; set; }
+        public DateTime SortDate { get; set; }
         public string Reference { get; set; }
         public string CNIC { get; set; }
         public string ClientID { get; set; }

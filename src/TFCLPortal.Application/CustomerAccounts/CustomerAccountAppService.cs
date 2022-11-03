@@ -272,7 +272,7 @@ namespace TFCLPortal.CustomerAccounts
             try
             {
                 var account = _CustomerAccountRepository.Get(AccountId);
-                var loans = _applicationAppService.GetAllApplicationsList().Where(x => x.CNICNo == account.CNIC).ToList();
+                var loans = _applicationAppService.GetAllApplicationsList().Where(x => x.CNICNo == account.CNIC && x.ScreenStatus!=ApplicationState.Decline).ToList();
                 return loans;
             }
             catch (Exception ex)

@@ -70,6 +70,15 @@ namespace TFCLPortal.Transactions.Dto
                             var app = apps.Where(x => x.Id == tr.ApplicationId).FirstOrDefault();
                             tr.ClientID = app.ClientID;
                         }
+
+                        if (tr.LastModificationTime == null)
+                        {
+                            tr.SortDate = tr.CreationTime;
+                        }
+                        else
+                        {
+                            tr.SortDate = (DateTime)tr.LastModificationTime;
+                        }
                     }
                 }
 
@@ -95,6 +104,14 @@ namespace TFCLPortal.Transactions.Dto
                     var acc = _CustomerAccountRepository.Get(tran.Fk_AccountId);
                     tran.Name = acc.Name;
                     tran.CNIC = acc.CNIC;
+                    if(tran.LastModificationTime==null)
+                    {
+                        tran.SortDate = tran.CreationTime;
+                    }
+                    else
+                    {
+                        tran.SortDate = (DateTime)tran.LastModificationTime;
+                    }
                 }
 
                 return TransactionMapped;

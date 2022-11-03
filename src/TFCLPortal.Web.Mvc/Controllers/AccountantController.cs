@@ -62,6 +62,7 @@ using TFCLPortal.Transactions;
 using TFCLPortal.CustomerAccounts.Dto;
 using TFCLPortal.BaloonPayments;
 using TFCLPortal.BaloonPayments.Dto;
+using TFCLPortal.ClosingMonths;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -115,8 +116,9 @@ namespace TFCLPortal.Web.Controllers
         private readonly IRepository<AuthorizeInstallmentPayment, int> _authorizeInstallmentPaymentRepository;
 
         private readonly INotificationLogAppService _notificationLogAppService;
+        private readonly IClosingMonthAppService _closingMonthAppService;
 
-        public AccountantController(IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService)
+        public AccountantController(IClosingMonthAppService closingMonthAppService,IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService)
         {
             _BaloonPaymentrepository = BaloonPaymentrepository;
             _baloonPaymentAppService = baloonPaymentAppService;
@@ -125,6 +127,7 @@ namespace TFCLPortal.Web.Controllers
             _enhancementRequestRepository = enhancementRequestRepository;
             _fundingSourceRepository = fundingSourceRepository;
             _customAppService = customAppService;
+            _closingMonthAppService = closingMonthAppService;
             _deceasedAuthorizationRepository = deceasedAuthorizationRepository;
             _deceasedAuthorizationAppService = deceasedAuthorizationAppService;
             _tDSLoanEligibilityAppService = tDSLoanEligibilityAppService;
@@ -1426,6 +1429,31 @@ namespace TFCLPortal.Web.Controllers
             }
             decimal Iamount = Decimal.Parse((ViewBag.InstallmentAmount).Replace(",", ""));
             ViewBag.DueAmount = Iamount - previous;
+
+            bool displayButton = true;
+
+            DateTime due = DateTime.Parse(ViewBag.InstallmentDueDate);
+
+            displayButton = _closingMonthAppService.checkIfOpen(app.FK_branchid, due.Month, due.Year);
+            
+            decimal payment = (ViewBag.Payment == null ? 0 : ViewBag.Payment);
+
+            if (displayButton)
+            {
+                if (ViewBag.RemainingInstallments == "0" && (payment < ViewBag.DueAmount))
+                {
+                    displayButton = false;
+                    ViewBag.RestrictionError = "Not enough amount in this customer's account to Settle.";
+                }
+            }
+            else
+            {
+                ViewBag.RestrictionError = "Month is not yet opened for this branch.";
+            }
+
+            ViewBag.displayButton = displayButton;
+
+
 
             return View();
         }

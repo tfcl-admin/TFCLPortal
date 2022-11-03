@@ -142,34 +142,35 @@
                 </thead>
                 <tbody>
                     @{ int i = 1;}
-                    @foreach (var item in Model.Where(x=>x.isAuthorized!=false).OrderBy(x => x.CreationTime))
+                    @foreach (var item in Model.Where(x=>x.isAuthorized!=false).OrderBy(x => x.SortDate))
                     {
-                        <tr class="@(item.Type=="Credit"?"text-credit":"text-debit") @(item.isReversed?"text-reversed":"") @(item.Type== "Reversal"?"text-reversal":"")">
-                            <td>@(i++)</td>
-                            <td>@item.CreationTime.ToString("dd-MMM-yyyy")</td>
-                            <td>@(item.Type=="Credit" ? item.DepositDate.ToString("dd-MMM-yyyy") : "--")</td>
-                            <td>@item.ClientID</td>
-                            <td>@(item.Details == ""|| item.Details == null ? item.ModeOfPayment : item.Details)</td>
-                            <td>@(item.Reference == ""|| item.Reference == null ? "--" : item.Reference)</td>
-                            <td style="text-align:right">@(item.Type=="Debit" ? (item.Amount == 0 ? "0" : string.Format("{0:#,##0}", item.Amount)) : "--")</td>
-                            <td style="text-align:right">@(item.Type=="Credit"||item.Type== "Reversal" ? (item.Amount == 0 ? "0" : string.Format("{0:#,##0}", item.Amount)) : "--")</td>
-                            <td style="text-align:right">@(item.BalAfter == 0 ? "0" : string.Format("{0:#,##0}", item.BalAfter))</td>
-                            <td class="statusCol">
-                                @if (item.isAuthorized == true)
-                                {
-                                    <i class="fa fa-check" title="Authorized" alt="Y"></i>
-                                }
-                                else if (item.isAuthorized == null)
-                                {
-                                    <i class="fa fa-info-circle" title="Pending" alt="P"></i>
-                                }
-                                else
-                                {
-                                    <i class="fa fa-times" title="Rejected" alt="N"></i>
+                    <tr class="@(item.Type=="Credit"?"text-credit":"text-debit") @(item.isReversed?"text-reversed":"") @(item.Type== "Reversal"?"text-reversal":"")">
+                        <td>@(i++)</td>
+                        @*<td>@item.SortDate</td>*@
+                        <td>@item.CreationTime.ToString("dd-MMM-yyyy")</td>
+                        <td>@(item.Type=="Credit" ? item.DepositDate.ToString("dd-MMM-yyyy") : "--")</td>
+                        <td>@item.ClientID</td>
+                        <td>@(item.Details == ""|| item.Details == null ? item.ModeOfPayment : item.Details)</td>
+                        <td>@(item.Reference == ""|| item.Reference == null ? "--" : item.Reference)</td>
+                        <td style="text-align:right">@(item.Type=="Debit" ? (item.Amount == 0 ? "0" : string.Format("{0:#,##0}", item.Amount)) : "--")</td>
+                        <td style="text-align:right">@(item.Type=="Credit"||item.Type== "Reversal" ? (item.Amount == 0 ? "0" : string.Format("{0:#,##0}", item.Amount)) : "--")</td>
+                        <td style="text-align:right">@(item.BalAfter == 0 ? "0" : string.Format("{0:#,##0}", item.BalAfter))</td>
+                        <td class="statusCol">
+                            @if (item.isAuthorized == true)
+                            {
+                                <i class="fa fa-check" title="Authorized" alt="Y"></i>
+                            }
+                            else if (item.isAuthorized == null)
+                            {
+                                <i class="fa fa-info-circle" title="Pending" alt="P"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-times" title="Rejected" alt="N"></i>
 
-                                }
-                            </td>
-                        </tr>
+                            }
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

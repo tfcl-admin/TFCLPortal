@@ -105,6 +105,7 @@ using TFCLPortal.Schedules;
 using Abp.Domain.Repositories;
 using TFCLPortal.PostDisbursementForms.Dto;
 using TFCLPortal.PostDisbursementForms;
+using TFCLPortal.ClosingMonths;
 
 namespace TFCLPortal.Web.Mvc.Controllers
 {
@@ -164,6 +165,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
         private readonly ISchoolNonFinancialAppService _schoolNonFinancialAppService;
         private readonly IPsychometricIndicatorAppService _psychometricIndicatorAppService;
         private readonly IPostDisbursementFormAppService _postDisbursementFormAppService;
+        private readonly IClosingMonthAppService _closingMonthAppService;
 
         private readonly UserManager _userManager;
         private readonly IUserAppService _userAppService;
@@ -171,8 +173,9 @@ namespace TFCLPortal.Web.Mvc.Controllers
         private readonly IHostingEnvironment _env;
 
         private readonly IRepository<Schedule, int> _scheduleRepository;
-        public DashboardController(IPostDisbursementFormAppService postDisbursementFormAppService, IRepository<Schedule, int> scheduleRepository, IPsychometricIndicatorAppService psychometricIndicatorAppService, ISchoolNonFinancialAppService schoolNonFinancialAppService, ISchoolFinancialAppService schoolFinancialAppService, IFcmTokenAppService fcmTokenAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, ITDSBusinessExpenseAppService tDSBusinessExpenseAppService, IBusinessDetailsTDSAppService businessDetailsTDSAppService, IPurchaseDetailAppService purchaseDetailAppService, ISalesDetailAppService salesDetailAppService, ITdsInventoryDetailAppService tdsInventoryDetailAppService, IDependentEducationDetailsAppService dependentEducationDetailsAppService, IMobilizationAppService mobilizationAppService, INotificationLogAppService notificationLogAppService, IHostingEnvironment env, IMcrcDecisionAppService McrcDecisionAppService, IMcrcRecordAppService mcrcRecordAppService, IMcrcStateAppService mcrcStateAppService, IBccStateAppService bccStateAppService, IFinalWorkflowAppService finalWorkflowAppService, IAssociatedIncomeAppService associatedIncomeAppService, IBranchManagerActionAppService branchManagerActionAppService, INonAssociatedIncomeAppService nonAssociatedIncomeAppService, IUserAppService userAppService, UserManager userManager)
+        public DashboardController(IClosingMonthAppService closingMonthAppService,IPostDisbursementFormAppService postDisbursementFormAppService, IRepository<Schedule, int> scheduleRepository, IPsychometricIndicatorAppService psychometricIndicatorAppService, ISchoolNonFinancialAppService schoolNonFinancialAppService, ISchoolFinancialAppService schoolFinancialAppService, IFcmTokenAppService fcmTokenAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, ITDSBusinessExpenseAppService tDSBusinessExpenseAppService, IBusinessDetailsTDSAppService businessDetailsTDSAppService, IPurchaseDetailAppService purchaseDetailAppService, ISalesDetailAppService salesDetailAppService, ITdsInventoryDetailAppService tdsInventoryDetailAppService, IDependentEducationDetailsAppService dependentEducationDetailsAppService, IMobilizationAppService mobilizationAppService, INotificationLogAppService notificationLogAppService, IHostingEnvironment env, IMcrcDecisionAppService McrcDecisionAppService, IMcrcRecordAppService mcrcRecordAppService, IMcrcStateAppService mcrcStateAppService, IBccStateAppService bccStateAppService, IFinalWorkflowAppService finalWorkflowAppService, IAssociatedIncomeAppService associatedIncomeAppService, IBranchManagerActionAppService branchManagerActionAppService, INonAssociatedIncomeAppService nonAssociatedIncomeAppService, IUserAppService userAppService, UserManager userManager)
         {
+            _closingMonthAppService = closingMonthAppService;
             _psychometricIndicatorAppService = psychometricIndicatorAppService;
             _postDisbursementFormAppService = postDisbursementFormAppService;
             _schoolNonFinancialAppService = schoolNonFinancialAppService;
@@ -2535,6 +2538,29 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
             return View();
         }
+
+        public IActionResult ClosingMonthsList()
+        {
+            var list = _closingMonthAppService.GetAllClosingMonths();
+
+            bool admin = false;
+            if (User.IsInRole("Admin"))
+            {
+                admin = true;
+            }
+
+            ViewBag.Admin = admin;
+
+            return View(list);
+        }
+        public IActionResult updateclosingmonth(int Id,int BranchId)
+        {
+            var list = _closingMonthAppService.updateClosingMonth(Id, BranchId);
+
+            return RedirectToAction("ClosingMonthsList", "Dashboard");
+        }
+        
+
 
         public IActionResult BADocumentsDetail(int Id)
         {

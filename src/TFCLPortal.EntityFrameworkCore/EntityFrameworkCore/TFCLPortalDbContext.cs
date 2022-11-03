@@ -193,6 +193,7 @@ using TFCLPortal.PostDisbursementForms;
 using TFCLPortal.Reversals;
 using TFCLPortal.TransactionLogs;
 using TFCLPortal.BaloonPayments;
+using TFCLPortal.ClosingMonths;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -203,6 +204,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<DynamicDropdowns.Ownership.OwnershipStatus> OwnershipStatus { get; set; }
         public DbSet<StudentGender> StudentGenderDbSet { get; set; }
         public DbSet<Occupation> OccupationDbSet { get; set; }
+        public DbSet<ClosingMonth> ClosingMonthDbSet { get; set; }
         public DbSet<FundSource> FundSourceDbSet { get; set; }
         public DbSet<CollateralOwnership> CollateralOwnershipDbSet { get; set; }
         public DbSet<CollateralType> CollateralTypeDbSet { get; set; }
