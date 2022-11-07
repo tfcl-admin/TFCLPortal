@@ -1451,6 +1451,22 @@ namespace TFCLPortal.Web.Controllers
                 ViewBag.RestrictionError = "Month is not yet opened for this branch.";
             }
 
+            if (displayButton)
+            {
+                var instpayment = _earlySettlementAppService.GetEarlySettlementByApplicationId(ApplicationId).Result;
+                if (instpayment != null)
+                {
+                    foreach (var es in instpayment)
+                    {
+                        if (es.isAuthorized == null)
+                        {
+                            displayButton = false;
+                            ViewBag.RestrictionError = "Installment Payment can not be entered when early settlement entry is pending.";
+                        }
+                    }
+                }
+            }
+
             ViewBag.displayButton = displayButton;
 
 
@@ -2706,107 +2722,108 @@ namespace TFCLPortal.Web.Controllers
         {
             var entry = _earlySettlementRepository.Get(Id);
 
-            if (Decision == "Authorize")
+            if(entry.isAuthorized==null)
             {
-                decimal amountToDeduct = entry.amountDeposited;
-
-                var accupdate1 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                var transactions = new Transaction();
-                transactions.Type = "Debit";
-                transactions.Details = "Early Settlement Charges";
-                transactions.isAuthorized = true;
-                transactions.ApplicationId = entry.ApplicationId;
-                transactions.Fk_AccountId = accupdate1.Id;
-                transactions.BalBefore = accupdate1.Balance;
-                transactions.Amount = entry.EarlySettlmentCharges;
-                transactions.AmountWords = NumberToWords((int)entry.EarlySettlmentCharges);
-                transactions.BalAfter = (transactions.BalBefore - entry.EarlySettlmentCharges);
-                var ts = _transactionRepository.Insert(transactions);
-                var cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate1.Id, transactions.BalAfter);
-                amountToDeduct -= entry.EarlySettlmentCharges;
-
-                var accupdate2 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                transactions = new Transaction();
-                transactions.Type = "Debit";
-                transactions.Details = "FED on Early Settlement Charges";
-                transactions.isAuthorized = true;
-                transactions.ApplicationId = entry.ApplicationId;
-                transactions.Fk_AccountId = accupdate2.Id;
-                transactions.BalBefore = accupdate2.Balance;
-                transactions.Amount = entry.FEDonESC;
-                transactions.AmountWords = NumberToWords((int)entry.FEDonESC);
-                transactions.BalAfter = (transactions.BalBefore - entry.FEDonESC);
-                ts = _transactionRepository.Insert(transactions);
-                cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate1.Id, transactions.BalAfter);
-                amountToDeduct -= entry.FEDonESC;
-
-
-                var accupdate3 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                transactions = new Transaction();
-                transactions.Type = "Debit";
-                transactions.Details = "Late Payment Charges";
-                transactions.isAuthorized = true;
-                transactions.Fk_AccountId = accupdate3.Id;
-                transactions.ApplicationId = entry.ApplicationId;
-                transactions.BalBefore = accupdate3.Balance;
-                transactions.Amount = entry.LatePaymentCharges;
-                transactions.AmountWords = NumberToWords((int)entry.LatePaymentCharges);
-                transactions.BalAfter = (transactions.BalBefore - entry.LatePaymentCharges);
-                ts = _transactionRepository.Insert(transactions);
-                cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate3.Id, transactions.BalAfter);
-                amountToDeduct -= entry.LatePaymentCharges;
-
-                var accupdate4 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                transactions = new Transaction();
-                transactions.Type = "Debit";
-                transactions.Details = "FED on Late Payment Charges";
-                transactions.isAuthorized = true;
-                transactions.ApplicationId = entry.ApplicationId;
-                transactions.Fk_AccountId = accupdate4.Id;
-                transactions.BalBefore = accupdate4.Balance;
-                transactions.Amount = entry.FEDonLPC;
-                transactions.AmountWords = NumberToWords((int)entry.FEDonLPC);
-                transactions.BalAfter = (transactions.BalBefore - entry.FEDonLPC);
-                ts = _transactionRepository.Insert(transactions);
-                cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate4.Id, transactions.BalAfter);
-                amountToDeduct -= entry.FEDonLPC;
-
-                var accupdate5 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                transactions = new Transaction();
-                transactions.Type = "Debit";
-                transactions.Details = "Markup";
-                transactions.isAuthorized = true;
-                transactions.ApplicationId = entry.ApplicationId;
-                transactions.Fk_AccountId = accupdate5.Id;
-                transactions.BalBefore = accupdate5.Balance;
-                transactions.Amount = entry.MarkupPayable;
-                transactions.AmountWords = NumberToWords((int)entry.MarkupPayable);
-                transactions.BalAfter = (transactions.BalBefore - entry.MarkupPayable);
-                ts = _transactionRepository.Insert(transactions);
-                cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate5.Id, transactions.BalAfter);
-                amountToDeduct -= entry.MarkupPayable;
-
-                var accupdate6 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                transactions = new Transaction();
-                transactions.Type = "Debit";
-                transactions.Details = "Principal";
-                transactions.isAuthorized = true;
-                transactions.Fk_AccountId = accupdate6.Id;
-                transactions.ApplicationId = entry.ApplicationId;
-                transactions.BalBefore = accupdate6.Balance;
-                transactions.Amount = entry.PrincipalPayable;
-                transactions.AmountWords = NumberToWords((int)entry.PrincipalPayable);
-                transactions.BalAfter = (transactions.BalBefore - entry.PrincipalPayable);
-                ts = _transactionRepository.Insert(transactions);
-                cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate6.Id, transactions.BalAfter);
-                amountToDeduct -= entry.PrincipalPayable;
-
-
-
-                CurrentUnitOfWork.SaveChanges();
-
                 if (Decision == "Authorize")
                 {
+                    decimal amountToDeduct = entry.amountDeposited;
+
+                    var accupdate1 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+                    var transactions = new Transaction();
+                    transactions.Type = "Debit";
+                    transactions.Details = "Early Settlement Charges";
+                    transactions.isAuthorized = true;
+                    transactions.ApplicationId = entry.ApplicationId;
+                    transactions.Fk_AccountId = accupdate1.Id;
+                    transactions.BalBefore = accupdate1.Balance;
+                    transactions.Amount = entry.EarlySettlmentCharges;
+                    transactions.AmountWords = NumberToWords((int)entry.EarlySettlmentCharges);
+                    transactions.BalAfter = (transactions.BalBefore - entry.EarlySettlmentCharges);
+                    var ts = _transactionRepository.Insert(transactions);
+                    var cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate1.Id, transactions.BalAfter);
+                    amountToDeduct -= entry.EarlySettlmentCharges;
+
+                    var accupdate2 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+                    transactions = new Transaction();
+                    transactions.Type = "Debit";
+                    transactions.Details = "FED on Early Settlement Charges";
+                    transactions.isAuthorized = true;
+                    transactions.ApplicationId = entry.ApplicationId;
+                    transactions.Fk_AccountId = accupdate2.Id;
+                    transactions.BalBefore = accupdate2.Balance;
+                    transactions.Amount = entry.FEDonESC;
+                    transactions.AmountWords = NumberToWords((int)entry.FEDonESC);
+                    transactions.BalAfter = (transactions.BalBefore - entry.FEDonESC);
+                    ts = _transactionRepository.Insert(transactions);
+                    cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate1.Id, transactions.BalAfter);
+                    amountToDeduct -= entry.FEDonESC;
+
+
+                    var accupdate3 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+                    transactions = new Transaction();
+                    transactions.Type = "Debit";
+                    transactions.Details = "Late Payment Charges";
+                    transactions.isAuthorized = true;
+                    transactions.Fk_AccountId = accupdate3.Id;
+                    transactions.ApplicationId = entry.ApplicationId;
+                    transactions.BalBefore = accupdate3.Balance;
+                    transactions.Amount = entry.LatePaymentCharges;
+                    transactions.AmountWords = NumberToWords((int)entry.LatePaymentCharges);
+                    transactions.BalAfter = (transactions.BalBefore - entry.LatePaymentCharges);
+                    ts = _transactionRepository.Insert(transactions);
+                    cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate3.Id, transactions.BalAfter);
+                    amountToDeduct -= entry.LatePaymentCharges;
+
+                    var accupdate4 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+                    transactions = new Transaction();
+                    transactions.Type = "Debit";
+                    transactions.Details = "FED on Late Payment Charges";
+                    transactions.isAuthorized = true;
+                    transactions.ApplicationId = entry.ApplicationId;
+                    transactions.Fk_AccountId = accupdate4.Id;
+                    transactions.BalBefore = accupdate4.Balance;
+                    transactions.Amount = entry.FEDonLPC;
+                    transactions.AmountWords = NumberToWords((int)entry.FEDonLPC);
+                    transactions.BalAfter = (transactions.BalBefore - entry.FEDonLPC);
+                    ts = _transactionRepository.Insert(transactions);
+                    cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate4.Id, transactions.BalAfter);
+                    amountToDeduct -= entry.FEDonLPC;
+
+                    var accupdate5 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+                    transactions = new Transaction();
+                    transactions.Type = "Debit";
+                    transactions.Details = "Markup";
+                    transactions.isAuthorized = true;
+                    transactions.ApplicationId = entry.ApplicationId;
+                    transactions.Fk_AccountId = accupdate5.Id;
+                    transactions.BalBefore = accupdate5.Balance;
+                    transactions.Amount = entry.MarkupPayable;
+                    transactions.AmountWords = NumberToWords((int)entry.MarkupPayable);
+                    transactions.BalAfter = (transactions.BalBefore - entry.MarkupPayable);
+                    ts = _transactionRepository.Insert(transactions);
+                    cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate5.Id, transactions.BalAfter);
+                    amountToDeduct -= entry.MarkupPayable;
+
+                    var accupdate6 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+                    transactions = new Transaction();
+                    transactions.Type = "Debit";
+                    transactions.Details = "Principal";
+                    transactions.isAuthorized = true;
+                    transactions.Fk_AccountId = accupdate6.Id;
+                    transactions.ApplicationId = entry.ApplicationId;
+                    transactions.BalBefore = accupdate6.Balance;
+                    transactions.Amount = entry.PrincipalPayable;
+                    transactions.AmountWords = NumberToWords((int)entry.PrincipalPayable);
+                    transactions.BalAfter = (transactions.BalBefore - entry.PrincipalPayable);
+                    ts = _transactionRepository.Insert(transactions);
+                    cs = _customerAccountAppAppService.UpdateAccountBalance(accupdate6.Id, transactions.BalAfter);
+                    amountToDeduct -= entry.PrincipalPayable;
+
+
+
+                    CurrentUnitOfWork.SaveChanges();
+
+
                     entry.isAuthorized = true;
                     entry.rejectionReason = Reason;
 
@@ -2821,17 +2838,18 @@ namespace TFCLPortal.Web.Controllers
 
                     _applicationAppService.ChangeApplicationState(ApplicationState.EarlySettled, entry.ApplicationId, "Early Settled By BM");
 
+                    _earlySettlementRepository.Update(entry);
+                    CurrentUnitOfWork.SaveChanges();
                 }
                 else if (Decision == "Reject")
                 {
                     entry.isAuthorized = false;
                     entry.rejectionReason = Reason;
+                    _earlySettlementRepository.Update(entry);
+                    CurrentUnitOfWork.SaveChanges();
                 }
-
-                _earlySettlementRepository.Update(entry);
-                CurrentUnitOfWork.SaveChanges();
             }
-
+           
 
             return Json("");
         }
@@ -2842,8 +2860,27 @@ namespace TFCLPortal.Web.Controllers
         {
             if (input.amountDeposited >= input.totalAmountPayable)
             {
-                _earlySettlementAppService.Create(input);
-                return RedirectToAction("Success", "About", new { Message = "Early Settlement Entry Sent to BM for Authorization!" });
+                bool allowed = true;
+                var es = _earlySettlementAppService.GetEarlySettlementByApplicationId(input.ApplicationId).Result;
+                if(es!=null)
+                {
+                    foreach(var entry in es)
+                    {
+                        if(entry.isAuthorized==null)
+                        {
+                            allowed = false;
+                        }
+                    }
+                }
+                if(allowed)
+                {
+                    _earlySettlementAppService.Create(input);
+                    return RedirectToAction("Success", "About", new { Message = "Early Settlement Entry Sent to BM for Authorization!" });
+                }
+                else
+                {
+                    return RedirectToAction("Error", "About", new { Message = "Early Settlement Entry Already Exists!" });
+                }
             }
             else
             {

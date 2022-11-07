@@ -168,8 +168,11 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 text-right">
+                    <div class="col-md-12 text-right" id="submitBtnDiv">
                         <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
+                    </div>
+                    <div class="col-md-12 text-right text-danger">
+                        <p id="responseText" class="text-right">@ViewBag.ErrorText</p>
                     </div>
                 </div>
             </form>
@@ -218,7 +221,7 @@
 
             $("#DaysConsumed").val(diff);
 
-            var OneDayMarkup = $("#OneDayMarkup").val();
+            var OneDayMarkup = $("#OneDayMarkup").val().replaceAll(',','');
 
             $("#MarkupPayable").val((Number(diff) * Number(OneDayMarkup)).toFixed(2));
             calculatePayableAmount();
@@ -226,6 +229,7 @@
 
         $('#TentativeSettlementDate').change(function (e) {
             SetMarkupPayable($("#TentativeSettlementDate").val());
+            checkDate($("#TentativeSettlementDate").val());
         });
 
         function calculatePayableAmount() {
@@ -307,7 +311,22 @@
             return cDate;
         }
 
+        function checkDate(date) {
+            //alert(moment().format('DD MMM YYYY'));
+            //alert(moment(date).format('DD MMM YYYY'));
+            //if (moment().format('DD MMM YYYY') === moment(date).format('DD MMM YYYY')) {
+                
+            //}
 
+            if (moment().format('DD MMM YYYY') === moment(date).format('DD MMM YYYY')) {
+                $('#submitBtnDiv').removeClass('d-none');
+                $('#responseText').text('');
+            }
+            else {
+                $('#responseText').text('Early Settlement can only be done when tentative date is ' + moment().format('DD MMM YYYY'));
+                $('#submitBtnDiv').addClass('d-none');
+            }
+        }
 
         function getDate() {
 
