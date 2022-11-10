@@ -563,6 +563,15 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                 {
                     actualPayment -= markupForThisInstallment;
 
+                    if(scheduleInstallment.InstNumber=="1")
+                    {
+                        var gDays = schedule.installmentList.Where(x => x.InstNumber == "G*").FirstOrDefault();
+                        if(gDays!=null)
+                        {
+                            actualPayment -= Decimal.Parse(gDays.markup.Replace(",",""));
+                        }
+                    }
+
                     if (actualPayment > 0)
                     {
                         if (scheduleInstallment.isPrincipalPaid == false)
