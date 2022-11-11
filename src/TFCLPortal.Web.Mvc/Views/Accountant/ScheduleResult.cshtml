@@ -861,6 +861,10 @@
                 'installmentList': ScheduleInstallments
             };
 
+            console.log('-------data-------');
+            console.log(dataToSend);
+            console.log('-------data-------');
+
             $.ajax({
                 type: 'POST',
                 datatype: "json",
@@ -1160,7 +1164,7 @@
         var osPrincipalAmountPlanned = Number(tranchesPlanned[0].amount);
         var instCalculationAmountPlanned = osPrincipalAmountPlanned;
 
-        var contentPlanned = "<table  class='table table-striped table-bordered installments' cellspacing='0' width='100 %'>";
+        var contentPlanned = "<table  class='table table-striped table-bordered Tranchinstallments' cellspacing='0' width='100 %'>";
         contentPlanned += "<thead>";
         contentPlanned += " <th style='text-align: center'>Inst #</th>";
         contentPlanned += " <th style='text-align: center'>Bal Inst</th>";
