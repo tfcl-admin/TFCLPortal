@@ -1,13 +1,16 @@
 ﻿using Abp.Domain.Repositories;
 using Abp.UI;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFCLPortal.Applications;
 using TFCLPortal.CoApplicantDetails;
 using TFCLPortal.FilesUploads.Dto;
+using TFCLPortal.FileTypes;
 using TFCLPortal.GuarantorDetails;
 
 namespace TFCLPortal.FilesUploads
@@ -18,14 +21,15 @@ namespace TFCLPortal.FilesUploads
         private readonly ICoApplicantDetailAppService _coApplicantDetailAppService;
         private readonly IGuarantorDetailAppService _guarantorDetailAppService;
         private readonly IApplicationAppService _applicationAppService;
+        private readonly IFileTypeAppService _fileTypeAppService;
 
-        public FilesUploadAppService(IRepository<FilesUpload, int> FilesUploadRepository, IApplicationAppService applicationAppService, IGuarantorDetailAppService guarantorDetailAppService, ICoApplicantDetailAppService coApplicantDetailAppService)
+        public FilesUploadAppService(IFileTypeAppService fileTypeAppService,IRepository<FilesUpload, int> FilesUploadRepository, IApplicationAppService applicationAppService, IGuarantorDetailAppService guarantorDetailAppService, ICoApplicantDetailAppService coApplicantDetailAppService)
         {
             _FilesUploadRepository = FilesUploadRepository;
             _applicationAppService = applicationAppService;
             _coApplicantDetailAppService = coApplicantDetailAppService;
             _guarantorDetailAppService = guarantorDetailAppService;
-
+            _fileTypeAppService = fileTypeAppService;
         }
 
         public async Task<string> CreateFilesUpload(CreateFileUploadDto Input)
@@ -90,12 +94,12 @@ namespace TFCLPortal.FilesUploads
 
                 foreach (var file in files)
                 {
-                    if(file.Fk_idForName!=0)
+                    if (file.Fk_idForName != 0)
                     {
                         if (file.ScreenCode.StartsWith("co_applicant"))
                         {
-                            var coapplicantFile=_coApplicantDetailAppService.GetCoApplicantDetailById(file.Fk_idForName).Result.FirstOrDefault();
-                            if(coapplicantFile!=null)
+                            var coapplicantFile = _coApplicantDetailAppService.GetCoApplicantDetailById(file.Fk_idForName).Result.FirstOrDefault();
+                            if (coapplicantFile != null)
                             {
                                 file.RespectiveName = coapplicantFile.FullName;
                             }
@@ -125,7 +129,7 @@ namespace TFCLPortal.FilesUploads
             try
             {
                 var filesList = _FilesUploadRepository.GetAllList().Where(x => x.ApplicationId == ApplicationId).ToList();
-                if (filesList.Count>0)
+                if (filesList.Count > 0)
                 {
                     return true;
                 }
@@ -168,5 +172,76 @@ namespace TFCLPortal.FilesUploads
             }
 
         }
+
+        public string footerstring(int applicationId)
+        {
+            try
+            {
+                int aFiles = 0, gFiles = 0, cFiles = 0, tFiles=0;
+
+                var files = GetFilesByApplicationId(applicationId);
+
+                if (files != null)
+                {
+                    aFiles = files.Where(x => x.ScreenCode.StartsWith("applicant")).Count();
+                    gFiles = files.Where(x => x.ScreenCode.StartsWith("guarantor")).Count();
+                    cFiles = files.Where(x => x.ScreenCode.StartsWith("co_applicant")).Count();
+                    tFiles = files.Count();
+                }
+
+
+                return "Applicant (" + aFiles + ") : Guarantor (" + gFiles + ") : Co-Applicant (" + cFiles + ") : Total Files (" + tFiles + ")";
+            }
+            catch
+            {
+                return "Applicant Files (0) : Guarantor Files (0) : Co-Applicant Files (0) : Total Files (0)";
+            }
+        }
+
+
+        public string UploadImagestoServer(UploadFile document, string uploadApplication, string rootPath)
+        {
+            string filenameRtn = "";
+            try
+            {
+                IFormFile image = document.UploadedFile;
+
+                string extension = System.IO.Path.GetExtension(image.FileName);
+
+
+
+                var fileType = _fileTypeAppService.GetById(document.FileTypeId);
+                var filename = fileType.Code;
+
+                var filePath = Path.Combine(uploadApplication, filename + "_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + extension);
+
+                CreateFileUploadDto createdocumentUpload = new CreateFileUploadDto();
+                createdocumentUpload.ApplicationId = document.ApplicationId;
+                createdocumentUpload.FileUrl = "uploads/" + document.ApplicationId + "/" + filename + "_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + extension;
+                createdocumentUpload.BaseUrl = rootPath + "/" + createdocumentUpload.FileUrl;
+                createdocumentUpload.ScreenCode = filename;
+                createdocumentUpload.Fk_idForName = document.ddrName;
+                createdocumentUpload.Comments = document.Description;
+                createdocumentUpload.UploadedBy = document.UploadedBy;
+                CreateFilesUpload(createdocumentUpload);
+
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+
+                filenameRtn = filename.Replace("_"," ");
+                return filenameRtn;
+
+            }
+            catch (Exception ex)
+            {
+                filenameRtn = "Error";
+                return filenameRtn;
+            }
+
+        }
+
     }
 }

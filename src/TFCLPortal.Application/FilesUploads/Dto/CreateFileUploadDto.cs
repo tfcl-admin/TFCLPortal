@@ -20,4 +20,14 @@ namespace TFCLPortal.FilesUploads.Dto
         public int? FileTypeId { get; set; }
         public string UploadedBy { get; set; }
     }
+
+    public class UploadFile
+    {
+        public int ApplicationId { get; set; }
+        public int FileTypeId { get; set; }
+        public int ddrName { get; set; }
+        public IFormFile UploadedFile { get; set; }
+        public string Description { get; set; }
+        public string UploadedBy { get; set; }
+    }
 }

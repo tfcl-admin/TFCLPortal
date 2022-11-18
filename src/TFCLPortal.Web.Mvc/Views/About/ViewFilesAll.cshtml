@@ -1,0 +1,557 @@
+﻿@{
+    ViewBag.CurrentPageName = "About"; // The menu item will be active for this page.
+    Layout = null;
+}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+
+<style>
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-body {
+        padding: 0.25rem;
+    }
+
+    .hoveringTag:hover {
+        cursor: pointer;
+        background-color: #8a8a8a80;
+    }
+
+    a {
+        text-decoration: none !important;
+    }
+
+    .title {
+        text-transform: capitalize;
+        font-size: 11px;
+        font-weight: bold;
+        color: black;
+        text-decoration: none;
+    }
+
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: #ddd;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #ccc;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+</style>
+<div class="tab_content" style="padding: 15px 20px">
+    <div class="row">
+        @if (ViewBag.OnWeb == 1)
+        {
+            <div class="col-md-12 text-right">
+                <a class="btn btn-success" href="/About/ViewFilesAll?ApplicationId=@ViewBag.Applicationid&&OnTab=3">Fullscreen</a>
+            </div>
+        }
+        @if (ViewBag.OnTab == 1)
+        {
+            <div class="col-md-12 text-right">
+                <a class="btn btn-primary" onclick="history.back()">Back</a>
+            </div>
+        }
+
+        <div class="col-md-12">
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'ApplicantFiles')">Applicant</button>
+                <button class="tablinks" onclick="openCity(event, 'BusinessFiles')">Business</button>
+                <button class="tablinks" onclick="openCity(event, 'BusinessIncomeFiles')">Income(s)</button>
+                <button class="tablinks" onclick="openCity(event, 'BusinessExpenseFiles')">Expense(s)</button>
+                <button class="tablinks" onclick="openCity(event, 'CollateralFiles')">Collateral</button>
+                <button class="tablinks" onclick="openCity(event, 'GuarantorFiles')">Guarantor</button>
+                <button class="tablinks" onclick="openCity(event, 'CoApplicantFiles')">Co-Applicant</button>
+                <button class="tablinks" onclick="openCity(event, 'SearchTab')">All Files</button>
+            </div>
+
+            <div id="ApplicantFiles" class="tabcontent">
+                <div class="ApplicantDiv"></div>
+            </div>
+
+            <div id="BusinessFiles" class="tabcontent">
+                <div class="BusinessDiv">No Files Found...</div>
+            </div>
+
+            <div id="GuarantorFiles" class="tabcontent">
+                <div class="GuarantorDiv">No Files Found...</div>
+            </div>
+
+            <div id="CoApplicantFiles" class="tabcontent">
+                <div class="CoApplicantDiv">No Files Found...</div>
+            </div>
+
+
+            <div id="CollateralFiles" class="tabcontent">
+                <div class="CollateralDiv">No Files Found...</div>
+            </div>
+
+            <div id="BusinessExpenseFiles" class="tabcontent">
+                <div class="BusinessExpenseDiv">No Files Found...</div>
+            </div>
+
+
+            <div id="BusinessIncomeFiles" class="tabcontent">
+                <div class="BusinessIncomeDiv">No Files Found...</div>
+            </div>
+
+            <div id="SearchTab" class="tabcontent" style="display:block">
+                <input type="text" class="form-control w-100 mb-3" placeholder="Type here to Search..." id="searchBox" />
+                <div class="SearchDiv"></div>
+            </div>
+
+        </div>
+
+        <div class="col-md-12">
+            <div class="ContentDiv"></div>
+        </div>
+    </div>
+
+
+</div>
+<script>
+
+        var resultFromAPI;
+
+        var onTab='@ViewBag.OnTab';
+
+            $(document).ready(function () {
+
+                var applicationid='@ViewBag.Applicationid';
+                       $('.SearchDiv').html("<p class='text-center'><img width='50px' src='/Theame/images/loader.gif'/> Loading ...</p>");
+
+                     $.ajax({
+                            type: 'GET',
+                            datatype: "json",
+                            contenttype: 'application/json; charset=utf-8',
+                            url: '@Url.Content("~/About/getFilesByApplicationId")',
+                            data: {'ApplicationId':applicationid} ,
+                            success: function (data) {
+                                if (data != null) {
+                                    console.log(data.result);
+                                    var result=data.result;
+                                    resultFromAPI=result;
+                                    displaySearch();
+                                }
+                                else
+                                    console.log(data);//abp.notify.error("Some error occure contact with admin..!", "error");
+                            },
+                            error: function (data) {
+                                console.log("Some error occure contact with admin..!");
+                                console.log(data);
+                            }
+                        });
+
+
+            });
+
+          function openCity(evt, tabName) {
+
+              callFuncs(tabName);
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        function callFuncs(tabName){
+            switch(tabName){
+                case 'ApplicantFiles': displayApplicantFiles(); break;
+                case 'BusinessFiles': displayBusinessFiles(); break;
+                case 'BusinessIncomeFiles': displayBusinessIncomeFiles(); break;
+                case 'BusinessExpenseFiles': displayBusinessExpenseFiles(); break;
+                case 'CollateralFiles': displayCollateralFiles(); break;
+                case 'GuarantorFiles': displayGuarantorFiles(); break;
+                case 'CoApplicantFiles': displayCoApplicantFiles(); break;
+                case 'SearchTab': displaySearch(); break;
+            }
+        }
+
+      function displayApplicantFiles() {
+        var html = "<div class='row'>";
+
+            resultFromAPI.filter(x=>x.screenCode=="applicant_photo").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            resultFromAPI.filter(x=>x.screenCode=="applicant_cnic_front").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            resultFromAPI.filter(x=>x.screenCode=="applicant_cnic_back").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+             resultFromAPI.filter(x=>x.screenCode=="ntn-atl_document").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="hh_rent_agreement").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+               resultFromAPI.filter(x=>x.screenCode=="dependent_fee_voucher").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            // resultFromAPI.filter(x=>!x.screenCode.includes("co_applicant")).filter(x=>x.screenCode!="applicant_school_front_view").filter(x=>x.screenCode!="applicant_school_inner_view").filter(x=>x.screenCode!="dependent_fee_voucher").filter(x=>x.screenCode!="applicant_photo").filter(x=>x.screenCode!="applicant_cnic_front").filter(x=>x.screenCode!="applicant_cnic_back").filter(x=>x.screenCode!="ntn-atl_document").filter(x=>x.screenCode!="hh_rent_agreement").filter(x=>x.screenCode.includes("applicant")).forEach(function(item) {
+            //    html+=getCard(item);
+            //});
+
+            
+            html += "</div>";
+
+        $('.ApplicantDiv').html(html);
+    };
+        function displayBusinessFiles(){
+        
+            var html = "<div class='row'>";
+            
+            resultFromAPI.filter(x=>x.screenCode=="business_main_front_view").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            resultFromAPI.filter(x=>x.screenCode=="business_proof_document").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            resultFromAPI.filter(x=>x.screenCode=="applicant_school_reg_certification").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+             resultFromAPI.filter(x=>x.screenCode=="applicant_school_affiliation").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="applicant_mou_of_franchise").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="applicant_school_front_view").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="applicant_school_inner_view").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="applicant_stock_view").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="applicant_rent_agreement").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="applicant_partnership_documents").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+
+            // resultFromAPI.filter(x=>x.screenCode!="applicant_photo").filter(x=>x.screenCode!="applicant_cnic_front").filter(x=>x.screenCode!="applicant_cnic_back").filter(x=>x.screenCode!="ntn-atl_document").filter(x=>x.screenCode!="hh_rent_agreement").filter(x=>x.screenCode.includes("applicant")).forEach(function(item) {
+            //    html+=getCard(item);
+            //});
+
+            
+            html += "</div>";
+
+        $('.BusinessDiv').html(html);
+        }
+        function displayBusinessIncomeFiles(){
+           var html = "<div class='row'>";
+            
+            resultFromAPI.filter(x=>x.screenCode=="ei_student_strength_(voucher)").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            resultFromAPI.filter(x=>x.screenCode=="ei_student_attendance").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            resultFromAPI.filter(x=>x.screenCode=="ei_fee_register").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+             resultFromAPI.filter(x=>x.screenCode=="ei_fee_voucher").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+             resultFromAPI.filter(x=>x.screenCode=="sales_voucher").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+             resultFromAPI.filter(x=>x.screenCode=="academy_student_attendance").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            
+             resultFromAPI.filter(x=>x.screenCode=="academy_fee_register").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+                resultFromAPI.filter(x=>x.screenCode=="canteen_income_document").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="annual_fund").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="copies_income").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="books_income").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="test_session_income").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="uniform_income").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="admission_charges").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="non-associated_income_document").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+
+            html += "</div>";
+
+        $('.BusinessIncomeDiv').html(html);
+        }
+        function displayBusinessExpenseFiles(){
+          var html = "<div class='row'>";
+            
+            resultFromAPI.filter(x=>x.screenCode=="staff_salary_document").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            resultFromAPI.filter(x=>x.screenCode=="staff_attendance_register").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            resultFromAPI.filter(x=>x.screenCode=="royalty_fee_voucher").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+             resultFromAPI.filter(x=>x.screenCode=="applicant_utility_bil_one").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="utility_bill_household").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="bank_statement").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            html += "</div>";
+
+        $('.BusinessExpenseDiv').html(html);
+        }
+        function displayCollateralFiles(){
+               
+            var html = "<div class='row'>";
+            
+            resultFromAPI.filter(x=>x.screenCode=="ownership_document").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            resultFromAPI.filter(x=>x.screenCode=="valuation_certificate").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            resultFromAPI.filter(x=>x.screenCode=="collateral_all").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+             resultFromAPI.filter(x=>x.screenCode=="collateral_all_documents").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            html += "</div>";
+
+        $('.CollateralDiv').html(html);
+        }
+        function displayGuarantorFiles(){
+          var html = "<div class='row'>";
+            
+            resultFromAPI.filter(x=>x.screenCode=="guarantor_photo").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            resultFromAPI.filter(x=>x.screenCode=="guarantor_cnic_front").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            resultFromAPI.filter(x=>x.screenCode=="guarantor_cnic_back").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+             resultFromAPI.filter(x=>x.screenCode=="guarantor_salary_slip").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="guarantor_business_related_documents").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="guarantor_utility_bill").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="guarantor_others_one").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="guarantor_others_two").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="guarantor_others_three").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+              resultFromAPI.filter(x=>x.screenCode=="guarantor_others_four").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            
+            html += "</div>";
+
+        $('.GuarantorDiv').html(html);
+        }
+        function displayCoApplicantFiles(){
+         var html = "<div class='row'>";
+            
+            resultFromAPI.filter(x=>x.screenCode=="co_applicant_photo").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            resultFromAPI.filter(x=>x.screenCode=="co_applicant_cnic_front").forEach(function(item) {
+                html+=getCard(item);
+            });
+
+            resultFromAPI.filter(x=>x.screenCode=="co_applicant_cnic_back").forEach(function(item) {
+                html+=getCard(item);
+            });
+            
+            html += "</div>";
+
+        $('.CoApplicantDiv').html(html);
+        }
+        function displaySearch(){
+         var html = "<div class='row'>";
+            resultFromAPI.forEach(function(item) {
+                html+=getCard(item);
+            });
+            html += "</div>";
+
+            $('.SearchDiv').html(html);
+        }
+
+
+
+        function getCard(item)
+        {
+            var html="";
+             html+="<div class='col-md-2 text-center mt-2'>";
+            html+="<div class='card'>";
+            html+="<a href='"+item.baseUrl+"' target='_blank'  class='hoveringTag'>";
+            html+="<div class='card-body'>";
+
+            if(item.fileUrl.includes('.jpg')||item.fileUrl.includes('.jpeg')||item.fileUrl.includes('.png'))
+            {
+                html+="<img src='"+item.baseUrl+"'/></p>";
+            }
+            else if(item.fileUrl.includes('.xls')||item.fileUrl.includes('.xlsx'))
+            {
+                html+="<img src='../../images/excel.png'/></p>";
+            }
+            else if(item.fileUrl.includes('.pdf'))
+            {
+                html+="<img src='../../images/pdf.png'/></p>";
+            }
+            else{
+                html+="<img src='../../images/file.png'/></p>";
+            }
+            html+="<p class='title'>"+item.screenCode.replaceAll('_',' ')+"</p>";
+
+            if(onTab==1)
+            {
+            html+="<a href='../About/DeleteFile?id="+item.id+"&&AppicationId="+item.applicationId+"&&UploadedBy="+item.uploadedBy+"' onclick='return confirm(\"Are you sure to delete document?\")' style='font-size:10px; color:red'><i class='fa fa-trash'></i> Delete</a>";
+            }
+            //html+="<p class='title'>Upload Date : "+(item.lastModificationTime==null ? moment(item.creationTime).format('DD MMM YYYY HH:mm ') : moment(item.lastModificationTime).format('dd'))+"</p>";
+
+            html+="</div>";
+            html+="</a>";
+            html+="</div>";
+            html+="</div>";
+
+            return html;
+        }
+
+
+        
+
+        $("#searchBox").keyup(function(){
+         ;
+
+           var html = "<div class='row'>";
+            resultFromAPI.filter(x=>x.screenCode.replaceAll('_',' ').includes($("#searchBox").val().toLowerCase())).forEach(function(item) {
+                html+=getCard(item);
+            });
+            html += "</div>";
+
+            $('.SearchDiv').html(html);
+        });
+
+</script>

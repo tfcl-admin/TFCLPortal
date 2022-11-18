@@ -17,6 +17,7 @@ using System.Text;
 using TFCLPortal.GuarantorDetails;
 using TFCLPortal.CoApplicantDetails;
 using System.Collections.Generic;
+using TFCLPortal.FileTypes.Dto;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -41,43 +42,17 @@ namespace TFCLPortal.Web.Controllers
             ViewBag.UploadedBy = u;
             ViewBag.Msg = Message;
             ViewBag.MsgCSS = MsgCSS;
-            var getFileUploads = _filesUploadAppService.GetFilesByApplicationId(id);
+            var footerstring = _filesUploadAppService.footerstring(id);
 
-            ViewBag.totalFiles = getFileUploads.Count;
+            ViewBag.footerstring = footerstring;
 
             var FileTypes = _fileTypeAppService.GetAllList();
 
             FileUploadModel model = new FileUploadModel();
-            model.filesUploads = getFileUploads;
+            //model.filesUploads = getFileUploads;
+            model.ApplicationId = id;
             model.fileTypes = FileTypes;
-
-            List<GuarantorCoApplicant> guarantorCoApplicant = new List<GuarantorCoApplicant>();
-
-            var guarantors = _guarantorDetailAppService.GetGuarantorDetailByApplicationId(id).Result;
-            if (guarantors != null)
-            {
-                foreach(var guarantor in guarantors)
-                {
-                    GuarantorCoApplicant ga = new GuarantorCoApplicant();
-                    ga.Id = guarantor.Id;
-                    ga.Name = guarantor.FullName + " (Guarantor)";
-                    guarantorCoApplicant.Add(ga);
-                }
-            }
-
-            var coapplicants = _coApplicantDetailAppService.GetCoApplicantDetailByApplicationId(id).Result;
-            if (coapplicants != null)
-            {
-                foreach (var coapplicant in coapplicants)
-                {
-                    GuarantorCoApplicant ga = new GuarantorCoApplicant();
-                    ga.Id = coapplicant.Id;
-                    ga.Name = coapplicant.FullName + " (Co-Applicant)";
-                    guarantorCoApplicant.Add(ga);
-                }
-            }
-
-            model.GuarantorCoApplicants = guarantorCoApplicant;
+            model.GuarantorCoApplicants = _fileTypeAppService.GetGuarantorCoApplicants(id);
 
 
             return View(model);
@@ -87,7 +62,45 @@ namespace TFCLPortal.Web.Controllers
         {
             return View();
         }
-        
+
+        public ActionResult ViewFiles(int ApplicationId)
+        {
+            ViewBag.Applicationid = ApplicationId;
+            ViewBag.OnTab = 1;
+
+            return View();
+        }
+        public ActionResult ViewFilesAll(int ApplicationId,int OnTab)
+        {
+            ViewBag.Applicationid = ApplicationId;
+            
+            if(OnTab == 1)
+            {
+                ViewBag.OnTab = 1;
+            }
+            else if(OnTab==0)
+            {
+                ViewBag.OnWeb = 1;
+            }
+
+            return View();
+        }
+        public JsonResult getFilesByApplicationId(int ApplicationId)
+        {
+            var result = _filesUploadAppService.GetFilesByApplicationId(ApplicationId);
+            return Json(result);
+        }
+        //[HttpPost]
+        public IActionResult ReturnPartialView(int ApplicationId)
+        {
+            ViewBag.UploadedDocumentsAction = "Hide";
+
+
+            var data = _filesUploadAppService.GetFilesByApplicationId(ApplicationId);
+
+            return PartialView("_attachDocuments", data);
+        }
+
         public ActionResult Entries()
         {
             return View();
@@ -199,11 +212,11 @@ namespace TFCLPortal.Web.Controllers
             {
                 if (documentUpload.UploadedFile.Length < 5242880)
                 {
-                    bool check = UploadImagestoServer(documentUpload, uploadApplication, rootPath);
+                    string check = _filesUploadAppService.UploadImagestoServer(documentUpload, uploadApplication, rootPath);
 
-                    if (check)
+                    if (check != "" && check != "Error")
                     {
-                        Message = "File Uploaded Successfully.";
+                        Message = check+" Uploaded Successfully.";
                         MsgCSS = "text-green";
                     }
                     else
@@ -231,17 +244,7 @@ namespace TFCLPortal.Web.Controllers
 
             return RedirectToAction("Index", new { id = AppicationId, u = documentUpload.UploadedBy, Message = Message, MsgCSS = MsgCSS });
         }
-        //private static Regex r = new Regex(":");
-        //public static DateTime GetDateTakenFromImage(string path)
-        //{
-        //    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-        //    using (Image myImage = Image.FromStream(fs, false, false))
-        //    {
-        //        PropertyItem propItem = myImage.GetPropertyItem(36867);
-        //        string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
-        //        return DateTime.Parse(dateTaken);
-        //    }
-        //}
+
         private bool UploadImagestoServer(UploadFile document, string uploadApplication, string rootPath)
         {
             try

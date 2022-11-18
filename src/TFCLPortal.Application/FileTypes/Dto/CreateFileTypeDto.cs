@@ -13,4 +13,10 @@ namespace TFCLPortal.FileTypes.Dto
         public string Title { get; set; }
         public string Code { get; set; }
     }
+
+    public class GuarantorCoApplicant
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }

@@ -5,17 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TFCLPortal.CoApplicantDetails;
 using TFCLPortal.FileTypes.Dto;
+using TFCLPortal.GuarantorDetails;
 
 namespace TFCLPortal.FileTypes
 {
     public class FileTypeAppService : TFCLPortalAppServiceBase, IFileTypeAppService
     {
         private readonly IRepository<FileType, int> _FileTypeRepository;
+        private readonly IGuarantorDetailAppService _guarantorDetailAppService;
+        private readonly ICoApplicantDetailAppService _coApplicantDetailAppService;
 
-        public FileTypeAppService(IRepository<FileType, int> FileTypeRepository)
+        public FileTypeAppService(ICoApplicantDetailAppService coApplicantDetailAppService,IRepository<FileType, int> FileTypeRepository, IGuarantorDetailAppService guarantorDetailAppService)
         {
+            _guarantorDetailAppService = guarantorDetailAppService;
             _FileTypeRepository = FileTypeRepository;
+            _coApplicantDetailAppService = coApplicantDetailAppService;
         }
         public async Task<string> CreateFilesType(CreateFileTypeDto Input)
         {
@@ -85,6 +91,43 @@ namespace TFCLPortal.FileTypes
             catch (Exception ex)
             {
                 throw new UserFriendlyException(L("GetMethodError{0}", "File Type"));
+            }
+        }
+
+        public List<GuarantorCoApplicant> GetGuarantorCoApplicants(int ApplicationId)
+        {
+            try
+            {
+                List<GuarantorCoApplicant> guarantorCoApplicant = new List<GuarantorCoApplicant>();
+                var guarantors = _guarantorDetailAppService.GetGuarantorDetailByApplicationId(ApplicationId).Result;
+                if (guarantors != null)
+                {
+                    foreach (var guarantor in guarantors)
+                    {
+                        GuarantorCoApplicant ga = new GuarantorCoApplicant();
+                        ga.Id = guarantor.Id;
+                        ga.Name = guarantor.FullName + " (Guarantor)";
+                        guarantorCoApplicant.Add(ga);
+                    }
+                }
+
+                var coapplicants = _coApplicantDetailAppService.GetCoApplicantDetailByApplicationId(ApplicationId).Result;
+                if (coapplicants != null)
+                {
+                    foreach (var coapplicant in coapplicants)
+                    {
+                        GuarantorCoApplicant ga = new GuarantorCoApplicant();
+                        ga.Id = coapplicant.Id;
+                        ga.Name = coapplicant.FullName + " (Co-Applicant)";
+                        guarantorCoApplicant.Add(ga);
+                    }
+                }
+                return guarantorCoApplicant;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

@@ -13,5 +13,7 @@ namespace TFCLPortal.FileTypes
         string DeleteFileType(int Id);
         List<FileTypeListDto> GetAllList();
         FileTypeListDto GetById(int Id);
+
+        List<GuarantorCoApplicant> GetGuarantorCoApplicants(int ApplicationId);
     }
 }

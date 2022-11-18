@@ -1826,6 +1826,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
                     var data = _FilesUploadAppService.GetFilesByApplicationId(ApplicationId);
                     //return RedirectToAction("DocumentUpload");
                     return PartialView("_attachDocuments", data);
+                    //return RedirectToAction("ViewFilesAll", "About", new { ApplicationId= ApplicationId }) ;
                 }
                 else if (viewName == "LOAN ELIGIBILITY")
                 {

@@ -12,8 +12,10 @@ namespace TFCLPortal.FilesUploads
         Task<string> CreateFilesUpload (CreateFileUploadDto Input);
         FilesUploadListDto GetFileByScreenCode(int applicationId,string ScreenCode);
         string UpdateFile(int applicationId, string ScreenCode);
+        string footerstring(int applicationId);
         List<FilesUploadListDto> GetFilesByApplicationId(int ApplicationId);
         bool DeleteFileById(int Id);
         bool CheckFilesByApplicationId(int ApplicationId);
+        string UploadImagestoServer(UploadFile document, string uploadApplication, string rootPath);
     }
 }

@@ -1,8 +1,12 @@
 ﻿@using TFCLPortal.Web.Startup
 @model TFCLPortal.Web.Models.UploadFiles.FileUploadModel
 
-@{int index = 1;}
-@{Random rnd = new Random();}
+@{
+    int index = 1;
+}
+@{
+    Random rnd = new Random();
+}
 
 @{
     ViewBag.CurrentPageName = PageNames.About; // The menu item will be active for this page.
@@ -23,12 +27,23 @@
     .progress-bar {
         background-color: #20a756;
     }
+
+    .blink_me {
+        animation: blinker 1s linear infinite;
+        color: blue;
+    }
+
+    @@keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+    }
 </style>
-<div class="tab_content" style="padding: 15px 20px">
+<div class="tab_content" style="padding: 3px 4px">
     <div class="row">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-8 pt-5">
+        @* <div class="col-md-2">
+            </div>*@
+        <div class="col-md-12">
 
             <!--<form action="/About/UploadFile" method="post" enctype="multipart/form-data">-->
 
@@ -39,7 +54,7 @@
                         @*<h5 class="card-title text-center">Submit File for Application ID : @ViewBag.Appid</h5>*@
                         <input type="hidden" value="@ViewBag.Appid" id="ApplicationId" name="ApplicationId" />
                         <input type="hidden" value="@ViewBag.UploadedBy" id="UploadedBy" name="UploadedBy" />
-                        <p class="text-center @ViewBag.MsgCSS">@ViewBag.Msg</p>
+                        <p class="text-center @ViewBag.MsgCSS text-capitalize">@ViewBag.Msg</p>
                         <div class="row">
                             <div class="col-md-4  p-2">
                                 <img src="~/images/icons/no-img.png" id="imagePreview" />
@@ -57,11 +72,11 @@
                                             </select>
                                         </div>
                                         <div class="col-md-12 pt-3">
-                                            <label for="file"><strong>Choose File : </strong></label>
+                                            <label for="file" id="chooseFileText"><strong>Choose File : </strong></label>
                                             <input type="file" id="UploadedFile" name="UploadedFile" onchange="readURL(this);" />
                                         </div>
                                         <div class="col-md-12">
-                                            <label for=""><strong>Select Name : </strong></label>
+                                            <label for="" id="nameText"><strong>Select Name : </strong></label>
                                             <select id="ddrName" name="ddrName" class="form-control">
                                                 @foreach (var item in Model.GuarantorCoApplicants)
                                                 {
@@ -78,7 +93,24 @@
                             </div>
 
                             <div class="col-md-12 text-right">
-                                <button class="card-link btn btn-outline-success" type="submit" style="width:100%">Upload</button>
+                                <button id="submitbtn" class="card-link btn btn-outline-success" type="submit" style="width:100%">Upload</button>
+                                <div id="progress" class="progress d-none">
+                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                 <div id="progressWait" class="d-none text-center">
+                                     <p class="blink_me">Please Wait...</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 text-right mt-5">
+                                <a class="card-link btn btn-outline-warning" style="width:100%" onClick="window.location='/About/ViewFilesAll?ApplicationId=@Model.ApplicationId&&OnTab=1'"> <i class="fa fa-files-o"></i> Docs</a>
+                                @*<a class="card-link btn btn-outline-warning" style="width:100%" onClick="window.location='/About/ViewFiles?ApplicationId=@Model.ApplicationId'"> <i class="fa fa-files-o"></i> Docs</a>*@
+                            </div>
+                            <div class="col-md-8 text-center mt-5">
+                                @ViewBag.footerstring
+                            </div>
+                            <div class="col-md-2 text-right mt-5">
+                                <a class="card-link btn btn-outline-success" style="width:100%" onClick="window.location.reload();"> <i class="fa fa-refresh"></i> Reload</a>
                             </div>
 
                         </div>
@@ -86,171 +118,7 @@
                 </div>
             </form>
 
-            @if (Model.filesUploads != null)
-            {
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row" style="margin-bottom:5px">
 
-                            @*<div class="col-md-12 pb-3 text-center">
-                            <p><span id="uploadedFiles">@Model.Count</span> /<span id="totalFiles"></span> files uploaded.</p>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success" id="the-progress-bar" role="progressbar" aria-valuenow="0"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                                </div>
-
-                            </div>
-                        </div>*@
-
-                            <div class="col-md-12 text-center">
-                                <u>Applicant Files</u>
-                            </div>
-                            @foreach (var item in Model.filesUploads.Where(x => x.ScreenCode.StartsWith("applicant")))
-                            {
-                                <div class="col-md-3 text-center">
-                                    <div class="card">
-                                        <div class="card-body" style="padding:0px">
-
-                                            @{index = rnd.Next();}
-                                            @if (item.FileUrl.Contains(".pdf"))
-                                            {
-                                                <a href="~/@item.FileUrl"><img src="~/images/pdfimg.png" width="100px" style="max-height:150px" /></a>
-                                            }
-                                            else
-                                            {
-                                                <a href="~/@item.FileUrl?dummy=@index">
-                                                    <img src="~/@item.FileUrl?dummy=@index" width="100%" />
-                                                </a>
-                                            }
-                                        </div>
-                                        <div class="card-footer" style="padding:0px">
-                                            <div class="text-capitalize">
-                                                @item.ScreenCode.Replace("_", " ")
-                                                <p style="font-size:10px; color:gray;">@item.RespectiveName</p>
-                                            </div>
-                                            <a href="~/About/DeleteFile?id=@item.Id&&AppicationId=@item.ApplicationId&&UploadedBy=@item.UploadedBy" onclick="return confirm('Are you sure to delete document?')" style="font-size:10px; color:red"><i class="fa fa-trash"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            }
-                        </div>
-                        <div class="row" style="margin-bottom:5px">
-
-                            <div class="col-md-12 text-center">
-                                <u>Guarantor Files</u>
-                            </div>
-                            @foreach (var item in Model.filesUploads.Where(x => x.ScreenCode.StartsWith("guarantor")))
-                            {
-
-                                <div class="col-md-3 text-center">
-                                    <div class="card">
-                                        <div class="card-body" style="padding:0px">
-
-                                            @{index = rnd.Next();}
-                                            @if (item.FileUrl.Contains(".pdf"))
-                                            {
-                                                <a href="~/@item.FileUrl"><img src="~/images/pdfimg.png" width="100px" style="max-height:150px" /></a>
-                                            }
-                                            else
-                                            {
-                                                <a href="~/@item.FileUrl?dummy=@index">
-                                                    <img src="~/@item.FileUrl?dummy=@index" width="100%" />
-                                                </a>
-                                            }
-                                        </div>
-                                        <div class="card-footer" style="padding:0px">
-                                            <div class="text-capitalize">
-                                                @item.ScreenCode.Replace("_", " ")
-                                                <p style="font-size:10px; color:gray;">@item.RespectiveName</p>
-                                            </div>
-                                            <a href="~/About/DeleteFile?id=@item.Id&&AppicationId=@item.ApplicationId&&UploadedBy=@item.UploadedBy" onclick="return confirm('Are you sure to delete document?')" style="font-size:10px; color:red"><i class="fa fa-trash"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            }
-                        </div>
-                        <div class="row" style="margin-bottom:5px">
-
-                            <div class="col-md-12 text-center">
-                                <u>Co-Applicant Files</u>
-                            </div>
-                            @foreach (var item in Model.filesUploads.Where(x => x.ScreenCode.StartsWith("co_applicant")))
-                            {
-
-                                <div class="col-md-3 text-center">
-                                    <div class="card">
-                                        <div class="card-body" style="padding:0px">
-
-                                            @{index = rnd.Next();}
-                                            @if (item.FileUrl.Contains(".pdf"))
-                                            {
-                                                <a href="~/@item.FileUrl"><img src="~/images/pdfimg.png" width="100px" style="max-height:150px" /></a>
-                                            }
-                                            else
-                                            {
-                                                <a href="~/@item.FileUrl?dummy=@index">
-                                                    <img src="~/@item.FileUrl?dummy=@index" width="100%" />
-                                                </a>
-                                            }
-                                        </div>
-                                        <div class="card-footer" style="padding:0px">
-                                            <div class="text-capitalize">
-                                                @item.ScreenCode.Replace("_", " ")
-                                                <p style="font-size:10px; color:gray;">@item.RespectiveName</p>
-                                            </div>
-                                            <a href="~/About/DeleteFile?id=@item.Id&&AppicationId=@item.ApplicationId&&UploadedBy=@item.UploadedBy" onclick="return confirm('Are you sure to delete document?')" style="font-size:10px; color:red"><i class="fa fa-trash"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            }
-                        </div>
-                        <div class="row" style="margin-bottom:5px">
-
-                            <div class="col-md-12 text-center">
-                                <u>Collateral Files</u>
-                            </div>
-                            @foreach (var item in Model.filesUploads.Where(x => x.ScreenCode.StartsWith("collateral")))
-                            {
-
-                                <div class="col-md-3 text-center">
-                                    <div class="card">
-                                        <div class="card-body" style="padding:0px">
-
-                                            @{index = rnd.Next();}
-                                            @if (item.FileUrl.Contains(".pdf"))
-                                            {
-                                                <a href="~/@item.FileUrl"><img src="~/images/pdfimg.png" width="100px" style="max-height:150px" /></a>
-                                            }
-                                            else
-                                            {
-                                                <a href="~/@item.FileUrl?dummy=@index">
-                                                    <img src="~/@item.FileUrl?dummy=@index" width="100%" />
-                                                </a>
-                                            }
-                                        </div>
-                                        <div class="card-footer" style="padding:0px">
-                                            <div class="text-capitalize">
-                                                @item.ScreenCode.Replace("_", " ")
-                                                <p style="font-size:10px; color:gray;">@item.RespectiveName</p>
-                                            </div>
-                                            <a href="~/About/DeleteFile?id=@item.Id&&AppicationId=@item.ApplicationId&&UploadedBy=@item.UploadedBy" onclick="return confirm('Are you sure to delete document?')" style="font-size:10px; color:red"><i class="fa fa-trash"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-
-
-
-                        </div>
-                    </div>
-                </div>
-            }
-            <a class="card-link btn btn-outline-success" style="width:100%" onClick="window.location.reload();"> <i class="fa fa-refresh"></i> Reload</a>
 
         </div>
     </div>
@@ -260,13 +128,50 @@
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
+             var extension = input.files[0].type;
             reader.onload = function (e) {
+             extension=extension.replace(/(.*)\//g, '');
+                 console.log(extension);
+
+             if(extension.includes('sheet'))
+             {
+                $('#imagePreview').attr('src', '../../images/excel.png').css('width', '100%');
+             }
+             else if(extension.includes('pdf'))
+             {
+                $('#imagePreview').attr('src', '../../images/pdf.png').css('width', '100%');
+             }
+             else{
                 $('#imagePreview').attr('src', e.target.result).css('width', '100%');
+             }
             };
 
             reader.readAsDataURL(input.files[0]);
+             $('#chooseFileText').removeClass("blink_me");
+
+
         }
+    }
+
+    var progressval=0;
+    $('#submitbtn').click(function(){
+        $('#submitbtn').addClass('d-none');
+        $('#progress').removeClass('d-none');
+
+        setInterval(updateProgress,100);
+
+        //alert('test')
+    });
+    //updateProgress();
+    function updateProgress(){
+        //alert(progressval);
+        progressval+=1;
+         $('.progress-bar').css("width", progressval+"%");
+
+         if(progressval>=100)
+         {
+             $('#progressWait').removeClass('d-none');
+         }
     }
 
     $(document).ready(function () {
@@ -275,78 +180,30 @@
             var optionSelected = $(this).find("option:selected");
             var textSelected = optionSelected.text();
             if (textSelected.includes('Guarantor')) {
+                $('#nameText').removeClass("blink_me");
                 $('#ddrName').attr("disabled", false);
+                $('#nameText').addClass("blink_me");
             }
             else if (textSelected.includes('Co-Applicant')) {
+                $('#nameText').removeClass("blink_me");
+                $('#nameText').addClass("blink_me");
                 $('#ddrName').attr("disabled", false);
             }
             else {
                 $('#ddrName').attr("disabled", true);
                 $('#ddrName').val(0);
+                $('#nameText').removeClass("blink_me");
             }
+
+
+                $('#chooseFileText').removeClass("blink_me");
+                $('#chooseFileText').addClass("blink_me");
+
+
         });
 
         $('#ddrName').attr("disabled", true);
         $('#ddrName').val(0);
-
-
-
-        @*$.ajax({
-            type: 'GET',
-            datatype: "json",
-            contenttype: 'application/json; charset=utf-8',
-            url: '@Url.Content("~/About/FetchFileTypes")',
-            data: {},
-            success: function (data) {
-
-                //console.log(data.result);
-                var i = 0;
-
-                $.each(data.result, function (index, item) { // item is now an object containing properties ID and Text
-                    i++;
-                    $('#FileTypeId').append($('<option></option>').text(item.category+" : "+item.title).val(item.id));
-                });
-
-                $('#totalFiles').html("&nbsp;" + i + "&nbsp;");
-
-                var percentage = (Number($('#uploadedFiles').text())/i) * 100;
-                $('#the-progress-bar').attr('aria-valuenow', percentage).css('width', percentage + '%');
-            },
-            error: function () {
-                alert("Error While Populating the Dropdown");
-            }
-        });*@
-
-        @*$('#FileTypeId').change(function () {
-            var optionSelected = $(this).find("option:selected");
-            var textSelected = optionSelected.text();
-            var currentAppId = $('#ApplicationId').val();
-            //alert(textSelected);
-            $('#ddrName').html("");
-             $.ajax({
-            type: 'GET',
-            datatype: "json",
-            contenttype: 'application/json; charset=utf-8',
-            url: '@Url.Content("~/About/FetchNames")',
-                 data: {
-                     'selectedText': textSelected, 'applicationId': currentAppId
-                    },
-            success: function (data) {
-
-                console.log(data.result.result);
-
-                $.each(data.result.result, function (index, item) { // item is now an object containing properties ID and Text
-                    $('#ddrName').append($('<option></option>').text(item.fullName).val(item.id));
-                });
-            },
-            error: function () {
-                alert("Error While Populating the Dropdown");
-            }
-        });
-
-
-
-        });*@
 
     });
 

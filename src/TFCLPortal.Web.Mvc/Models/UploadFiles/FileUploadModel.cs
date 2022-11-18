@@ -9,15 +9,16 @@ namespace TFCLPortal.Web.Models.UploadFiles
 {
     public class FileUploadModel
     {
+        public int ApplicationId { get; set; }
         public List<FilesUploadListDto> filesUploads { get; set; }
         public List<FileTypeListDto> fileTypes { get; set; }
         public List<GuarantorCoApplicant> GuarantorCoApplicants{ get; set; }
     }
 
-    public class GuarantorCoApplicant
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+    //public class GuarantorCoApplicant
+    //{
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //}
 
 }
