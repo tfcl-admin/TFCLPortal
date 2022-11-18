@@ -287,8 +287,15 @@ namespace TFCLPortal.CustomerAccounts
             {
                 var app = _applicationAppService.GetApplicationById(ApplicationId);
                 var CustomerAccount = _CustomerAccountRepository.GetAllList(x=>x.CNIC==app.CNICNo).FirstOrDefault();
+                var result = ObjectMapper.Map<CustomerAccountListDto>(CustomerAccount);
 
-                return ObjectMapper.Map<CustomerAccountListDto>(CustomerAccount);
+                if (result != null)
+                {
+                    result.transactions = _transactionAppService.GetTransactionByAccountId(result.Id);
+                }
+
+
+                return result;
             }
             catch (Exception ex)
             {

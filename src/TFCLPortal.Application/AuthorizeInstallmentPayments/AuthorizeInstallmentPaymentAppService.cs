@@ -443,7 +443,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                             actualPayment -= totalPaidForThisInst;
                         }
 
-                        if(actualPayment < markupForThisInstallment)
+                        if (actualPayment < markupForThisInstallment)
                         {
                             string n1 = "Partial Markup Collection Inst No # " + scheduleInstallment.InstNumber;
                             _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, actualPayment, n1, payment.ModeOfPayment);
@@ -469,9 +469,15 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                         {
                             excessShortForLastPaidInstallment *= -1;
 
-                            string n1 = "Previous Installment Deduction";
-                            _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n1, payment.ModeOfPayment);
-                            actualPayment -= excessShortForLastPaidInstallment;
+                            var matchingTransactions = acc.transactions.Where(x => x.Amount == excessShortForLastPaidInstallment && x.Details.Contains("Previous Installment Deduction")).ToList();
+                            if (matchingTransactions.Count == 0)
+                            {
+                                string n1 = "Previous Installment Deduction";
+                                _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n1, payment.ModeOfPayment);
+                                actualPayment -= excessShortForLastPaidInstallment;
+                                markupForThisInstallment -= excessShortForLastPaidInstallment;
+                            }
+                          
                         }
 
                         string n2 = "Markup Collection Inst No # " + scheduleInstallment.InstNumber;
@@ -501,32 +507,17 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                                 {
                                     string n1 = "Principal Collection Inst No # " + scheduleInstallment.InstNumber;
                                     _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, principalForThisInstallment, n1, payment.ModeOfPayment);
-                        _scheduleAppService.SetPaid(scheduleInstallment.Id, "Principal", payment.DepositDate);
+                                    _scheduleAppService.SetPaid(scheduleInstallment.Id, "Principal", payment.DepositDate);
                                     actualPayment -= principalForThisInstallment;
                                 }
                                 else
                                 {
                                     string n1 = "Markup Collection Inst No # " + scheduleInstallment.InstNumber;
                                     _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, actualPayment, n1, payment.ModeOfPayment);
-                        _scheduleAppService.SetPaid(scheduleInstallment.Id, "Markup", payment.DepositDate);
+                                    _scheduleAppService.SetPaid(scheduleInstallment.Id, "Markup", payment.DepositDate);
                                     actualPayment = 0;
                                 }
 
-
-                                //if (scheduleInstallment.isPrincipalPaid = true)
-                                //{
-                                //    if (actualPayment > 0 && (principalForThisInstallment + markupForThisInstallment) < Decimal.Parse(scheduleInstallment.installmentAmount))
-                                //    {
-                                //        decimal amountToDeduct = Decimal.Parse(scheduleInstallment.installmentAmount) - (principalForThisInstallment + markupForThisInstallment);
-                                //        //var accupdate2 = _customerAccountAppAppService.GetCustomerAccountByApplicationId(payment.ApplicationId);
-                                //        if (scheduleInstallment.InstNumber == "1")
-                                //        {
-                                //            string n1 = "Grace Days Markup Collection";
-                                //            _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, amountToDeduct, n1, payment.ModeOfPayment);
-                                //            actualPayment -= amountToDeduct;
-                                //        }
-                                //    }
-                                //}
                             }
                             else
                             {
@@ -549,13 +540,21 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                         {
                             excessShortForLastPaidInstallment *= -1;
 
-                            string n2 = "Previous Installment Deduction";
-                            _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n2, payment.ModeOfPayment);
-                            actualPayment -= excessShortForLastPaidInstallment;
+                            var matchingTransactions = acc.transactions.Where(x => x.Amount == excessShortForLastPaidInstallment && x.Details.Contains("Previous Installment Deduction")).ToList();
+                            if (matchingTransactions.Count==0)
+                            {
+                                string n2 = "Previous Installment Deduction";
+                                _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n2, payment.ModeOfPayment);
+                                actualPayment -= excessShortForLastPaidInstallment;
+                                payment.Amount -= excessShortForLastPaidInstallment;
+                            }
                         }
 
-                        string n1 = "Partial Markup Collection Inst No # " + scheduleInstallment.InstNumber;
-                        _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, payment.Amount, n1, payment.ModeOfPayment);
+                        if (payment.Amount > 0)
+                        {
+                            string n1 = "Partial Markup Collection Inst No # " + scheduleInstallment.InstNumber;
+                            _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, payment.Amount, n1, payment.ModeOfPayment);
+                        }
                         //actualPayment -= markupForThisInstallment;
                     }
                 }
@@ -563,12 +562,12 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                 {
                     actualPayment -= markupForThisInstallment;
 
-                    if(scheduleInstallment.InstNumber=="1")
+                    if (scheduleInstallment.InstNumber == "1")
                     {
                         var gDays = schedule.installmentList.Where(x => x.InstNumber == "G*").FirstOrDefault();
-                        if(gDays!=null)
+                        if (gDays != null)
                         {
-                            actualPayment -= Decimal.Parse(gDays.markup.Replace(",",""));
+                            actualPayment -= Decimal.Parse(gDays.markup.Replace(",", ""));
                         }
                     }
 
