@@ -2713,7 +2713,7 @@ namespace TFCLPortal.Web.Controllers
 
                 if(Acc.transactions.Count>0)
                 {
-                    var lastCredit = Acc.transactions.Where(x => x.Type.ToLower() == "credit" && x.isAuthorized == true).LastOrDefault();
+                    var lastCredit = Acc.transactions.Where(x => x.Type.ToLower() == "credit" && x.isAuthorized == true).OrderBy(x=>x.SortDate).LastOrDefault();
                     if(lastCredit!=null)
                     {
                         ViewBag.AllowedDate = lastCredit.DepositDate;
