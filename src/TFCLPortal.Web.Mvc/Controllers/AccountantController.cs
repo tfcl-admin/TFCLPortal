@@ -2649,7 +2649,7 @@ namespace TFCLPortal.Web.Controllers
             var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
             if (schedule != null)
             {
-                var Acc = _customerAccountAppAppService.GetCustomerAccountByCNIC(app.CNICNo).Result;
+                var Acc = _customerAccountAppAppService.GetCustomerAccountByCNICwithTransactions(app.CNICNo);
                 if (Acc != null)
                 {
                     ViewBag.Payment = Acc.Balance;
@@ -2709,6 +2709,23 @@ namespace TFCLPortal.Web.Controllers
                 {
                     ViewBag.ESC = 0;
                     ViewBag.FEDonESC = 0;
+                }
+
+                if(Acc.transactions.Count>0)
+                {
+                    var lastCredit = Acc.transactions.Where(x => x.Type.ToLower() == "credit" && x.isAuthorized == true).LastOrDefault();
+                    if(lastCredit!=null)
+                    {
+                        ViewBag.AllowedDate = lastCredit.DepositDate;
+                    }
+                    else
+                    {
+                        ViewBag.AllowedDate = DateTime.Now;
+                    }
+                }
+                else
+                {
+                    ViewBag.AllowedDate = DateTime.Now;
                 }
 
             }
