@@ -1482,59 +1482,6 @@ namespace TFCLPortal.Web.Controllers
         {
             _authorizeInstallmentPaymentAppService.Create(payment);
 
-            //var schedule = _scheduleAppService.GetScheduleByApplicationId(payment.ApplicationId).Result;
-            //var firstUnpaidInstallment = schedule.installmentList.Where(x => (x.isPaid == false || x.isPaid == null) && x.InstNumber != "G*").FirstOrDefault();
-            //var scheduleInstallment = _scheduleInstallmentRepository.Get(firstUnpaidInstallment.Id);
-
-            //decimal paidAmount = payment.Amount;
-
-            //var Exists = _installmentPaymentAppService.GetInstallmentPaymentByApplicationId(payment.ApplicationId);
-            //if (Exists.Result != null || Exists.Result.Count >= 0)
-            //{
-            //    decimal existingAmountForSingleInstallment = 0;
-            //    foreach (var existingPayment in Exists.Result.Where(x => x.NoOfInstallment.ToString() == scheduleInstallment.InstNumber))
-            //    {
-            //        existingAmountForSingleInstallment += existingPayment.Amount;
-            //    }
-            //    paidAmount += existingAmountForSingleInstallment;
-
-            //    var gracePeriodInstallment = schedule.installmentList.Where(x => (x.isPaid == false || x.isPaid == null) && x.InstNumber == "G*").FirstOrDefault();
-            //    if (gracePeriodInstallment != null)
-            //    {
-            //        var graceInstallment = _scheduleInstallmentRepository.Get(gracePeriodInstallment.Id);
-            //        decimal gracePaidAmount = paidAmount;
-            //        gracePaidAmount = paidAmount - Decimal.Parse(graceInstallment.markup);
-
-            //        if (gracePaidAmount >= -100)
-            //        {
-            //            graceInstallment.isPaid = true;
-            //            graceInstallment.PaymentDate = payment.DepositDate;
-            //            _scheduleInstallmentRepository.Update(graceInstallment);
-            //            CurrentUnitOfWork.SaveChanges();
-            //        }
-            //    }
-
-            //    //if (Exists.Result.Where(x => x.NoOfInstallment.ToString() == scheduleInstallment.InstNumber).ToList().Count <= 1)
-            //    //{
-            //    //    paidAmount += payment.PreviousBalance;
-            //    //} commented on 29-03-2021
-            //}
-
-            //paidAmount -= Decimal.Parse(scheduleInstallment.installmentAmount);
-
-            //_installmentPaymentAppService.Create(payment);
-
-            //if (paidAmount >= -100)
-            //{
-            //    scheduleInstallment.isPaid = true;
-            //    scheduleInstallment.PaymentDate = payment.DepositDate;
-            //    _scheduleInstallmentRepository.Update(scheduleInstallment);
-            //    CurrentUnitOfWork.SaveChanges();
-            //}
-
-
-
-
             return RedirectToAction("InstallmentPayment", new { ApplicationId = payment.ApplicationId });
         }
 

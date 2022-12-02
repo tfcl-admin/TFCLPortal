@@ -512,7 +512,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                                 }
                                 else
                                 {
-                                    string n1 = "Markup Collection Inst No # " + scheduleInstallment.InstNumber;
+                                    string n1 = "Principal Collection Inst No # " + scheduleInstallment.InstNumber;
                                     _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, actualPayment, n1, payment.ModeOfPayment);
                                     _scheduleAppService.SetPaid(scheduleInstallment.Id, "Markup", payment.DepositDate);
                                     actualPayment = 0;
