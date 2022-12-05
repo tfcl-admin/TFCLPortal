@@ -432,11 +432,11 @@ namespace TFCLPortal.Web.Controllers
 
             if (branch != 0)
             {
-                schedules = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPayments().Result.Where(x => x.isAuthorized == null && x.branchId == branch).ToList();
+                schedules = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPaymentsUnAuthorized().Result.Where(x => x.branchId == branch).ToList();
             }
             else
             {
-                schedules = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPayments().Result.Where(x => x.isAuthorized == null).ToList();
+                schedules = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPaymentsUnAuthorized().Result.ToList();
             }
 
             return View(schedules);
