@@ -37,7 +37,12 @@ namespace TFCLPortal.Web.Controllers
         private readonly IRepository<Transaction> _TransactionRepository;
         private readonly IRepository<CustomerAccount> _CustomerAccountRepository;
         private readonly IRepository<AuthorizeInstallmentPayment> _AuthorizeInstallmentPaymentRepository;
-        public CustomerAccountController(IRepository<AuthorizeInstallmentPayment> AuthorizeInstallmentPaymentRepository,IRepository<Applicationz> ApplicationzRepository, IRepository<CustomerAccount> CustomerAccountRepository, IRepository<Transaction> TransactionRepository, IRepository<Branch> BranchRepository, ITransactionAppService TransactionAppService, ICustomerAccountAppService CustomerAccountAppService, IHostingEnvironment env, IFileTypeAppService fileTypeAppService, IGuarantorDetailAppService guarantorDetailAppService, ICoApplicantDetailAppService coApplicantDetailAppService)
+        public CustomerAccountController(IRepository<AuthorizeInstallmentPayment> AuthorizeInstallmentPaymentRepository,
+            IRepository<Applicationz> ApplicationzRepository, IRepository<CustomerAccount> CustomerAccountRepository, 
+            IRepository<Transaction> TransactionRepository, IRepository<Branch> BranchRepository, 
+            ITransactionAppService TransactionAppService, ICustomerAccountAppService CustomerAccountAppService,
+            IHostingEnvironment env, IFileTypeAppService fileTypeAppService, IGuarantorDetailAppService guarantorDetailAppService,
+            ICoApplicantDetailAppService coApplicantDetailAppService)
         {
             _AuthorizeInstallmentPaymentRepository = AuthorizeInstallmentPaymentRepository;
             _ApplicationzRepository = ApplicationzRepository;

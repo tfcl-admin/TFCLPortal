@@ -1,23 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Abp.AspNetCore.Mvc.Authorization;
-using TFCLPortal.Controllers;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
+﻿using Abp.AspNetCore.Mvc.Authorization;
 using Abp.AspNetCore.Mvc.Controllers;
-using TFCLPortal.FilesUploads;
-using TFCLPortal.FileTypes;
-using TFCLPortal.Web.Models.UploadFiles;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using TFCLPortal.FilesUploads.Dto;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Text;
-using TFCLPortal.GuarantorDetails;
+using System.Text.RegularExpressions;
 using TFCLPortal.CoApplicantDetails;
-using System.Collections.Generic;
+using TFCLPortal.Controllers;
+using TFCLPortal.FilesUploads;
+using TFCLPortal.FilesUploads.Dto;
+using TFCLPortal.FileTypes;
 using TFCLPortal.FileTypes.Dto;
+using TFCLPortal.GuarantorDetails;
+using TFCLPortal.Web.Models.UploadFiles;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -28,13 +28,20 @@ namespace TFCLPortal.Web.Controllers
         private readonly IGuarantorDetailAppService _guarantorDetailAppService;
         private readonly ICoApplicantDetailAppService _coApplicantDetailAppService;
         private readonly IHostingEnvironment _env;
-        public AboutController(IFilesUploadAppService filesUploadAppService, IHostingEnvironment env, IFileTypeAppService fileTypeAppService, IGuarantorDetailAppService guarantorDetailAppService, ICoApplicantDetailAppService coApplicantDetailAppService)
+        public AboutController(IFilesUploadAppService filesUploadAppService, IHostingEnvironment env,
+            IFileTypeAppService fileTypeAppService, IGuarantorDetailAppService guarantorDetailAppService,
+            ICoApplicantDetailAppService coApplicantDetailAppService)
         {
             _filesUploadAppService = filesUploadAppService;
             _fileTypeAppService = fileTypeAppService;
             _guarantorDetailAppService = guarantorDetailAppService;
             _coApplicantDetailAppService = coApplicantDetailAppService;
             _env = env;
+        }
+
+        public IActionResult StudentList()
+        {
+            return View();
         }
         public ActionResult Index(int id, string u, string Message, string MsgCSS)
         {
