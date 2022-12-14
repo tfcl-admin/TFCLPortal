@@ -13,6 +13,7 @@ namespace TFCLPortal.CustomerAccounts.Dto
     {
         public string CNIC { get; set; }
         public string Phone { get; set; }
+        public string Branch { get; set; }
         public string Name { get; set; }
         public string ProfilePicUrl { get; set; }
         public string ClientId { get; set; }

@@ -48,6 +48,8 @@ using TFCLPortal.Schedules;
 using TFCLPortal.TaggedPortfolios;
 using TFCLPortal.CustomerAccounts;
 using TFCLPortal.CustomerAccounts.Dto;
+using TFCLPortal.BusinessPlans;
+using TFCLPortal.ClientStatuses;
 //using TFCLPortal.Schedules;
 
 namespace TFCLPortal.Applications
@@ -86,6 +88,8 @@ namespace TFCLPortal.Applications
         private readonly IRepository<CustomerAccount> _customerAccountRepository;
         private readonly IRepository<Branch> _branchRepository;
         private readonly IRepository<EnhancementRequest> _enhancementRequestRepository;
+        private readonly IRepository<BusinessPlan> _businessPlanRepository;
+        private readonly IRepository<ClientStatus> _clientStatusRepository;
 
 
 
@@ -98,9 +102,11 @@ namespace TFCLPortal.Applications
             //IScheduleAppService scheduleAppService,
             ITaggedPortfolioAppService taggedPortfolioAppService,
             IRepository<Branch> branchRepository,
+            IRepository<ClientStatus> clientStatusRepository,
             ITaleemJariSahulatAppService taleemJariSahulatAppService,
             ITaleemTeacherSahulatAppService taleemTeacherSahulatAppService,
             IWorkFlowAppService workFlowAppService,
+            IRepository<BusinessPlan> businessPlanRepository,
             IWorkFlowApplicationStateAppService flowApplicationStateAppService,
             IDescripentScreenAppService descripentScreenAppService,
             //IScheduleAppService scheduleAppService,
@@ -125,6 +131,8 @@ namespace TFCLPortal.Applications
             _customerAccountRepository = customerAccountRepository;
             //_scheduleAppService = scheduleAppService;
             //_scheduleAppService = scheduleAppService;
+            _businessPlanRepository = businessPlanRepository;
+            _clientStatusRepository = clientStatusRepository;
             _enhancementRequestRepository = enhancementRequestRepository;
             _branchRepository = branchRepository;
             _mobilizationStatusRepository = mobilizationStatusRepository;
@@ -275,8 +283,8 @@ namespace TFCLPortal.Applications
                     var applications = _applicationRepository.Insert(mobilizations);
                     CurrentUnitOfWork.SaveChanges();
 
-                    var accounts = _customerAccountRepository.GetAllList(x=>x.CNIC==mobilizations.CNICNo).FirstOrDefault();
-                    if(accounts!=null)
+                    var accounts = _customerAccountRepository.GetAllList(x => x.CNIC == mobilizations.CNICNo).FirstOrDefault();
+                    if (accounts != null)
                     {
                         CustomerAccount account = new CustomerAccount();
                         account.CNIC = mobilizations.CNICNo;
@@ -751,7 +759,7 @@ namespace TFCLPortal.Applications
                         }
                         if (obj.CreatorUserId != 0)
                         {
-                            var user = _userAppService.GetAllUsers().Where(x=>x.Id==obj.CreatorUserId).FirstOrDefault();
+                            var user = _userAppService.GetAllUsers().Where(x => x.Id == obj.CreatorUserId).FirstOrDefault();
                             obj.SDE_Name = user.FullName;
                         }
                         return obj;
@@ -919,6 +927,41 @@ namespace TFCLPortal.Applications
             }
         }
 
+        public List<ApplicationDto> GetShortApplicationListMC(string applicationState)
+        {
+            try
+            {
+                var apps = GetApplicationList(applicationState, 0);
+
+                if (apps.Count > 0)
+                {
+                    var bp = _businessPlanRepository.GetAllList();
+                    var csList = _clientStatusRepository.GetAllList();
+                    if (bp.Count > 0)
+                    {
+                        foreach (var app in apps)
+                        {
+                            var cs = bp.Where(x => x.ApplicationId == app.Id).FirstOrDefault();
+                            if (cs != null)
+                            {
+                                if (cs.clientStatus > 0)
+                                {
+                                    app.ClientStatus = csList.Where(x=>x.Id==cs.clientStatus).FirstOrDefault().Name;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                return apps;
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", application));
+            }
+        }
+
         public List<Applicationz> GetBCCShortApplicationList(int userid)
         {
             try
@@ -1011,11 +1054,11 @@ namespace TFCLPortal.Applications
             {
                 if (branchId == null)
                 {
-                    var apps= _customRepository.GetAllApplicationList(applicationState, 0, showAll, IsAdmin, true);
+                    var apps = _customRepository.GetAllApplicationList(applicationState, 0, showAll, IsAdmin, true);
 
-                    if(apps!=null)
+                    if (apps != null)
                     {
-                        foreach(var app in apps)
+                        foreach (var app in apps)
                         {
                             app.ClientID = app.ClientID + " (E)";
                         }
@@ -1601,12 +1644,12 @@ namespace TFCLPortal.Applications
             try
             {
                 var applicationz = _applicationRepository.GetAllList();
-                foreach( var record in records)
+                foreach (var record in records)
                 {
                     var app = applicationz.Where(x => x.Id == record.ApplicationId).FirstOrDefault();
-                    if(app!=null)
+                    if (app != null)
                     {
-                        app.MobilizationRecordId=record.mobilizationRecordId;
+                        app.MobilizationRecordId = record.mobilizationRecordId;
                         _applicationRepository.Update(app);
                         CurrentUnitOfWork.SaveChanges();
                     }
@@ -1621,7 +1664,7 @@ namespace TFCLPortal.Applications
             }
         }
 
-        public List<ApplicationDto> getApplicationsListing(bool admin, int branchId,string screen, string sde, DateTime? startDate, DateTime? endDate)
+        public List<ApplicationDto> getApplicationsListing(bool admin, int branchId, string screen, string sde, DateTime? startDate, DateTime? endDate)
         {
             try
             {
@@ -1664,7 +1707,7 @@ namespace TFCLPortal.Applications
 
                 var finalWorkFlows = _finalWorkflowAppService.getAllFinalWorkFlows();
 
-                for ( int i=0;i<returnList.Count;i++)//  var item in returnList)
+                for (int i = 0; i < returnList.Count; i++)//  var item in returnList)
                 {
                     var item = returnList[i];
 
@@ -1678,7 +1721,7 @@ namespace TFCLPortal.Applications
                     }
                     else if (screen.ToLower() == "settled")
                     {
-                        if(item.AppStatus=="Early Settled")
+                        if (item.AppStatus == "Early Settled")
                         {
                             returnList.Remove(item);
                         }
@@ -1703,7 +1746,7 @@ namespace TFCLPortal.Applications
 
                 return returnList;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }

@@ -48,9 +48,9 @@ namespace TFCLPortal.Web.Controllers
         public IActionResult Index()
         {
             int userid = (int)_userManager.AbpSession.UserId;
-            var applications = _applicationAppService.GetShortApplicationList(ApplicationState.BCC_Approved, 0);
+            var applications = _applicationAppService.GetShortApplicationListMC(ApplicationState.BCC_Approved);
 
-            List<Applicationz> returnList = new List<Applicationz>();
+            List<ApplicationDto> returnList = new List<ApplicationDto>();
 
 
             if (userid != 0)

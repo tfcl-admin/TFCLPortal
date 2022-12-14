@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TFCLPortal.ApiCallLogs.Dto;
 using TFCLPortal.Applications;
 using TFCLPortal.Applications.Dto;
+using TFCLPortal.Branches;
 using TFCLPortal.CustomerAccounts.Dto;
 using TFCLPortal.DynamicDropdowns.Districts;
 using TFCLPortal.DynamicDropdowns.Ownership;
@@ -25,11 +26,13 @@ namespace TFCLPortal.CustomerAccounts
         private readonly IApiCallLogAppService _apiCallLogAppService;
         private readonly IApplicationAppService _applicationAppService;
         private readonly ITransactionAppService _transactionAppService;
+        private readonly IBranchDetailAppService _branchDetailAppService;
         private string CustomerAccounts = "Contact Detail";
         public CustomerAccountAppService(IRepository<CustomerAccount, Int32> CustomerAccountRepository,
             IRepository<OwnershipStatus> ownershipStatusRepository,
             IRepository<Province> provinceRepository,
             ITransactionAppService transactionAppService,
+            IBranchDetailAppService branchDetailAppService,
             IApiCallLogAppService apiCallLogAppService,
             IRepository<Transaction, Int32> TransactionRepository,
             IApplicationAppService applicationAppService,
@@ -41,7 +44,7 @@ namespace TFCLPortal.CustomerAccounts
             _applicationAppService = applicationAppService;
             _apiCallLogAppService = apiCallLogAppService;
             _TransactionRepository = TransactionRepository;
-
+            _branchDetailAppService= branchDetailAppService;
         }
         public async Task<string> CreateCustomerAccount(CreateCustomerAccountDto input)
         {
@@ -229,6 +232,8 @@ namespace TFCLPortal.CustomerAccounts
 
                 var apps = _applicationAppService.GetAllApplicationsList();
 
+                var branches = _branchDetailAppService.GetBranchListDetail();
+
                 var contact = ObjectMapper.Map<List<CustomerAccountListDto>>(CustomerAccount);
 
                 foreach(var acc in contact)
@@ -237,19 +242,32 @@ namespace TFCLPortal.CustomerAccounts
                     if(app!=null)
                     {
                         acc.ClientId = app.ClientID;
+                        var branch= branches.Where(x => x.Id == app.FK_branchid).FirstOrDefault();
+                        acc.Branch = branch.BranchCode;
                     }
                     else
                     {
-                        app = apps.Where(x => x.CNICNo == acc.CNIC && x.ScreenStatus.Contains("Settled")).FirstOrDefault();
+                        app = apps.Where(x => x.CNICNo == acc.CNIC && (x.ScreenStatus.Contains("Settled")|| x.ScreenStatus.Contains("Deceased") || x.ScreenStatus.Contains("Write"))).FirstOrDefault();
                         if (app != null)
                         {
-                            if(app.ScreenStatus=="Settled")
+                            var branch = branches.Where(x => x.Id == app.FK_branchid).FirstOrDefault();
+                            acc.Branch = branch.BranchCode;
+
+                            if (app.ScreenStatus=="Settled")
                             {
                                 acc.ClientId = app.ClientID+" (s)";
                             }
                             else if (app.ScreenStatus == "Early Settled")
                             {
                                 acc.ClientId = app.ClientID + " (es)";
+                            }
+                            else if (app.ScreenStatus == "Deceased")
+                            {
+                                acc.ClientId = app.ClientID + " (d)";
+                            }
+                            else if (app.ScreenStatus == "Write Off")
+                            {
+                                acc.ClientId = app.ClientID + " (WO)";
                             }
                             else
                             {

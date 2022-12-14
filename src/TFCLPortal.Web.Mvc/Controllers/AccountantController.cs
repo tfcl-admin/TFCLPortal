@@ -118,7 +118,7 @@ namespace TFCLPortal.Web.Controllers
         private readonly INotificationLogAppService _notificationLogAppService;
         private readonly IClosingMonthAppService _closingMonthAppService;
 
-        public AccountantController(IClosingMonthAppService closingMonthAppService,IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService)
+        public AccountantController(IClosingMonthAppService closingMonthAppService, IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService)
         {
             _BaloonPaymentrepository = BaloonPaymentrepository;
             _baloonPaymentAppService = baloonPaymentAppService;
@@ -1435,7 +1435,7 @@ namespace TFCLPortal.Web.Controllers
             DateTime due = DateTime.Parse(ViewBag.InstallmentDueDate);
 
             displayButton = _closingMonthAppService.checkIfOpen(app.FK_branchid, due.Month, due.Year);
-            
+
             decimal payment = (ViewBag.Payment == null ? 0 : ViewBag.Payment);
 
             if (displayButton)
@@ -2658,10 +2658,10 @@ namespace TFCLPortal.Web.Controllers
                     ViewBag.FEDonESC = 0;
                 }
 
-                if(Acc.transactions.Count>0)
+                if (Acc.transactions.Count > 0)
                 {
-                    var lastCredit = Acc.transactions.Where(x => x.Type.ToLower() == "credit" && x.isAuthorized == true).OrderBy(x=>x.SortDate).LastOrDefault();
-                    if(lastCredit!=null)
+                    var lastCredit = Acc.transactions.Where(x => x.Type.ToLower() == "credit" && x.isAuthorized == true).OrderBy(x => x.SortDate).LastOrDefault();
+                    if (lastCredit != null)
                     {
                         ViewBag.AllowedDate = lastCredit.DepositDate;
                     }
@@ -2686,7 +2686,7 @@ namespace TFCLPortal.Web.Controllers
         {
             var entry = _earlySettlementRepository.Get(Id);
 
-            if(entry.isAuthorized==null)
+            if (entry.isAuthorized == null)
             {
                 if (Decision == "Authorize")
                 {
@@ -2813,7 +2813,7 @@ namespace TFCLPortal.Web.Controllers
                     CurrentUnitOfWork.SaveChanges();
                 }
             }
-           
+
 
             return Json("");
         }
@@ -2826,17 +2826,17 @@ namespace TFCLPortal.Web.Controllers
             {
                 bool allowed = true;
                 var es = _earlySettlementAppService.GetEarlySettlementByApplicationId(input.ApplicationId).Result;
-                if(es!=null)
+                if (es != null)
                 {
-                    foreach(var entry in es)
+                    foreach (var entry in es)
                     {
-                        if(entry.isAuthorized==null)
+                        if (entry.isAuthorized == null)
                         {
                             allowed = false;
                         }
                     }
                 }
-                if(allowed)
+                if (allowed)
                 {
                     _earlySettlementAppService.Create(input);
                     return RedirectToAction("Success", "About", new { Message = "Early Settlement Entry Sent to BM for Authorization!" });
@@ -2901,6 +2901,11 @@ namespace TFCLPortal.Web.Controllers
             var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
             if (schedule != null)
             {
+                var customerAccount = _customerAccountAppAppService.GetCustomerAccountByApplicationId(ApplicationId);
+                if (customerAccount != null)
+                {
+                    ViewBag.Balance = customerAccount.Balance;
+                }
 
                 var lastPaidInstallment = schedule.installmentList.Where(x => x.isPaid == true).LastOrDefault();
                 if (lastPaidInstallment != null)
@@ -2931,6 +2936,8 @@ namespace TFCLPortal.Web.Controllers
         [HttpPost]
         public IActionResult CreateWriteOff(CreateWriteOff input)
         {
+            input.FileUrl= UploadImagestoServer(input.File, "wwwroot/uploads/WriteOffFiles/" + input.ApplicationId + "/");
+
             _writeOffAppService.Create(input);
 
             return RedirectToAction("Success", "About", new { Message = "Write-Off Entry Sent to BM for Authorization!" });
@@ -2977,10 +2984,32 @@ namespace TFCLPortal.Web.Controllers
         {
             var entry = _writeOffRepository.Get(Id);
 
+
             if (Decision == "Authorize")
             {
                 entry.isAuthorized = true;
                 entry.RejectionReason = Reason;
+
+                var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+                if(acc!=null)
+                {
+                    string n1 = "Write Off Payment Collection";
+                    _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, entry.AmountDeposited, n1, "");
+
+                    var app = _applicationRepository.Get(entry.ApplicationId);
+                    _applicationAppService.ChangeApplicationState(ApplicationState.WriteOff, entry.ApplicationId, "Write Off");
+
+                    CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
+                    fWobj.ApplicationId = entry.ApplicationId;
+                    fWobj.Action = "Application Write-Off";
+                    fWobj.ActionBy = (int)AbpSession.UserId;
+                    fWobj.ApplicationState = ApplicationState.WriteOff;
+                    fWobj.isActive = true;
+
+                    _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
+                }
+                
+
             }
             else if (Decision == "Reject")
             {
@@ -3012,6 +3041,16 @@ namespace TFCLPortal.Web.Controllers
             else
             {
                 ViewBag.Deceased = "Yes";
+            }
+
+            var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(ApplicationId);
+            if(acc!=null)
+            {
+                ViewBag.Balance = acc.Balance;
+            }
+            else
+            {
+                ViewBag.Balance = 0;
             }
 
             var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
@@ -3257,6 +3296,20 @@ namespace TFCLPortal.Web.Controllers
             {
                 entry.isAuthorized = true;
                 entry.RejectionReason = Reason;
+
+                var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+                if(acc!=null)
+                {
+                    string n1 = "Principal Collection for Deceased Settlement";
+                    _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, entry.OsPrincipalAmount, n1, "");
+                    
+                    var accUpdate = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+
+                    string n2 = "Remaining Balance Deduction";
+                    _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, accUpdate.Balance, n2, "");
+                }
+
+                
 
                 var app = _applicationRepository.Get(entry.ApplicationId);
                 _applicationAppService.ChangeApplicationState(ApplicationState.Deceased, entry.ApplicationId, "Deceased Applicant");

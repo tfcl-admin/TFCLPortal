@@ -41,6 +41,9 @@ namespace TFCLPortal.Applications
         public int EnhancementfileCount { get; set; }
         public int EnhancedfileCount { get; set; }
 
+        public int WriteOfffileCount { get; set; }
+        public int WriteOfffileAmount { get; set; }
+
 
     }
 

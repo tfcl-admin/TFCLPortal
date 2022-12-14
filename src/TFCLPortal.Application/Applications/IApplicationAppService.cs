@@ -37,6 +37,8 @@ namespace TFCLPortal.Applications
         ApplicationListDto GetDescripentApplicationbyApplicationId(int ApplicationId);
         List<MobilizationSyncDto> GetMobilizationDataBySDEId(int SDEId);
 
+        List<ApplicationDto> GetShortApplicationListMC(string applicationState);
+
         List<ApplicationListDto> GetStateWiseApplicationbyUserId(int UserId, string state);
         string setMobilizationRecordId(List<setMobilizationRecordIdDto> records);
 

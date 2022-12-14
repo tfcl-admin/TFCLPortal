@@ -4,6 +4,19 @@
     Layout = "~/Views/Shared/_NewLayout.cshtml";
 }
 
+<style>
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
+</style>
+
 <main class='main-content bgc-grey-100' style="padding-top:50px">
     <div class="row page-title">
         <div class="col-md-6 text-left">
@@ -21,6 +34,7 @@
     </div>
     <div class="card p-10 mB-20">
         <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <div class="pageloader d-none"></div>
             <form asp-action="CreateWriteOff" method="post">
                 <div class="row">
                     <input asp-for="Id" type="hidden" id="Id" value="@Model.Id" />
@@ -68,16 +82,32 @@
                             <input asp-for="RecoveryStatus" value="@Model.RecoveryStatus" class="form-control"  readonly="readonly" />
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Rebate (%)</label>
-                            <input asp-for="RebatePercentage" value="@Model.RebatePercentage" min="0" max="100" maxlength="3" readonly="readonly"  class="form-control" />
+                            <label>Amount Recoverable</label>
+                            <input asp-for="TotalAmountPayableRebate" value="@Model.TotalAmountPayableRebate" min="0" max="100" maxlength="3" readonly="readonly" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Write Off Amount Mark-up</label>
+                            <input asp-for="WriteOffAmountMarkup" value="@Model.WriteOffAmountMarkup" class="form-control" readonly="readonly" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Total Amount Payable After Rebate (Rs)</label>
-                            <input asp-for="TotalAmountPayableRebate" value="@(string.Format("{0:#,##0}", Model.TotalAmountPayableRebate))" readonly="readonly" class="form-control" />
+                            <label>Write Off Amount Principal</label>
+                            <input asp-for="WriteOffAmountPrincipal" value="@Model.WriteOffAmountPrincipal" class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+
+                 
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Write Off %age</label>
+                            <input asp-for="RebatePercentage" value="@Model.RebatePercentage" readonly="readonly" class="form-control" />
                         </div>
                     </div>
 
@@ -87,9 +117,16 @@
                             <input asp-for="AmountDeposited" value="@(string.Format("{0:#,##0}", Model.AmountDeposited))" class="form-control" readonly="readonly" />
                         </div>
                     </div>
+                  
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Approval Doc</label><br />
+                            <a href="@Model.FileUrl.Replace("wwwroot","..")" class="text-success" target="_blank"> <i class="fa fa-download"></i> Click to Download</a>
+                        </div>
+                    </div>
 
 
-                    <div class="col-md-12 text-right">
+                    <div class="col-md-9 text-right">
                         <input id="RejectionReason" type="text" style="width:25%;" class="form-control d-inline" placeholder="Reason For Rejection" />
                         <a class="btn btn-outline-danger d-inline" style="color: red !important;padding:8px" id="rejectBtn"><i class="fa fa-times"></i> Reject Entry</a>
                         <a class="btn btn-outline-success d-inline" style="color: green !important;padding:8px" id="uploadBtn"><i class="fa fa-upload"></i> Authorize Entry</a>
@@ -111,6 +148,7 @@
     $(function () {
 
            $('#rejectBtn').click(function () {
+        $(".pageloader").toggleClass("d-none");
 
             var RejectionReason = $('#RejectionReason').val();
                var Id = $('#Id').val();
@@ -150,6 +188,7 @@
            });
 
         $('#uploadBtn').click(function () {
+            $(".pageloader").toggleClass("d-none");
 
             var Id = $('#Id').val();
 

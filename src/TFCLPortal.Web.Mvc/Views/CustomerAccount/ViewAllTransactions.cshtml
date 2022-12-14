@@ -94,7 +94,6 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
-
                         <td>@(item.ModeOfPayment==""||item.ModeOfPayment==null?"--":item.ModeOfPayment)</td>
                         <td>@(item.Amount == 0 ? "0" : string.Format("{0:#,##0}", item.Amount))</td>
                         <td><a href="/CustomerAccount/ViewTransactions?accountid=@item.Fk_AccountId"> View</a></td>

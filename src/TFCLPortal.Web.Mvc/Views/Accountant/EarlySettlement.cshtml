@@ -308,26 +308,31 @@
         $("#LastPaidInstallmentDate").val(getPaymentDate());
 
         function getPaymentDate() {
-             //var d = new Date().toJSON().slice(0, 19);
-
             var cDate = new moment('@ViewBag.PaymentDate').format('YYYY-MM-DD');
-            //console.log(d);
-           //var str = d.substr(0, 11)+ gh + ":" + gm + ":" + gs
-            //var str = d.substr(0, 10);
-            console.log(cDate);
-            console.log('@ViewBag.PaymentDate');
             return cDate;
         }
 
         function checkDate(date) {
 
+            var allowedDateStart = moment(allowedDate);//.format('DD MMM YYYY');
+            var allowedDateEnd = moment();//.format('DD MMM YYYY');
 
-            if (moment(allowedDate).format('DD MMM YYYY') === moment(date).format('DD MMM YYYY')) {
+            var givenDate = moment(date);//.format('DD MMM YYYY');
+
+            console.log('date : ' + givenDate);
+            console.log('allowedDateStart : ' + allowedDateStart);
+            console.log('allowedDateEnd : ' + allowedDateEnd);
+            //target.isBetween(start, finish, 'days', '()') // default exclusive
+            //target.isBetween(start, finish, 'days', '(]') // right inclusive
+            //target.isBetween(start, finish, 'days', '[)') // left inclusive
+            //target.isBetween(start, finish, 'days', '[]') // all inclusive
+
+            if (givenDate.isBetween(allowedDateStart, allowedDateEnd, 'days', '[]')) {
                 $('#submitBtnDiv').removeClass('d-none');
                 $('#responseText').text('');
             }
             else {
-                $('#responseText').text('Early Settlement can only be done when tentative date is ' + moment(allowedDate).format('DD MMM YYYY')+' (Last Payment Deposit Date)');
+                $('#responseText').text('Early Settlement can only be done when tentative date is between ' + allowedDateStart.format('DD MMM YYYY') + ' (Last Payment Deposit Date) and ' + allowedDateEnd.format('DD MMM YYYY') + ' (Today)');
                 $('#submitBtnDiv').addClass('d-none');
             }
         }

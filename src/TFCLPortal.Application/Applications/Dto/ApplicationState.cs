@@ -40,6 +40,7 @@ namespace TFCLPortal.Applications.Dto
         public static string Settled = "Settled";
         public static string Deceased = "Deceased";
         public static string Enhanced = "Enhanced";
+        public static string WriteOff = "Write Off";
 
 
     }

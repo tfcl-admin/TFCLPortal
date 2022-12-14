@@ -10012,6 +10012,8 @@ namespace TFCLPortal.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
+                    b.Property<string>("FileUrl");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
@@ -10031,6 +10033,10 @@ namespace TFCLPortal.Migrations
                     b.Property<decimal>("TotalAmountPayable");
 
                     b.Property<decimal>("TotalAmountPayableRebate");
+
+                    b.Property<decimal>("WriteOffAmountMarkup");
+
+                    b.Property<decimal>("WriteOffAmountPrincipal");
 
                     b.Property<bool?>("isAuthorized");
 

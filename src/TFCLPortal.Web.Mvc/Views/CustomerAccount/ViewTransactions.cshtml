@@ -142,6 +142,7 @@
                 </thead>
                 <tbody>
                     @{ int i = 1;}
+
                     @foreach (var item in Model.Where(x=>x.isAuthorized!=false).OrderBy(x => x.SortDate))
                     {
                     <tr class="@(item.Type=="Credit"?"text-credit":"text-debit") @(item.isReversed?"text-reversed":"") @(item.Type== "Reversal"?"text-reversal":"")">

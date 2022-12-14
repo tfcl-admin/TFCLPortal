@@ -48,13 +48,7 @@
                         Balance
                     </th>
                     <th>
-                        Active
-                    </th>
-                    <th>
-                        Phone Verified
-                    </th>
-                    <th>
-                        Email Verified
+                        Branch
                     </th>
                     <th>
                         Action
@@ -73,34 +67,7 @@
                     <td>@(item.ClientId == null || item.ClientId == "" ? "--" : item.ClientId)</td>
                     <td>@(item.Balance == 0 ? "0" : string.Format("{0:#,##0}", item.Balance))</td>
                     <td>
-                        @if (item.isActive)
-                        {
-                            <i class="fa fa-check"></i>
-                        }
-                        else
-                        {
-                            <i class="fa fa-times"></i>
-                        }
-                    </td>
-                    <td>
-                        @if (item.isPhoneVerified)
-                        {
-                            <i class="fa fa-check"></i>
-                        }
-                        else
-                        {
-                            <i class="fa fa-times"></i>
-                        }
-                    </td>
-                    <td>
-                        @if (item.isEmailVerified)
-                        {
-                            <i class="fa fa-check"></i>
-                        }
-                        else
-                        {
-                            <i class="fa fa-times"></i>
-                        }
+                       @(item.Branch == null || item.Branch == "" ? "--" : item.Branch)
                     </td>
                     <td>
                         <a href="/CustomerAccount/ViewTransactions?accountId=@item.Id"><i class="fa fa-eye"></i> View Transactions</a>

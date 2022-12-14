@@ -8,7 +8,7 @@ namespace TFCLPortal.Web.Models.McModels
 {
     public class McModel
     {
-        public List<TFCLPortal.Applications.Applicationz> applications { get; set; }
+        public List<TFCLPortal.Applications.ApplicationDto> applications { get; set; }
         public List<TFCLPortal.ManagmentCommitteeDecisions.Dto.ManagmentCommitteeDecisionListDto> decisions { get; set; }
     }
 }
