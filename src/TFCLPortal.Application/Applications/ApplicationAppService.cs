@@ -291,6 +291,7 @@ namespace TFCLPortal.Applications
                         account.Phone = mobilizations.MobileNo;
                         account.Name = mobilizations.ClientName;
                         account.Balance = 0;
+                        account.ProfilePicUrl = "Application App Service Line No 294";
                         account.isActive = true;
                         var accountCreation = _customerAccountRepository.Insert(account);
                     }

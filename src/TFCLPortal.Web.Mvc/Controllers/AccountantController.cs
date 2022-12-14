@@ -1169,6 +1169,7 @@ namespace TFCLPortal.Web.Controllers
                 acc.CNIC = appData.CNICNo;
                 acc.Phone = appData.MobileNo;
                 acc.Name = appData.ClientName;
+                acc.ProfilePicUrl = "Accountant Controller Line No 1172";
                 acc.isActive = true;
                 _customerAccountAppAppService.CreateCustomerAccount(acc);
             }
