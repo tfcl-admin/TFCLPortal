@@ -932,7 +932,7 @@ namespace TFCLPortal.Applications
         {
             try
             {
-                var apps = GetApplicationList(applicationState, 0);
+                var apps = GetApplicationList(applicationState, 0,true,true,true);
 
                 if (apps.Count > 0)
                 {
