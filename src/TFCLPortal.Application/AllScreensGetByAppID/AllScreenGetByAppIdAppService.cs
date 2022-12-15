@@ -49,6 +49,7 @@ using TFCLPortal.InstallmentPayments;
 using System.Linq;
 using TFCLPortal.InstallmentPayments.Dto;
 using TFCLPortal.LoanStatuses;
+using TFCLPortal.Preferences.Dto;
 
 namespace TFCLPortal.AllScreensGetByAppID
 {
@@ -788,7 +789,7 @@ namespace TFCLPortal.AllScreensGetByAppID
             return (a - b) / 10000;
         }
 
-        public async Task<AllScreenGetByAppIdDto> AllScreenGetByApplicationId(int ApplicationId)
+        public async Task<AllScreenGetByAppIdDto> AllScreenGetByApplicationId(int ApplicationId, bool isReferencesRequired)
         {
             string ResponseString = "";
             try
@@ -806,7 +807,11 @@ namespace TFCLPortal.AllScreensGetByAppID
                 var household = _householdIncomeAppService.GetHouseholdIncomeByApplicationId(ApplicationId);
                 var coapplicantdetail = await _coApplicantDetailAppService.GetCoApplicantDetailByApplicationId(ApplicationId);
                 var guarantordetail = await _guarantorDetailAppService.GetGuarantorDetailByApplicationId(ApplicationId);
-                var prefrence = await _preferenceAppService.GetPreferencesByApplicationId(ApplicationId);
+                List<PreferencesListDto> prefrence=new  List<PreferencesListDto>();
+                if (isReferencesRequired)
+                {
+                    prefrence = await _preferenceAppService.GetPreferencesByApplicationId(ApplicationId);
+                }
                 var forSDE = await _forSDEAppService.GetForSDEByApplicationId(ApplicationId);
                 var bankaccount = await _bankAccountAppService.GetBankAccountDetailByApplicationId(ApplicationId);
                 var loanEligibilty = await _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId);
@@ -845,7 +850,10 @@ namespace TFCLPortal.AllScreensGetByAppID
                 allScreenGetByAppId.listHouseholdIncomeDetail = household;
                 allScreenGetByAppId.listCoApplicantDetail = coapplicantdetail;
                 allScreenGetByAppId.listGuarantorDetail = guarantordetail;
-                allScreenGetByAppId.listReferenceDetail = prefrence;
+                if (isReferencesRequired)
+                {
+                    allScreenGetByAppId.listReferenceDetail = prefrence;
+                }
                 allScreenGetByAppId.listForSDERecommendationDetail = forSDE;
                 allScreenGetByAppId.listBankAccount = bankaccount;
                 allScreenGetByAppId.listLoanEligibilities = loanEligibilty;
@@ -1303,8 +1311,8 @@ namespace TFCLPortal.AllScreensGetByAppID
                             try
                             {
                                 IGrouping<DateTime, InstallmentPaymentListDto> lastInstallmentDate;
-                              
-                                    lastInstallmentDate = Installmentspaid.Where(x => x.isAuthorized == true).GroupBy(x => x.InstallmentDueDate).OrderBy(x => x.Key).LastOrDefault();
+
+                                lastInstallmentDate = Installmentspaid.Where(x => x.isAuthorized == true).GroupBy(x => x.InstallmentDueDate).OrderBy(x => x.Key).LastOrDefault();
 
                                 if (lastInstallmentDate != null)
                                 {
@@ -1377,11 +1385,11 @@ namespace TFCLPortal.AllScreensGetByAppID
                 {
                     var ExistingStatus = _loanStatusRepository.GetAllList();
 
-                    foreach(var existing in ExistingStatus)
+                    foreach (var existing in ExistingStatus)
                     {
                         await _loanStatusRepository.DeleteAsync(existing);
                     }
-                    
+
                     CurrentUnitOfWork.SaveChanges();
 
                     foreach (var status in statuses)
@@ -1399,13 +1407,13 @@ namespace TFCLPortal.AllScreensGetByAppID
             }
             catch (Exception ex)
             {
-                return "Error. "+ex.ToString();
+                return "Error. " + ex.ToString();
             }
         }
 
         public decimal ConvertToDecimal(string str)
         {
-            if (str != ""&& str!="--")
+            if (str != "" && str != "--")
             {
                 return decimal.Parse(str.Replace(",", ""));
             }
