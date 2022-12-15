@@ -164,32 +164,54 @@ namespace TFCLPortal.Applications
         {
             CnicCheckResponse response = new CnicCheckResponse();
 
-            var cnicList = _applicationRepository.GetAllList().Where(x => x.CNICNo.Trim() == cnic.Trim() && x.ScreenStatus != "decline").ToList();
+            //var cnicList = _applicationRepository.GetAllList().Where(x => x.CNICNo.Trim() == cnic.Trim() && x.ScreenStatus != "decline").ToList();
+            var cnicList = _applicationRepository.GetAllList().Where(x => x.CNICNo.Trim() == cnic.Trim()).ToList();
 
             if (cnicList.Count > 0)
             {
-                var latestApplication = cnicList.Where(x => x.Id == cnicList.Max(y => y.Id)).FirstOrDefault();
-                response.previousApplicationId = latestApplication.Id;
-                response.previousProductType = latestApplication.ProductType;
 
-                if (latestApplication.ScreenStatus == ApplicationState.Disbursed)
+
+
+                if (cnicList.Count == 1 && cnicList[0].ScreenStatus == "decline")
                 {
-                    response.status = 2;//Application Exists in Disbursed Status
-                    response.MessageToShow = "CNIC already associated with Client ID : " + latestApplication.ClientID + ". Application is Currently Disbursed.";
-                }
-                else if (latestApplication.ScreenStatus == ApplicationState.Settled || latestApplication.ScreenStatus == ApplicationState.EarlySettled)
-                {
-                    response.status = 3;//Application Exists in Settled Or Early Settled
-                    response.MessageToShow = "CNIC already associated with Client ID : " + latestApplication.ClientID + ". Application is Settled.";
+
+                    var latestApplication = cnicList.Where(x => x.Id == cnicList.Max(y => y.Id)).FirstOrDefault();
+                    response.previousApplicationId = latestApplication.Id;
+                    response.previousProductType = latestApplication.ProductType;
+                    response.status = 5;//Application Exists in Declined Status
+                    response.MessageToShow = "CNIC already associated with Client ID : " + latestApplication.ClientID + ". Application is Currently Declined.";
+
                 }
                 else
                 {
-                    response.status = 4;//Application Exist. But not yet Disbursed
-                    response.MessageToShow = "CNIC already associated with Client ID : " + latestApplication.ClientID + ". Application is currently in " + latestApplication.ScreenStatus + " state.";
+
+                    var latestApplication = cnicList.Where(x => x.Id == cnicList.Max(y => y.Id) && x.ScreenStatus != "decline").FirstOrDefault();
+                    response.previousApplicationId = latestApplication.Id;
+                    response.previousProductType = latestApplication.ProductType;
+                    if (latestApplication.ScreenStatus == ApplicationState.Disbursed)
+                    {
+                        response.status = 2;//Application Exists in Disbursed Status
+                        response.MessageToShow = "CNIC already associated with Client ID : " + latestApplication.ClientID + ". Application is Currently Disbursed.";
+                    }
+                    else if (latestApplication.ScreenStatus == ApplicationState.Settled || latestApplication.ScreenStatus == ApplicationState.EarlySettled)
+                    {
+                        response.status = 3;//Application Exists in Settled Or Early Settled
+                        response.MessageToShow = "CNIC already associated with Client ID : " + latestApplication.ClientID + ". Application is Settled.";
+                    }
+                    else
+                    {
+                        response.status = 4;//Application Exist. But not yet Disbursed
+                        response.MessageToShow = "CNIC already associated with Client ID : " + latestApplication.ClientID + ". Application is currently in " + latestApplication.ScreenStatus + " state.";
+                    }
                 }
+
+
+               
             }
             else
             {
+
+
                 response.status = 1;//applications does not exist. New Customer
                 response.previousApplicationId = -1;
                 response.previousProductType = -1;
@@ -947,7 +969,7 @@ namespace TFCLPortal.Applications
                             {
                                 if (cs.clientStatus > 0)
                                 {
-                                    app.ClientStatus = csList.Where(x=>x.Id==cs.clientStatus).FirstOrDefault().Name;
+                                    app.ClientStatus = csList.Where(x => x.Id == cs.clientStatus).FirstOrDefault().Name;
                                 }
                             }
                         }
@@ -1639,13 +1661,13 @@ namespace TFCLPortal.Applications
         }
 
 
-        public string setMobilizationRecordId(List<setMobilizationRecordIdDto> records)
+        public string setMobilizationRecordId(setMobilizationRecordIdDto records)
         {
 
             try
             {
                 var applicationz = _applicationRepository.GetAllList();
-                foreach (var record in records)
+                foreach (var record in records.records)
                 {
                     var app = applicationz.Where(x => x.Id == record.ApplicationId).FirstOrDefault();
                     if (app != null)
