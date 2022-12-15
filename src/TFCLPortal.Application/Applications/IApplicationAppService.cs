@@ -50,5 +50,7 @@ namespace TFCLPortal.Applications
         List<Applicationz> GetAllApplicationsByUserId(int userid);
         List<Applicationz> GetAllBCCReviewedApplicationsByUserId(int userid);
         Task<string> ChangeApplicationStateAsync(string state, int ApplicationId, string comments);
+
+        string UpdateNamesByApplicationId(int applicationId, string clientname,string businessname);
     }
 }

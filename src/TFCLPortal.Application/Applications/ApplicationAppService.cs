@@ -1774,5 +1774,11 @@ namespace TFCLPortal.Applications
                 throw ex;
             }
         }
+
+        public string UpdateNamesByApplicationId(int applicationId, string clientname, string businessname)
+        {
+            //Function To be implemented
+            return "Success";
+        }
     }
 }
