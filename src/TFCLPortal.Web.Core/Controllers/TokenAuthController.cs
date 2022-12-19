@@ -250,16 +250,24 @@ namespace TFCLPortal.Controllers
             {
                 case AbpLoginResultType.Success:
 
-                    if (loginResult.User.IMEI.Length>1 && loginResult.User.IMEI != androidId)
-                    {
-                        
-                        throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttemptCustomized(11, usernameOrEmailAddress, tenancyName);
-                        //11 is the error code for wrong android id
-                    }
-                    else
+                    if(usernameOrEmailAddress=="google")
                     {
                         return loginResult;
                     }
+                    else
+                    {
+                        if (loginResult.User.IMEI.Length > 1 && loginResult.User.IMEI != androidId)
+                        {
+
+                            throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttemptCustomized(11, usernameOrEmailAddress, tenancyName);
+                            //11 is the error code for wrong android id
+                        }
+                        else
+                        {
+                            return loginResult;
+                        }
+                    }
+                   
 
                 default:
                     throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(loginResult.Result, usernameOrEmailAddress, tenancyName);
