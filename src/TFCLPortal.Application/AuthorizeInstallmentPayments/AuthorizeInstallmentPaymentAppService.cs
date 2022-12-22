@@ -469,15 +469,23 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                         {
                             excessShortForLastPaidInstallment *= -1;
 
-                            var matchingTransactions = acc.transactions.Where(x => x.Amount == excessShortForLastPaidInstallment ).ToList();
-                            if (matchingTransactions!=null)
+                            var matchingTransactions = acc.transactions.Where(x => x.Amount == excessShortForLastPaidInstallment).ToList();
+                            if (matchingTransactions != null)
                             {
                                 string n1 = "Previous Installment Deduction";
                                 _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n1, payment.ModeOfPayment);
                                 actualPayment -= excessShortForLastPaidInstallment;
                                 markupForThisInstallment -= excessShortForLastPaidInstallment;
                             }
-                          
+
+                        }
+
+                        if (gracePeriodInstallment != null)
+                        {
+                            if (scheduleInstallment.InstNumber == "1" && gracePeriodInstallment.isMarkupPaid)
+                            {
+                                markupForThisInstallment += decimal.Parse(gracePeriodInstallment.markup.Replace(",", ""));
+                            }
                         }
 
                         string n2 = "Markup Collection Inst No # " + scheduleInstallment.InstNumber;
@@ -541,7 +549,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                             excessShortForLastPaidInstallment *= -1;
 
                             var matchingTransactions = acc.transactions.Where(x => x.Amount == excessShortForLastPaidInstallment && x.Details.Contains("Previous Installment Deduction")).ToList();
-                            if (matchingTransactions.Count==0)
+                            if (matchingTransactions.Count == 0)
                             {
                                 string n2 = "Previous Installment Deduction";
                                 _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n2, payment.ModeOfPayment);
