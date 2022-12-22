@@ -1023,6 +1023,9 @@ namespace TFCLPortal.Applications
             try
             {
                 var apps = GetApplicationList(applicationState, 0, true, true, false);
+                var appsEnh = GetApplicationList(applicationState, 0, true, true, true);
+
+                apps.AddRange(appsEnh);
 
                 if (apps.Count > 0)
                 {
