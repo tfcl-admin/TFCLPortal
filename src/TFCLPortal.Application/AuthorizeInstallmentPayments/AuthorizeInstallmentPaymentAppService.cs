@@ -507,10 +507,10 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                                 //decimal principalForThisInstallment = decimal.Parse(scheduleInstallment.principal == "--" ? "0" : scheduleInstallment.principal.Replace(",", ""));
                                 //var accupdate = _customerAccountAppAppService.GetCustomerAccountByApplicationId(payment.ApplicationId);
 
-                                if (Exists.Result.Where(x => x.NoOfInstallment == Int32.Parse(scheduleInstallment.InstNumber)).Count() > 1)
-                                {
-                                    principalForThisInstallment -= (totalPaidForThisInst - payment.Amount - markupForThisInstallment);
-                                }
+                                //if (Exists.Result.Where(x => x.NoOfInstallment == Int32.Parse(scheduleInstallment.InstNumber)).Count() > 1)
+                                //{
+                                //    principalForThisInstallment -= (totalPaidForThisInst - payment.Amount - markupForThisInstallment);
+                                //}
 
                                 //principalForThisInstallment -= (totalPaidForThisInst - markupForThisInstallment);
 
