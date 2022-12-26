@@ -6525,35 +6525,6 @@ namespace TFCLPortal.Migrations
                     b.ToTable("InstallmentPayment");
                 });
 
-            modelBuilder.Entity("TFCLPortal.Klasses.Klass", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("TotalStudents");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Klass");
-                });
-
             modelBuilder.Entity("TFCLPortal.LiabilityTypes.LiabilityType", b =>
                 {
                     b.Property<int>("Id")
@@ -8835,37 +8806,6 @@ namespace TFCLPortal.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SchoolNonFinancial");
-                });
-
-            modelBuilder.Entity("TFCLPortal.Students.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Age");
-
-                    b.Property<int>("Class");
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("TFCLPortal.TDSBusinessExpenses.TDSBusinessExpense", b =>

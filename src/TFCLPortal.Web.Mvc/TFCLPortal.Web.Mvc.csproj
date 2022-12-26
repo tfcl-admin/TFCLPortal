@@ -81,7 +81,6 @@
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
     <Folder Include="Properties\ServiceDependencies\local\" />
-    <Folder Include="Views\Student\" />
     <Folder Include="wwwroot\Theame\fonts\fonts\" />
     <Folder Include="wwwroot\view-resources\Views\_Bundles\" />
   </ItemGroup>

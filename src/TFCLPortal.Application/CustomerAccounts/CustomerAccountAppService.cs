@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TFCLPortal.ApiCallLogs.Dto;
 using TFCLPortal.Applications;
@@ -60,9 +61,9 @@ namespace TFCLPortal.CustomerAccounts
                     var Customer = _CustomerAccountRepository.Get(IsExist.Id);
                     await _CustomerAccountRepository.DeleteAsync(Customer);
                 }
-
-                var CustomerAccount = ObjectMapper.Map<CustomerAccount>(input);
-                await _CustomerAccountRepository.InsertAsync(CustomerAccount);
+                
+                    var CustomerAccount = ObjectMapper.Map<CustomerAccount>(input);
+                    await _CustomerAccountRepository.InsertAsync(CustomerAccount);
 
                 CurrentUnitOfWork.SaveChanges();
                 return ResponseString = "Success";
@@ -74,11 +75,11 @@ namespace TFCLPortal.CustomerAccounts
             }
         }
 
-        public CustomerAccountListDto GetCustomerAccountById(int Id)
+        public  CustomerAccountListDto GetCustomerAccountById(int Id)
         {
             try
             {
-                var CustomerAccount = _CustomerAccountRepository.Get(Id);
+                var CustomerAccount =  _CustomerAccountRepository.Get(Id);
 
                 return ObjectMapper.Map<CustomerAccountListDto>(CustomerAccount);
 
@@ -122,9 +123,9 @@ namespace TFCLPortal.CustomerAccounts
         {
             try
             {
-                var CustomerAccount = _CustomerAccountRepository.FirstOrDefault(x => x.CNIC == CNIC);
+                var CustomerAccount =  _CustomerAccountRepository.FirstOrDefault(x=>x.CNIC==CNIC);
 
-                var contact = ObjectMapper.Map<CustomerAccountListDto>(CustomerAccount);
+                var contact= ObjectMapper.Map<CustomerAccountListDto>(CustomerAccount);
 
                 if (contact != null)
                 {
@@ -230,10 +231,10 @@ namespace TFCLPortal.CustomerAccounts
 
                 var contact = ObjectMapper.Map<List<CustomerAccountListDto>>(CustomerAccount);
 
-                foreach (var acc in contact)
+                foreach(var acc in contact)
                 {
                     var app = apps.Where(x => x.CNICNo == acc.CNIC && x.ScreenStatus == "Disbursed").FirstOrDefault();
-                    if (app != null)
+                    if(app!=null)
                     {
                         acc.ClientId = app.ClientID;
                     }
@@ -242,9 +243,9 @@ namespace TFCLPortal.CustomerAccounts
                         app = apps.Where(x => x.CNICNo == acc.CNIC && x.ScreenStatus.Contains("Settled")).FirstOrDefault();
                         if (app != null)
                         {
-                            if (app.ScreenStatus == "Settled")
+                            if(app.ScreenStatus=="Settled")
                             {
-                                acc.ClientId = app.ClientID + " (s)";
+                                acc.ClientId = app.ClientID+" (s)";
                             }
                             else if (app.ScreenStatus == "Early Settled")
                             {
@@ -257,7 +258,7 @@ namespace TFCLPortal.CustomerAccounts
                         }
                     }
                 }
-
+               
                 return contact;
             }
             catch (Exception ex)
@@ -271,7 +272,7 @@ namespace TFCLPortal.CustomerAccounts
             try
             {
                 var account = _CustomerAccountRepository.Get(AccountId);
-                var loans = _applicationAppService.GetAllApplicationsList().Where(x => x.CNICNo == account.CNIC && x.ScreenStatus != ApplicationState.Decline).ToList();
+                var loans = _applicationAppService.GetAllApplicationsList().Where(x => x.CNICNo == account.CNIC && x.ScreenStatus!=ApplicationState.Decline).ToList();
                 return loans;
             }
             catch (Exception ex)
@@ -285,7 +286,7 @@ namespace TFCLPortal.CustomerAccounts
             try
             {
                 var app = _applicationAppService.GetApplicationById(ApplicationId);
-                var CustomerAccount = _CustomerAccountRepository.GetAllList(x => x.CNIC == app.CNICNo).FirstOrDefault();
+                var CustomerAccount = _CustomerAccountRepository.GetAllList(x=>x.CNIC==app.CNICNo).FirstOrDefault();
                 var result = ObjectMapper.Map<CustomerAccountListDto>(CustomerAccount);
 
                 if (result != null)
@@ -302,7 +303,7 @@ namespace TFCLPortal.CustomerAccounts
             }
         }
 
-        public bool UpdateAccountBalance(int accountid, decimal balance)
+        public bool UpdateAccountBalance(int accountid,decimal balance)
         {
             try
             {
@@ -318,7 +319,7 @@ namespace TFCLPortal.CustomerAccounts
             }
         }
 
-        public bool Debit(int accountid, int Applicationid, decimal amount, string Narration, string modeOfPayment)
+        public bool Debit(int accountid,int Applicationid, decimal amount,string Narration,string modeOfPayment)
         {
             try
             {
@@ -333,7 +334,7 @@ namespace TFCLPortal.CustomerAccounts
                 transaction.ApplicationId = Applicationid;// payment.ApplicationId;
                 transaction.BalBefore = acc.Balance;
                 transaction.Amount = amount;// excessShortForLastPaidInstallment;
-                transaction.BalAfter = (acc.Balance - amount);
+                transaction.BalAfter = (acc.Balance-amount);
                 var t1 = _TransactionRepository.Insert(transaction);
                 var c1 = UpdateAccountBalance(acc.Id, transaction.BalAfter);
                 CurrentUnitOfWork.SaveChanges();
