@@ -2,13 +2,13 @@
 
 @{
     Layout = "~/Views/Shared/_NewLayout.cshtml";
-    decimal payment = (ViewBag.Payment == null ? 0 : ViewBag.Payment);
+    decimal payment = (ViewBag.inp.Payment == null ? 0 : ViewBag.inp.Payment);
     decimal balAfterPayment = 0;
 
-    if (payment >= ViewBag.DueAmount)
+    if (payment >= ViewBag.inp.DueAmount)
     {
-        balAfterPayment = payment - ViewBag.DueAmount;
-        payment = ViewBag.DueAmount;
+        balAfterPayment = payment - ViewBag.inp.DueAmount;
+        payment = ViewBag.inp.DueAmount;
     }
 }
 <style>
@@ -28,7 +28,7 @@
         </div>
         <div class="col-md-6 text-right">
             @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
-            <a href="~/Accountant/ViewSchedule?ApplicationId=@ViewBag.ApplicationId" target="_blank" class="btn btn-sm btn-outline-success bg1 eft-1" title="View Schedule"><i class="fa fa-calendar"></i> View Schedule </a>
+            <a href="~/Accountant/ViewSchedule?ApplicationId=@ViewBag.inp.ApplicationId" target="_blank" class="btn btn-sm btn-outline-success bg1 eft-1" title="View Schedule"><i class="fa fa-calendar"></i> View Schedule </a>
             <a href="~/Accountant/ActiveSchedules" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To List </a>
             <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
         </div>
@@ -37,24 +37,24 @@
         <div class="bgc-white bd bdrs-3 p-20 mB-20">
             <form asp-action="CreateAuthorizeInstallmentPayment" method="post">
                 <div class="row">
-                    <input asp-for="ApplicationId" type="hidden" id="ApplicationId" value="@ViewBag.Applicationid" />
+                    <input asp-for="ApplicationId" type="hidden" id="ApplicationId" value="@ViewBag.inp.ApplicationId" />
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Client ID</label>
-                            <input type="text" value="@ViewBag.ClientId" readonly="readonly" class="form-control" />
+                            <input type="text" value="@ViewBag.inp.ClientId" readonly="readonly" class="form-control" />
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Applicant Name</label>
-                            <input type="text" value="@ViewBag.ClientName" readonly="readonly" class="form-control" />
+                            <input type="text" value="@ViewBag.inp.ClientName" readonly="readonly" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6 d-none">
                         <div class="form-group">
                             <label>Nature Of Payment <font color="red">*</font></label>
-                            @Html.DropDownList("NatureOfPayment", ViewBag.NatureOfPaymentsList as SelectList, new { Name = "NatureOfPayment", @class = "form-control", required = "required" })
+                            @*@Html.DropDownList("NatureOfPayment", ViewBag.inp.NatureOfPaymentsList as SelectList, new { Name = "NatureOfPayment", @class = "form-control", required = "required" })*@
                         </div>
                     </div>
                     <div class="col-md-6 d-none">
@@ -66,25 +66,25 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Installment Due Date</label>
-                            <input asp-for="InstallmentDueDate" type="text" value="@ViewBag.InstallmentDueDate" readonly="readonly" class="form-control" />
+                            <input asp-for="InstallmentDueDate" type="text" value="@ViewBag.inp.InstallmentDueDate" readonly="readonly" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Installment Amount</label>
-                            <input asp-for="InstallmentAmount" value="@ViewBag.InstallmentAmount" readonly="readonly" class="form-control" />
+                            <input asp-for="InstallmentAmount" value="@ViewBag.inp.InstallmentAmount" readonly="readonly" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Installment Number (@ViewBag.RemainingInstallments Remaining)</label>
-                            <input asp-for="NoOfInstallment" value="@ViewBag.InstallmentNumber" readonly="readonly" class="form-control" />
+                            <label>Installment Number (@ViewBag.inp.RemainingInstallments Remaining)</label>
+                            <input asp-for="NoOfInstallment" value="@ViewBag.inp.InstallmentNumber" readonly="readonly" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Amount Paid</label>
-                            <input asp-for="PreviousBalance" value="@ViewBag.PreviousBalance" readonly="readonly" class="form-control" />
+                            <input asp-for="PreviousBalance" value="@ViewBag.inp.PreviousBalance" readonly="readonly" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -94,7 +94,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Due Amount</label>
-                            <input asp-for="DueAmount" value="@ViewBag.DueAmount" readonly="readonly" class="form-control" />
+                            <input asp-for="DueAmount" value="@ViewBag.inp.DueAmount" readonly="readonly" class="form-control" />
                         </div>
                     </div>
                     <div class="col-md-6 d-none">
@@ -184,14 +184,14 @@
                     <div class="col-md-6  d-none">
                         <div class="form-group">
                             <label>Bank Name <font color="red">*</font></label>
-                            @Html.DropDownList("FK_CompanyBankId", ViewBag.BanksList as SelectList, new { Name = "BankName", @class = "form-control", required = "required" })
+                            @*@Html.DropDownList("FK_CompanyBankId", ViewBag.inp.BanksList as SelectList, new { Name = "BankName", @class = "form-control", required = "required" })*@
                         </div>
                     </div>
 
-                    @if (!ViewBag.displayButton)
+                    @if (!ViewBag.inp.displayButton)
                     {
                         <div class="col-md-12 text-danger text-right">
-                            @ViewBag.RestrictionError
+                            @ViewBag.inp.RestrictionError
                         </div>
                     }
                     else

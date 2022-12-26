@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TFCLPortal.InstallmentPayments.Dto;
+using TFCLPortal.Schedules;
+using TFCLPortal.Schedules.Dto;
 
 namespace TFCLPortal.InstallmentPayments
 {
@@ -16,6 +18,7 @@ namespace TFCLPortal.InstallmentPayments
         Task<List<InstallmentPaymentListDto>> GetInstallmentPaymentByApplicationId(int ApplicationId);
         Task<List<InstallmentPaymentListDto>> GetAllInstallmentPaymentByApplicationId(int ApplicationId);
         Task<List<InstallmentPaymentListDto>> GetAllInstallmentPayments();
+        CurrentInstallmentPaymentDto GetCurrentInstallmentPayment(int ApplicationId, ScheduleListDto schedule);
         bool CheckInstallmentPaymentByApplicationId(int ApplicationId);
     }
 }

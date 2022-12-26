@@ -11,7 +11,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
 {
    public interface IAuthorizeInstallmentPaymentAppService : IApplicationService
     {
-        Task<string> Create(CreateAuthorizeInstallmentPayment createAuthorizeInstallmentPayment);
+       int Create(CreateAuthorizeInstallmentPayment createAuthorizeInstallmentPayment);
         Task<string> Update(EditAuthorizeInstallmentPayment editAuthorizeInstallmentPayment);
         Task<AuthorizeInstallmentPaymentListDto> GetAuthorizeInstallmentPaymentById(int Id);
         Task<List<AuthorizeInstallmentPaymentListDto>> GetAuthorizeInstallmentPaymentByApplicationId(int ApplicationId);
@@ -23,5 +23,6 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
         Task<string> DeductInstallmentPayment(CreateInstallmentPayment payment);
         Task<string> DeductInstallmentPaymentRevised(CreateInstallmentPayment payment);
         bool CheckAuthorizeInstallmentPaymentByApplicationId(int ApplicationId);
+        bool InstallmentPayment(CreateAuthorizeInstallmentPayment payment);
     }
 }

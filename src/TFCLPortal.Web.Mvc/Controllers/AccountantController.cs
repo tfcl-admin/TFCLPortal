@@ -425,22 +425,6 @@ namespace TFCLPortal.Web.Controllers
             return RedirectToAction("EnhancementRequestList", "Accountant");
         }
 
-        public IActionResult AuthorizationInstallmentPayment()
-        {
-            int branch = Branchid();
-            List<AuthorizeInstallmentPaymentListDto> schedules;
-
-            if (branch != 0)
-            {
-                schedules = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPaymentsUnAuthorized().Result.Where(x => x.branchId == branch).ToList();
-            }
-            else
-            {
-                schedules = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPaymentsUnAuthorized().Result.ToList();
-            }
-
-            return View(schedules);
-        }
 
         public IActionResult getEarlySettlement(int ApplicationId)
         {
@@ -461,292 +445,6 @@ namespace TFCLPortal.Web.Controllers
         }
 
 
-        public IActionResult InstallmentPaymentList(int? filterType, int? branchFilter, int? day, int? month, int? year)
-        {
-            List<ScheduleInstallmenttListDto> scheduleInstallments = new List<ScheduleInstallmenttListDto>();
-
-            int branch = 0;
-
-            //if (branchFilter == null)
-            //{
-            //    branch = Branchid();
-            //}
-            //else
-            //{
-            //    branch = (int)branchFilter;
-            //}
-
-            scheduleInstallments = _scheduleAppService.GetInstallmentPaymentsList(filterType, branchFilter, day, month, year);
-
-            //decimal totalDue = 0;
-            //decimal totalPaid = 0;
-            //decimal totalUnPaid = 0;
-            //decimal DefCount = 0;
-            //decimal DefAmount = 0;
-
-            //if (filterType == null)
-            //{
-            //    filterType = 1;
-            //}
-            ////if (day == null)
-            ////{
-            ////    day = DateTime.Now.Day;
-            ////}
-            //if (month == null)
-            //{
-            //    month = DateTime.Now.Month;
-            //}
-            //if (year == null)
-            //{
-            //    year = DateTime.Now.Year;
-            //}
-
-            //string monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName((int)month);
-            //ViewBag.monthName = monthName;
-            //ViewBag.Month = month;
-            //ViewBag.Year = year;
-            //ViewBag.Day = day;
-            //ViewBag.filterType = filterType;
-
-            //int branch = 0;
-
-            //if (branchFilter == null)
-            //{
-            //    branch = Branchid();
-            //}
-            //else
-            //{
-            //    branch = (int)branchFilter;
-            //}
-
-            //var getDisbursedApplications = new List<Applicationz>();
-
-            //var users = _userAppService.GetAllUsers();
-
-
-            //if (branch != 0)
-            //{
-            //    getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed && (int)x.FK_branchid == branch).ToList();
-            //}
-            //else
-            //{
-            //    getDisbursedApplications = _applicationRepository.GetAllList(x => x.ScreenStatus == ApplicationState.Disbursed).ToList();
-            //}
-
-            //var schedules = _scheduleAppService.GetScheduleList();
-            //var paidInstallmentsList = _installmentPaymentAppService.GetAllInstallmentPayments();
-
-
-            //if (getDisbursedApplications.Count > 0)
-            //{
-            //    foreach (var app in getDisbursedApplications)
-            //    {
-            //        var schedule = schedules.Result.Where(x => x.ApplicationId == app.Id).FirstOrDefault();
-            //        if (schedule != null)
-            //        {
-            //            List<ScheduleInstallmenttListDto> installments = new List<ScheduleInstallmenttListDto>();
-
-            //            if (filterType != 3)
-            //            {
-            //                if (day != null)
-            //                {
-            //                    if (filterType == 1)
-            //                    {
-            //                        installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && DateTime.Parse(x.InstallmentDueDate).Day == day && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
-            //                    }
-            //                    else if (filterType == 2)
-            //                    {
-            //                        installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid == true && ((DateTime)x.PaymentDate).Day == day && ((DateTime)x.PaymentDate).Month == month && ((DateTime)x.PaymentDate).Year == year).ToList();
-            //                    }
-            //                }
-            //                else
-            //                {
-            //                    if (filterType == 1)
-            //                    {
-            //                        installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && DateTime.Parse(x.InstallmentDueDate).Month == month && DateTime.Parse(x.InstallmentDueDate).Year == year).ToList();
-            //                    }
-            //                    else if (filterType == 2)
-            //                    {
-            //                        installments = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid == true && ((DateTime)x.PaymentDate).Month == month && ((DateTime)x.PaymentDate).Year == year).ToList();
-            //                    }
-
-            //                }
-
-
-            //                var paidInstallments = paidInstallmentsList.Result.Where(x => x.ApplicationId == schedule.ApplicationId && x.isAuthorized == true);
-
-            //                if (paidInstallments != null)
-            //                {
-            //                    foreach (var installment in installments)
-            //                    {
-            //                        if (installment.InstNumber != "0")
-            //                        {
-            //                            var paidInstByInstNo = paidInstallments.Where(x => x.NoOfInstallment.ToString() == installment.InstNumber);
-
-            //                            decimal sumOfAmountsPerInstallment = 0;
-            //                            decimal excessShort = 0;
-
-            //                            if (paidInstByInstNo.Count() > 0)
-            //                            {
-            //                                foreach (var paidInstallment in paidInstByInstNo)
-            //                                {
-            //                                    sumOfAmountsPerInstallment += paidInstallment.Amount;
-            //                                    excessShort = paidInstallment.ExcessShortPayment;
-            //                                    installment.LastPaymentDate = paidInstallment.DepositDate;
-            //                                }
-            //                            }
-            //                            else
-            //                            {
-            //                                var getLastPaidInstallment = paidInstallments.Where(x => x.ApplicationId == schedule.ApplicationId).FirstOrDefault();
-            //                                if (getLastPaidInstallment != null)
-            //                                {
-            //                                    excessShort = getLastPaidInstallment.ExcessShortPayment;
-            //                                    installment.LastPaymentDate = getLastPaidInstallment.DepositDate;
-            //                                }
-            //                            }
-
-
-            //                            installment.PaidAmount = sumOfAmountsPerInstallment.ToString();
-            //                            installment.ExcessShort = excessShort.ToString();
-
-
-            //                            sumOfAmountsPerInstallment = 0;
-            //                        }
-            //                        else
-            //                        {
-
-            //                            var AllDefferedInstallments = schedule.installmentList.Where(x => x.InstNumber == installment.InstNumber).ToList();
-            //                            var indexOfThisInstallment = AllDefferedInstallments.IndexOf(installment);
-
-            //                            var paidDeferredInstallments = paidInstallments.Where(x => x.NoOfInstallment.ToString() == "0").ToList();
-            //                            try
-            //                            {
-            //                                IGrouping<DateTime, InstallmentPaymentListDto> lastInstallmentDate;
-            //                                if (month != DateTime.Now.Month)
-            //                                {
-            //                                    lastInstallmentDate = paidInstallments.Where(x => x.isAuthorized == true && x.InstallmentDueDate.Month == month && x.InstallmentDueDate.Year == year).GroupBy(x => x.InstallmentDueDate).OrderBy(x => x.Key).LastOrDefault();
-            //                                }
-            //                                else
-            //                                {
-            //                                    lastInstallmentDate = paidInstallments.Where(x => x.isAuthorized == true).GroupBy(x => x.InstallmentDueDate).OrderBy(x => x.Key).LastOrDefault();
-            //                                }
-
-            //                                if (lastInstallmentDate != null)
-            //                                {
-            //                                    var requiredPayments = paidInstallments.Where(x => x.InstallmentDueDate == lastInstallmentDate.Key).ToList();
-
-            //                                    decimal sumOfAmountsPerInstallment = 0;
-            //                                    decimal excessShort = 0;
-
-            //                                    int appid = schedule.ApplicationId;
-
-            //                                    foreach (var payment in requiredPayments)
-            //                                    {
-            //                                        if (installment.isPaid == true)
-            //                                        {
-            //                                            sumOfAmountsPerInstallment += payment.Amount;
-            //                                            excessShort += payment.ExcessShortPayment;
-            //                                        }
-            //                                        else
-            //                                        {
-            //                                            excessShort = payment.ExcessShortPayment;
-
-            //                                        }
-            //                                        installment.LastPaymentDate = payment.DepositDate;
-            //                                    }
-
-            //                                    installment.PaidAmount = sumOfAmountsPerInstallment.ToString();
-            //                                    installment.ExcessShort = excessShort.ToString();
-            //                                }
-
-            //                                //var paidDeferredInstallmentOnThisIndex = paidDeferredInstallments[indexOfThisInstallment];
-            //                                //installment.PaidAmount = paidDeferredInstallmentOnThisIndex.Amount.ToString();
-            //                                //installment.ExcessShort = paidDeferredInstallmentOnThisIndex.ExcessShortPayment.ToString();
-
-            //                            }
-            //                            catch
-            //                            {
-
-            //                            }
-
-            //                        }
-            //                    }
-            //                }
-
-            //            }
-            //            else
-            //            {
-            //                var installment = schedule.installmentList.Where(x => x.InstNumber != "G*" && x.isPaid != true).FirstOrDefault();
-
-            //                var paidInstallments = paidInstallmentsList.Result.Where(x => x.ApplicationId == schedule.ApplicationId && x.isAuthorized == true).LastOrDefault();
-            //                if (paidInstallments != null)
-            //                {
-            //                    installment.LastPaymentDate = paidInstallments.DepositDate;
-            //                }
-
-            //                if ((DateTime.Parse(installment.InstallmentDueDate)) <= DateTime.Now.AddDays(-1))
-            //                {
-            //                    installments.Add(installment);
-            //                }
-            //            }
-
-            //            if (installments.Count > 0)
-            //            {
-            //                foreach (var inst in installments)
-            //                {
-            //                    inst.ClientId = app.ClientID;
-            //                    inst.ClientName = app.ClientName;
-            //                    inst.BusinessName = app.SchoolName;
-            //                    inst.Applicationid = app.Id;
-            //                    inst.BranchName = app.BranchCode;
-            //                    inst.LoanAmount = schedule.LoanAmount;
-            //                    var sde = users.Where(x => x.Id == app.CreatorUserId).FirstOrDefault();
-            //                    if (sde != null)
-            //                    {
-            //                        inst.SdeName = sde.FullName;
-            //                    }
-            //                    scheduleInstallments.Add(inst);
-
-            //                    totalDue += decimal.Parse(inst.installmentAmount.Replace(",", ""));
-
-            //                    if (inst.isPaid == true)
-            //                    {
-            //                        totalPaid += decimal.Parse(inst.PaidAmount.Replace(",", ""));
-            //                    }
-            //                    else
-            //                    {
-            //                        inst.DPD = (int)(DateTime.Now - DateTime.Parse(inst.InstallmentDueDate)).TotalDays;
-
-            //                        totalUnPaid += decimal.Parse(inst.installmentAmount.Replace(",", ""));
-            //                    }
-
-            //                    if (inst.InstNumber == "0")
-            //                    {
-            //                        DefCount++;
-            //                        DefAmount += decimal.Parse(inst.installmentAmount.Replace(",", ""));
-            //                    }
-
-
-            //                }
-            //            }
-            //        }
-
-
-            //    }
-            //}
-
-            //ViewBag.Due = totalDue;
-            //ViewBag.Paid = totalPaid;
-            //ViewBag.UnPaid = totalUnPaid;
-            //ViewBag.DefCount = DefCount;
-            //ViewBag.DefAmount = DefAmount;
-
-            var branches = _branchDetailAppService.GetBranchListDetail();
-
-            ViewBag.McrcUserList = new SelectList(branches, "Id", "BranchCode");
-
-            return View(scheduleInstallments);
-        }
 
         public async Task<IActionResult> CreateAccdecline(int Id, string Reason)
         {
@@ -792,74 +490,7 @@ namespace TFCLPortal.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult ViewInstallmentPayment(int Id)
-        {
-            ViewBag.Id = Id;
-            var authorizeInstallment = _authorizeInstallmentPaymentAppService.GetAuthorizeInstallmentPaymentById(Id).Result;
-            if (authorizeInstallment != null)
-            {
-                ViewBag.Applicationid = authorizeInstallment.ApplicationId;
-                var app = _applicationAppService.GetApplicationById(authorizeInstallment.ApplicationId);
-                ViewBag.ClientId = app.ClientID;
-                ViewBag.ClientName = app.ClientName;
-                var Banks = _companyBankAccountRepository.Get(authorizeInstallment.FK_CompanyBankId);
-                if (Banks != null)
-                {
-                    ViewBag.BanksList = Banks.Name;
-                }
-                else
-                {
-                    ViewBag.BanksList = "";
-                }
-                var NatureOfPayments = _natureOfPaymentRepository.Get(authorizeInstallment.NatureOfPayment);
-                if (NatureOfPayments != null)
-                {
-                    ViewBag.NatureOfPaymentsList = NatureOfPayments.Name;
-                }
-                else
-                {
-                    ViewBag.NatureOfPaymentsList = "";
-                }
-                ViewBag.InstallmentDueDate = authorizeInstallment.InstallmentDueDate;
-                ViewBag.InstallmentAmount = authorizeInstallment.InstallmentAmount;
-                ViewBag.InstallmentNumber = authorizeInstallment.NoOfInstallment;
-                ViewBag.PreviousBalance = authorizeInstallment.PreviousBalance;
-                ViewBag.DueAmount = authorizeInstallment.DueAmount;
-                ViewBag.ModeOfPayment = authorizeInstallment.ModeOfPayment;
-                ViewBag.Amount = authorizeInstallment.Amount;
-                ViewBag.ExcessShortPayment = authorizeInstallment.ExcessShortPayment;
-                ViewBag.AmountWords = authorizeInstallment.AmountWords;
-                ViewBag.LateDays = authorizeInstallment.LateDays;
-                ViewBag.LateDaysPenalty = authorizeInstallment.LateDaysPenalty;
-                ViewBag.DepositDate = authorizeInstallment.DepositDate.ToString("yyyy-MM-dd hh:mm:ss tt");
-                ViewBag.BankId = authorizeInstallment.FK_CompanyBankId;
-                ViewBag.isLateDaysApplied = authorizeInstallment.isLateDaysApplied;
-            }
-            else
-            {
-                ViewBag.Applicationid = 0;
-                ViewBag.ClientId = "";
-                ViewBag.ClientName = "";
-                ViewBag.BanksList = "";
-                ViewBag.NatureOfPaymentsList = "";
-                ViewBag.InstallmentDueDate = "";
-                ViewBag.InstallmentAmount = "0";
-                ViewBag.InstallmentNumber = "0";
-                ViewBag.PreviousBalance = "0";
-                ViewBag.DueAmount = "0";
-                ViewBag.ModeOfPayment = "";
-                ViewBag.Amount = "";
-                ViewBag.ExcessShortPayment = "";
-                ViewBag.AmountWords = "";
-                ViewBag.isLateDaysApplied = 0;
-                ViewBag.LateDays = "0";
-                ViewBag.LateDaysPenalty = "0";
-                ViewBag.DepositDate = "";
-                ViewBag.BankId = 0;
-            }
 
-            return View();
-        }
 
         public IActionResult ViewAuthorizationsReschedule()
         {
@@ -885,12 +516,6 @@ namespace TFCLPortal.Web.Controllers
             return View("AuthorizationPartial");
         }
 
-        public async Task<ActionResult> AuthorizationInstallmentPaymentPartial(int id)
-        {
-            ViewBag.Id = id;
-            ViewBag.IP = _installmentPaymentRepository.Get(id);
-            return View("AuthorizationInstallmentPaymentPartial");
-        }
 
         public async Task<ActionResult> AuthorizationPartialTemp(int appid)
         {
@@ -1098,6 +723,126 @@ namespace TFCLPortal.Web.Controllers
             return Json(response);
         }
 
+
+        //Installment Process Start
+        public IActionResult InstallmentPayment(int ApplicationId)
+        {
+            var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
+            var inp = _installmentPaymentAppService.GetCurrentInstallmentPayment(ApplicationId, schedule);
+            ViewBag.inp = inp;
+            return View();
+        }
+
+        [DisableValidation]
+        [HttpPost]
+        public IActionResult CreateAuthorizeInstallmentPayment(CreateAuthorizeInstallmentPayment payment)
+        {
+            bool isPaymentDone = _authorizeInstallmentPaymentAppService.InstallmentPayment(payment);
+
+            var app = _applicationAppService.GetApplicationById(payment.ApplicationId);
+
+            if (isPaymentDone)
+            {
+                return RedirectToAction("Success", "About", new { Message = "Installment Payment deducted successfully for "+app.ClientID+" ("+app.ClientName+")" });
+            }
+            else
+            {
+                return RedirectToAction("Error", "About", new { Message = "Error while deducting installment payment for " + app.ClientID + " (" + app.ClientName + ")" });
+            }
+        }
+
+        public IActionResult AuthorizationInstallmentPayment()
+        {
+            int branch = Branchid();
+            List<AuthorizeInstallmentPaymentListDto> schedules;
+
+            if (branch != 0)
+            {
+                schedules = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPaymentsUnAuthorized().Result.Where(x => x.branchId == branch).ToList();
+            }
+            else
+            {
+                schedules = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPaymentsUnAuthorized().Result.ToList();
+            }
+
+            return View(schedules);
+        }
+
+        public async Task<ActionResult> AuthorizationInstallmentPaymentPartial(int id)
+        {
+            ViewBag.Id = id;
+            ViewBag.IP = _installmentPaymentRepository.Get(id);
+            return View("AuthorizationInstallmentPaymentPartial");
+        }
+        public IActionResult ViewInstallmentPayment(int Id)
+        {
+            ViewBag.Id = Id;
+            var authorizeInstallment = _authorizeInstallmentPaymentAppService.GetAuthorizeInstallmentPaymentById(Id).Result;
+            if (authorizeInstallment != null)
+            {
+                ViewBag.Applicationid = authorizeInstallment.ApplicationId;
+                var app = _applicationAppService.GetApplicationById(authorizeInstallment.ApplicationId);
+                ViewBag.ClientId = app.ClientID;
+                ViewBag.ClientName = app.ClientName;
+                var Banks = _companyBankAccountRepository.Get(authorizeInstallment.FK_CompanyBankId);
+                if (Banks != null)
+                {
+                    ViewBag.BanksList = Banks.Name;
+                }
+                else
+                {
+                    ViewBag.BanksList = "";
+                }
+                var NatureOfPayments = _natureOfPaymentRepository.Get(authorizeInstallment.NatureOfPayment);
+                if (NatureOfPayments != null)
+                {
+                    ViewBag.NatureOfPaymentsList = NatureOfPayments.Name;
+                }
+                else
+                {
+                    ViewBag.NatureOfPaymentsList = "";
+                }
+                ViewBag.InstallmentDueDate = authorizeInstallment.InstallmentDueDate;
+                ViewBag.InstallmentAmount = authorizeInstallment.InstallmentAmount;
+                ViewBag.InstallmentNumber = authorizeInstallment.NoOfInstallment;
+                ViewBag.PreviousBalance = authorizeInstallment.PreviousBalance;
+                ViewBag.DueAmount = authorizeInstallment.DueAmount;
+                ViewBag.ModeOfPayment = authorizeInstallment.ModeOfPayment;
+                ViewBag.Amount = authorizeInstallment.Amount;
+                ViewBag.ExcessShortPayment = authorizeInstallment.ExcessShortPayment;
+                ViewBag.AmountWords = authorizeInstallment.AmountWords;
+                ViewBag.LateDays = authorizeInstallment.LateDays;
+                ViewBag.LateDaysPenalty = authorizeInstallment.LateDaysPenalty;
+                ViewBag.DepositDate = authorizeInstallment.DepositDate.ToString("yyyy-MM-dd hh:mm:ss tt");
+                ViewBag.BankId = authorizeInstallment.FK_CompanyBankId;
+                ViewBag.isLateDaysApplied = authorizeInstallment.isLateDaysApplied;
+            }
+            else
+            {
+                ViewBag.Applicationid = 0;
+                ViewBag.ClientId = "";
+                ViewBag.ClientName = "";
+                ViewBag.BanksList = "";
+                ViewBag.NatureOfPaymentsList = "";
+                ViewBag.InstallmentDueDate = "";
+                ViewBag.InstallmentAmount = "0";
+                ViewBag.InstallmentNumber = "0";
+                ViewBag.PreviousBalance = "0";
+                ViewBag.DueAmount = "0";
+                ViewBag.ModeOfPayment = "";
+                ViewBag.Amount = "";
+                ViewBag.ExcessShortPayment = "";
+                ViewBag.AmountWords = "";
+                ViewBag.isLateDaysApplied = 0;
+                ViewBag.LateDays = "0";
+                ViewBag.LateDaysPenalty = "0";
+                ViewBag.DepositDate = "";
+                ViewBag.BankId = 0;
+            }
+
+            return View();
+        }
+
         [HttpPost]
         public async Task<JsonResult> RejectInstallmentPayment(int Id, string Reason)
         {
@@ -1140,7 +885,41 @@ namespace TFCLPortal.Web.Controllers
             catch (Exception ex)
             {
             }
+        }
 
+        //[DisableValidation]
+        //[HttpPost]
+        
+        //Installment Process End
+
+        public IActionResult InstallmentPaymentList(int? filterType, int? branchFilter, int? day, int? month, int? year)
+        {
+            List<ScheduleInstallmenttListDto> scheduleInstallments = new List<ScheduleInstallmenttListDto>();
+
+            int branch = 0;
+
+            scheduleInstallments = _scheduleAppService.GetInstallmentPaymentsList(filterType, branchFilter, day, month, year);
+
+            var branches = _branchDetailAppService.GetBranchListDetail();
+
+            ViewBag.McrcUserList = new SelectList(branches, "Id", "BranchCode");
+
+            return View(scheduleInstallments);
+        }
+
+        [HttpPost]
+        public JsonResult getAuthorizeInstallmentPayment(int ApplicationId)
+        {
+            try
+            {
+                var schedule = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPaymentByApplicationId(ApplicationId);
+                var installments = schedule.Result;
+                return Json(installments);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error : " + ex.ToString());
+            }
         }
 
         public IActionResult DisburseApplication(int ApplicationId)
@@ -1306,229 +1085,6 @@ namespace TFCLPortal.Web.Controllers
 
             return View(getSchedule);
         }
-
-        public IActionResult InstallmentPayment(int ApplicationId)
-        {
-            ViewBag.Applicationid = ApplicationId;
-
-            var app = _applicationAppService.GetApplicationById(ApplicationId);
-            ViewBag.ClientId = app.ClientID;
-            ViewBag.ClientName = app.ClientName;
-
-            var Banks = _companyBankAccountRepository.GetAllList().Select(s => new { Id = s.Id, Selection = string.Format("{0} {1} ({2})", s.Name, s.Branch, s.AccountNumber) }).ToList();
-            ViewBag.BanksList = new SelectList(Banks, "Id", "Selection");
-
-            var NatureOfPayments = _natureOfPaymentRepository.GetAllList().ToList();
-            ViewBag.NatureOfPaymentsList = new SelectList(NatureOfPayments, "Id", "Name");
-
-            var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result ?? null;
-
-            ScheduleInstallmenttListDto firstUnpaidInstallment = new ScheduleInstallmenttListDto();
-
-            if (schedule != null)
-            {
-                firstUnpaidInstallment = schedule.installmentList.Where(x => (x.isPaid == false || x.isPaid == null) && x.InstNumber != "G*").FirstOrDefault();
-            }
-            else
-            {
-                firstUnpaidInstallment = null;
-            }
-
-            var Acc = _customerAccountAppAppService.GetCustomerAccountByCNIC(app.CNICNo).Result;
-            if (Acc != null)
-            {
-                ViewBag.Payment = Acc.Balance;
-            }
-
-            if (firstUnpaidInstallment != null)
-            {
-                ViewBag.InstallmentDueDate = firstUnpaidInstallment.InstallmentDueDate;
-                ViewBag.InstallmentAmount = (firstUnpaidInstallment.installmentAmount == "--" || firstUnpaidInstallment.installmentAmount == "" ? "0" : firstUnpaidInstallment.installmentAmount);
-                ViewBag.InstallmentNumber = firstUnpaidInstallment.InstNumber;
-                ViewBag.RemainingInstallments = firstUnpaidInstallment.BalInst;
-            }
-            else
-            {
-                ViewBag.InstallmentDueDate = "0";
-                ViewBag.InstallmentAmount = "0";
-                ViewBag.InstallmentNumber = "0";
-                ViewBag.RemainingInstallments = schedule.installmentList.Where(x => x.InstNumber != "G*").Count();
-
-            }
-
-            var paidInstallments = _installmentPaymentAppService.GetInstallmentPaymentByApplicationId(ApplicationId);
-            decimal previous;
-            if (paidInstallments.Result.Count > 0)
-            {
-                var lastPaidInstallment = paidInstallments.Result.LastOrDefault();
-                if (lastPaidInstallment.NoOfInstallment.ToString() != firstUnpaidInstallment.InstNumber)
-                {
-                    ViewBag.PreviousBalance = lastPaidInstallment.ExcessShortPayment;
-                    previous = lastPaidInstallment.ExcessShortPayment;
-                }
-                else if (lastPaidInstallment.NoOfInstallment.ToString() == "0")
-                {
-                    //Changed due to Asif Iqbal's Previous Balance Issue
-                    //var sameInstallmentPaymentsList = paidInstallments.Result.Where(x => x.InstallmentDueDate == DateTime.Parse(lastPaidInstallment.InstallmentDueDate));
-                    var sameInstallmentPaymentsList = paidInstallments.Result.Where(x => x.InstallmentDueDate == DateTime.Parse(firstUnpaidInstallment.InstallmentDueDate));
-                    decimal sumOfAllPaymentsForOneInstallment = 0;
-
-                    int count = 0;
-                    if (sameInstallmentPaymentsList.Count() > 0)
-                    {
-
-                        foreach (var payments in sameInstallmentPaymentsList)
-                        {
-                            if (count > 0)
-                            {
-                                sumOfAllPaymentsForOneInstallment += (payments.Amount);
-                            }
-                            else
-                            {
-                                sumOfAllPaymentsForOneInstallment += (payments.Amount + payments.PreviousBalance);
-                            }
-
-                            count++;
-                        }
-
-                    }
-                    else
-                    {
-                        sumOfAllPaymentsForOneInstallment = lastPaidInstallment.ExcessShortPayment;
-                    }
-                    ViewBag.PreviousBalance = sumOfAllPaymentsForOneInstallment;
-                    previous = sumOfAllPaymentsForOneInstallment;
-                }
-                else
-                {
-                    var sameInstallmentPaymentsList = paidInstallments.Result.Where(x => x.NoOfInstallment == lastPaidInstallment.NoOfInstallment);
-                    decimal sumOfAllPaymentsForOneInstallment = 0;
-
-                    int count = 0;
-                    foreach (var payments in sameInstallmentPaymentsList)
-                    {
-                        if (count > 0)
-                        {
-                            sumOfAllPaymentsForOneInstallment += (payments.Amount);
-                        }
-                        else
-                        {
-                            sumOfAllPaymentsForOneInstallment += (payments.Amount + payments.PreviousBalance);
-                        }
-
-                        count++;
-                    }
-
-                    ViewBag.PreviousBalance = sumOfAllPaymentsForOneInstallment;
-                    previous = sumOfAllPaymentsForOneInstallment;
-                }
-            }
-            else
-            {
-                ViewBag.PreviousBalance = "0";
-                previous = 0;
-            }
-            decimal Iamount = Decimal.Parse((ViewBag.InstallmentAmount).Replace(",", ""));
-            ViewBag.DueAmount = Iamount - previous;
-
-            bool displayButton = true;
-
-            DateTime due = DateTime.Parse(ViewBag.InstallmentDueDate);
-
-            displayButton = _closingMonthAppService.checkIfOpen(app.FK_branchid, due.Month, due.Year);
-
-            decimal payment = (ViewBag.Payment == null ? 0 : ViewBag.Payment);
-
-            if (displayButton)
-            {
-                if (ViewBag.RemainingInstallments == "0" && (payment < ViewBag.DueAmount))
-                {
-                    displayButton = false;
-                    ViewBag.RestrictionError = "Not enough amount in this customer's account to Settle.";
-                }
-            }
-            else
-            {
-                ViewBag.RestrictionError = "Month is not yet opened for this branch.";
-            }
-
-            if (displayButton)
-            {
-                var instpayment = _earlySettlementAppService.GetEarlySettlementByApplicationId(ApplicationId).Result;
-                if (instpayment != null)
-                {
-                    foreach (var es in instpayment)
-                    {
-                        if (es.isAuthorized == null)
-                        {
-                            displayButton = false;
-                            ViewBag.RestrictionError = "Installment Payment can not be entered when early settlement entry is pending.";
-                        }
-                    }
-                }
-            }
-
-            ViewBag.displayButton = displayButton;
-
-
-
-            return View();
-        }
-
-
-
-        [DisableValidation]
-        [HttpPost]
-        public IActionResult CreateAuthorizeInstallmentPayment(CreateAuthorizeInstallmentPayment payment)
-        {
-            _authorizeInstallmentPaymentAppService.Create(payment);
-
-            return RedirectToAction("InstallmentPayment", new { ApplicationId = payment.ApplicationId });
-        }
-
-        [DisableValidation]
-        [HttpPost]
-        public IActionResult CreateInstallmentPayment(CreateInstallmentPayment payment)
-        {
-            var schedule = _scheduleAppService.GetScheduleByApplicationId(payment.ApplicationId).Result;
-            if (schedule != null)
-            {
-                if (schedule.installmentList.Where(x => x.InstNumber == payment.NoOfInstallment.ToString()).FirstOrDefault().isPaid != true)
-                {
-                    var payments = _installmentPaymentAppService.GetAllInstallmentPaymentByApplicationId(payment.ApplicationId).Result;
-                    if (payments == null)
-                    {
-                        AuthorizeInstallmentPayment(payment.AuthorizationId);
-
-                        _authorizeInstallmentPaymentAppService.DeductInstallmentPaymentRevised(payment);
-                    }
-                    else
-                    {
-                        var lastpayment = payments.Where(x => x.NoOfInstallment == payment.NoOfInstallment).OrderByDescending(x => x.Id).FirstOrDefault();
-                        if (lastpayment != null)
-                        {
-                            if ((DateTime.Now - lastpayment.CreationTime).TotalMinutes >= 10)
-                            {
-                                AuthorizeInstallmentPayment(payment.AuthorizationId);
-
-                                _authorizeInstallmentPaymentAppService.DeductInstallmentPaymentRevised(payment);
-                            }
-                        }
-                        else
-                        {
-                            AuthorizeInstallmentPayment(payment.AuthorizationId);
-
-                            _authorizeInstallmentPaymentAppService.DeductInstallmentPaymentRevised(payment);
-                        }
-                    }
-
-                }
-            }
-
-
-            return RedirectToAction("AuthorizationInstallmentPayment");
-        }
-
 
         public IActionResult ViewReSchedule(int ApplicationId)
         {
@@ -2075,20 +1631,6 @@ namespace TFCLPortal.Web.Controllers
             }
         }
 
-        [HttpPost]
-        public JsonResult getAuthorizeInstallmentPayment(int ApplicationId)
-        {
-            try
-            {
-                var schedule = _authorizeInstallmentPaymentAppService.GetAllAuthorizeInstallmentPaymentByApplicationId(ApplicationId);
-                var installments = schedule.Result;
-                return Json(installments);
-            }
-            catch (Exception ex)
-            {
-                return Json("Error : " + ex.ToString());
-            }
-        }
 
 
         [HttpPost]
@@ -2937,7 +2479,7 @@ namespace TFCLPortal.Web.Controllers
         [HttpPost]
         public IActionResult CreateWriteOff(CreateWriteOff input)
         {
-            input.FileUrl= UploadImagestoServer(input.File, "wwwroot/uploads/WriteOffFiles/" + input.ApplicationId + "/");
+            input.FileUrl = UploadImagestoServer(input.File, "wwwroot/uploads/WriteOffFiles/" + input.ApplicationId + "/");
 
             _writeOffAppService.Create(input);
 
@@ -2992,7 +2534,7 @@ namespace TFCLPortal.Web.Controllers
                 entry.RejectionReason = Reason;
 
                 var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                if(acc!=null)
+                if (acc != null)
                 {
                     string n1 = "Write Off Payment Collection";
                     _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, entry.AmountDeposited, n1, "");
@@ -3009,7 +2551,7 @@ namespace TFCLPortal.Web.Controllers
 
                     _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
                 }
-                
+
 
             }
             else if (Decision == "Reject")
@@ -3045,7 +2587,7 @@ namespace TFCLPortal.Web.Controllers
             }
 
             var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(ApplicationId);
-            if(acc!=null)
+            if (acc != null)
             {
                 ViewBag.Balance = acc.Balance;
             }
@@ -3299,18 +2841,18 @@ namespace TFCLPortal.Web.Controllers
                 entry.RejectionReason = Reason;
 
                 var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                if(acc!=null)
+                if (acc != null)
                 {
                     string n1 = "Principal Collection for Deceased Settlement";
                     _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, entry.OsPrincipalAmount, n1, "");
-                    
+
                     var accUpdate = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
 
                     string n2 = "Remaining Balance Deduction";
                     _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, accUpdate.Balance, n2, "");
                 }
 
-                
+
 
                 var app = _applicationRepository.Get(entry.ApplicationId);
                 _applicationAppService.ChangeApplicationState(ApplicationState.Deceased, entry.ApplicationId, "Deceased Applicant");

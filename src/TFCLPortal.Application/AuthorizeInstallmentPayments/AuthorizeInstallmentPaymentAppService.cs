@@ -72,20 +72,23 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
         }
         #endregion
         #region Methods
-        public async Task<string> Create(CreateAuthorizeInstallmentPayment createAuthorizeInstallmentPayment)
+        public int Create(CreateAuthorizeInstallmentPayment createAuthorizeInstallmentPayment)
         {
             try
             {
                 var AuthorizeInstallmentPayment = ObjectMapper.Map<AuthorizeInstallmentPayment>(createAuthorizeInstallmentPayment);
-                await _AuthorizeInstallmentPaymentRepository.InsertAsync(AuthorizeInstallmentPayment);
+                return _AuthorizeInstallmentPaymentRepository.InsertAndGetId(AuthorizeInstallmentPayment);
 
             }
             catch (Exception ex)
             {
-                return "Failed";
+                return -1;
             }
-            return "Success";
         }
+
+
+
+
         public async Task<string> DeductInstallmentPayment(CreateInstallmentPayment payment)
         {
             try
@@ -883,6 +886,112 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                 throw new UserFriendlyException(L("GetMethodError{0}", "payment"));
             }
         }
+
+        public bool InstallmentPayment(CreateAuthorizeInstallmentPayment payment)
+        {
+            try
+            {
+                var paymentCreation = Create(payment);
+
+                if (paymentCreation != -1)
+                {
+                    var paymentData = GetAuthorizeInstallmentPaymentById(paymentCreation).Result;
+                    if (paymentData != null)
+                    {
+                        CreateInstallmentPayment installmentPayment = new CreateInstallmentPayment();
+
+                        installmentPayment.ApplicationId = paymentData.ApplicationId;
+                        installmentPayment.InstallmentDueDate = paymentData.InstallmentDueDate;
+                        installmentPayment.InstallmentAmount = paymentData.InstallmentAmount;
+                        installmentPayment.NoOfInstallment = paymentData.NoOfInstallment;
+                        installmentPayment.PreviousBalance = paymentData.PreviousBalance;
+                        installmentPayment.DueAmount = paymentData.DueAmount;
+                        installmentPayment.ModeOfPayment = paymentData.ModeOfPayment;
+                        installmentPayment.Amount = paymentData.Amount;
+                        installmentPayment.ExcessShortPayment = paymentData.ExcessShortPayment;
+                        installmentPayment.AmountWords = paymentData.AmountWords;
+                        installmentPayment.LateDays = paymentData.LateDays;
+                        installmentPayment.LateDaysPenalty = paymentData.LateDaysPenalty;
+                        installmentPayment.DepositDate = DateTime.Parse(paymentData.DepositDate.ToString("yyyy-MM-dd hh:mm:ss tt"));
+                        installmentPayment.isLateDaysApplied = paymentData.isLateDaysApplied;
+
+                        CreateInstallmentPayment(installmentPayment);
+                    }
+                }
+                return true;
+            }
+            catch //(Exception ex)
+            {
+                return false;
+                //throw new UserFriendlyException(L("GetMethodError{0}", "payment"));
+            }
+        }
+
+        public bool CreateInstallmentPayment(CreateInstallmentPayment payment)
+        {
+            try
+            {
+                var schedule = _scheduleAppService.GetScheduleByApplicationId(payment.ApplicationId).Result;
+                if (schedule != null)
+                {
+                    if (schedule.installmentList.Where(x => x.InstNumber == payment.NoOfInstallment.ToString()).FirstOrDefault().isPaid != true)
+                    {
+                        var payments = _installmentPaymentAppService.GetAllInstallmentPaymentByApplicationId(payment.ApplicationId).Result;
+                        if (payments == null)
+                        {
+                            AuthorizeInstallmentPayment(payment.AuthorizationId);
+
+                            DeductInstallmentPaymentRevised(payment);
+                        }
+                        else
+                        {
+                            var lastpayment = payments.Where(x => x.NoOfInstallment == payment.NoOfInstallment).OrderByDescending(x => x.Id).FirstOrDefault();
+                            if (lastpayment != null)
+                            {
+                                if ((DateTime.Now - lastpayment.CreationTime).TotalMinutes >= 10)
+                                {
+                                    AuthorizeInstallmentPayment(payment.AuthorizationId);
+
+                                    DeductInstallmentPaymentRevised(payment);
+                                }
+                            }
+                            else
+                            {
+                                AuthorizeInstallmentPayment(payment.AuthorizationId);
+
+                                DeductInstallmentPaymentRevised(payment);
+                            }
+                        }
+
+                    }
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void AuthorizeInstallmentPayment(int Id)
+        {
+            try
+            {
+                var getInstallmentPayment = _AuthorizeInstallmentPaymentRepository.Get(Id);
+                if (getInstallmentPayment != null)
+                {
+                    getInstallmentPayment.isAuthorized = true;
+                    _AuthorizeInstallmentPaymentRepository.Update(getInstallmentPayment);
+                    CurrentUnitOfWork.SaveChanges();
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
         #endregion
     }
 }
