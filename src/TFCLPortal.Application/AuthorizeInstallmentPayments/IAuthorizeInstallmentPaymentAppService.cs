@@ -18,6 +18,8 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
         Task<List<AuthorizeInstallmentPaymentListDto>> GetAllAuthorizeInstallmentPaymentByApplicationId(int ApplicationId);
         Task<List<AuthorizeInstallmentPaymentListDto>> GetAllAuthorizeInstallmentPayments();
 
+        Task<List<AuthorizeInstallmentPaymentListDto>> GetAllAuthorizeInstallmentPaymentsUnAuthorized();
+
         Task<string> DeductInstallmentPayment(CreateInstallmentPayment payment);
         Task<string> DeductInstallmentPaymentRevised(CreateInstallmentPayment payment);
         bool CheckAuthorizeInstallmentPaymentByApplicationId(int ApplicationId);

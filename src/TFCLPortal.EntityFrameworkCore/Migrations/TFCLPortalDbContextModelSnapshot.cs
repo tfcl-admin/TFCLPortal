@@ -7413,6 +7413,41 @@ namespace TFCLPortal.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("TFCLPortal.NameChanges.NameChange", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ApplicationId");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("NewBusinessName");
+
+                    b.Property<string>("NewClientName");
+
+                    b.Property<string>("OldBusinessName");
+
+                    b.Property<string>("OldClientName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NameChange");
+                });
+
             modelBuilder.Entity("TFCLPortal.NatureOfPayments.NatureOfPayment", b =>
                 {
                     b.Property<int>("Id")
@@ -10012,6 +10047,8 @@ namespace TFCLPortal.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
+                    b.Property<string>("FileUrl");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
@@ -10031,6 +10068,10 @@ namespace TFCLPortal.Migrations
                     b.Property<decimal>("TotalAmountPayable");
 
                     b.Property<decimal>("TotalAmountPayableRebate");
+
+                    b.Property<decimal>("WriteOffAmountMarkup");
+
+                    b.Property<decimal>("WriteOffAmountPrincipal");
 
                     b.Property<bool?>("isAuthorized");
 

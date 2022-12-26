@@ -9,7 +9,7 @@ namespace TFCLPortal.AllScreensGetByAppID
 {
     public interface IAllScreenGetByAppIdAppService : IApplicationService
     {
-        Task<AllScreenGetByAppIdDto> AllScreenGetByApplicationId(int ApplicationId);
+        Task<AllScreenGetByAppIdDto> AllScreenGetByApplicationId(int ApplicationId, bool isReferencesRequired);
         //Task<List<AllScreenGetByAppIdDto>> AllScreenGetBySdeId(int SDE_Id);
         Task<AllScreenGetBySDEidDto> AllScreenGetBySdeId(int SDE_Id);
         Task<AllScreenGetBySDEidDto> AllScreenGetBySdeIdImproved(int SDE_Id);

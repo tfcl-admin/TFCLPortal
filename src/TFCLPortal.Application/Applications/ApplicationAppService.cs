@@ -48,6 +48,31 @@ using TFCLPortal.Schedules;
 using TFCLPortal.TaggedPortfolios;
 using TFCLPortal.CustomerAccounts;
 using TFCLPortal.CustomerAccounts.Dto;
+using TFCLPortal.BusinessPlans;
+using TFCLPortal.ClientStatuses;
+using TFCLPortal.PersonalDetails;
+using TFCLPortal.BusinessDetails;
+using TFCLPortal.HouseholdIncomesExpenses;
+using System.Runtime.CompilerServices;
+//using TFCLPortal.Migrations;
+using TFCLPortal.SalesDetails;
+using TFCLPortal.PurchaseDetails;
+using TFCLPortal.CoApplicantDetails;
+using TFCLPortal.BusinessDetailsTDS;
+using TFCLPortal.TdsInventoryDetailChilds;
+using TFCLPortal.TDSBusinessExpenses;
+using TFCLPortal.BusinessDetails;
+using TFCLPortal.HouseholdIncomeExpenseParents;
+using TFCLPortal.BusinessIncomes;
+using TFCLPortal.BusinessIncomeSchools;
+using TFCLPortal.BusinessExpenses;
+using TFCLPortal.BusinessExpenseSchools;
+using TFCLPortal.AssociatedIncomes;
+using TFCLPortal.AssociatedIncomeChilds;
+using TFCLPortal.TdsInventoryDetails;
+using TFCLPortal.TDSBusinessExpenses;
+using TFCLPortal.NameChanges;
+
 //using TFCLPortal.Schedules;
 
 namespace TFCLPortal.Applications
@@ -55,6 +80,16 @@ namespace TFCLPortal.Applications
     public class ApplicationAppService : TFCLPortalAppServiceBase, IApplicationAppService
     {
         private readonly IRepository<Applicationz, Int32> _applicationRepository;
+        private readonly IRepository<PersonalDetail, Int32> _personalDetailRepository;
+        private readonly IRepository<HouseholdIncomeExpense, Int32> _householdIncomesExpenses;
+        private readonly IRepository<BusinessDetail, Int32> _businessDetailRepository;
+        private readonly IRepository<BusinessDetailTDS, Int32> _businessDetailTDSRepository;
+        private readonly IRepository<SalesDetailChild, Int32> _salesDetailChildRepository;
+        private readonly IRepository<CoApplicantDetail, Int32> _coApplicantDetailRepository;
+        private readonly IRepository<PurchaseDetailChild, Int32> _purchaseDetailChildRepository;
+        private readonly IRepository<TdsInventoryDetailChild, Int32> _tdsInventoryDetailChildRepository;
+        private readonly IRepository<TDSBusinessExpenseChild, Int32> _tDSBusinessExpenseChildRepository;
+        private readonly IRepository<TDSBusinessExpense, Int32> _TDSBusinessExpenseRepository;
         private readonly IRepository<MobilizationStatus> _mobilizationStatusRepository;
         private readonly IRepository<ProductType> _productTypeRepository;
         private readonly IMobilizationAppService _mobilizationAppService;
@@ -86,21 +121,60 @@ namespace TFCLPortal.Applications
         private readonly IRepository<CustomerAccount> _customerAccountRepository;
         private readonly IRepository<Branch> _branchRepository;
         private readonly IRepository<EnhancementRequest> _enhancementRequestRepository;
+        private readonly IRepository<BusinessPlan> _businessPlanRepository;
+        private readonly IRepository<ClientStatus> _clientStatusRepository;
+        private readonly IRepository<HouseholdIncomeExpenseParent> _HouseholdIncomeExpenseParentRepository;
+        private readonly IRepository<School_Branch> _School_BranchRepository;
+        private readonly IRepository<BusinessIncome> _BusinessIncomeRepository;
+        private readonly IRepository<BusinessIncomeSchool> _BusinessIncomeSchoolRepository;
+        private readonly IRepository<BusinessExpense> _BusinessexpenseRepository;
+        private readonly IRepository<BusinessExpenseSchool> _BusinessexpenseSchoolRepository;
+        private readonly IRepository<AssociatedIncome> _AssociatedIncomeRepository;
+        private readonly IRepository<AssociatedIncomeChild> _AssociatedIncomeChildRepository;
+        private readonly IRepository<SalesDetail, Int32> _salesDetailRepository;
+        private readonly IRepository<PurchaseDetail, Int32> _purchaseDetailRepository;
+        private readonly IRepository<TdsInventoryDetail, Int32> _tdsInventoryDetailRepository;
+        private readonly IRepository<NameChange, Int32> _NameChangeRepository;
 
 
 
         public ApplicationAppService(IRepository<Applicationz> applicationRepository,
             IRepository<MobilizationStatus> mobilizationStatusRepository,
-            IRepository<ProductType> ProductTyperepo,
+            IRepository<TDSBusinessExpenseChild, Int32> tDSBusinessExpenseChildRepository,
+            IRepository<TDSBusinessExpense, Int32> TDSBusinessExpenseRepository,
+            IRepository<BusinessIncome> BusinessIncomeRepository,
+            IRepository<BusinessExpense> BusinessexpenseRepository,
+            IRepository<AssociatedIncome> AssociatedIncomeRepository,
+            IRepository<NameChange, Int32> NameChangeRepository,
+            IRepository<BusinessIncomeSchool> BusinessIncomeSchoolRepository,
+            IRepository<SalesDetail, Int32> salesDetailRepository,
+            IRepository<AssociatedIncomeChild> AssociatedIncomeChildRepository,
+            IRepository<PurchaseDetail, Int32> purchaseDetailRepository,
+            IRepository<PersonalDetail, Int32> personalDetailRepository,
+            IRepository<BusinessDetail, Int32> businessDetailRepository,
+            IRepository<TdsInventoryDetail, Int32> tdsInventoryDetailRepository,
+            IRepository<BusinessDetailTDS, Int32> businessDetailTDSRepository,
+            IRepository<HouseholdIncomeExpense, Int32> householdIncomesExpenses,
+            IRepository<HouseholdIncomeExpenseParent> HouseholdIncomeExpenseParentRepository,
+            IRepository<SalesDetailChild, Int32> salesDetailChildRepository,
+            IRepository<PurchaseDetailChild, Int32> purchaseDetailChildRepository,
+            IRepository<School_Branch> School_BranchRepository,
+            IRepository<CoApplicantDetail, Int32> coApplicantDetailRepository,
+            IRepository<TdsInventoryDetailChild, Int32> tdsInventoryDetailChildRepository,
+            IRepository<TDSBusinessExpenseChild, Int32> _tDSBusinessExpenseChild,
+        IRepository<ProductType> ProductTyperepo,
             IMobilizationAppService mobilizationAppService,
             IUserAppService userAppService,
             IRepository<CustomerAccount> customerAccountRepository,
             //IScheduleAppService scheduleAppService,
             ITaggedPortfolioAppService taggedPortfolioAppService,
             IRepository<Branch> branchRepository,
+            IRepository<ClientStatus> clientStatusRepository,
             ITaleemJariSahulatAppService taleemJariSahulatAppService,
+            IRepository<BusinessExpenseSchool> BusinessexpenseSchoolRepository,
             ITaleemTeacherSahulatAppService taleemTeacherSahulatAppService,
             IWorkFlowAppService workFlowAppService,
+            IRepository<BusinessPlan> businessPlanRepository,
             IWorkFlowApplicationStateAppService flowApplicationStateAppService,
             IDescripentScreenAppService descripentScreenAppService,
             //IScheduleAppService scheduleAppService,
@@ -120,11 +194,35 @@ namespace TFCLPortal.Applications
             IApplicationWiseDeviationVariableAppService applicationWiseDeviationVariableAppService,
             IRepository<Mobilization, Int32> mobilizationRepository)
         {
+            _BusinessexpenseRepository = BusinessexpenseRepository;
+            _tDSBusinessExpenseChildRepository = tDSBusinessExpenseChildRepository;
+            _TDSBusinessExpenseRepository = TDSBusinessExpenseRepository;
+            _AssociatedIncomeRepository = AssociatedIncomeRepository;
+            _purchaseDetailRepository = purchaseDetailRepository;
+            _salesDetailRepository = salesDetailRepository;
             _notificationLogAppService = notificationLogAppService;
+            _NameChangeRepository = NameChangeRepository;
+            _BusinessexpenseSchoolRepository = BusinessexpenseSchoolRepository;
             _applicationRepository = applicationRepository;
             _customerAccountRepository = customerAccountRepository;
+            _BusinessIncomeSchoolRepository = BusinessIncomeSchoolRepository;
+            _BusinessIncomeRepository = BusinessIncomeRepository;
+            _AssociatedIncomeChildRepository = AssociatedIncomeChildRepository;
+            _tdsInventoryDetailRepository = tdsInventoryDetailRepository;
+            _personalDetailRepository = personalDetailRepository;
+            _businessDetailRepository = businessDetailRepository;
+            _householdIncomesExpenses = householdIncomesExpenses;
+            _School_BranchRepository = School_BranchRepository;
+            _salesDetailChildRepository = salesDetailChildRepository;
+            _purchaseDetailChildRepository = purchaseDetailChildRepository;
+            _coApplicantDetailRepository = coApplicantDetailRepository;
+            _businessDetailTDSRepository = businessDetailTDSRepository;
+            _tdsInventoryDetailChildRepository = tdsInventoryDetailChildRepository;
             //_scheduleAppService = scheduleAppService;
             //_scheduleAppService = scheduleAppService;
+            _businessPlanRepository = businessPlanRepository;
+            _HouseholdIncomeExpenseParentRepository = HouseholdIncomeExpenseParentRepository;
+            _clientStatusRepository = clientStatusRepository;
             _enhancementRequestRepository = enhancementRequestRepository;
             _branchRepository = branchRepository;
             _mobilizationStatusRepository = mobilizationStatusRepository;
@@ -275,14 +373,15 @@ namespace TFCLPortal.Applications
                     var applications = _applicationRepository.Insert(mobilizations);
                     CurrentUnitOfWork.SaveChanges();
 
-                    var accounts = _customerAccountRepository.GetAllList(x=>x.CNIC==mobilizations.CNICNo).FirstOrDefault();
-                    if(accounts!=null)
+                    var accounts = _customerAccountRepository.GetAllList(x => x.CNIC == mobilizations.CNICNo).FirstOrDefault();
+                    if (accounts != null)
                     {
                         CustomerAccount account = new CustomerAccount();
                         account.CNIC = mobilizations.CNICNo;
                         account.Phone = mobilizations.MobileNo;
                         account.Name = mobilizations.ClientName;
                         account.Balance = 0;
+                        account.ProfilePicUrl = "Application App Service Line No 294";
                         account.isActive = true;
                         var accountCreation = _customerAccountRepository.Insert(account);
                     }
@@ -751,7 +850,7 @@ namespace TFCLPortal.Applications
                         }
                         if (obj.CreatorUserId != 0)
                         {
-                            var user = _userAppService.GetAllUsers().Where(x=>x.Id==obj.CreatorUserId).FirstOrDefault();
+                            var user = _userAppService.GetAllUsers().Where(x => x.Id == obj.CreatorUserId).FirstOrDefault();
                             obj.SDE_Name = user.FullName;
                         }
                         return obj;
@@ -919,6 +1018,44 @@ namespace TFCLPortal.Applications
             }
         }
 
+        public List<ApplicationDto> GetShortApplicationListMC(string applicationState)
+        {
+            try
+            {
+                var apps = GetApplicationList(applicationState, 0, true, true, false);
+                var appsEnh = GetApplicationList(applicationState, 0, true, true, true);
+
+                apps.AddRange(appsEnh);
+
+                if (apps.Count > 0)
+                {
+                    var bp = _businessPlanRepository.GetAllList();
+                    var csList = _clientStatusRepository.GetAllList();
+                    if (bp.Count > 0)
+                    {
+                        foreach (var app in apps)
+                        {
+                            var cs = bp.Where(x => x.ApplicationId == app.Id).FirstOrDefault();
+                            if (cs != null)
+                            {
+                                if (cs.clientStatus > 0)
+                                {
+                                    app.ClientStatus = csList.Where(x => x.Id == cs.clientStatus).FirstOrDefault().Name;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                return apps;
+            }
+            catch (Exception ex)
+            {
+                throw new UserFriendlyException(L("GetMethodError{0}", application));
+            }
+        }
+
         public List<Applicationz> GetBCCShortApplicationList(int userid)
         {
             try
@@ -1011,11 +1148,11 @@ namespace TFCLPortal.Applications
             {
                 if (branchId == null)
                 {
-                    var apps= _customRepository.GetAllApplicationList(applicationState, 0, showAll, IsAdmin, true);
+                    var apps = _customRepository.GetAllApplicationList(applicationState, 0, showAll, IsAdmin, true);
 
-                    if(apps!=null)
+                    if (apps != null)
                     {
-                        foreach(var app in apps)
+                        foreach (var app in apps)
                         {
                             app.ClientID = app.ClientID + " (E)";
                         }
@@ -1595,18 +1732,18 @@ namespace TFCLPortal.Applications
         }
 
 
-        public string setMobilizationRecordId(List<setMobilizationRecordIdDto> records)
+        public string setMobilizationRecordId(setMobilizationRecordIdDto records)
         {
 
             try
             {
                 var applicationz = _applicationRepository.GetAllList();
-                foreach( var record in records)
+                foreach (var record in records.records)
                 {
                     var app = applicationz.Where(x => x.Id == record.ApplicationId).FirstOrDefault();
-                    if(app!=null)
+                    if (app != null)
                     {
-                        app.MobilizationRecordId=record.mobilizationRecordId;
+                        app.MobilizationRecordId = record.mobilizationRecordId;
                         _applicationRepository.Update(app);
                         CurrentUnitOfWork.SaveChanges();
                     }
@@ -1621,7 +1758,7 @@ namespace TFCLPortal.Applications
             }
         }
 
-        public List<ApplicationDto> getApplicationsListing(bool admin, int branchId,string screen, string sde, DateTime? startDate, DateTime? endDate)
+        public List<ApplicationDto> getApplicationsListing(bool admin, int branchId, string screen, string sde, DateTime? startDate, DateTime? endDate)
         {
             try
             {
@@ -1664,7 +1801,7 @@ namespace TFCLPortal.Applications
 
                 var finalWorkFlows = _finalWorkflowAppService.getAllFinalWorkFlows();
 
-                for ( int i=0;i<returnList.Count;i++)//  var item in returnList)
+                for (int i = 0; i < returnList.Count; i++)//  var item in returnList)
                 {
                     var item = returnList[i];
 
@@ -1678,7 +1815,7 @@ namespace TFCLPortal.Applications
                     }
                     else if (screen.ToLower() == "settled")
                     {
-                        if(item.AppStatus=="Early Settled")
+                        if (item.AppStatus == "Early Settled")
                         {
                             returnList.Remove(item);
                         }
@@ -1703,10 +1840,257 @@ namespace TFCLPortal.Applications
 
                 return returnList;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        public string UpdateNamesByApplicationId(int applicationId, string clientname, string businessname)
+        {
+            //Function To be implemented
+            try
+            {
+                var app = _applicationRepository.Get(applicationId);
+                if (app != null)
+                {
+
+
+                    var hhParent = _HouseholdIncomeExpenseParentRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                    if (hhParent != null)
+                    {
+                        var houseHoldExpenses = _householdIncomesExpenses.GetAllList(x => x.fk_HouseHoldParentID == hhParent.Id && x.HouseholdOwnerName.Contains(app.ClientName)).FirstOrDefault();
+                        if (houseHoldExpenses != null)
+                        {
+                            houseHoldExpenses.HouseholdOwnerName = clientname;
+                            _householdIncomesExpenses.Update(houseHoldExpenses);
+                        }
+                    }
+                    var pd = _personalDetailRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                    if (pd != null)
+                    {
+                        pd.ApplicantName = clientname;
+                        _personalDetailRepository.Update(pd);
+
+                    }
+
+
+                    if (app.ProductType == 1 || app.ProductType == 2)//TSS-TSA
+                    {
+
+                        var bd = _businessDetailRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (bd != null)
+                        {
+                            var School_Branches = _School_BranchRepository.GetAllList(x => x.Fk_BusinessDetailID == bd.Id && x.SchoolName.Contains(app.SchoolName)).FirstOrDefault();
+                            if (School_Branches != null)
+                            {
+                                School_Branches.SchoolName = businessname;
+                                _School_BranchRepository.Update(School_Branches);
+                            }
+                            else
+                            {
+                                School_Branches = _School_BranchRepository.GetAllList(x => x.Fk_BusinessDetailID == bd.Id).FirstOrDefault();
+                                if (School_Branches != null)
+                                {
+                                    School_Branches.SchoolName = businessname;
+                                    _School_BranchRepository.Update(School_Branches);
+                                }
+                            }
+                        }
+
+                        var be = _BusinessexpenseRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (be != null)
+                        {
+                            var School_Branches = _BusinessexpenseSchoolRepository.GetAllList(x => x.Fk_BusinessExpense == be.Id && x.SchoolName.Contains(app.SchoolName)).FirstOrDefault();
+                            if (School_Branches != null)
+                            {
+                                School_Branches.SchoolName = businessname;
+                                _BusinessexpenseSchoolRepository.Update(School_Branches);
+                            }
+                            else
+                            {
+                                School_Branches = _BusinessexpenseSchoolRepository.GetAllList(x => x.Fk_BusinessExpense == be.Id).FirstOrDefault();
+                                if (School_Branches != null)
+                                {
+                                    School_Branches.SchoolName = businessname;
+                                    _BusinessexpenseSchoolRepository.Update(School_Branches);
+                                }
+                            }
+                        }
+
+
+                        var bi = _BusinessIncomeRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (bi != null)
+                        {
+                            var School_Branches = _BusinessIncomeSchoolRepository.GetAllList(x => x.Fk_BusinessIncome == bi.Id && x.SchoolName.Contains(app.SchoolName)).FirstOrDefault();
+                            if (School_Branches != null)
+                            {
+                                School_Branches.SchoolName = businessname;
+                                _BusinessIncomeSchoolRepository.Update(School_Branches);
+                            }
+                            else
+                            {
+                                School_Branches = _BusinessIncomeSchoolRepository.GetAllList(x => x.Fk_BusinessIncome == bi.Id).FirstOrDefault();
+                                if (School_Branches != null)
+                                {
+                                    School_Branches.SchoolName = businessname;
+                                    _BusinessIncomeSchoolRepository.Update(School_Branches);
+                                }
+                            }
+                        }
+                        
+
+
+
+                        var ai = _AssociatedIncomeRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (ai != null)
+                        {
+                            var School_Branches = _AssociatedIncomeChildRepository.GetAllList(x => x.Fk_AssociatedIncome == ai.Id && x.BranchName.Contains(app.SchoolName)).FirstOrDefault();
+                            if (School_Branches != null)
+                            {
+                                School_Branches.BranchName = businessname;
+                                _AssociatedIncomeChildRepository.Update(School_Branches);
+                            }
+                            else
+                            {
+                                School_Branches = _AssociatedIncomeChildRepository.GetAllList(x => x.Fk_AssociatedIncome == ai.Id ).FirstOrDefault();
+                                if (School_Branches != null)
+                                {
+                                    School_Branches.BranchName = businessname;
+                                    _AssociatedIncomeChildRepository.Update(School_Branches);
+                                }
+                            }
+                        }
+
+                    }
+                    else if (app.ProductType == 8 || app.ProductType == 9)//TDS-TJS
+                    {
+                        var TDSbd = _businessDetailTDSRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (TDSbd != null)
+                        {
+                            TDSbd.BusinessName = businessname;
+                            _businessDetailTDSRepository.Update(TDSbd);
+                        }
+
+                        var saledetail = _salesDetailRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (saledetail != null)
+                        {
+                            var TDSsaledetail = _salesDetailChildRepository.GetAllList(x => x.Fk_SalesDetailId == saledetail.Id && x.BusinessName.Contains(app.SchoolName)).FirstOrDefault();
+                            if (TDSsaledetail != null)
+                            {
+                                TDSsaledetail.BusinessName = businessname;
+                                _salesDetailChildRepository.Update(TDSsaledetail);
+                            }
+                            else
+                            {
+                                TDSsaledetail = _salesDetailChildRepository.GetAllList(x => x.Fk_SalesDetailId == saledetail.Id).FirstOrDefault();
+                                if (TDSsaledetail != null)
+                                {
+                                    TDSsaledetail.BusinessName = businessname;
+                                    _salesDetailChildRepository.Update(TDSsaledetail);
+                                }
+                            }
+                        }
+
+                        var PurchaseDetail = _purchaseDetailRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (PurchaseDetail != null)
+                        {
+                            var TDSPurchaseDetail = _purchaseDetailChildRepository.GetAllList(x => x.Fk_PurchaseDetailId == PurchaseDetail.Id && x.BusinessName.Contains(app.SchoolName)).FirstOrDefault();
+                            if (TDSPurchaseDetail != null)
+                            {
+                                TDSPurchaseDetail.BusinessName = businessname;
+                                _purchaseDetailChildRepository.Update(TDSPurchaseDetail);
+                            }
+                            else
+                            {
+                                TDSPurchaseDetail = _purchaseDetailChildRepository.GetAllList(x => x.Fk_PurchaseDetailId == PurchaseDetail.Id).FirstOrDefault();
+                                if (TDSPurchaseDetail != null)
+                                {
+                                    TDSPurchaseDetail.BusinessName = businessname;
+                                    _purchaseDetailChildRepository.Update(TDSPurchaseDetail);
+                                }
+                            }
+                        }
+
+                        var TDSbe = _TDSBusinessExpenseRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (TDSbe != null)
+                        {
+
+                            var TDSBExpense = _tDSBusinessExpenseChildRepository.GetAllList(x => x.Fk_TDSBusinessExpenseid == TDSbe.Id && (x.BusinessName.Trim()).Contains(app.SchoolName.Trim())).FirstOrDefault();
+                            if (TDSBExpense != null)
+                            {
+                                TDSBExpense.BusinessName = businessname;
+                                _tDSBusinessExpenseChildRepository.Update(TDSBExpense);
+                            }
+                            else
+                            {
+                                TDSBExpense = _tDSBusinessExpenseChildRepository.GetAllList(x => x.Fk_TDSBusinessExpenseid == TDSbe.Id).FirstOrDefault();
+                                if (TDSBExpense != null)
+                                {
+                                    TDSBExpense.BusinessName = businessname;
+                                    _tDSBusinessExpenseChildRepository.Update(TDSBExpense);
+                                }
+                            }
+                        }
+
+                        var Invenorydetail = _tdsInventoryDetailRepository.GetAllList(x => x.ApplicationId == applicationId).FirstOrDefault();
+                        if (Invenorydetail != null)
+                        {
+                            var TDSInvenoryChild = _tdsInventoryDetailChildRepository.GetAllList(x => x.Fk_TdsInventoryDetail == Invenorydetail.Id && x.BusinessName.Contains(app.SchoolName)).FirstOrDefault();
+                            if (TDSInvenoryChild != null)
+                            {
+                                TDSInvenoryChild.BusinessName = businessname;
+                                _tdsInventoryDetailChildRepository.Update(TDSInvenoryChild);
+                            }
+                            else
+                            {
+                                TDSInvenoryChild = _tdsInventoryDetailChildRepository.GetAllList(x => x.Fk_TdsInventoryDetail == Invenorydetail.Id).FirstOrDefault();
+                                if (TDSInvenoryChild != null)
+                                {
+                                    TDSInvenoryChild.BusinessName = businessname;
+                                    _tdsInventoryDetailChildRepository.Update(TDSInvenoryChild);
+                                }
+                            }
+                        }
+
+                        //var TDSBusinessExpenseChild = _tDSBusinessExpenseChildRepository;
+
+                    }
+
+                    NameChange nameChange = new NameChange();
+
+                    nameChange.ApplicationId = applicationId;
+                    nameChange.OldClientName = app.ClientName;
+                    nameChange.NewClientName = clientname;
+                    nameChange.OldBusinessName = app.SchoolName;
+                    nameChange.NewBusinessName = businessname;
+
+                    _NameChangeRepository.Insert(nameChange);
+
+                    app.ClientName = clientname;
+                    app.SchoolName = businessname;
+                    _applicationRepository.Update(app);
+                }
+
+
+
+
+
+                return "Success";
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return "Error : " + ex.ToString();
+
+
+
+            }
+
+
+
         }
     }
 }

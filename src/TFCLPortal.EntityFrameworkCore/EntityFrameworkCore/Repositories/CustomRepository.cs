@@ -412,6 +412,9 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
                         dashboard.EnhancementfileCount = Convert.ToInt32(dataReader["EnhancementfileCount"]);
                         dashboard.EnhancedfileCount = Convert.ToInt32(dataReader["EnhancedfileCount"]);
 
+                        dashboard.WriteOfffileCount = Convert.ToInt32(dataReader["WriteOfffileCount"]);
+                        dashboard.WriteOfffileAmount = Convert.ToInt32(dataReader["WriteOfffileAmount"]);
+
 
 
                     }

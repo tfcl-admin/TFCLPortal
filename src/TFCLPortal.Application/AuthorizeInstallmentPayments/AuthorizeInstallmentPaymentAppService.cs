@@ -469,15 +469,23 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                         {
                             excessShortForLastPaidInstallment *= -1;
 
-                            var matchingTransactions = acc.transactions.Where(x => x.Amount == excessShortForLastPaidInstallment && x.Details.Contains("Previous Installment Deduction")).ToList();
-                            if (matchingTransactions.Count == 0)
+                            var matchingTransactions = acc.transactions.Where(x => x.Amount == excessShortForLastPaidInstallment).ToList();
+                            if (matchingTransactions != null)
                             {
                                 string n1 = "Previous Installment Deduction";
                                 _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n1, payment.ModeOfPayment);
                                 actualPayment -= excessShortForLastPaidInstallment;
                                 markupForThisInstallment -= excessShortForLastPaidInstallment;
                             }
-                          
+
+                        }
+
+                        if (gracePeriodInstallment != null)
+                        {
+                            if (scheduleInstallment.InstNumber == "1" && gracePeriodInstallment.isMarkupPaid)
+                            {
+                                markupForThisInstallment += decimal.Parse(gracePeriodInstallment.markup.Replace(",", ""));
+                            }
                         }
 
                         string n2 = "Markup Collection Inst No # " + scheduleInstallment.InstNumber;
@@ -512,7 +520,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                                 }
                                 else
                                 {
-                                    string n1 = "Markup Collection Inst No # " + scheduleInstallment.InstNumber;
+                                    string n1 = "Partial Principal Collection Inst No # " + scheduleInstallment.InstNumber;
                                     _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, actualPayment, n1, payment.ModeOfPayment);
                                     _scheduleAppService.SetPaid(scheduleInstallment.Id, "Markup", payment.DepositDate);
                                     actualPayment = 0;
@@ -541,7 +549,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                             excessShortForLastPaidInstallment *= -1;
 
                             var matchingTransactions = acc.transactions.Where(x => x.Amount == excessShortForLastPaidInstallment && x.Details.Contains("Previous Installment Deduction")).ToList();
-                            if (matchingTransactions.Count==0)
+                            if (matchingTransactions.Count == 0)
                             {
                                 string n2 = "Previous Installment Deduction";
                                 _customerAccountAppAppService.Debit(acc.Id, payment.ApplicationId, excessShortForLastPaidInstallment, n2, payment.ModeOfPayment);
@@ -809,6 +817,51 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
                 return null;
             }
         }
+
+        public async Task<List<AuthorizeInstallmentPaymentListDto>> GetAllAuthorizeInstallmentPaymentsUnAuthorized()
+        {
+            try
+            {
+                var AuthorizeInstallmentPayment = _AuthorizeInstallmentPaymentRepository.GetAllList(x => x.isAuthorized == null);
+                var payments = ObjectMapper.Map<List<AuthorizeInstallmentPaymentListDto>>(AuthorizeInstallmentPayment);
+
+                var applications = _applicationAppService.GetApplicationList("", 0);
+
+                if (payments != null && payments.Count > 0)
+                {
+                    foreach (var child in payments)
+                    {
+
+                        if (child.NatureOfPayment != 0)
+                        {
+                            var NatureOfPayment = _natureOfPaymentRepository.GetAllList().Where(x => x.Id == child.NatureOfPayment).FirstOrDefault();
+                            child.NatureOfPaymentName = NatureOfPayment.Name;
+                        }
+                        if (child.FK_CompanyBankId != 0)
+                        {
+                            var CompanyBank = _companyBankAccountRepository.GetAllList().Where(x => x.Id == child.FK_CompanyBankId).FirstOrDefault();
+                            child.CompanyBankName = CompanyBank.Name;
+                        }
+
+                        var app = applications.Where(x => x.Id == child.ApplicationId).FirstOrDefault();
+                        if (app != null)
+                        {
+                            child.ClientID = app.ClientID;
+                            child.ClientName = app.ApplicantName;
+                            child.SchoolName = app.SchoolName;
+                            child.branchId = app.branchId;
+                        }
+                    }
+                }
+
+                return payments;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
 
         public bool CheckAuthorizeInstallmentPaymentByApplicationId(int ApplicationId)
         {

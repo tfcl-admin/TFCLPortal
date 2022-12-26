@@ -1,5 +1,6 @@
 ﻿using Abp.AutoMapper;
 using Abp.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,10 @@ namespace TFCLPortal.WriteOffs.Dto
         public decimal RebatePercentage { get; set; }
         public decimal TotalAmountPayableRebate { get; set; }
         public decimal AmountDeposited { get; set; }
+        public decimal WriteOffAmountMarkup { get; set; }
+        public decimal WriteOffAmountPrincipal { get; set; }
+        public IFormFile File { get; set; }
+        public string FileUrl { get; set; }
         public string ClientID { get; set; }
         public string ClientName { get; set; }
         public string CNIC { get; set; }

@@ -44,6 +44,7 @@
                     <th>
                         total Amount Payable
                     </th>
+                    <th>Write Off %age</th>
                     <th>
                         amount Deposited
                     </th>
@@ -69,6 +70,9 @@
                     </td>
                     <td>
                         @(string.Format("{0:#,##0}", item.TotalAmountPayableRebate))
+                    </td>
+                    <td>
+                            @Html.DisplayFor(modelItem => item.RebatePercentage)
                     </td>
                     <td>
                         @(string.Format("{0:#,##0}", item.AmountDeposited))

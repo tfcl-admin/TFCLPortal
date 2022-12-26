@@ -194,6 +194,7 @@ using TFCLPortal.Reversals;
 using TFCLPortal.TransactionLogs;
 using TFCLPortal.BaloonPayments;
 using TFCLPortal.ClosingMonths;
+using TFCLPortal.NameChanges;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -215,6 +216,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<UtilityBillPayment> UtilityBillPaymentDbSet { get; set; }
         public DbSet<BusinessLegalStatus> BusinessLegalStatusDbSet { get; set; }
         public DbSet<Gender> GenderDbSet { get; set; }
+        public DbSet<NameChange> NameChangeDbSet { get; set; }
         public DbSet<MaritalStatus> MaritalStatusDbSet { get; set; }
         public DbSet<WriteOff> WriteOffDbSet { get; set; }
         public DbSet<MobilizationStatus> MobilizationStatusDbSet { get; set; }

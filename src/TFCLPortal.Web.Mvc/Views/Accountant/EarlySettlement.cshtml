@@ -187,7 +187,9 @@
 
     $(function () {
 
+        var allowedDate = '@ViewBag.AllowedDate';
 
+        var allowedDateConverted = moment(allowedDate).format('YYYY-MM-DD');
 
         $('#EarlySettlementPercentage').change(function (e) {
             var principal = Number($('#OsPrincipalAmount').val().replaceAll(',',''));
@@ -206,12 +208,19 @@
 
         });
 
-        SetMarkupPayable(getDate());
+        SetMarkupPayable(allowedDateConverted);
+        $("#TentativeSettlementDate").val(getDate());
 
         function SetMarkupPayable(givenDate) {
 
             var StartDate = moment('@ViewBag.PaymentDate'); // moment($("#LastPaidInstallmentDate").val());
+            //var StartDate = moment($("#LastPaidInstallmentDate").val());
             var EndDate = moment(givenDate);
+
+            console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+            console.log('LastPaidInstallmentDate : ' + StartDate);
+            console.log('givenDate : ' + EndDate);
+            console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 
             var diff = EndDate.diff(StartDate, 'days');
 
@@ -294,36 +303,36 @@
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        $("#TentativeSettlementDate").val(getDate());
 
 
         $("#LastPaidInstallmentDate").val(getPaymentDate());
 
         function getPaymentDate() {
-             //var d = new Date().toJSON().slice(0, 19);
-
             var cDate = new moment('@ViewBag.PaymentDate').format('YYYY-MM-DD');
-            //console.log(d);
-           //var str = d.substr(0, 11)+ gh + ":" + gm + ":" + gs
-            //var str = d.substr(0, 10);
-            console.log(cDate);
-            console.log('@ViewBag.PaymentDate');
             return cDate;
         }
 
         function checkDate(date) {
-            //alert(moment().format('DD MMM YYYY'));
-            //alert(moment(date).format('DD MMM YYYY'));
-            //if (moment().format('DD MMM YYYY') === moment(date).format('DD MMM YYYY')) {
-                
-            //}
 
-            if (moment().format('DD MMM YYYY') === moment(date).format('DD MMM YYYY')) {
+            var allowedDateStart = moment(allowedDate);//.format('DD MMM YYYY');
+            var allowedDateEnd = moment();//.format('DD MMM YYYY');
+
+            var givenDate = moment(date);//.format('DD MMM YYYY');
+
+            console.log('date : ' + givenDate);
+            console.log('allowedDateStart : ' + allowedDateStart);
+            console.log('allowedDateEnd : ' + allowedDateEnd);
+            //target.isBetween(start, finish, 'days', '()') // default exclusive
+            //target.isBetween(start, finish, 'days', '(]') // right inclusive
+            //target.isBetween(start, finish, 'days', '[)') // left inclusive
+            //target.isBetween(start, finish, 'days', '[]') // all inclusive
+
+            if (givenDate.isBetween(allowedDateStart, allowedDateEnd, 'days', '[]')) {
                 $('#submitBtnDiv').removeClass('d-none');
                 $('#responseText').text('');
             }
             else {
-                $('#responseText').text('Early Settlement can only be done when tentative date is ' + moment().format('DD MMM YYYY'));
+                $('#responseText').text('Early Settlement can only be done when tentative date is between ' + allowedDateStart.format('DD MMM YYYY') + ' (Last Payment Deposit Date) and ' + allowedDateEnd.format('DD MMM YYYY') + ' (Today)');
                 $('#submitBtnDiv').addClass('d-none');
             }
         }
@@ -331,33 +340,35 @@
         function getDate() {
 
 
-            var d = new Date().toJSON().slice(0, 19);
+            //console.log('allowedDate : ' + allowedDate);
+            var d = moment(allowedDate).format('YYYY-MM-DD');
+            //console.log('d : ' + d);
 
-            var cDate = new Date('@ViewBag.PaymentDate');
+            //var cDate = new Date(allowedDate);
+            //var cDate = new Date('@ViewBag.PaymentDate');
 
-            var gh = cDate.getHours();
+            //var gh = cDate.getHours();
 
-            if (gh < 10) {
-                gh = '0' + gh;
-            }
+            //if (gh < 10) {
+            //    gh = '0' + gh;
+            //}
 
-            var gm = cDate.getMinutes();
+            //var gm = cDate.getMinutes();
 
-            if (gm < 10) {
-                gm = '0' + gm;
-            }
+            //if (gm < 10) {
+            //    gm = '0' + gm;
+            //}
 
-            var gs = cDate.getSeconds();
+            //var gs = cDate.getSeconds();
 
-            if (gs < 10) {
-                gs = '0' + gs;
-            }
+            //if (gs < 10) {
+            //    gs = '0' + gs;
+            //}
 
-            console.log(d);
            //var str = d.substr(0, 11)+ gh + ":" + gm + ":" + gs
-            var str = d.substr(0, 10);
-            console.log(str);
-            return str;
+            //var str = d.substr(0, 10);
+            //console.log(str);
+            return d;
         }
 
     });

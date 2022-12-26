@@ -1,6 +1,8 @@
 ﻿@model TFCLPortal.Web.Models.McModels.McModel
 
-@{ int i = 0;}
+@{
+    int i = 0;
+}
 @{
     int n = 0;
     List<TFCLPortal.ManagmentCommitteeDecisions.Dto.ManagmentCommitteeDecisionListDto> decisions = new List<TFCLPortal.ManagmentCommitteeDecisions.Dto.ManagmentCommitteeDecisionListDto>();
@@ -54,8 +56,8 @@
     </div>
     <div class="card p-10 mB-20">
         @*<p>
-                <a asp-action="Create">Create New</a>
-            </p>*@
+        <a asp-action="Create">Create New</a>
+        </p>*@
         <table class=" dataTable table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -71,16 +73,16 @@
                     <th>
                         Client / School / Business Name
                     </th>
-
-                    <th colspan="1">
-                        Approve
+                    <th>C. Status</th>
+                    <th colspan="3">
+                        Actions
                     </th>
-                    <th colspan="1">
+                   @* <th colspan="1">
                         Decline
                     </th>
                     <th colspan="1">
                         Discrepent
-                    </th>
+                    </th>*@
                     <th colspan="3">
                         Details
                     </th>
@@ -89,47 +91,51 @@
             <tbody>
                 @foreach (var item in Model.applications)
                 {
-                <tr>
-                    <td> @{i = i + 1;} @i</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClientID)
+                    <tr>
+                        <td> @{
+                                i = i + 1;
+                            } @i</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientID)
 
-                        @(item.isEnhancementApplication==true ? " (E)" : "")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClientName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SchoolName)
-                    </td>
+                            @*@(item.isEnhancementApplication==true ? " (E)" : "")*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplicantName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SchoolName)
+                        </td>
+                        <td>@item.ClientStatus</td>
+                        <td>
+                            <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }" class="btn btn-sm btn-outline-success"><i class="fa fa-check-circle text-success"></i> Approve </a>
+                            @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
+                        </td>
+                        <td>
+                            <a onclick="DiscrepentApp(@item.Id)" class="btn btn-sm btn-outline-warning"><i class="fa fa-info-circle text-warning"></i> Discrepant </a>
+                        </td>
+                        <td>
+                            <a onclick="DeclineApp(@item.Id)" class="btn btn-sm btn-outline-danger"><i class="fa fa-times-circle text-danger"></i> Decline </a>
+                        </td>
+                      
 
-                    <td>
-                        <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }"><i class="fa fa-check-circle text-success"></i> Approve </a>
-                        @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
-                    </td>
-                    <td>
-                        <a onclick="DeclineApp(@item.Id)"><i class="fa fa-times-circle text-danger"></i> Decline </a>
-                    </td>
-                    <td>
-                        <a onclick="DiscrepentApp(@item.Id)"><i class="fa fa-info-circle text-warning"></i> Discrepant </a>
-                    </td>
-                    <td>
-                        @if (item.ProductType == 1 || item.ProductType == 2)
-                        {
-                            <a href="/Dashboard/Application?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
-                        }
-                        else if (item.ProductType == 8 || item.ProductType == 9)
-                        {
-                            <a href="/Dashboard/TdsApplication?id=@item.Id" target="_blank"><i class="fa fa-search"></i> View Details</a>
-                        }
-                    </td>
-                    <td>
-                        <a href="/McrcDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
-                    </td>
-                    <td>
-                        <a href="/BCCDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
-                    </td>
-                </tr>
+                        <td>
+                            @if (item.ShortCode == "TSA" || item.ShortCode == "TSS")
+                            {
+                                <a href="/Dashboard/Application?id=@item.Id" target="_blank"><i class="fa fa-search"></i> App D.</a>
+                            }
+                            else if (item.ShortCode == "TDS" || item.ShortCode == "TJS")
+                            {   
+                                <a href="/Dashboard/TdsApplication?id=@item.Id" target="_blank"><i class="fa fa-search"></i> App D.</a>
+                            }
+                        </td>
+                        <td>
+                            <a href="/McrcDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> MCRC D.</a>
+                        </td>
+                        <td>
+                            <a href="/BCCDecisions/Index?ApplicationId=@item.Id" target="_blank"><i class="fa fa-comment"></i> BCC D.</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -188,90 +194,92 @@
                     var item = itemDecisions.FirstOrDefault();
 
 
-                        <tr>
-                            <td> @{n = n + 1;} @n</td>
-                            <td>
-                                @item.ClientID
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ClientName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SchoolName)
-                            </td>
-                            @*<td>
-                        @Html.DisplayFor(modelItem => item.State)
+                    <tr>
+                        <td> @{
+                                n = n + 1;
+                            } @n</td>
+                        <td>
+                            @item.ClientID
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClientName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SchoolName)
+                        </td>
+                        @*<td>
+                    @Html.DisplayFor(modelItem => item.State)
                     </td>*@
+                        @if (Outeritem.Count() < 3)
+                        {
+                            <td>Pending</td>
+                        }
+                        else
+                        {
+                            <td>Authorized</td>
+                        }
+
+                        <td width="10%">
                             @if (Outeritem.Count() < 3)
                             {
-                                <td>Pending</td>
+                                @(Outeritem.Count())
                             }
                             else
                             {
-                                <td>Authorized</td>
+                                @(3)
                             }
+                        </td>
+                        <td>@item.CreationTime.ToString("dd MMM yyyy hh:mm tt")</td>
+                        <td>@(item.BccApprovalDate == null ? "--" : String.Format("{0:dd MMM yyyy hh:mm tt}", item.BccApprovalDate))</td>
+                        <td>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-list"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @if (item.productType == 1 || item.productType == 2)
+                                    {
+                                        <a class="dropdown-item" href="/Dashboard/Application?id=@item.ApplicationId" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                                    }
+                                    else if (item.productType == 8 || item.productType == 9)
+                                    {
+                                        <a class="dropdown-item" href="/Dashboard/TdsApplication?id=@item.ApplicationId" target="_blank"><i class="fa fa-search"></i> View Details</a>
+                                    }
+                                    <a class="dropdown-item" href="/McrcDecisions/Index?ApplicationId=@item.ApplicationId" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
+                                    <a class="dropdown-item" href="/BCCDecisions/Index?ApplicationId=@item.ApplicationId" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
 
-                            <td width="10%">
-                                @if (Outeritem.Count() < 3)
-                                {
-                                    @(Outeritem.Count())
-                                }
-                                else
-                                {
-                                    @(3)
-                                }
-                            </td>
-                            <td>@item.CreationTime.ToString("dd MMM yyyy hh:mm tt")</td>
-                            <td>@(item.BccApprovalDate==null? "--": String.Format("{0:dd MMM yyyy hh:mm tt}", item.BccApprovalDate))</td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-list"></i>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        @if (item.productType == 1 || item.productType == 2)
-                                        {
-                                            <a class="dropdown-item" href="/Dashboard/Application?id=@item.ApplicationId" target="_blank"><i class="fa fa-search"></i> View Details</a>
-                                        }
-                                        else if (item.productType == 8 || item.productType == 9)
-                                        {
-                                            <a class="dropdown-item" href="/Dashboard/TdsApplication?id=@item.ApplicationId" target="_blank"><i class="fa fa-search"></i> View Details</a>
-                                        }
-                                        <a class="dropdown-item" href="/McrcDecisions/Index?ApplicationId=@item.ApplicationId" target="_blank"><i class="fa fa-comment"></i> MCRC Decisions</a>
-                                        <a class="dropdown-item" href="/BCCDecisions/Index?ApplicationId=@item.ApplicationId" target="_blank"><i class="fa fa-comment"></i> BCC Decisions</a>
-
-                                    </div>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 
     @*<table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>
-                        Details
-                    </th>
-                    <th>
-                        Details
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+    <thead>
+    <tr>
+    <th>
+    Details
+    </th>
+    <th>
+    Details
+    </th>
+    </tr>
+    </thead>
+    <tbody>
 
 
 
 
-                    <tr>
-                        <td> @item.Key</td>
+    <tr>
+    <td> @item.Key</td>
 
-                        <td> @(item.Count())</td>
-                    </tr>
-            </tbody>
-        </table>*@
+    <td> @(item.Count())</td>
+    </tr>
+    </tbody>
+    </table>*@
 
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -283,6 +291,8 @@
         $(".pageloader").toggleClass("d-none");
 
         if (msg == null || msg == "") {
+            $(".pageloader").toggleClass("d-none");
+
             // text = "User cancelled the prompt.";
         } else {
             //text = msg;
@@ -295,6 +305,8 @@
         $(".pageloader").toggleClass("d-none");
 
         if (msg == null || msg == "") {
+            $(".pageloader").toggleClass("d-none");
+
             // text = "User cancelled the prompt.";
         } else {
             //text = msg;

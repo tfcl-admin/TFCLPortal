@@ -21,6 +21,7 @@ namespace TFCLPortal.Applications
         public int TAT { get; set; }
         public string ShortCode { get; set; }
         public string Comments { get; set; }
+        public string ClientStatus { get; set; }
         public string LastScreen { get; set; }
         public string Transferred { get; set; }
         public int branchId { get; set; }

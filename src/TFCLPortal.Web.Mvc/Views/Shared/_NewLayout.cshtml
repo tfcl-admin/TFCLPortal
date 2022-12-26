@@ -477,7 +477,7 @@
 
                     }
 
-                    @if (User.Identity.Name.Contains("furrukh"))
+                    @if (User.Identity.Name.Contains("furrukh")||User.Identity.Name.Contains("admin"))
                     {
                         <li class="nav-item">
                             <a href="~/Accountant/DeceasedSettlementAuthorizationList" class="dropdown-toggle">
@@ -919,12 +919,23 @@
                             </a>
                         </li>
 
+                      
+
                         <li class="nav-item dropdown">
                             <a href="~/CustomerAccount/TransactionAuthorization" class="dropdown-toggle">
                                 <span class="icon-holder">
                                     <i class="fa fa-money"></i>
                                 </span>
                                 <h6>Transaction Authorizations</h6>
+                            </a>
+                        </li>
+
+                           <li class="nav-item dropdown">
+                            <a href="~/Accountant/WriteOffAuthorizationList" class="dropdown-toggle">
+                                <span class="icon-holder">
+                                    <i class="fa fa-check-circle"></i>
+                                </span>
+                                <h6>Write-Off Authorizations</h6>
                             </a>
                         </li>
 

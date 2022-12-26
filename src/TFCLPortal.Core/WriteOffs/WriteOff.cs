@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +16,9 @@ namespace TFCLPortal.WriteOffs
         public decimal TotalAmountPayable { get; set; }
         public string RecoveryStatus { get; set; }
         public decimal RebatePercentage { get; set; }
+        public decimal WriteOffAmountMarkup { get; set; }
+        public decimal WriteOffAmountPrincipal { get; set; }
+        public string FileUrl { get; set; }
         public decimal TotalAmountPayableRebate { get; set; }
         public decimal AmountDeposited { get; set; }
 
