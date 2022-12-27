@@ -438,7 +438,7 @@ namespace TFCLPortal.InstallmentPayments
                     if (lastCredit != null)
                     {
                         rtn.DepositDate = lastCredit.DepositDate.ToString("O");
-                        rtn.RestrictionError = "For Testing .";
+                       // rtn.RestrictionError = "For Testing .";
 
                     }
                     else
