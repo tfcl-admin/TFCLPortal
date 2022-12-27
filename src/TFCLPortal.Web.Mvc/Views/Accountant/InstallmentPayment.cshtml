@@ -148,7 +148,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Amount Deposit Date <font color="red">*</font></label>
-                            <input asp-for="DepositDate" class="form-control" required="required" step="any" />
+                            <input asp-for="DepositDate" value="@ViewBag.inp.DepositDate"  class="form-control" required="required" step="any" />
                         </div>
                     </div>
 
@@ -188,7 +188,7 @@
                         </div>
                     </div>
 
-                    @if (!ViewBag.inp.displayButton)
+                    @if (!ViewBag.inp.displayButton || ViewBag.inp.DepositDate == "")
                     {
                         <div class="col-md-12 text-danger text-right">
                             @ViewBag.inp.RestrictionError
@@ -196,6 +196,7 @@
                     }
                     else
                     {
+                        
                         <div class="col-md-12 text-right ">
                             <button type="submit" class="btn btn-outline-success" id="uploadBtn"><i class="fa fa-upload"></i> Generate Entry</button>
                         </div>
@@ -654,34 +655,25 @@
                     });
 
                     function getCurrentDate() {
-                        var d = new Date().toJSON().slice(0, 19);
 
-                        var cDate = new Date();
+                        var dDate='@ViewBag.inp.DepositDate';
+                        var d = new Date(dDate);
 
-                        var gh = cDate.getHours();
+                        return d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate())+"T00:00:00";
 
-                        if (gh < 10) {
-                            gh = '0' + gh;
-                        }
-
-                        var gm = cDate.getMinutes();
-
-                        if (gm < 10) {
-                            gm = '0' + gm;
-                        }
-
-                        var gs = cDate.getSeconds();
-
-                        if (gs < 10) {
-                            gs = '0' + gs;
-                        }
-
-                        console.log(d);
-                        var str = d.substr(0, 11) + gh + ":" + gm + ":" + gs
-                        console.log(str);
-                        return str;
                     }
 
+       function zeroPadded(val) {
+
+          if (val >= 10)
+
+            return val;
+
+          else
+
+            return '0' + val;
+
+        }
 
     });
 

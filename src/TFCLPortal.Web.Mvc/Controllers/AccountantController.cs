@@ -105,6 +105,7 @@ namespace TFCLPortal.Web.Controllers
         private readonly IRepository<DeceasedAuthorization, int> _deceasedAuthorizationRepository;
         private readonly ICustomAppService _customAppService;
 
+
         private readonly IRepository<Transaction, int> _transactionRepository;
         private readonly IRepository<Holiday, int> _holidayRepository;
         private readonly IRepository<FundingSource, int> _fundingSourceRepository;
@@ -730,6 +731,8 @@ namespace TFCLPortal.Web.Controllers
             var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
             var inp = _installmentPaymentAppService.GetCurrentInstallmentPayment(ApplicationId, schedule);
             ViewBag.inp = inp;
+
+
             return View();
         }
 
@@ -738,7 +741,7 @@ namespace TFCLPortal.Web.Controllers
         public IActionResult CreateAuthorizeInstallmentPayment(CreateAuthorizeInstallmentPayment payment)
         {
             bool isPaymentDone = _authorizeInstallmentPaymentAppService.InstallmentPayment(payment);
-
+           
             var app = _applicationAppService.GetApplicationById(payment.ApplicationId);
 
             if (isPaymentDone)
@@ -749,6 +752,7 @@ namespace TFCLPortal.Web.Controllers
             {
                 return RedirectToAction("Error", "About", new { Message = "Error while deducting installment payment for " + app.ClientID + " (" + app.ClientName + ")" });
             }
+
         }
 
         public IActionResult AuthorizationInstallmentPayment()

@@ -4,8 +4,10 @@ using Abp.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using TFCLPortal.AllScreensGetByAppID.Dto;
 using TFCLPortal.Applications;
 using TFCLPortal.ClosingMonths;
 using TFCLPortal.CompanyBankAccounts;
@@ -297,7 +299,7 @@ namespace TFCLPortal.InstallmentPayments
                     firstUnpaidInstallment = null;
                 }
 
-                var Acc = _customerAccountAppAppService.GetCustomerAccountByCNIC(app.CNICNo).Result;
+                var Acc = _customerAccountAppAppService.GetCustomerAccountByCNICwithTransactions(app.CNICNo);
                 if (Acc != null)
                 {
                     rtn.Payment = Acc.Balance;
@@ -430,7 +432,27 @@ namespace TFCLPortal.InstallmentPayments
                     }
                 }
 
+                if(displayButton)
+                {
+                    var lastCredit = Acc.transactions.Where(x => x.Type.ToLower() == "credit" && x.isAuthorized == true).OrderBy(x => x.SortDate).LastOrDefault();
+                    if (lastCredit != null)
+                    {
+                        rtn.DepositDate = lastCredit.DepositDate.ToString("O");
+                        rtn.RestrictionError = "For Testing .";
+
+                    }
+                    else
+                    {
+                        displayButton = false;
+                        rtn.RestrictionError = "Please credit amount first into account.";
+                        //rtn.DepositDate = DateTime.Today.ToString("O");
+                        rtn.DepositDate = DateTime.Now.ToString("O");
+                    }
+                }
+
                 rtn.displayButton = displayButton;
+
+
 
                 return rtn;
 

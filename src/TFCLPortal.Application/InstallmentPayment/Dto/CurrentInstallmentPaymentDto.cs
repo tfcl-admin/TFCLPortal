@@ -22,6 +22,7 @@ namespace TFCLPortal.InstallmentPayments.Dto
         public decimal Payment { get; set; } //// 
         public string RestrictionError { get; set; } //// 
         public bool displayButton { get; set; } //// 
+        public string DepositDate { get; set; } //// 
       
     }
 }
