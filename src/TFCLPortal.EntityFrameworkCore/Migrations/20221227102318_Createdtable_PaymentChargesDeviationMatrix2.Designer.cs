@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TFCLPortal.EntityFrameworkCore;
 
 namespace TFCLPortal.Migrations
 {
     [DbContext(typeof(TFCLPortalDbContext))]
-    partial class TFCLPortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221227102318_Createdtable_PaymentChargesDeviationMatrix2")]
+    partial class Createdtable_PaymentChargesDeviationMatrix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

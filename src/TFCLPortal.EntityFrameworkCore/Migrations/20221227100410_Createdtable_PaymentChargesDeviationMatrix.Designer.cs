@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TFCLPortal.EntityFrameworkCore;
 
 namespace TFCLPortal.Migrations
 {
     [DbContext(typeof(TFCLPortalDbContext))]
-    partial class TFCLPortalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221227100410_Createdtable_PaymentChargesDeviationMatrix")]
+    partial class Createdtable_PaymentChargesDeviationMatrix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -7627,37 +7629,6 @@ namespace TFCLPortal.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OtherDetail");
-                });
-
-            modelBuilder.Entity("TFCLPortal.PaymentChargesDeviationMatrix.PaymentChargesDeviationMatric", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<decimal>("MaxAmount");
-
-                    b.Property<decimal>("Percentage");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentChargesDeviationMatrix");
                 });
 
             modelBuilder.Entity("TFCLPortal.PersonalDetails.PersonalDetail", b =>

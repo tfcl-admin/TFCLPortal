@@ -63,12 +63,15 @@ using TFCLPortal.CustomerAccounts.Dto;
 using TFCLPortal.BaloonPayments;
 using TFCLPortal.BaloonPayments.Dto;
 using TFCLPortal.ClosingMonths;
+using TFCLPortal.PaymentChargesDeviationMatrix;
 
 namespace TFCLPortal.Web.Controllers
 {
     public class AccountantController : TFCLPortalControllerBase
     {
         private readonly IUserAppService _userAppService;
+        private readonly IRepository<PaymentChargesDeviationMatric , Int32> _paymentChargesDeviationMatricRepository;
+        private readonly IPaymentChargesDeviationMatrixAppService _paymentChargesDeviationMatrixAppService;
         private readonly IFinalWorkflowAppService _finalWorkflowAppService;
         private readonly IApplicationAppService _applicationAppService;
         private readonly UserManager _userManager;
@@ -119,8 +122,11 @@ namespace TFCLPortal.Web.Controllers
         private readonly INotificationLogAppService _notificationLogAppService;
         private readonly IClosingMonthAppService _closingMonthAppService;
 
-        public AccountantController(IClosingMonthAppService closingMonthAppService, IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService)
+        public AccountantController(IClosingMonthAppService closingMonthAppService, IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService , 
+                                    IRepository<PaymentChargesDeviationMatric , Int32 > paymentChargesDeviationMatricRepository , IPaymentChargesDeviationMatrixAppService PaymentChargesDeviationMatrixAppService)
         {
+            _paymentChargesDeviationMatricRepository= paymentChargesDeviationMatricRepository;
+            _paymentChargesDeviationMatrixAppService = PaymentChargesDeviationMatrixAppService;
             _BaloonPaymentrepository = BaloonPaymentrepository;
             _baloonPaymentAppService = baloonPaymentAppService;
             _transactionRepository = transactionRepository;
@@ -1200,8 +1206,19 @@ namespace TFCLPortal.Web.Controllers
             double dailyMarkup = yearlyMarkup / 365;
             ViewBag.DailyMarkup = dailyMarkup;
 
-            ViewBag.Application = application;
+            var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId);
+            if (ProcessCharges != null)
+            { 
+                ViewBag.ProcessingCharges = ProcessCharges;
+                double calculation = 0.16;
+                double FED = 0;
+                FED= Convert.ToDouble(ProcessCharges) * calculation;
+                ViewBag.FEDonProcessingCharges = FED;
 
+                ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges) + FED);
+            }
+
+            ViewBag.Application = application;
             return View();
         }
 
@@ -2572,6 +2589,20 @@ namespace TFCLPortal.Web.Controllers
         //Write Off Module End
 
         //Deceased Settlement Module Start
+
+        //public IActionResult ProcessingFee(int ApplicationId)
+        //{
+        //    ViewBag.ApplicationId = ApplicationId;
+        //    var app = _applicationAppService.GetApplicationById(ApplicationId);
+        //    ViewBag.ClientId = app.ClientID;
+        //    ViewBag.ClientName = app.ClientName;
+
+        //    var BP = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId);
+        //    ViewBag.BP= BP;
+
+
+        //    return View();
+        //}
 
         public IActionResult DeceasedSettlement(int ApplicationId)
         {

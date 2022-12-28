@@ -297,6 +297,33 @@
             </div>
         </div>
         <div class="card">
+            <div class="card-header text-white">Tax Calculations</div>
+            <div class="card-body">
+                <form asp-action="ProcessingFee" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Processing Charges
+                            </p>
+                            <input asp-for="ProcessingCharges" type="number"  readonly="readonly" class="form-control disabled" value="@ViewBag.ProcessingCharges" />
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                FED% on Processing Charges
+                            </p>
+                            <input asp-for="FEDonProcessingCharges" type="number" readonly="readonly" class="form-control disabled" value="@ViewBag.FEDonProcessingCharges" />
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">
+                                Net Disbursment Amount
+                            </p>
+                            <input asp-for="NetDisbursmentAmount" type="number" readonly="readonly" class="form-control disabled" value="@ViewBag.NetDisbursmentAmount" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
             <div class="card-header text-white">Selection Parameters</div>
             <div class="card-body">
                 <form asp-action="ScheduleResult" method="post">

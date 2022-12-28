@@ -8,7 +8,7 @@ using TFCLPortal.Users.Dto;
 
 namespace TFCLPortal.PersonalDetails
 {
-    public interface IPersonalDetailAppService :IApplicationService
+    public interface IPersonalDetailAppService : IApplicationService
     {
         // Task<ListResultDto<QualificationListDto>> GetAllQualification();
         PersonalDetailDto GetPersonalDetailById(int Id);

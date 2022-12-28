@@ -195,6 +195,7 @@ using TFCLPortal.TransactionLogs;
 using TFCLPortal.BaloonPayments;
 using TFCLPortal.ClosingMonths;
 using TFCLPortal.NameChanges;
+using TFCLPortal.PaymentChargesDeviationMatrix;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -438,6 +439,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<RentAgreementSignatory> RentAgreementSignatoryDbSet { get; set; }
         public DbSet<RentAgreementSignatoryOther> RentAgreementSignatoryOtherDbSet { get; set; }
 
+        public DbSet<PaymentChargesDeviationMatric> PaymentChargesDeviationMatrixDbSet { get; set; }
         public TFCLPortalDbContext(DbContextOptions<TFCLPortalDbContext> options)
             : base(options)
         {
