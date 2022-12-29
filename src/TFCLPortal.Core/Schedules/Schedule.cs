@@ -38,5 +38,9 @@ namespace TFCLPortal.Schedules
         public string ReasonForDelayTAT { get; set; }
         public decimal OpeningBalance { get; set; }
 
+        public string ProcessingCharges { get; set; }
+        public string FEDonProcessingCharges { get; set; }
+        public string NetDisbursmentAmount { get; set; }
+
     }
 }

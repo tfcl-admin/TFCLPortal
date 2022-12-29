@@ -11,7 +11,7 @@
     public bool isLate = false;
 
     public string TAT = "";
-    public int TATMinutes =0;
+    public int TATMinutes = 0;
 
     public string getTAT(int Minutes)
     {
@@ -27,7 +27,7 @@
 
         int daysToCheck = 0;
 
-        if(ViewBag.LoanRequisitionDetails.CollateralGiven== "UNSECURED")
+        if (ViewBag.LoanRequisitionDetails.CollateralGiven == "UNSECURED")
         {
             daysToCheck = 7;
         }
@@ -36,7 +36,7 @@
             daysToCheck = 14;
         }
 
-        if(t.Days> daysToCheck)
+        if (t.Days > daysToCheck)
         {
             isLate = true;
         }
@@ -296,31 +296,29 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card mB-20">
             <div class="card-header text-white">Tax Calculations</div>
             <div class="card-body">
-                <form asp-action="ProcessingFee" method="post">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <p class="detailHeading">
-                                Processing Charges
-                            </p>
-                            <input asp-for="ProcessingCharges" type="number"  readonly="readonly" class="form-control disabled" value="@ViewBag.ProcessingCharges" />
-                        </div>
-                        <div class="col-md-4">
-                            <p class="detailHeading">
-                                FED% on Processing Charges
-                            </p>
-                            <input asp-for="FEDonProcessingCharges" type="number" readonly="readonly" class="form-control disabled" value="@ViewBag.FEDonProcessingCharges" />
-                        </div>
-                        <div class="col-md-4">
-                            <p class="detailHeading">
-                                Net Disbursment Amount
-                            </p>
-                            <input asp-for="NetDisbursmentAmount" type="number" readonly="readonly" class="form-control disabled" value="@ViewBag.NetDisbursmentAmount" />
-                        </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Processing Charges
+                        </p>
+                        <input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.ProcessingCharges).ToString("#,###.##"))" />
                     </div>
-                </form>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            FED% on Processing Charges
+                        </p>
+                        <input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.FEDonProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.FEDonProcessingCharges).ToString("#,###.##"))" />
+                    </div>
+                    <div class="col-md-4">
+                        <p class="detailHeading">
+                            Net Disbursment Amount
+                        </p>
+                        <input asp-for="NetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card">
@@ -339,6 +337,10 @@
                     <input type="hidden" asp-for="Tenure" value="@ViewBag.LoanRequisitionDetails.LoanTenureRequestedName" />
                     <input type="hidden" asp-for="TurnArroundTimeMins" value="@TATMinutes" />
                     <input type="hidden" asp-for="ReasonForDelayTAT" value="" />
+
+                    <input type="hidden" asp-for="ProcessingCharges" value="@(ViewBag.ProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.ProcessingCharges).ToString("#,###.##"))" />
+                    <input type="hidden" asp-for="FEDonProcessingCharges" value="@(ViewBag.FEDonProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.FEDonProcessingCharges).ToString("#,###.##"))" />
+                    <input type="hidden" asp-for="NetDisbursmentAmount" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
                     <div class="row">
                         <div class="col-md-4">
                             <p class="detailHeading">
@@ -467,7 +469,7 @@
     var reasonForLateDisbursement = '';
 
     if (isLate == 'True') {
-        let reasonForLateDisbursement = prompt("Turn Arround Time : " + TAT +"\n\nPlease Justify : ",'');
+        let reasonForLateDisbursement = prompt("Turn Arround Time : " + TAT + "\n\nPlease Justify : ", '');
         if (reasonForLateDisbursement == null || reasonForLateDisbursement == "") {
             alert('Please Justify Late Disbursement!');
             window.location.reload();
@@ -476,7 +478,7 @@
             $('#ReasonForDelayTAT').val(reasonForLateDisbursement);
         }
     }
-            //alert($('#ReasonForDelayTAT').val());
+    //alert($('#ReasonForDelayTAT').val());
 
 
     $('#isDeferrment').on('change', function () {

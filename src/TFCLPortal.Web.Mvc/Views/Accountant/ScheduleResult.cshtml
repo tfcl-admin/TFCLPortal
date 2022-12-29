@@ -226,11 +226,31 @@
                     <tr>
                         <td><b>Deferment End Date</b></td>
                         <td style="background-color:lightyellow" id="txtDeffermentEndDate">
-                            @(ViewBag.Input.DefermentEndDate == null ? "--" : string.Format("{0:dd MMM yyyy}", ViewBag.Input.DefermentEndDate))
                         </td>
                     </tr>
                 }
 
+                   
+            </table>
+            <table width="100%" class="tblTopData" style="margin-top:20px">
+                <tr>
+                        <td width="40%"><b>Processing Charges</b></td>
+                        <td style="background-color:yellow" id="ProcessingChargesTxt">
+                        @ViewBag.Input.ProcessingCharges
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td><b>FED on Processing Charges</b></td>
+                        <td style="background-color:yellow" id="FEDonProcessingChargesTxt">@ViewBag.Input.FEDonProcessingCharges</td>
+
+                    </tr>
+                    <tr>
+                        <td><b>Net Disbursment Amount</b></td>
+                    <td style="background-color:yellow" id="NetDisbursmentAmountTxt">
+                        @ViewBag.Input.NetDisbursmentAmount
+                        </td>
+                    </tr>
             </table>
 
         </div>
@@ -858,6 +878,9 @@
                  'LastInstallmentDate': $("#txtLastInstallmentDate").text().trim(),
                 'YearlyMarkup': $("#YearlyDiv").text(),
                 'PerDayMarkup': $("#DayDiv").text(),
+                'ProcessingCharges': $("#ProcessingChargesTxt").text().trim(),
+                'FEDonProcessingCharges': $("#FEDonProcessingChargesTxt").text(),
+                'NetDisbursmentAmount': $("#NetDisbursmentAmountTxt").text(),
                 'installmentList': ScheduleInstallments
             };
 

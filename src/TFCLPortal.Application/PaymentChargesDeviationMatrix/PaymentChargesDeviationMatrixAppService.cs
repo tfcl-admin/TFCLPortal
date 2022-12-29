@@ -55,7 +55,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
             _applicationAppService = ApplicationAppService;
 
         }
-        public async Task<List<PaymentChargesDeviationMatrixListDto>> GetAllPaymentChargesDeviationMatrixListDto()
+        public async Task<List<PaymentChargesDeviationMatrixListDto>> GetAllPaymentChargesDeviationMatrixList()
         {
             try
             {
@@ -84,51 +84,66 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
           
                 var app = _applicationAppService.GetApplicationByApplicationId(ApplicationId);
                 var BP = _BusinessPlansAppService.GetBusinessPlanByApplicationId(ApplicationId).Result;
-                if (app.ProductType != 9 || app.ProductType != 8)
+                var paymentCharges = GetAllPaymentChargesDeviationMatrixList().Result;
+                if(paymentCharges!=null)
                 {
-                    var product = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId).Result;
-                    if (BP.CollateralGiven == "SECURED")
+                    if (app.ProductType != 9 || app.ProductType != 8)
                     {
-                        loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",",""));
-                        //if to check processing charges are less then 13500
-                        LPC = loanAmount * 0.0045;
-
-                        if(LPC>13500)
+                        var product = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId).Result;
+                        if (BP.CollateralGiven == "SECURED")
                         {
-                            LPC = 13500;
+                            var securedPaymentCharges = paymentCharges.Where(x => x.Type.ToUpper() == "SECURED").FirstOrDefault();
+
+                            loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",", ""));
+                            
+                            //if to check processing charges are less then 13500
+
+                            LPC = loanAmount * (Convert.ToDouble(securedPaymentCharges.Percentage)/100);
+
+                            if (LPC > Convert.ToDouble(securedPaymentCharges.MaxAmount) && Convert.ToDouble(securedPaymentCharges.MaxAmount) != 0)
+                            {
+                                LPC = Convert.ToDouble(securedPaymentCharges.MaxAmount);
+                            }
+
+                            //FED = LPC * 0.16;
+
+                        }
+                        else if (BP.CollateralGiven == "UNSECURED")
+                        {
+                            var unSecuredPaymentCharges = paymentCharges.Where(x => x.Type.ToUpper() == "UNSECURED").FirstOrDefault();
+
+                            loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",", ""));
+                            LPC = loanAmount * (Convert.ToDouble(unSecuredPaymentCharges.Percentage) / 100);
+                            if (LPC > Convert.ToDouble(unSecuredPaymentCharges.MaxAmount)&& Convert.ToDouble(unSecuredPaymentCharges.MaxAmount)!=0)
+                            {
+                                LPC = Convert.ToDouble(unSecuredPaymentCharges.MaxAmount);
+                            }
                         }
 
-                        //FED = LPC * 0.16;
-
                     }
-                    else if (BP.CollateralGiven == "UNSECURED")
-                    {
-                        loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",", ""));
-                        LPC = loanAmount * 0.0077;
-                    }
-                    
-                }
 
-                else if (app.ProductType == 9 || app.ProductType == 8)
-                {
-                    var tds_product = _tDSLoanEligibilityAppService.GetTDSLoanEligibilityListByApplicationId(ApplicationId).Result;
-                    if (BP.CollateralGiven == "SECURED")
+                    else if (app.ProductType == 9 || app.ProductType == 8)
                     {
-                        loanAmount = Convert.ToDouble(tds_product.LoanAmountRequried.Replace(",", ""));
-                        LPC = loanAmount * 0.0045;
-                        if (LPC > 13500)
+                        var tds_product = _tDSLoanEligibilityAppService.GetTDSLoanEligibilityListByApplicationId(ApplicationId).Result;
+                        if (BP.CollateralGiven == "SECURED")
                         {
-                            LPC = 13500;
-                        }
-                        //FED = LPC * 0.16;
+                            loanAmount = Convert.ToDouble(tds_product.LoanAmountRequried.Replace(",", ""));
+                            LPC = loanAmount * 0.0045;
+                            if (LPC > 13500)
+                            {
+                                LPC = 13500;
+                            }
+                            //FED = LPC * 0.16;
 
-                    }
-                    else if (BP.CollateralGiven == "UNSECURED")
-                    {
-                        loanAmount = Convert.ToDouble(tds_product.LoanAmountRequried.Replace(",", ""));
-                        LPC = loanAmount * 0.0077;
+                        }
+                        else if (BP.CollateralGiven == "UNSECURED")
+                        {
+                            loanAmount = Convert.ToDouble(tds_product.LoanAmountRequried.Replace(",", ""));
+                            LPC = loanAmount * 0.0077;
+                        }
                     }
                 }
+                
 
 
 

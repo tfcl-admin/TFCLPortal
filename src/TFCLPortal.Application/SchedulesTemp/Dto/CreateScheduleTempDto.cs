@@ -38,6 +38,10 @@ namespace TFCLPortal.ScheduleTemps.Dto
         public string ReasonForDelayTAT { get; set; }
         public bool isBaloon { get; set; }
 
+        public string ProcessingCharges { get; set; }
+        public string FEDonProcessingCharges { get; set; }
+        public string NetDisbursmentAmount { get; set; }
+
         public List<CreateScheduleTempInstallmentDto> installmentList { get; set; }
 
     }

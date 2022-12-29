@@ -39,6 +39,9 @@ namespace TFCLPortal.ScheduleTemps.Dto
         public int TurnArroundTimeMins { get; set; }
         public string ReasonForDelayTAT { get; set; }
 
+        public string ProcessingCharges { get; set; }
+        public string FEDonProcessingCharges { get; set; }
+        public string NetDisbursmentAmount { get; set; }
         public List<ScheduleInstallmenttTempListDto> installmentList { get; set; }
 
 

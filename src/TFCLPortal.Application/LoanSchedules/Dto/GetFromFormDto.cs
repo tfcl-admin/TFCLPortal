@@ -49,10 +49,9 @@ namespace TFCLPortal.LoanSchedules.Dto
         public decimal newEnhancedAmount { get; set; }
         public decimal newEnhancedTenure { get; set; }
 
-        public decimal ProcessingCharges { get; set; }
-        public decimal FEDonProcessingCharges { get; set; }
-
-        public decimal NetDisbursmentAmount { get; set; }
+        public string ProcessingCharges { get; set; }
+        public string FEDonProcessingCharges { get; set; }
+        public string NetDisbursmentAmount { get; set; }
     }
 
     public class tranchList
