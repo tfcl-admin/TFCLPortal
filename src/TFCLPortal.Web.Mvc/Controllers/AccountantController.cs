@@ -1209,7 +1209,7 @@ namespace TFCLPortal.Web.Controllers
             double dailyMarkup = yearlyMarkup / 365;
             ViewBag.DailyMarkup = dailyMarkup;
 
-            var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId);
+            var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId,application.isEnhancementApplication, false, 0);
             if (ProcessCharges != null)
             { 
 
@@ -1297,9 +1297,9 @@ namespace TFCLPortal.Web.Controllers
                         ViewBag.UnpaidInstallment = unpaidInstallment;
                     }
 
-                    ViewBag.OldPC = getUnpaidIstallmentLastSchedule.Result.ProcessingCharges==null?"0" : getUnpaidIstallmentLastSchedule.Result.ProcessingCharges;
-                    ViewBag.OldFEDonPC = getUnpaidIstallmentLastSchedule.Result.FEDonProcessingCharges == null ? "0" : getUnpaidIstallmentLastSchedule.Result.FEDonProcessingCharges;
-                    ViewBag.OldND = getUnpaidIstallmentLastSchedule.Result.NetDisbursmentAmount == null ? "0" : getUnpaidIstallmentLastSchedule.Result.NetDisbursmentAmount;
+                   // ViewBag.OldPC = getUnpaidIstallmentLastSchedule.Result.ProcessingCharges==null?"0" : getUnpaidIstallmentLastSchedule.Result.ProcessingCharges;
+                    //ViewBag.OldFEDonPC = getUnpaidIstallmentLastSchedule.Result.FEDonProcessingCharges == null ? "0" : getUnpaidIstallmentLastSchedule.Result.FEDonProcessingCharges;
+                    //ViewBag.OldND = getUnpaidIstallmentLastSchedule.Result.NetDisbursmentAmount == null ? "0" : getUnpaidIstallmentLastSchedule.Result.NetDisbursmentAmount;
                 }
 
                 //var getLE = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId).Result;
@@ -1355,16 +1355,16 @@ namespace TFCLPortal.Web.Controllers
                 //    }
                 //}
 
-                var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId);
+                var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId,application.isEnhancementApplication,false,0);
                 if (ProcessCharges != null)
                 {
                     ViewBag.ProcessingCharges = ProcessCharges;
-                    double calculation = 0.16;
-                    double FED = 0;
-                    FED = Convert.ToDouble(ProcessCharges) * calculation;
-                    ViewBag.FEDonProcessingCharges = FED;
+                    //double calculation = 0.16;
+                    //double FED = 0;
+                    //FED = Convert.ToDouble(ProcessCharges) * calculation;
+                    //ViewBag.FEDonProcessingCharges = FED;
 
-                    ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges) + FED);
+                    //ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges) + FED);
                 }
 
             }
@@ -1394,6 +1394,28 @@ namespace TFCLPortal.Web.Controllers
             ViewBag.Application = application;
 
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult getProcessingCharges(int ApplicationId,double TrancheAmount)
+        {
+            try
+            {
+                var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId, true,true,TrancheAmount);
+                if (ProcessCharges != null)
+                {
+                    //ViewBag.ProcessingCharges = ProcessCharges;
+                    return Json(ProcessCharges);
+                }
+                else
+                {
+                    return Json("");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json("Error : " + ex.ToString());
+            }
         }
 
         public IActionResult Reschedule(int ApplicationId)

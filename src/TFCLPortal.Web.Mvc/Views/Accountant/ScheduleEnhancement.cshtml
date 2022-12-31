@@ -346,13 +346,13 @@
                         <p class="detailHeading">
                             Earlier Processing Charges
                         </p>
-                        <input asp-for="OldProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.OldPC == null ? "0" : Convert.ToDouble(ViewBag.OldPC).ToString("#,###.##"))" />
+                        <input asp-for="OldProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.EarlierProcessingCharges == 0 ? "0" : ViewBag.ProcessingCharges.EarlierProcessingCharges.ToString("#,###.##"))" />
                     </div>
                     <div class="col-md-4">
                         <p class="detailHeading">
                             Earlier FED on Processing Charges
                         </p>
-                        <input asp-for="OldFEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.OldFEDonPC == null ? "0" : Convert.ToDouble(ViewBag.OldFEDonPC).ToString("#,###.##"))" />
+                        <input asp-for="OldFEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.EarlierFEDonPC == 0 ? "0" : ViewBag.ProcessingCharges.EarlierFEDonPC.ToString("#,###.##"))" />
                     </div>
 @*                    <div class="col-md-4">
                         <p class="detailHeading">
@@ -366,19 +366,26 @@
                         <p class="detailHeading">
                             Due Processing Charges
                         </p>
-                        <input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.ProcessingCharges).ToString("#,###.##"))" />
+                        <input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.ProcessingCharges == 0 ? "0" : (ViewBag.ProcessingCharges.ProcessingCharges.ToString("#,###.##")))" />
                     </div>
                     <div class="col-md-4">
                         <p class="detailHeading">
                             Due FED on Processing Charges
                         </p>
-                        <input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.FEDonProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.FEDonProcessingCharges).ToString("#,###.##"))" />
+                        <input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.FEDonPC == 0 ? "0" : (ViewBag.ProcessingCharges.FEDonPC.ToString("#,###.##")))" />
                     </div>
                     <div class="col-md-4">
                         <p class="detailHeading">
                             Net Disbursment Amount
                         </p>
-                        <input asp-for="NetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
+                      @*  @{
+                            string NetDisbursment="";
+                            double nd = (Convert.ToDouble(ViewBag.ProcessingCharges) - Convert.ToDouble(ViewBag.OldPC.Replace(",", "")));
+                            nd += ((Convert.ToDouble(ViewBag.ProcessingCharges) - Convert.ToDouble(ViewBag.OldPC.Replace(",", ""))) * 0.16);
+                            NetDisbursment = (NewLoanAmount - nd).ToString("#,###.##");
+                        }*@
+
+                        <input asp-for="NetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.NetDisbursement == 0 ? "0" : (ViewBag.ProcessingCharges.NetDisbursement.ToString("#,###.##")))" />
                     </div>
                 </div>
             </div>
@@ -400,9 +407,9 @@
                     <input type="hidden" asp-for="LoanAmount" value="@ViewBag.LoanRequisitionDetails.LoanAmountRecommended" />
                     <input type="hidden" asp-for="Tenure" value="@ViewBag.LoanRequisitionDetails.LoanTenureRequestedName" />
 
-                    <input type="hidden" asp-for="ProcessingCharges" value="@(ViewBag.ProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.ProcessingCharges).ToString("#,###.##"))" />
-                    <input type="hidden" asp-for="FEDonProcessingCharges" value="@(ViewBag.FEDonProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.FEDonProcessingCharges).ToString("#,###.##"))" />
-                    <input type="hidden" asp-for="NetDisbursmentAmount" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
+                    <input type="hidden" asp-for="ProcessingCharges" value="@(ViewBag.ProcessingCharges.TotalProcessingCharges == 0 ? "0" : (ViewBag.ProcessingCharges.TotalProcessingCharges).ToString("#,###.##"))" />
+                    <input type="hidden" asp-for="FEDonProcessingCharges" value="@(ViewBag.ProcessingCharges.TotalFEDonPC == 0 ? "0" : (ViewBag.ProcessingCharges.TotalFEDonPC).ToString("#,###.##"))" />
+                    <input type="hidden" asp-for="NetDisbursmentAmount" value="@(ViewBag.ProcessingCharges.TotalNetDisbursement == 0 ? "0" : (ViewBag.ProcessingCharges.TotalNetDisbursement).ToString("#,###.##"))" />
 
                     <input type="hidden" asp-for="newLoanAmountDiff" value="@diff" />
                     <input type="hidden" asp-for="newEnhancedAmount" value="@NewLoanAmount" />

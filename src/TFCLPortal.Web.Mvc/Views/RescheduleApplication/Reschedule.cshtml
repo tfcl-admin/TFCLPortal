@@ -191,6 +191,24 @@
 
             </table>
 
+               <table width="100%" class="tblTopData" style="margin-top:20px">
+                <tr>
+                        <td width="40%"><b>Processing Charges</b></td>
+                        <td style="background-color:yellow" id="ProcessingChargesTxt">0</td>
+
+                    </tr>
+                    <tr>
+                        <td><b>FED on Processing Charges</b></td>
+                        <td style="background-color:yellow" id="FEDonProcessingChargesTxt">0</td>
+
+                    </tr>
+                    <tr>
+                        <td><b>Net Disbursment Amount</b></td>
+                    <td style="background-color:yellow" id="NetDisbursmentAmountTxtView">0</td>
+                    </tr>
+            </table>
+
+
         </div>
         <div class="col-md-6 text-right">
             <table width="100%" class="tblTopData">
@@ -435,6 +453,21 @@
                                 <p class="detailHeading">Amount</p>
                                 <input id="TopUpAmountText" type="number" class="form-control" />
                             </div>
+
+                             <div class="col-md-12">
+                                <p class="detailHeading">Processing Charges</p>
+                                <input id="PCText" type="text" class="form-control" readonly="readonly" />
+                            </div>
+
+                             <div class="col-md-12">
+                                <p class="detailHeading">FED On PC</p>
+                                <input id="FEDonPCText" type="text" class="form-control" readonly="readonly"/>
+                            </div>
+
+                             <div class="col-md-12">
+                                <p class="detailHeading">Net Disbursement Amount</p>
+                                <input id="NetDisbursementAmountText" type="text" class="form-control" readonly="readonly"/>
+                            </div>
                         </div>
                     </div>
 
@@ -443,7 +476,8 @@
 
             </div>
             <div class="modal-footer">
-                <button id="applyTopUpPayment" type="button" class="btn btn-outline-success bg1 ef1">Apply</button>
+                <a id="getPCfromServerBtn"  class="btn btn-outline-success bg1 ef1">Get Processing Charges</a>
+                <button id="applyTopUpPayment" type="button" class="btn btn-outline-success bg1 ef1 d-none">Apply</button>
                 <button data-dismiss="modal" type="button" class="btn btn-outline-danger bg1 ef1">Cancel</button>
             </div>
         </div>
@@ -463,10 +497,76 @@
 
 <script>
 
+
+    $("#getPCfromServerBtn").click(function () {
+        var val = $('#TopUpAmountText').val();
+        var oldAmount = $('#totalLoanAmount').val().replaceAll(',','');
+        var LA=Number(val)+Number(oldAmount);
+        console.log(oldAmount);
+        var Applicationid = '@ViewBag.ApplicationId';
+        $(".pageloader").toggleClass("d-none");
+
+        if (val == "") {
+            val = 0;
+        }
+
+         $.ajax({
+            type: 'POST',
+            datatype: "json",
+            contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Accountant/getProcessingCharges")',
+            data:{'ApplicationId':'@ViewBag.ApplicationId','TrancheAmount':LA},
+            success: function (response) {
+                $(".pageloader").toggleClass("d-none");
+                $("#applyTopUpPayment").toggleClass("d-none");
+               
+                var rtnData=response.result;
+
+                $('#PCText').val(numberWithCommas(rtnData.processingCharges.toFixed(0)));
+                $('#FEDonPCText').val(numberWithCommas(rtnData.feDonPC.toFixed(0)));
+                $('#NetDisbursementAmountText').val(numberWithCommas(rtnData.netDisbursement.toFixed(0)));
+                //console.log('PC');//reDisplayTable();
+                //console.log(response.result);//reDisplayTable();
+
+            },
+            error: function (error) {
+                console.log(error);
+                $(".pageloader").toggleClass("d-none");
+
+            }
+        });
+
+
+    });
+
+    function numberWithCommas(x) {
+        x = Math.round(x);
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+
+
     $('#BaloonPaymentAmountText').on('change', 'input', function () {
         alert('BaloonPaymentAmountText');
         setBPCamount();
     });
+
+    $('#TopUpAmountText').on('input', function () {
+        //alert('test');
+         $('#PCText').val('0');
+         $('#FEDonPCText').val('0');
+         $('#NetDisbursementAmountText').val('0');
+         $('#NetDisbursementAmountTextView').text('');
+         $('#ProcessingChargesTxt').text('');
+         $('#FEDonProcessingChargesTxt').text('');
+         if(!$("#applyTopUpPayment").hasClass("d-none"))
+         {
+                $("#applyTopUpPayment").addClass("d-none");
+         }
+    });
+
+    
+
     $('#TaxPercentageText').on('change', 'input', function () {
         alert('TaxPercentageText');
         setBPCamount();
@@ -772,6 +872,11 @@
         });
 
         $(document).on('click', '#applyTopUpPayment', function (e) {
+
+
+            $('#ProcessingChargesTxt').text($('#PCText').val());
+            $('#FEDonProcessingChargesTxt').text($('#FEDonPCText').val());
+            $('#NetDisbursmentAmountTxtView').text($('#NetDisbursementAmountText').val());
 
             var LastInstallmentIndex = installments.filter(x => x.isPaid == true).length - 1;
             var LastInstallmentP = installments[LastInstallmentIndex];
@@ -1404,6 +1509,11 @@
                  'LastInstallmentDate': $("#txtLastInstallmentDate").text().trim(),
                 'YearlyMarkup': $("#YearlyDiv").text(),
                 'PerDayMarkup': $("#DayDiv").text(),
+
+                'ProcessingCharges': $("#ProcessingChargesTxt").text().trim(),
+                'FEDonProcessingCharges': $("#FEDonProcessingChargesTxt").text().trim(),
+                'NetDisbursmentAmount': $("#NetDisbursmentAmountTxtView").text().trim(),
+                
                 'UpdationReason': 'Reschedule',
                  'isBaloon': isBaloon,
                 'installmentList': ScheduleInstallments

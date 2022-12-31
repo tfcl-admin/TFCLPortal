@@ -11,7 +11,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
 {
     public interface IPaymentChargesDeviationMatrixAppService : IApplicationService
     {
-        decimal GetPaymentChargesDeviationMatrixByApplicationId(int ApplicationId);
+        PaymentChargesValues GetPaymentChargesDeviationMatrixByApplicationId(int ApplicationId, bool isOldRequired, bool isLoanAmountGiven, double loanamountgiven);
         Task<List<PaymentChargesDeviationMatrixListDto>> GetAllPaymentChargesDeviationMatrixList();
 
     }

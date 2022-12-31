@@ -24,6 +24,7 @@ using TFCLPortal.IApplicationWiseDeviationVariableAppServices;
 using TFCLPortal.LoanEligibilities;
 using TFCLPortal.PaymentChargesDeviationMatrix.Dto;
 using TFCLPortal.PersonalDetails.Dto;
+using TFCLPortal.ProductMarkupRates;
 using TFCLPortal.Schedules;
 using TFCLPortal.TDSLoanEligibilities;
 using TFCLPortal.Users.Dto;
@@ -73,22 +74,20 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                 return null;
             }
         }
-        public decimal GetPaymentChargesDeviationMatrixByApplicationId(int ApplicationId)
+        public PaymentChargesValues GetPaymentChargesDeviationMatrixByApplicationId(int ApplicationId, bool isOldRequired,bool isLoanAmountGiven,double loanamountgiven)
         {
             try
             {
 
-                // application = product type
-                // get PaymentChargesDeviationMatrix get all list
-                // businessplan = sec/unsec
-                // check product id = 1,2,6,7 loaneligibility <-> productid=8,9 tdsloaneligibility ==== Loan Amount
-                //  formula
                 double LPC = 0, FED = 0, loanAmount = 0, result;
                 decimal val = 0;
 
                 ApplicationListDto app = _applicationAppService.GetApplicationByApplicationId(ApplicationId);
                 var BP = _BusinessPlansAppService.GetBusinessPlanByApplicationId(ApplicationId).Result;
                 var paymentCharges = GetAllPaymentChargesDeviationMatrixList().Result;
+
+                //Result
+                PaymentChargesValues rtnObject = new PaymentChargesValues();
 
                 if (paymentCharges != null)
                 {
@@ -99,7 +98,14 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                         {
                             var securedPaymentCharges = paymentCharges.Where(x => x.Type.ToUpper() == "SECURED").FirstOrDefault();
 
-                            loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",", ""));
+                            if(isLoanAmountGiven)
+                            {
+                                loanAmount = loanamountgiven;
+                            }
+                            else
+                            {
+                                loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",", ""));
+                            }
 
                             //if to check processing charges are less then 13500
 
@@ -110,7 +116,12 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                 LPC = Convert.ToDouble(securedPaymentCharges.MaxAmount);
                             }
 
-                            if (app.isEnhancementApplication == true)
+                            rtnObject.ProcessingCharges = LPC;
+                            rtnObject.FEDonPC = LPC * 0.16;
+                            rtnObject.NetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+
+
+                            if (isOldRequired)
                             {
                                 var schedule = _scheduleappservice.GetScheduleByApplicationId(app.PrevApplicationId).Result;
                                 if (schedule != null)
@@ -118,7 +129,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     double pc = 0;
                                     if (schedule.ProcessingCharges != null)
                                     {
-                                        pc = double.Parse(schedule.ProcessingCharges.Replace(",", "").Replace("", "0"));
+                                        pc = double.Parse(schedule.ProcessingCharges.Replace(",", ""));
                                     }
 
                                     if ((LPC + pc) > Convert.ToDouble(securedPaymentCharges.MaxAmount))
@@ -129,6 +140,20 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     {
                                         LPC += pc;
                                     }
+                                    rtnObject.EarlierProcessingCharges = schedule.ProcessingCharges == null ? 0 : Convert.ToDouble(schedule.ProcessingCharges.Replace(",", ""));
+                                    rtnObject.EarlierFEDonPC = schedule.FEDonProcessingCharges == null ? 0 : Convert.ToDouble(schedule.FEDonProcessingCharges.Replace(",", ""));
+                                    rtnObject.EarlierNetDisbursement = schedule.NetDisbursmentAmount == null ? 0 : Convert.ToDouble(schedule.NetDisbursmentAmount.Replace(",", ""));
+
+
+                                    rtnObject.ProcessingCharges = LPC - pc;
+                                    rtnObject.TotalFEDonPC = (LPC - pc) * 0.16;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+
+                                    rtnObject.TotalProcessingCharges = LPC;
+                                    rtnObject.TotalFEDonPC = LPC * 0.16;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.TotalProcessingCharges - rtnObject.TotalFEDonPC;
+
+
                                 }
                             }
 
@@ -139,14 +164,25 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                         {
                             var unSecuredPaymentCharges = paymentCharges.Where(x => x.Type.ToUpper() == "UNSECURED").FirstOrDefault();
 
-                            loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",", ""));
+                            if (isLoanAmountGiven)
+                            {
+                                loanAmount = loanamountgiven;
+                            }
+                            else
+                            {
+                                loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",", ""));
+                            }
+
                             LPC = loanAmount * (Convert.ToDouble(unSecuredPaymentCharges.Percentage) / 100);
                             if (LPC > Convert.ToDouble(unSecuredPaymentCharges.MaxAmount) && Convert.ToDouble(unSecuredPaymentCharges.MaxAmount) != 0)
                             {
                                 LPC = Convert.ToDouble(unSecuredPaymentCharges.MaxAmount);
                             }
+                            rtnObject.ProcessingCharges = LPC;
+                            rtnObject.FEDonPC = LPC * 0.16;
+                            rtnObject.NetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
 
-                            if (app.isEnhancementApplication == true)
+                            if (isOldRequired)
                             {
                                 var schedule = _scheduleappservice.GetScheduleByApplicationId(app.PrevApplicationId).Result;
                                 if (schedule != null)
@@ -154,10 +190,10 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     double pc = 0;
                                     if (schedule.ProcessingCharges != null)
                                     {
-                                        pc = double.Parse(schedule.ProcessingCharges.Replace(",", "").Replace("", "0"));
+                                        pc = double.Parse(schedule.ProcessingCharges.Replace(",", ""));
                                     }
 
-                                    if ((LPC + pc) > Convert.ToDouble(unSecuredPaymentCharges.MaxAmount)&& Convert.ToDouble(unSecuredPaymentCharges.MaxAmount)!=0)
+                                    if ((LPC + pc) > Convert.ToDouble(unSecuredPaymentCharges.MaxAmount) && Convert.ToDouble(unSecuredPaymentCharges.MaxAmount) != 0)
                                     {
                                         LPC = Convert.ToDouble(unSecuredPaymentCharges.MaxAmount);
                                     }
@@ -165,6 +201,20 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     {
                                         LPC += pc;
                                     }
+
+                                    rtnObject.EarlierProcessingCharges = schedule.ProcessingCharges == null ? 0 : Convert.ToDouble(schedule.ProcessingCharges.Replace(",", ""));
+                                    rtnObject.EarlierFEDonPC = schedule.FEDonProcessingCharges == null ? 0 : Convert.ToDouble(schedule.FEDonProcessingCharges.Replace(",", ""));
+                                    rtnObject.EarlierNetDisbursement = schedule.NetDisbursmentAmount == null ? 0 : Convert.ToDouble(schedule.NetDisbursmentAmount.Replace(",", ""));
+
+
+                                    rtnObject.ProcessingCharges = LPC - pc;
+                                    rtnObject.TotalFEDonPC = (LPC - pc) * 0.16;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+
+                                    rtnObject.TotalProcessingCharges = LPC;
+                                    rtnObject.TotalFEDonPC = LPC * 0.16;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.TotalProcessingCharges - rtnObject.TotalFEDonPC;
+
                                 }
                             }
 
@@ -178,16 +228,26 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                         if (BP.CollateralGiven == "SECURED")
                         {
                             var securedPaymentCharges = paymentCharges.Where(x => x.Type.ToUpper() == "SECURED").FirstOrDefault();
-                            loanAmount = Convert.ToDouble(tds_product.LoanAmountRequried.Replace(",", ""));
-
+                            if (isLoanAmountGiven)
+                            {
+                                loanAmount = loanamountgiven;
+                            }
+                            else
+                            {
+                                loanAmount = Convert.ToDouble(tds_product.LoanAmountRequried.Replace(",", ""));
+                            }
                             LPC = loanAmount * (Convert.ToDouble(securedPaymentCharges.Percentage) / 100);
 
                             if (LPC > Convert.ToDouble(securedPaymentCharges.MaxAmount) && Convert.ToDouble(securedPaymentCharges.MaxAmount) != 0)
                             {
                                 LPC = Convert.ToDouble(securedPaymentCharges.MaxAmount);
                             }
+                            rtnObject.ProcessingCharges = LPC;
+                            rtnObject.FEDonPC = LPC * 0.16;
+                            rtnObject.NetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+
                             //FED = LPC * 0.16;
-                            if (app.isEnhancementApplication == true)
+                            if (isOldRequired)
                             {
                                 var schedule = _scheduleappservice.GetScheduleByApplicationId(app.PrevApplicationId).Result;
                                 if (schedule != null)
@@ -195,7 +255,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     double pc = 0;
                                     if (schedule.ProcessingCharges != null)
                                     {
-                                        pc = double.Parse(schedule.ProcessingCharges.Replace(",", "").Replace("", "0"));
+                                        pc = double.Parse(schedule.ProcessingCharges.Replace(",", ""));
                                     }
 
                                     if ((LPC + pc) > Convert.ToDouble(securedPaymentCharges.MaxAmount))
@@ -206,6 +266,20 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     {
                                         LPC += pc;
                                     }
+
+                                    rtnObject.EarlierProcessingCharges = schedule.ProcessingCharges == null ? 0 : Convert.ToDouble(schedule.ProcessingCharges.Replace(",", ""));
+                                    rtnObject.EarlierFEDonPC = schedule.FEDonProcessingCharges == null ? 0 : Convert.ToDouble(schedule.FEDonProcessingCharges.Replace(",", ""));
+                                    rtnObject.EarlierNetDisbursement = schedule.NetDisbursmentAmount == null ? 0 : Convert.ToDouble(schedule.NetDisbursmentAmount.Replace(",", ""));
+
+
+                                    rtnObject.ProcessingCharges = LPC - pc;
+                                    rtnObject.TotalFEDonPC = (LPC - pc) * 0.16;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+
+                                    rtnObject.TotalProcessingCharges = LPC;
+                                    rtnObject.TotalFEDonPC = LPC * 0.16;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.TotalProcessingCharges - rtnObject.TotalFEDonPC;
+
                                 }
                             }
 
@@ -213,10 +287,21 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                         else if (BP.CollateralGiven == "UNSECURED")
                         {
                             var unSecuredPaymentCharges = paymentCharges.Where(x => x.Type.ToUpper() == "UNSECURED").FirstOrDefault();
-                            loanAmount = Convert.ToDouble(tds_product.LoanAmountRequried.Replace(",", ""));
+                            if (isLoanAmountGiven)
+                            {
+                                loanAmount = loanamountgiven;
+                            }
+                            else
+                            {
+                                loanAmount = Convert.ToDouble(tds_product.LoanAmountRequried.Replace(",", ""));
+                            }
                             LPC = loanAmount * (Convert.ToDouble(unSecuredPaymentCharges.Percentage) / 100);
 
-                            if (app.isEnhancementApplication == true)
+                            rtnObject.ProcessingCharges = LPC;
+                            rtnObject.FEDonPC = LPC * 0.16;
+                            rtnObject.NetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+
+                            if (isOldRequired)
                             {
                                 var schedule = _scheduleappservice.GetScheduleByApplicationId(app.PrevApplicationId).Result;
                                 if (schedule != null)
@@ -224,7 +309,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     double pc = 0;
                                     if (schedule.ProcessingCharges != null)
                                     {
-                                        pc = double.Parse(schedule.ProcessingCharges.Replace(",", "").Replace("", "0"));
+                                        pc = double.Parse(schedule.ProcessingCharges.Replace(",", ""));
                                     }
 
                                     if ((LPC + pc) > Convert.ToDouble(unSecuredPaymentCharges.MaxAmount) && Convert.ToDouble(unSecuredPaymentCharges.MaxAmount) != 0)
@@ -235,6 +320,21 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     {
                                         LPC += pc;
                                     }
+
+                                    rtnObject.EarlierProcessingCharges = schedule.ProcessingCharges == null ? 0 : Convert.ToDouble(schedule.ProcessingCharges.Replace(",", ""));
+                                    rtnObject.EarlierFEDonPC = schedule.FEDonProcessingCharges == null ? 0 : Convert.ToDouble(schedule.FEDonProcessingCharges.Replace(",", ""));
+                                    rtnObject.EarlierNetDisbursement = schedule.NetDisbursmentAmount == null ? 0 : Convert.ToDouble(schedule.NetDisbursmentAmount.Replace(",", ""));
+
+
+
+                                    rtnObject.ProcessingCharges = LPC - pc;
+                                    rtnObject.TotalFEDonPC = (LPC - pc) * 0.16;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+
+                                    rtnObject.TotalProcessingCharges = LPC;
+                                    rtnObject.TotalFEDonPC = LPC * 0.16;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.TotalProcessingCharges - rtnObject.TotalFEDonPC;
+
                                 }
                             }
                         }
@@ -242,7 +342,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                     }
                 }
 
-                return Convert.ToDecimal(LPC);
+                return rtnObject;
             }
             catch (Exception ex)
             {
