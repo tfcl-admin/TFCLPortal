@@ -52,6 +52,9 @@ namespace TFCLPortal.LoanSchedules.Dto
         public string ProcessingCharges { get; set; }
         public string FEDonProcessingCharges { get; set; }
         public string NetDisbursmentAmount { get; set; }
+        public string OldProcessingCharges { get; set; }
+        public string OldFEDonProcessingCharges { get; set; }
+        public string OldNetDisbursmentAmount { get; set; }
     }
 
     public class tranchList

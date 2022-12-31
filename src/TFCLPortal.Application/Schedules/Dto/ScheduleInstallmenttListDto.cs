@@ -40,6 +40,9 @@ namespace TFCLPortal.Schedules.Dto
 
         public bool isMarkupPaid { get; set; }
         public bool isPrincipalPaid { get; set; }
+        //public string ProcessingCharges { get; set; }
+        //public string FEDonProcessingCharges { get; set; }
+        //public string NetDisbursmentAmount { get; set; }
 
     }
 }

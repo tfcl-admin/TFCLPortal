@@ -192,6 +192,7 @@
         </div>
     </div>
 
+
     <div class="row" style="margin-top:20px">
         <div class="col-md-6 text-left">
             <table width="100%" class="tblTopData">
@@ -230,9 +231,31 @@
                     </tr>
                 }
 
-            </table>
+             </table>
+                <table width="100%" class="tblTopData" style="margin-top:20px">
+                                <tr>
+                                    <td width="40%"><b>Processing Charges</b></td>
+                                        <td style="background-color:burlywood" id="ProcessingChargesTxt">
+                                          @ViewBag.Input.ProcessingCharges
+                                        </td>
+                               </tr>
+                             <tr>
+                                 <td><b>FED on Processing Charges</b></td>
+                                 <td style="background-color:burlywood" id="FEDonProcessingChargesTxt">@ViewBag.Input.FEDonProcessingCharges</td>
+
+                             </tr>
+                             <tr>
+                                 <td><b>Net Disbursment Amount</b></td>
+                                     <td style="background-color:burlywood" id="NetDisbursmentAmountTxt">
+                                        @ViewBag.Input.NetDisbursmentAmount
+                                     </td>
+                            </tr>
+                </table>
 
         </div>
+
+
+
         <div class="col-md-6 text-right">
             <table width="100%" class="tblTopData">
                 <tr>
@@ -865,6 +888,9 @@
                  'LastInstallmentDate': $("#txtLastInstallmentDate").text().trim(),
                 'YearlyMarkup': $("#YearlyDiv").text(),
                 'PerDayMarkup': $("#DayDiv").text(),
+                'ProcessingCharges': $("#ProcessingChargesTxt").text().trim(),
+                'FEDonProcessingCharges': $("#FEDonProcessingChargesTxt").text(),
+                'NetDisbursmentAmount': $("#NetDisbursmentAmountTxt").text(),
                 'installmentList': ScheduleInstallments
             };
 

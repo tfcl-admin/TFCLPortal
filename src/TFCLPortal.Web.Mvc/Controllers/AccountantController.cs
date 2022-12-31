@@ -64,6 +64,9 @@ using TFCLPortal.BaloonPayments;
 using TFCLPortal.BaloonPayments.Dto;
 using TFCLPortal.ClosingMonths;
 using TFCLPortal.PaymentChargesDeviationMatrix;
+using static System.Net.Mime.MediaTypeNames;
+using Abp.Collections.Extensions;
+using System.Security.Cryptography.X509Certificates;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -232,7 +235,7 @@ namespace TFCLPortal.Web.Controllers
         public IActionResult Index()
         {
             var Applications = _applicationAppService.GetShortApplicationList(ApplicationState.MC_Authorized, Branchid());
-            if (Applications != null)
+             if (Applications != null)
             {
                 foreach (var app in Applications)
                 {
@@ -1209,6 +1212,8 @@ namespace TFCLPortal.Web.Controllers
             var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId);
             if (ProcessCharges != null)
             { 
+
+                
                 ViewBag.ProcessingCharges = ProcessCharges;
                 double calculation = 0.16;
                 double FED = 0;
@@ -1216,6 +1221,10 @@ namespace TFCLPortal.Web.Controllers
                 ViewBag.FEDonProcessingCharges = FED;
 
                 ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges) + FED);
+
+                ViewBag.OldPC = ProcessCharges;
+                ViewBag.OldFEDonPC = FED;
+
             }
 
             ViewBag.Application = application;
@@ -1287,6 +1296,10 @@ namespace TFCLPortal.Web.Controllers
                     {
                         ViewBag.UnpaidInstallment = unpaidInstallment;
                     }
+
+                    ViewBag.OldPC = getUnpaidIstallmentLastSchedule.Result.ProcessingCharges==null?"0" : getUnpaidIstallmentLastSchedule.Result.ProcessingCharges;
+                    ViewBag.OldFEDonPC = getUnpaidIstallmentLastSchedule.Result.FEDonProcessingCharges == null ? "0" : getUnpaidIstallmentLastSchedule.Result.FEDonProcessingCharges;
+                    ViewBag.OldND = getUnpaidIstallmentLastSchedule.Result.NetDisbursmentAmount == null ? "0" : getUnpaidIstallmentLastSchedule.Result.NetDisbursmentAmount;
                 }
 
                 //var getLE = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId).Result;
@@ -1316,6 +1329,44 @@ namespace TFCLPortal.Web.Controllers
                 ViewBag.BranchManagerId = (long)branch.FK_BMid;
                 ViewBag.SdeName = _userAppService.GetUserById((long)application.CreatorUserId).Result.FullName;
                 ViewBag.SdeId = (long)application.CreatorUserId;
+
+                //var unPaid_PC = _scheduleAppService.GetScheduleList().Result;
+                //var Check_PC = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
+                //if(getUnpaidIstallmentLastSchedule != null)
+                //{
+
+                //    if (Check_PC.ProcessingCharges == null || Convert.ToDecimal(Check_PC.ProcessingCharges) == 0)
+                //    {
+                //        ViewBag.ProcessingCharges = 0;
+                //    }
+
+                //    if (Check_PC.ProcessingCharges != null )
+                //    {
+                //        if (Convert.ToDecimal(Check_PC.ProcessingCharges) >= 13500)
+                //        {
+                //            double FED = 0;
+                //            ViewBag.FEDonProcessingCharges = FED;
+                //            ViewBag.ProcessingCharges = 0;
+                //        }
+                //        if (Convert.ToDecimal(Check_PC.ProcessingCharges) != 0)
+                //        {
+                //           // var deviation = getUnpaidIstallmentLastSchedule.Result.ProcessingCharges()
+                //        }
+                //    }
+                //}
+
+                var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId);
+                if (ProcessCharges != null)
+                {
+                    ViewBag.ProcessingCharges = ProcessCharges;
+                    double calculation = 0.16;
+                    double FED = 0;
+                    FED = Convert.ToDouble(ProcessCharges) * calculation;
+                    ViewBag.FEDonProcessingCharges = FED;
+
+                    ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges) + FED);
+                }
+
             }
 
             //Calculating IRR
@@ -1335,6 +1386,10 @@ namespace TFCLPortal.Web.Controllers
             //Calculating Daily Markup Amount
             double dailyMarkup = yearlyMarkup / 365;
             ViewBag.DailyMarkup = dailyMarkup;
+
+
+
+
 
             ViewBag.Application = application;
 
@@ -1926,8 +1981,9 @@ namespace TFCLPortal.Web.Controllers
                     item.tranchInstallment = -PMT(item.Irr / 1200, tranchTenure, sumOfAmounts, 0, 0);
 
                     item.DailyMarkup = Int32.Parse(item.Amount) * markup / 365;
-
                 }
+
+
             }
 
 
