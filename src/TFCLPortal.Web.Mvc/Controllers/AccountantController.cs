@@ -73,7 +73,7 @@ namespace TFCLPortal.Web.Controllers
     public class AccountantController : TFCLPortalControllerBase
     {
         private readonly IUserAppService _userAppService;
-        private readonly IRepository<PaymentChargesDeviationMatric , Int32> _paymentChargesDeviationMatricRepository;
+        private readonly IRepository<PaymentChargesDeviationMatric, Int32> _paymentChargesDeviationMatricRepository;
         private readonly IPaymentChargesDeviationMatrixAppService _paymentChargesDeviationMatrixAppService;
         private readonly IFinalWorkflowAppService _finalWorkflowAppService;
         private readonly IApplicationAppService _applicationAppService;
@@ -125,10 +125,10 @@ namespace TFCLPortal.Web.Controllers
         private readonly INotificationLogAppService _notificationLogAppService;
         private readonly IClosingMonthAppService _closingMonthAppService;
 
-        public AccountantController(IClosingMonthAppService closingMonthAppService, IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService , 
-                                    IRepository<PaymentChargesDeviationMatric , Int32 > paymentChargesDeviationMatricRepository , IPaymentChargesDeviationMatrixAppService PaymentChargesDeviationMatrixAppService)
+        public AccountantController(IClosingMonthAppService closingMonthAppService, IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService,
+                                    IRepository<PaymentChargesDeviationMatric, Int32> paymentChargesDeviationMatricRepository, IPaymentChargesDeviationMatrixAppService PaymentChargesDeviationMatrixAppService)
         {
-            _paymentChargesDeviationMatricRepository= paymentChargesDeviationMatricRepository;
+            _paymentChargesDeviationMatricRepository = paymentChargesDeviationMatricRepository;
             _paymentChargesDeviationMatrixAppService = PaymentChargesDeviationMatrixAppService;
             _BaloonPaymentrepository = BaloonPaymentrepository;
             _baloonPaymentAppService = baloonPaymentAppService;
@@ -235,7 +235,7 @@ namespace TFCLPortal.Web.Controllers
         public IActionResult Index()
         {
             var Applications = _applicationAppService.GetShortApplicationList(ApplicationState.MC_Authorized, Branchid());
-             if (Applications != null)
+            if (Applications != null)
             {
                 foreach (var app in Applications)
                 {
@@ -750,12 +750,12 @@ namespace TFCLPortal.Web.Controllers
         public IActionResult CreateAuthorizeInstallmentPayment(CreateAuthorizeInstallmentPayment payment)
         {
             bool isPaymentDone = _authorizeInstallmentPaymentAppService.InstallmentPayment(payment);
-           
+
             var app = _applicationAppService.GetApplicationById(payment.ApplicationId);
 
             if (isPaymentDone)
             {
-                return RedirectToAction("Success", "About", new { Message = "Installment Payment deducted successfully for "+app.ClientID+" ("+app.ClientName+")" });
+                return RedirectToAction("Success", "About", new { Message = "Installment Payment deducted successfully for " + app.ClientID + " (" + app.ClientName + ")" });
             }
             else
             {
@@ -902,7 +902,7 @@ namespace TFCLPortal.Web.Controllers
 
         //[DisableValidation]
         //[HttpPost]
-        
+
         //Installment Process End
 
         public IActionResult InstallmentPaymentList(int? filterType, int? branchFilter, int? day, int? month, int? year)
@@ -1032,23 +1032,7 @@ namespace TFCLPortal.Web.Controllers
                     }
                     else
                     {
-                        //Due To Ahsan Habib Display Issue
-                        //var AllDefferedInstallments = getSchedule.installmentList.Where(x => x.InstNumber == installment.InstNumber).ToList();
-                        //var indexOfThisInstallment = AllDefferedInstallments.IndexOf(installment);
 
-                        //var paidDeferredInstallments = paidInstallments.Where(x => x.NoOfInstallment.ToString() == "0").ToList();
-
-                        //try
-                        //{
-                        //    var paidDeferredInstallmentOnThisIndex = paidDeferredInstallments[indexOfThisInstallment];
-                        //    installment.PaidAmount = paidDeferredInstallmentOnThisIndex.Amount.ToString();
-                        //    installment.ExcessShort = paidDeferredInstallmentOnThisIndex.ExcessShortPayment.ToString();
-
-                        //}
-                        //catch
-                        //{
-
-                        //}
 
                         var AllDefferedInstallments = getSchedule.installmentList.Where(x => x.InstNumber == installment.InstNumber).ToList();
                         var indexOfThisInstallment = AllDefferedInstallments.IndexOf(installment);
@@ -1209,20 +1193,20 @@ namespace TFCLPortal.Web.Controllers
             double dailyMarkup = yearlyMarkup / 365;
             ViewBag.DailyMarkup = dailyMarkup;
 
-            var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId,application.isEnhancementApplication, false, 0);
+            var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId, application.isEnhancementApplication, false, 0);
             if (ProcessCharges != null)
-            { 
+            {
 
-                
-                ViewBag.ProcessingCharges = ProcessCharges;
+
+                ViewBag.ProcessingCharges = ProcessCharges.ProcessingCharges;
                 double calculation = 0.16;
                 double FED = 0;
-                FED= Convert.ToDouble(ProcessCharges) * calculation;
+                FED = Convert.ToDouble(ProcessCharges.ProcessingCharges) * calculation;
                 ViewBag.FEDonProcessingCharges = FED;
 
-                ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges) + FED);
+                ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges.ProcessingCharges) + FED);
 
-                ViewBag.OldPC = ProcessCharges;
+                ViewBag.OldPC = ProcessCharges.ProcessingCharges;
                 ViewBag.OldFEDonPC = FED;
 
             }
@@ -1297,7 +1281,7 @@ namespace TFCLPortal.Web.Controllers
                         ViewBag.UnpaidInstallment = unpaidInstallment;
                     }
 
-                   // ViewBag.OldPC = getUnpaidIstallmentLastSchedule.Result.ProcessingCharges==null?"0" : getUnpaidIstallmentLastSchedule.Result.ProcessingCharges;
+                    // ViewBag.OldPC = getUnpaidIstallmentLastSchedule.Result.ProcessingCharges==null?"0" : getUnpaidIstallmentLastSchedule.Result.ProcessingCharges;
                     //ViewBag.OldFEDonPC = getUnpaidIstallmentLastSchedule.Result.FEDonProcessingCharges == null ? "0" : getUnpaidIstallmentLastSchedule.Result.FEDonProcessingCharges;
                     //ViewBag.OldND = getUnpaidIstallmentLastSchedule.Result.NetDisbursmentAmount == null ? "0" : getUnpaidIstallmentLastSchedule.Result.NetDisbursmentAmount;
                 }
@@ -1355,7 +1339,7 @@ namespace TFCLPortal.Web.Controllers
                 //    }
                 //}
 
-                var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId,application.isEnhancementApplication,false,0);
+                var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId, application.isEnhancementApplication, false, 0);
                 if (ProcessCharges != null)
                 {
                     ViewBag.ProcessingCharges = ProcessCharges;
@@ -1397,11 +1381,11 @@ namespace TFCLPortal.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult getProcessingCharges(int ApplicationId,double TrancheAmount)
+        public JsonResult getProcessingCharges(int ApplicationId, double TrancheAmount)
         {
             try
             {
-                var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId, true,true,TrancheAmount);
+                var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId, true, true, TrancheAmount);
                 if (ProcessCharges != null)
                 {
                     //ViewBag.ProcessingCharges = ProcessCharges;
@@ -2254,7 +2238,7 @@ namespace TFCLPortal.Web.Controllers
                     ViewBag.PaymentDate = string.Format("{0:yyyy-MM-dd}", lastPaidInstallment.InstallmentDueDate);
 
                     var paymentDetails = _installmentPaymentAppService.GetAllInstallmentPaymentByApplicationId(ApplicationId).Result;
-                    var excess_short = paymentDetails.Where(x => x.NoOfInstallment.ToString() == lastPaidInstallment.InstNumber).LastOrDefault().ExcessShortPayment;
+                    var excess_short = paymentDetails.Where(x => x.NoOfInstallment.ToString() == lastPaidInstallment.InstNumber).FirstOrDefault().ExcessShortPayment;
                     ViewBag.PreviousBalance = string.Format("{0:#,##0}", excess_short);
                 }
                 else
@@ -2565,437 +2549,474 @@ namespace TFCLPortal.Web.Controllers
                 {
                     OsMarkupAmount += Decimal.Parse(item.markup.Replace(",", ""));
                 }
-                ViewBag.OsMarkupAmount = string.Format("{0:#,##0}", OsMarkupAmount);
 
-                ViewBag.TotalPayable = decimal.Parse(ViewBag.OsPrincipalAmount.Replace(",", "")) + OsMarkupAmount;
-
-            }
-
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult CreateWriteOff(CreateWriteOff input)
-        {
-            input.FileUrl = UploadImagestoServer(input.File, "wwwroot/uploads/WriteOffFiles/" + input.ApplicationId + "/");
-
-            _writeOffAppService.Create(input);
-
-            return RedirectToAction("Success", "About", new { Message = "Write-Off Entry Sent to BM for Authorization!" });
-        }
-
-        public IActionResult WriteOffAuthorizationList(int ApplicationId)
-        {
-            var list = _writeOffAppService.GetAllWriteOffs().Result.Where(x => x.isAuthorized == null).ToList();
-
-            List<WriteOffListDto> returnList = new List<WriteOffListDto>();
-
-            if (list != null)
-            {
-                foreach (var item in list)
+                //installmentpayments
+                decimal totalInstallmentPayments = 0;
+                var installmentpayments = _installmentPaymentAppService.GetAllInstallmentPaymentByApplicationId(ApplicationId).Result;
+                var firstUnpaidInstallmentNo = schedule.installmentList.Where(x => x.isPaid != true).FirstOrDefault();
+                if (firstUnpaidInstallmentNo != null)
                 {
-                    var app = _applicationAppService.GetApplicationById(item.ApplicationId);
-                    if (app != null)
+                    foreach (var item in installmentpayments.Where(x => x.NoOfInstallment.ToString() == firstUnpaidInstallmentNo.InstNumber))
                     {
-                        if (app.FK_branchid == Branchid() || Branchid() == 0)
-                        {
-                            item.ClientID = app.ClientID;
-                            item.ClientName = app.ClientName;
-                            item.SchoolName = app.SchoolName;
-                            item.CNIC = app.CNICNo;
+                        totalInstallmentPayments += item.Amount;
+                    }
 
-                            returnList.Add(item);
+                    var markupForThisInst = schedule.installmentList.Where(x => x.InstNumber == firstUnpaidInstallmentNo.InstNumber).FirstOrDefault();
+
+                    if (markupForThisInst != null)
+                    {
+                        if (totalInstallmentPayments >= Decimal.Parse(markupForThisInst.markup.Replace(",", "")))
+                        {
+                            OsMarkupAmount -= Decimal.Parse(markupForThisInst.markup.Replace(",", ""));
+
+                            totalInstallmentPayments = totalInstallmentPayments - Decimal.Parse(markupForThisInst.markup.Replace(",", ""));
+
+                            ViewBag.OsPrincipalAmount = (decimal.Parse(ViewBag.OsPrincipalAmount.Replace(",", "")) - totalInstallmentPayments).ToString();
+
+                        }
+                        else
+                        {
+                            OsMarkupAmount -= totalInstallmentPayments;
                         }
                     }
                 }
-            }
 
-            return View(returnList);
+
+
+
+
+                ViewBag.OsPrincipalAmount = string.Format("{0:#,##0}", ViewBag.OsPrincipalAmount);
+            ViewBag.OsMarkupAmount = string.Format("{0:#,##0}", OsMarkupAmount);
+
+                ViewBag.TotalPayable = decimal.Parse(ViewBag.OsPrincipalAmount.Replace(",", "")) + OsMarkupAmount;
+
         }
 
-        public IActionResult WriteOffAuthorization(int Id)
+
+            return View();
+    }
+
+    [HttpPost]
+    public IActionResult CreateWriteOff(CreateWriteOff input)
+    {
+        input.FileUrl = UploadImagestoServer(input.File, "wwwroot/uploads/WriteOffFiles/" + input.ApplicationId + "/");
+
+        _writeOffAppService.Create(input);
+
+        return RedirectToAction("Success", "About", new { Message = "Write-Off Entry Sent to BM for Authorization!" });
+    }
+
+    public IActionResult WriteOffAuthorizationList(int ApplicationId)
+    {
+        var list = _writeOffAppService.GetAllWriteOffs().Result.Where(x => x.isAuthorized == null).ToList();
+
+        List<WriteOffListDto> returnList = new List<WriteOffListDto>();
+
+        if (list != null)
         {
-            var writeOff = _writeOffAppService.GetWriteOffById(Id).Result;
-            return View(writeOff);
-        }
-
-
-        [HttpPost]
-        public JsonResult AuthorizeWriteOff(int Id, string Decision, string Reason)
-        {
-            var entry = _writeOffRepository.Get(Id);
-
-
-            if (Decision == "Authorize")
+            foreach (var item in list)
             {
-                entry.isAuthorized = true;
-                entry.RejectionReason = Reason;
-
-                var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                if (acc != null)
+                var app = _applicationAppService.GetApplicationById(item.ApplicationId);
+                if (app != null)
                 {
-                    string n1 = "Write Off Payment Collection";
-                    _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, entry.AmountDeposited, n1, "");
+                    if (app.FK_branchid == Branchid() || Branchid() == 0)
+                    {
+                        item.ClientID = app.ClientID;
+                        item.ClientName = app.ClientName;
+                        item.SchoolName = app.SchoolName;
+                        item.CNIC = app.CNICNo;
 
-                    var app = _applicationRepository.Get(entry.ApplicationId);
-                    _applicationAppService.ChangeApplicationState(ApplicationState.WriteOff, entry.ApplicationId, "Write Off");
-
-                    CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
-                    fWobj.ApplicationId = entry.ApplicationId;
-                    fWobj.Action = "Application Write-Off";
-                    fWobj.ActionBy = (int)AbpSession.UserId;
-                    fWobj.ApplicationState = ApplicationState.WriteOff;
-                    fWobj.isActive = true;
-
-                    _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
+                        returnList.Add(item);
+                    }
                 }
-
-
             }
-            else if (Decision == "Reject")
-            {
-                entry.isAuthorized = false;
-                entry.RejectionReason = Reason;
-            }
-
-            _writeOffRepository.Update(entry);
-            CurrentUnitOfWork.SaveChanges();
-
-            return Json("");
         }
-        //Write Off Module End
 
-        //Deceased Settlement Module Start
+        return View(returnList);
+    }
 
-        //public IActionResult ProcessingFee(int ApplicationId)
-        //{
-        //    ViewBag.ApplicationId = ApplicationId;
-        //    var app = _applicationAppService.GetApplicationById(ApplicationId);
-        //    ViewBag.ClientId = app.ClientID;
-        //    ViewBag.ClientName = app.ClientName;
-
-        //    var BP = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId);
-        //    ViewBag.BP= BP;
+    public IActionResult WriteOffAuthorization(int Id)
+    {
+        var writeOff = _writeOffAppService.GetWriteOffById(Id).Result;
+        return View(writeOff);
+    }
 
 
-        //    return View();
-        //}
+    [HttpPost]
+    public JsonResult AuthorizeWriteOff(int Id, string Decision, string Reason)
+    {
+        var entry = _writeOffRepository.Get(Id);
 
-        public IActionResult DeceasedSettlement(int ApplicationId)
+
+        if (Decision == "Authorize")
         {
-            ViewBag.Applicationid = ApplicationId;
+            entry.isAuthorized = true;
+            entry.RejectionReason = Reason;
 
-            var app = _applicationAppService.GetApplicationById(ApplicationId);
-            ViewBag.ClientId = app.ClientID;
-            ViewBag.ClientName = app.ClientName;
-
-            if (!app.isDeceased)
-            {
-                ViewBag.Deceased = "No";
-            }
-            else
-            {
-                ViewBag.Deceased = "Yes";
-            }
-
-            var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(ApplicationId);
+            var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
             if (acc != null)
             {
-                ViewBag.Balance = acc.Balance;
-            }
-            else
-            {
-                ViewBag.Balance = 0;
-            }
-
-            var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
-            if (schedule != null)
-            {
-
-                var lastPaidInstallment = schedule.installmentList.Where(x => x.isPaid == true).LastOrDefault();
-                if (lastPaidInstallment != null)
-                {
-                    ViewBag.OsPrincipalAmount = lastPaidInstallment.OsPrincipal_Closing;
-                }
-                else
-                {
-                    ViewBag.OsPrincipalAmount = schedule.LoanAmount;
-                }
-
-                //OutstandingMarkup
-                decimal OsMarkupAmount = 0;
-                foreach (var item in schedule.installmentList.Where(x => x.isPaid != true))
-                {
-                    OsMarkupAmount += Decimal.Parse(item.markup.Replace(",", ""));
-                }
-                ViewBag.OsMarkupAmount = string.Format("{0:#,##0}", OsMarkupAmount);
-
-                ViewBag.TotalPayable = decimal.Parse(ViewBag.OsPrincipalAmount.Replace(",", "")) + OsMarkupAmount;
-
-            }
-
-
-            return View();
-        }
-
-        public IActionResult MarkDeceased(int ApplicationId)
-        {
-            ViewBag.Applicationid = ApplicationId;
-
-            var app = _applicationAppService.GetApplicationById(ApplicationId);
-            ViewBag.ClientId = app.ClientID;
-            ViewBag.ClientName = app.ClientName;
-            ViewBag.CNIC = app.CNICNo;
-
-            return View();
-        }
-
-        public IActionResult declineMarkingDeceased(int Id, string Reason)
-        {
-            var app = _deceasedAuthorizationRepository.Get(Id);
-            app.isAuthorized = false;
-            app.RejectionReason = Reason;
-            _deceasedAuthorizationRepository.Update(app);
-
-            return RedirectToAction("DeceasedAuthorizationList", "Accountant");
-        }
-
-        public IActionResult MarkApplicantDeceased(string cnic, int appid)
-        {
-            var apps = _applicationRepository.GetAllList(x => x.CNICNo == cnic).ToList();
-
-            foreach (var app in apps)
-            {
-                app.isDeceased = true;
-                _applicationRepository.Update(app);
-                CurrentUnitOfWork.SaveChanges();
-            }
-
-            var auth = _deceasedAuthorizationRepository.Get(appid);
-            auth.isAuthorized = true;
-            _deceasedAuthorizationRepository.Update(auth);
-
-            return RedirectToAction("DeceasedAuthorizationList", "Accountant");
-        }
-
-
-        [HttpPost]
-        public IActionResult CreateDeceasedSettlement(CreateDeceasedSettlement input)
-        {
-            string uploadFileResult = UploadImagestoServer(input.file, "wwwroot/uploads/DeceasedFiles/" + input.ApplicationId + "/");
-            if (uploadFileResult != "Error")
-            {
-                input.ProofUrl = uploadFileResult;
-            }
-
-            _deceasedSettlementAppService.Create(input);
-            _notificationLogAppService.SendNotification(69, "Deceased Applicant Settlement Entry has been recieved.", "Go to Deceased Applicant Settlement Authorization list to authorize/reject entry.");
-
-            return RedirectToAction("Success", "About", new { Message = "Deceased Applicant Settlement Entry Sent to Finance Department for Authorization!" });
-        }
-
-        [HttpPost]
-        public IActionResult CreateDeceasedAuthorization(CreateDeceasedAuthorization input)
-        {
-            string uploadFileResult = UploadImagestoServer(input.file, "wwwroot/uploads/DeceasedFiles/" + input.ApplicationId + "/");
-            if (uploadFileResult != "Error")
-            {
-                input.ProofUrl = uploadFileResult;
-            }
-
-            _deceasedAuthorizationAppService.Create(input);
-            return RedirectToAction("Success", "About", new { Message = "Deceased Applicant Marking Entry Sent to BM for Authorization!" });
-        }
-        private string UploadImagestoServer(IFormFile document, string path)
-        {
-            try
-            {
-                Directory.CreateDirectory(path);
-
-                string extension = System.IO.Path.GetExtension(document.FileName);
-                string filePath = Path.Combine(path, document.FileName + "_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + extension);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    document.CopyTo(fileStream);
-                }
-
-                return filePath;
-            }
-            catch (Exception ex)
-            {
-                return "Error";
-            }
-
-        }
-        public IActionResult DeceasedAuthorizationList(int ApplicationId)
-        {
-            var list = _deceasedAuthorizationAppService.GetAllDeceasedAuthorizations().Result.Where(x => x.isAuthorized == null).ToList();
-
-            List<DeceasedAuthorizationListDto> returnList = new List<DeceasedAuthorizationListDto>();
-
-            if (list != null)
-            {
-                foreach (var item in list)
-                {
-                    var app = _applicationAppService.GetApplicationById(item.ApplicationId);
-                    if (app != null)
-                    {
-                        if (app.FK_branchid == Branchid() || Branchid() == 0)
-                        {
-                            item.ClientID = app.ClientID;
-                            item.ClientName = app.ClientName;
-                            item.SchoolName = app.SchoolName;
-                            item.CNIC = app.CNICNo;
-
-                            returnList.Add(item);
-                        }
-                    }
-                }
-            }
-
-            return View(returnList);
-        }
-
-        public IActionResult DeceasedSettlementAuthorizationList(int ApplicationId)
-        {
-            var list = _deceasedSettlementAppService.GetAllDeceasedSettlements().Result.Where(x => x.isAuthorized == null).ToList();
-
-            List<DeceasedSettlementListDto> returnList = new List<DeceasedSettlementListDto>();
-
-            if (list != null)
-            {
-                foreach (var item in list)
-                {
-                    var app = _applicationAppService.GetApplicationById(item.ApplicationId);
-                    if (app != null)
-                    {
-                        if (app.FK_branchid == Branchid() || Branchid() == 0)
-                        {
-                            item.ClientID = app.ClientID;
-                            item.ClientName = app.ClientName;
-                            item.SchoolName = app.SchoolName;
-                            item.CNIC = app.CNICNo;
-
-                            returnList.Add(item);
-                        }
-                    }
-                }
-            }
-
-            return View(returnList);
-        }
-        public static string NumberToWords(int number)
-        {
-            if (number == 0)
-                return "zero";
-
-            if (number < 0)
-                return "minus " + NumberToWords(Math.Abs(number));
-
-            string words = "";
-
-            if ((number / 1000000) > 0)
-            {
-                words += NumberToWords(number / 1000000) + " million ";
-                number %= 1000000;
-            }
-
-            if ((number / 1000) > 0)
-            {
-                words += NumberToWords(number / 1000) + " thousand ";
-                number %= 1000;
-            }
-
-            if ((number / 100) > 0)
-            {
-                words += NumberToWords(number / 100) + " hundred ";
-                number %= 100;
-            }
-
-            if (number > 0)
-            {
-                if (words != "")
-                    words += "and ";
-
-                var unitsMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
-                var tensMap = new[] { "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
-
-                if (number < 20)
-                    words += unitsMap[number];
-                else
-                {
-                    words += tensMap[number / 10];
-                    if ((number % 10) > 0)
-                        words += "-" + unitsMap[number % 10];
-                }
-            }
-
-            return words;
-        }
-        public IActionResult DeceasedSettlementAuthorization(int Id)
-        {
-            var deceasedSettlement = _deceasedSettlementAppService.GetDeceasedSettlementById(Id).Result;
-            return View(deceasedSettlement);
-        }
-
-
-        [HttpPost]
-        public JsonResult AuthorizeDeceasedSettlement(int Id, string Decision, string Reason)
-        {
-            var entry = _deceasedSettlementRepository.Get(Id);
-
-
-
-            if (Decision == "Authorize")
-            {
-                entry.isAuthorized = true;
-                entry.RejectionReason = Reason;
-
-                var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-                if (acc != null)
-                {
-                    string n1 = "Principal Collection for Deceased Settlement";
-                    _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, entry.OsPrincipalAmount, n1, "");
-
-                    var accUpdate = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
-
-                    string n2 = "Remaining Balance Deduction";
-                    _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, accUpdate.Balance, n2, "");
-                }
-
-
+                string n1 = "Write Off Payment Collection";
+                _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, entry.AmountDeposited, n1, "");
 
                 var app = _applicationRepository.Get(entry.ApplicationId);
-                _applicationAppService.ChangeApplicationState(ApplicationState.Deceased, entry.ApplicationId, "Deceased Applicant");
+                _applicationAppService.ChangeApplicationState(ApplicationState.WriteOff, entry.ApplicationId, "Write Off");
 
                 CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
                 fWobj.ApplicationId = entry.ApplicationId;
-                fWobj.Action = "Application Submitted";
+                fWobj.Action = "Application Write-Off";
                 fWobj.ActionBy = (int)AbpSession.UserId;
-                fWobj.ApplicationState = ApplicationState.Submitted;
+                fWobj.ApplicationState = ApplicationState.WriteOff;
                 fWobj.isActive = true;
 
                 _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
-
-            }
-            else if (Decision == "Reject")
-            {
-                entry.isAuthorized = false;
-                entry.RejectionReason = Reason;
             }
 
-            _deceasedSettlementRepository.Update(entry);
-            CurrentUnitOfWork.SaveChanges();
 
-
-
-
-            return Json("");
+        }
+        else if (Decision == "Reject")
+        {
+            entry.isAuthorized = false;
+            entry.RejectionReason = Reason;
         }
 
-        //Deceased Settlement Module End
+        _writeOffRepository.Update(entry);
+        CurrentUnitOfWork.SaveChanges();
+
+        return Json("");
+    }
+    //Write Off Module End
+
+    //Deceased Settlement Module Start
+
+    //public IActionResult ProcessingFee(int ApplicationId)
+    //{
+    //    ViewBag.ApplicationId = ApplicationId;
+    //    var app = _applicationAppService.GetApplicationById(ApplicationId);
+    //    ViewBag.ClientId = app.ClientID;
+    //    ViewBag.ClientName = app.ClientName;
+
+    //    var BP = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId);
+    //    ViewBag.BP= BP;
+
+
+    //    return View();
+    //}
+
+    public IActionResult DeceasedSettlement(int ApplicationId)
+    {
+        ViewBag.Applicationid = ApplicationId;
+
+        var app = _applicationAppService.GetApplicationById(ApplicationId);
+        ViewBag.ClientId = app.ClientID;
+        ViewBag.ClientName = app.ClientName;
+
+        if (!app.isDeceased)
+        {
+            ViewBag.Deceased = "No";
+        }
+        else
+        {
+            ViewBag.Deceased = "Yes";
+        }
+
+        var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(ApplicationId);
+        if (acc != null)
+        {
+            ViewBag.Balance = acc.Balance;
+        }
+        else
+        {
+            ViewBag.Balance = 0;
+        }
+
+        var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
+        if (schedule != null)
+        {
+
+            var lastPaidInstallment = schedule.installmentList.Where(x => x.isPaid == true).LastOrDefault();
+            if (lastPaidInstallment != null)
+            {
+                ViewBag.OsPrincipalAmount = lastPaidInstallment.OsPrincipal_Closing;
+            }
+            else
+            {
+                ViewBag.OsPrincipalAmount = schedule.LoanAmount;
+            }
+
+            //OutstandingMarkup
+            decimal OsMarkupAmount = 0;
+            foreach (var item in schedule.installmentList.Where(x => x.isPaid != true))
+            {
+                OsMarkupAmount += Decimal.Parse(item.markup.Replace(",", ""));
+            }
+            ViewBag.OsMarkupAmount = string.Format("{0:#,##0}", OsMarkupAmount);
+
+            ViewBag.TotalPayable = decimal.Parse(ViewBag.OsPrincipalAmount.Replace(",", "")) + OsMarkupAmount;
+
+        }
+
+
+        return View();
+    }
+
+    public IActionResult MarkDeceased(int ApplicationId)
+    {
+        ViewBag.Applicationid = ApplicationId;
+
+        var app = _applicationAppService.GetApplicationById(ApplicationId);
+        ViewBag.ClientId = app.ClientID;
+        ViewBag.ClientName = app.ClientName;
+        ViewBag.CNIC = app.CNICNo;
+
+        return View();
+    }
+
+    public IActionResult declineMarkingDeceased(int Id, string Reason)
+    {
+        var app = _deceasedAuthorizationRepository.Get(Id);
+        app.isAuthorized = false;
+        app.RejectionReason = Reason;
+        _deceasedAuthorizationRepository.Update(app);
+
+        return RedirectToAction("DeceasedAuthorizationList", "Accountant");
+    }
+
+    public IActionResult MarkApplicantDeceased(string cnic, int appid)
+    {
+        var apps = _applicationRepository.GetAllList(x => x.CNICNo == cnic).ToList();
+
+        foreach (var app in apps)
+        {
+            app.isDeceased = true;
+            _applicationRepository.Update(app);
+            CurrentUnitOfWork.SaveChanges();
+        }
+
+        var auth = _deceasedAuthorizationRepository.Get(appid);
+        auth.isAuthorized = true;
+        _deceasedAuthorizationRepository.Update(auth);
+
+        return RedirectToAction("DeceasedAuthorizationList", "Accountant");
+    }
+
+
+    [HttpPost]
+    public IActionResult CreateDeceasedSettlement(CreateDeceasedSettlement input)
+    {
+        string uploadFileResult = UploadImagestoServer(input.file, "wwwroot/uploads/DeceasedFiles/" + input.ApplicationId + "/");
+        if (uploadFileResult != "Error")
+        {
+            input.ProofUrl = uploadFileResult;
+        }
+
+        _deceasedSettlementAppService.Create(input);
+        _notificationLogAppService.SendNotification(69, "Deceased Applicant Settlement Entry has been recieved.", "Go to Deceased Applicant Settlement Authorization list to authorize/reject entry.");
+
+        return RedirectToAction("Success", "About", new { Message = "Deceased Applicant Settlement Entry Sent to Finance Department for Authorization!" });
+    }
+
+    [HttpPost]
+    public IActionResult CreateDeceasedAuthorization(CreateDeceasedAuthorization input)
+    {
+        string uploadFileResult = UploadImagestoServer(input.file, "wwwroot/uploads/DeceasedFiles/" + input.ApplicationId + "/");
+        if (uploadFileResult != "Error")
+        {
+            input.ProofUrl = uploadFileResult;
+        }
+
+        _deceasedAuthorizationAppService.Create(input);
+        return RedirectToAction("Success", "About", new { Message = "Deceased Applicant Marking Entry Sent to BM for Authorization!" });
+    }
+    private string UploadImagestoServer(IFormFile document, string path)
+    {
+        try
+        {
+            Directory.CreateDirectory(path);
+
+            string extension = System.IO.Path.GetExtension(document.FileName);
+            string filePath = Path.Combine(path, document.FileName + "_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + extension);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                document.CopyTo(fileStream);
+            }
+
+            return filePath;
+        }
+        catch (Exception ex)
+        {
+            return "Error";
+        }
 
     }
+    public IActionResult DeceasedAuthorizationList(int ApplicationId)
+    {
+        var list = _deceasedAuthorizationAppService.GetAllDeceasedAuthorizations().Result.Where(x => x.isAuthorized == null).ToList();
+
+        List<DeceasedAuthorizationListDto> returnList = new List<DeceasedAuthorizationListDto>();
+
+        if (list != null)
+        {
+            foreach (var item in list)
+            {
+                var app = _applicationAppService.GetApplicationById(item.ApplicationId);
+                if (app != null)
+                {
+                    if (app.FK_branchid == Branchid() || Branchid() == 0)
+                    {
+                        item.ClientID = app.ClientID;
+                        item.ClientName = app.ClientName;
+                        item.SchoolName = app.SchoolName;
+                        item.CNIC = app.CNICNo;
+
+                        returnList.Add(item);
+                    }
+                }
+            }
+        }
+
+        return View(returnList);
+    }
+
+    public IActionResult DeceasedSettlementAuthorizationList(int ApplicationId)
+    {
+        var list = _deceasedSettlementAppService.GetAllDeceasedSettlements().Result.Where(x => x.isAuthorized == null).ToList();
+
+        List<DeceasedSettlementListDto> returnList = new List<DeceasedSettlementListDto>();
+
+        if (list != null)
+        {
+            foreach (var item in list)
+            {
+                var app = _applicationAppService.GetApplicationById(item.ApplicationId);
+                if (app != null)
+                {
+                    if (app.FK_branchid == Branchid() || Branchid() == 0)
+                    {
+                        item.ClientID = app.ClientID;
+                        item.ClientName = app.ClientName;
+                        item.SchoolName = app.SchoolName;
+                        item.CNIC = app.CNICNo;
+
+                        returnList.Add(item);
+                    }
+                }
+            }
+        }
+
+        return View(returnList);
+    }
+    public static string NumberToWords(int number)
+    {
+        if (number == 0)
+            return "zero";
+
+        if (number < 0)
+            return "minus " + NumberToWords(Math.Abs(number));
+
+        string words = "";
+
+        if ((number / 1000000) > 0)
+        {
+            words += NumberToWords(number / 1000000) + " million ";
+            number %= 1000000;
+        }
+
+        if ((number / 1000) > 0)
+        {
+            words += NumberToWords(number / 1000) + " thousand ";
+            number %= 1000;
+        }
+
+        if ((number / 100) > 0)
+        {
+            words += NumberToWords(number / 100) + " hundred ";
+            number %= 100;
+        }
+
+        if (number > 0)
+        {
+            if (words != "")
+                words += "and ";
+
+            var unitsMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+            var tensMap = new[] { "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+
+            if (number < 20)
+                words += unitsMap[number];
+            else
+            {
+                words += tensMap[number / 10];
+                if ((number % 10) > 0)
+                    words += "-" + unitsMap[number % 10];
+            }
+        }
+
+        return words;
+    }
+    public IActionResult DeceasedSettlementAuthorization(int Id)
+    {
+        var deceasedSettlement = _deceasedSettlementAppService.GetDeceasedSettlementById(Id).Result;
+        return View(deceasedSettlement);
+    }
+
+
+    [HttpPost]
+    public JsonResult AuthorizeDeceasedSettlement(int Id, string Decision, string Reason)
+    {
+        var entry = _deceasedSettlementRepository.Get(Id);
+
+
+
+        if (Decision == "Authorize")
+        {
+            entry.isAuthorized = true;
+            entry.RejectionReason = Reason;
+
+            var acc = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+            if (acc != null)
+            {
+                string n1 = "Principal Collection for Deceased Settlement";
+                _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, entry.OsPrincipalAmount, n1, "");
+
+                var accUpdate = _customerAccountAppAppService.GetCustomerAccountByApplicationId(entry.ApplicationId);
+
+                string n2 = "Remaining Balance Deduction";
+                _customerAccountAppAppService.Debit(acc.Id, entry.ApplicationId, accUpdate.Balance, n2, "");
+            }
+
+
+
+            var app = _applicationRepository.Get(entry.ApplicationId);
+            _applicationAppService.ChangeApplicationState(ApplicationState.Deceased, entry.ApplicationId, "Deceased Applicant");
+
+            CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
+            fWobj.ApplicationId = entry.ApplicationId;
+            fWobj.Action = "Application Submitted";
+            fWobj.ActionBy = (int)AbpSession.UserId;
+            fWobj.ApplicationState = ApplicationState.Submitted;
+            fWobj.isActive = true;
+
+            _finalWorkflowAppService.CreateFinalWorkflow(fWobj);
+
+        }
+        else if (Decision == "Reject")
+        {
+            entry.isAuthorized = false;
+            entry.RejectionReason = Reason;
+        }
+
+        _deceasedSettlementRepository.Update(entry);
+        CurrentUnitOfWork.SaveChanges();
+
+
+
+
+        return Json("");
+    }
+
+    //Deceased Settlement Module End
+
+}
 }

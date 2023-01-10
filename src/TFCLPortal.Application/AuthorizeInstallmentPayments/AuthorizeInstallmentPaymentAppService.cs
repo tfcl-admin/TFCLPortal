@@ -891,6 +891,7 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
         {
             try
             {
+                payment.isAuthorized = true;
                 var paymentCreation = Create(payment);
 
                 if (paymentCreation != -1)
