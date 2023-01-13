@@ -91,7 +91,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
 
                 if (paymentCharges != null)
                 {
-                    if (app.ProductType != 9 || app.ProductType != 8)
+                    if (app.ProductType != 9 && app.ProductType != 8)
                     {
                         var product = _loanEligibilityAppService.GetLoanEligibilityListByApplicationId(ApplicationId).Result;
                         if (BP.CollateralGiven == "SECURED")
