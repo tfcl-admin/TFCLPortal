@@ -356,7 +356,7 @@
                             <p class="detailHeading">
                                 Disbursement Date
                             </p>
-                            <input asp-for="DisbursmentDate" type="date" class="form-control" />
+                            <input asp-for="DisbursmentDate" id="#EnterDate" type="date" class="form-control" />
                         </div>
                         <div class="col-md-4">
                             <p class="detailHeading">
@@ -471,6 +471,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+
 
 <script>
 
@@ -594,14 +595,4 @@
         $('.tranchInner').append(html);
 
     });
-
-
-
-
-
-
-
-
-
-
 </script>
