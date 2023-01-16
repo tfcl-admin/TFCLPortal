@@ -414,8 +414,18 @@
                                 <option value="true">Yes</option>
                             </select>
                         </div>
-                        <wdiv class="col-md-8">
-                        </wdiv>
+
+                        <div class="col-md-4">
+                            <p class="detailHeading">Cheque Number</p>
+                            <input asp-for="ChequeNo" type="number" class="form-control"  />
+                        </div>
+                        <div class="col-md-4">
+                            <p class="detailHeading">Cheque Date</p>
+                            <input asp-for="ChequeDate" type="date" class="form-control"  />
+                        </div>
+
+                        @*<wdiv class="col-md-8">
+                        </wdiv>*@
                         <div class="col-md-4">
                             <p class="detailHeading">Deferment Start Date</p>
                             <input asp-for="DefermentStartDate" type="date" class="form-control" readonly="readonly" />

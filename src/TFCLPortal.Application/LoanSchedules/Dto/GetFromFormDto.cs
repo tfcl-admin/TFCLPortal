@@ -42,6 +42,9 @@ namespace TFCLPortal.LoanSchedules.Dto
         public int DefermentMonths { get; set; }
         public DateTime DefermentEndDate { get; set; }
 
+        public string ChequeNo { get; set; }
+        public DateTime ChequeDate { get; set; }
+
         public List<ScheduleInstallmenttListDto> PaidInstallmentList { get; set; }
         public ScheduleListDto OldSchedule { get; set; }
 

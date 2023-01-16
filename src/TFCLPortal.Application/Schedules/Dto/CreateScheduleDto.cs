@@ -41,6 +41,9 @@ namespace TFCLPortal.Schedules.Dto
         public string FEDonProcessingCharges { get; set; }
         public string NetDisbursmentAmount { get; set; }
 
+        public string ChequeNo { get; set; }
+        public string ChequeDate { get; set; }
+
         public List<CreateScheduleInstallmentDto> installmentList { get; set; }
 
     }
