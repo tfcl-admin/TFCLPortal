@@ -990,6 +990,31 @@ namespace TFCLPortal.Web.Controllers
             if (getSchedule != null)
             {
                 ViewBag.DisbursmentDate = getSchedule.DisbursmentDate;
+
+                if (getSchedule.ProcessingCharges != null)
+                {
+                    ViewBag.ProcessingCharges = getSchedule.ProcessingCharges;
+                }
+                else
+                {
+                    ViewBag.ProcessingCharges = "Old Account";
+                }
+                if (getSchedule.FEDonProcessingCharges != null)
+                {
+                    ViewBag.FEDonProcessingCharges = getSchedule.FEDonProcessingCharges;
+                }
+                else 
+                {
+                    ViewBag.FEDonProcessingCharges = "Old Account";
+                }
+                if (getSchedule.NetDisbursmentAmount != null)
+                {
+                    ViewBag.NetDisbursmentAmount = getSchedule.NetDisbursmentAmount;
+                }
+                else 
+                {
+                    ViewBag.NetDisbursmentAmount = "Old Account";
+                }
             }
 
             //var getDisbursedDate = _finalWorkflowAppService.GetFinalWorkflowByApplicationId(ApplicationId).Where(x => x.ApplicationState == ApplicationState.Disbursed).FirstOrDefault();
