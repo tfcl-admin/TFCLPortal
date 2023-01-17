@@ -110,7 +110,26 @@
                     }
 
                     <td>
-                        <a href="/Dashboard/Application?id=@item.Id" title="View Application Details" target="_blank"><i class="fa fa-desktop"></i></a>
+
+
+                            @if (item.ClientID.Length > 0)
+                            {
+
+                                @if (item.ClientID.Substring(0, 3) == "TSS" || item.ClientID.Substring(0, 3) == "TSA")
+                                {
+                                    <a class="dropdown-item" target="_blank" href="~/Dashboard/Application?id=@item.Id"><i class="fa fa-desktop" aria-hidden="true"></i></a>
+                                    @*<a class="dropdown-item " target="_blank" href="/Dashboard/ApplicationReport?ApplicationId=@item.Id"><i class="fa fa-print"></i> Print Application</a>*@
+                                }
+                                else if (item.ClientID.Substring(0, 3) == "TDS" || item.ClientID.Substring(0, 3) == "TJS")
+                                {
+                                    <a class="dropdown-item" target="_blank" href="~/Dashboard/TDSApplication?id=@item.Id"><i class="fa fa-desktop" aria-hidden="true"></i> Application Detail</a>
+                                    @*<a class="dropdown-item " target="_blank" href="/Dashboard/ApplicationReportTds?ApplicationId=@item.Id"><i class="fa fa-print"></i> Print Application</a>*@
+                                }
+
+                            }
+                            
+
+                        @*<a href="/Dashboard/Application?id=@item.Id" title="View Application Details" target="_blank"><i class="fa fa-desktop"></i></a>*@
                     </td>
                 </tr>
                 }

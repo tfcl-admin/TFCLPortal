@@ -87,10 +87,14 @@ namespace TFCLPortal.Web.Mvc.Controllers
             StrList.Add(ApplicationState.BCCReviewed);
             StrList.Add(ApplicationState.MCRCReview);
             StrList.Add(ApplicationState.MCRCReviewed);
-            StrList.Add(ApplicationState.MCRCReviewed);
+            //StrList.Add(ApplicationState.MCRCReviewed);
             StrList.Add(ApplicationState.BCC_Approved);
             StrList.Add(ApplicationState.MC_Authorized);
             StrList.Add(ApplicationState.Disbursed);
+            StrList.Add(ApplicationState.Settled);
+            StrList.Add(ApplicationState.EarlySettled);
+            StrList.Add(ApplicationState.WriteOff);
+            StrList.Add(ApplicationState.Deceased);
 
             return StrList;
         }
