@@ -4,6 +4,18 @@
     Layout = "~/Views/Shared/_NewLayout.cshtml";
 }
 
+<style>
+    .pageloader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        opacity: .8;
+    }
+</style>
 <main class='main-content bgc-grey-100' style="padding-top:50px">
     <div class="row page-title">
         <div class="col-md-6 text-left">
@@ -21,6 +33,7 @@
     </div>
     <div class="card p-10 mB-20">
         <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <div class="pageloader d-none"></div>
             <form asp-action="CreateEarlySettlement" method="post">
                 <div class="row">
                     <input asp-for="Id" type="hidden" id="Id" value="@Model.Id" />
@@ -230,7 +243,7 @@
         $('#uploadBtn').click(function () {
 
             var Id = $('#Id').val();
-
+            $(".pageloader").toggleClass("d-none");
            
                 var formData = new FormData();
                 formData.append('Id', Id);
