@@ -35,6 +35,7 @@ using TFCLPortal.FcmTokens.Dto;
 using TFCLPortal.FcmTokens;
 using TFCLPortal.NotificationLogs;
 using TFCLPortal.TDSLoanEligibilities;
+using TFCLPortal.Migrations;
 
 namespace TFCLPortal.Web.Mvc.Controllers
 {
@@ -171,6 +172,19 @@ namespace TFCLPortal.Web.Mvc.Controllers
                 ViewBag.LoanAmount = (getLRD.Result.LoanAmountRecommended == null || getLRD.Result.LoanAmountRecommended == "" ? "--" : Convert.ToDecimal(getLRD.Result.LoanAmountRecommended).ToString("#,###"));
                 ViewBag.LoanTenure = (getLRD.Result.LoanTenureRequestedName == null || getLRD.Result.LoanTenureRequestedName == "" ? "--" : getLRD.Result.LoanTenureRequestedName);
             }
+
+            if (ViewBag.LoanAmoun == "150,000" || ViewBag.LoanAmoun == "100,000")
+            {
+                CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
+                fWobj.ApplicationId = appid;
+                fWobj.ActionBy = (int)AbpSession.UserId;
+                fWobj.isActive = true;
+
+                fWobj.Action = "Approved By BCC";
+                fWobj.ApplicationState = ApplicationState.Submitted;
+                _applicationAppService.ChangeApplicationState(ApplicationState.BCC_Approved, appid, "Approved By BCC");
+            }
+
             if (getColD != null)
             {
                 ViewBag.CollateralAmount = (getColD.Result.AllCollateralMarketPrice == null || getColD.Result.AllCollateralMarketPrice == "" ? "--" : Convert.ToDecimal(getColD.Result.AllCollateralMarketPrice).ToString("#,###"));
@@ -192,6 +206,7 @@ namespace TFCLPortal.Web.Mvc.Controllers
             if (getMcrcDecision != null)
             {
                 ViewBag.McrcDecision = getMcrcDecision.Decision;
+               // ViewBag.McrcDecision = getMcrcDecision.LoanAmount;
             }
 
             return View("DecisionPartial");

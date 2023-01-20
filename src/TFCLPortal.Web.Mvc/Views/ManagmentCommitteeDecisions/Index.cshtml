@@ -73,6 +73,7 @@
                     <th>
                         Client / School / Business Name
                     </th>
+                    <th>Loan Amount</th>
                     <th>C. Status</th>
                     <th colspan="3">
                         Actions
@@ -106,6 +107,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.SchoolName)
                         </td>
+                        <td>@ViewBag.LoanAmount</td>
                         <td>@item.ClientStatus</td>
                         <td>
                             <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }" class="btn btn-sm btn-outline-success"><i class="fa fa-check-circle text-success"></i> Approve </a>
