@@ -997,7 +997,7 @@ namespace TFCLPortal.Web.Controllers
                 }
                 else
                 {
-                    ViewBag.ProcessingCharges = "Old Account";
+                    ViewBag.ProcessingCharges = "0";
                 }
                 if (getSchedule.FEDonProcessingCharges != null)
                 {
@@ -1005,7 +1005,7 @@ namespace TFCLPortal.Web.Controllers
                 }
                 else 
                 {
-                    ViewBag.FEDonProcessingCharges = "Old Account";
+                    ViewBag.FEDonProcessingCharges = "0";
                 }
                 if (getSchedule.NetDisbursmentAmount != null)
                 {
@@ -1013,7 +1013,7 @@ namespace TFCLPortal.Web.Controllers
                 }
                 else 
                 {
-                    ViewBag.NetDisbursmentAmount = "Old Account";
+                    ViewBag.NetDisbursmentAmount = "0";
                 }
             }
 

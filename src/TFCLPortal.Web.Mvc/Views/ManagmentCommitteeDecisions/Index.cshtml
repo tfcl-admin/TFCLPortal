@@ -110,14 +110,14 @@
                         <td>@ViewBag.LoanAmount</td>
                         <td>@item.ClientStatus</td>
                         <td>
-                            <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }" class="btn btn-sm btn-outline-success"><i class="fa fa-check-circle text-success"></i> Approve </a>
+                            <a onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("CreateMC", "ManagmentCommitteeDecisions", new { Id = item.Id })'; }" title="Approve" class="btn btn-sm btn-outline-success"><i class="fa fa-check-circle text-success"></i> App.</a>
                             @*<a asp-action="CreateMC" asp-route-id="@item.Id" onclick="confirm('Are You Sure?');"><i class="fa fa-check-circle"></i> Approve </a>*@
                         </td>
                         <td>
-                            <a onclick="DiscrepentApp(@item.Id)" class="btn btn-sm btn-outline-warning"><i class="fa fa-info-circle text-warning"></i> Discrepant </a>
+                            <a onclick="DiscrepentApp(@item.Id)" title="Discrepant" class="btn btn-sm btn-outline-warning"><i class="fa fa-info-circle text-warning"></i> Disc.</a>
                         </td>
                         <td>
-                            <a onclick="DeclineApp(@item.Id)" class="btn btn-sm btn-outline-danger"><i class="fa fa-times-circle text-danger"></i> Decline </a>
+                            <a onclick="DeclineApp(@item.Id)" title="Decline" class="btn btn-sm btn-outline-danger"><i class="fa fa-times-circle text-danger"></i> Dec.</a>
                         </td>
                       
 

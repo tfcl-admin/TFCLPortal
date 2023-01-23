@@ -236,19 +236,19 @@
             <table width="100%" class="tblTopData" style="margin-top:20px">
                 <tr>
                         <td width="40%"><b>Processing Charges</b></td>
-                        <td style="background-color:yellow" id="ProcessingChargesTxt">@ViewBag.Input.ProcessingCharges</td>
+                        <td  style="background-color:lightyellow"  id="ProcessingChargesTxt">@ViewBag.Input.ProcessingCharges</td>
 
                     </tr>
                     <tr>
                         <td><b>FED on Processing Charges</b></td>
-                        <td style="background-color:yellow" id="FEDonProcessingChargesTxt">@ViewBag.Input.FEDonProcessingCharges</td>
+                    <td style="background-color:lightyellow" id="FEDonProcessingChargesTxt">@ViewBag.Input.FEDonProcessingCharges</td>
 
                     </tr>
                     <tr>
                         <td><b>Net Disbursment Amount</b></td>
-                    <td style="background-color:yellow" id="NetDisbursmentAmountTxt">@ViewBag.Input.NetDisbursmentAmount</td>
+                    <td style="background-color:lightyellow" id="NetDisbursmentAmountTxt">@ViewBag.Input.NetDisbursmentAmount</td>
                     </tr>
-                <tr>
+@*                <tr>
                     <td width="40%"><b>Cheque Number</b></td>
                     <td style="background-color:cornsilk" id="ChequeNoTxt">@ViewBag.Input.ChequeNo</td>
 
@@ -257,7 +257,7 @@
                     <td><b>Cheque Date</b></td>
                     <td style="background-color:cornsilk" id="ChequeDateTxt">@(ViewBag.Input.ChequeDate== null ? "--" : string.Format("{0:dd MMM yyyy}", @ViewBag.Input.ChequeDate))</td>
 
-                </tr>
+                </tr>*@
             </table>
         </div>
         <div class="col-md-6 text-right">
@@ -288,6 +288,16 @@
                 <tr>
                     <td><b>Per Day Mark-up</b></td>
                     <td style="background-color:lightyellow" id="DayDiv">@(ViewBag.Input.PerDayMarkup == null || ViewBag.Input.PerDayMarkup == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.PerDayMarkup)))</td>
+                </tr>
+                <tr>
+                    <td width="40%"><b>Cheque Number</b></td>
+                    <td style="background-color:cornsilk" id="ChequeNoTxt">@ViewBag.Input.ChequeNo</td>
+
+                </tr>
+                <tr>
+                    <td><b>Cheque Date</b></td>
+                    <td style="background-color:cornsilk" id="ChequeDateTxt">@(ViewBag.Input.ChequeDate == null ? "--" : string.Format("{0:dd MMM yyyy}", @ViewBag.Input.ChequeDate))</td>
+
                 </tr>
             </table>
         </div>

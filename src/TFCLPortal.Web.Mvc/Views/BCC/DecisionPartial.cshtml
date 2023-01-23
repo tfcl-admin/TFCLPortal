@@ -132,29 +132,7 @@
             <div class="col-md-4">
                 <p class="detailHeading">
                     Decision of BCC
-                </p>
-@*                @{
-                    string requiredLoan="150,000";
-                    string requiredLoan2 = "100,000";
-                    @if (ViewBag.LoanAmount == Convert.ToString(requiredLoan) || ViewBag.LoanAmount == Convert.ToString(requiredLoan2))
-                {
-                    <select class="form-control" id="Decision">
-                        <option value="Approve">Approve</option>
-                    </select>
-                }
-                    else if (ViewBag.LoanAmount != Convert.ToString(requiredLoan) || ViewBag.LoanAmount != Convert.ToString(requiredLoan2))
-                {
-                    <select class="form-control" id="Decision">
-                        <option value="">Select Decision</option>
-                        <option value="Approve">Approve</option>
-                        <option value="Decline">Decline</option>
-                        <option value="Discrepent">Discrepent</option>
-                        <option value="Under MCRC Review">Forward to MCRC</option>
-                    </select>
-                }
-                }*@
-                
- 
+                </p>                
                         <select class="form-control" id="Decision">
                             <option value="">Select Decision</option>
                             <option value="Approve">Approve</option>
@@ -362,19 +340,22 @@
         $(document).ready(function () {
             var mcrcDecision = '@ViewBag.McrcDecision';
             var requiredLoan = '@ViewBag.LoanAmount';
-            //alert(mcrcDecision);
-            if (requiredLoan == "100,000") {
+          requiredLoan =  requiredLoan.replace(",","");
+           requiredLoan = parseInt(requiredLoan);
+           // requiredLoan.valueOf();
+            console.log(requiredLoan);
+            if (requiredLoan <= 150000) {
                 $("#Decision option[value='Under MCRC Review']").remove();
                 $("#Decision option[value='Decline']").remove();
                 $("#Decision option[value='Discrepent']").remove();
                 $("#Decision option[value='Approve']").add();
             }
-            else if (requiredLoan == "150,000") {
-                $("#Decision option[value='Under MCRC Review']").remove();
-                $("#Decision option[value='Decline']").remove();
-                $("#Decision option[value='Discrepent']").remove();
-                $("#Decision option[value='Approve']").add();
-            }
+            //else if (requiredLoan == "150,000") {
+            //    $("#Decision option[value='Under MCRC Review']").remove();
+            //    $("#Decision option[value='Decline']").remove();
+            //    $("#Decision option[value='Discrepent']").remove();
+            //    $("#Decision option[value='Approve']").add();
+            //}
             else if (mcrcDecision == "Discrepent") {
                 $("#Decision option[value='Under MCRC Review']").remove();
             }

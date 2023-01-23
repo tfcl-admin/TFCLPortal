@@ -173,17 +173,17 @@ namespace TFCLPortal.Web.Mvc.Controllers
                 ViewBag.LoanTenure = (getLRD.Result.LoanTenureRequestedName == null || getLRD.Result.LoanTenureRequestedName == "" ? "--" : getLRD.Result.LoanTenureRequestedName);
             }
 
-            if (ViewBag.LoanAmoun == "150,000" || ViewBag.LoanAmoun == "100,000")
-            {
-                CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
-                fWobj.ApplicationId = appid;
-                fWobj.ActionBy = (int)AbpSession.UserId;
-                fWobj.isActive = true;
+            //if (ViewBag.LoanAmoun == "150,000" || ViewBag.LoanAmoun == "100,000")
+            //{
+            //    CreateFinalWorkflowDto fWobj = new CreateFinalWorkflowDto();
+            //    fWobj.ApplicationId = appid;
+            //    fWobj.ActionBy = (int)AbpSession.UserId;
+            //    fWobj.isActive = true;
 
-                fWobj.Action = "Approved By BCC";
-                fWobj.ApplicationState = ApplicationState.Submitted;
-                _applicationAppService.ChangeApplicationState(ApplicationState.BCC_Approved, appid, "Approved By BCC");
-            }
+            //    fWobj.Action = "Approved By BCC";
+            //    fWobj.ApplicationState = ApplicationState.Submitted;
+            //    _applicationAppService.ChangeApplicationState(ApplicationState.BCC_Approved, appid, "Approved By BCC");
+            //}
 
             if (getColD != null)
             {
