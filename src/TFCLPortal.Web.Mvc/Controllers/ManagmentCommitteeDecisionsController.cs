@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using TFCLPortal.Applications;
 using TFCLPortal.Applications.Dto;
 using TFCLPortal.Authorization.Users;
+using TFCLPortal.BusinessPlans;
 using TFCLPortal.Controllers;
+using TFCLPortal.DynamicDropdowns.BusinessTypes;
 using TFCLPortal.EntityFrameworkCore;
 using TFCLPortal.FinalWorkflows;
 using TFCLPortal.FinalWorkflows.Dto;
@@ -33,8 +35,10 @@ namespace TFCLPortal.Web.Controllers
         private readonly IFinalWorkflowAppService _finalWorkflowAppService;
         private readonly INotificationLogAppService _notificationLogAppService;
         private readonly IMcrcDecisionAppService _McrcDecisionAppService;
+        private readonly IBusinessPlanAppService _BusinessPlanAppServices;
 
-        public ManagmentCommitteeDecisionsController(IUserAppService userAppService, INotificationLogAppService notificationLogAppService, IFinalWorkflowAppService finalWorkflowAppService, UserManager userManager, IRepository<ManagmentCommitteeDecision, int> managmentCommitteeDecisionRepository, IApplicationAppService applicationAppService, IManagmentCommitteeDecisionAppService managmentCommitteeDecisionAppService, IMcrcDecisionAppService McrcDecisionAppService)
+        public ManagmentCommitteeDecisionsController(IUserAppService userAppService, INotificationLogAppService notificationLogAppService, IFinalWorkflowAppService finalWorkflowAppService, UserManager userManager, IRepository<ManagmentCommitteeDecision, int> managmentCommitteeDecisionRepository, IApplicationAppService applicationAppService,
+            IManagmentCommitteeDecisionAppService managmentCommitteeDecisionAppService, IMcrcDecisionAppService McrcDecisionAppService, IBusinessPlanAppService BusinessPlanAppServices)
         {
             _userAppService = userAppService;
             _notificationLogAppService = notificationLogAppService;
@@ -44,6 +48,7 @@ namespace TFCLPortal.Web.Controllers
             _McrcDecisionAppService = McrcDecisionAppService;
             _userManager = userManager;
             _finalWorkflowAppService = finalWorkflowAppService;
+            _BusinessPlanAppServices = BusinessPlanAppServices;
         }
 
         // GET: ManagmentCommitteeDecisions
@@ -62,8 +67,9 @@ namespace TFCLPortal.Web.Controllers
                     foreach (var app in applications)
                     {
                         var decision = _managmentCommitteeDecisionRepository.GetAllList(x => x.ApplicationId == app.Id && x.fk_userid == userid);
-                        var getMcrcDecision = _McrcDecisionAppService.GetMcrcDecisionList().Where(x => x.ApplicationId == app.Id).FirstOrDefault();
-                        ViewBag.LoanAmount = getMcrcDecision.LoanAmount;
+                        //var getMcrcDecision = _McrcDecisionAppService.GetMcrcDecisionList().Where(x => x.ApplicationId == app.Id).FirstOrDefault();
+                        var BP= _BusinessPlanAppServices.GetBusinessPlanByApplicationId(app.Id).Result;
+                        ViewBag.LoanAmount = BP.LoanAmountRecommended;
                         if (decision.Count == 0)
                         {
                             returnList.Add(app);
@@ -75,8 +81,9 @@ namespace TFCLPortal.Web.Controllers
                     foreach (var app in applications)
                     {
                         var decision = _managmentCommitteeDecisionRepository.GetAllList(x => x.ApplicationId == app.Id);
-                        var getMcrcDecision = _McrcDecisionAppService.GetMcrcDecisionList().Where(x => x.ApplicationId == app.Id).FirstOrDefault();
-                        ViewBag.LoanAmount = getMcrcDecision.LoanAmount;
+                        //var getMcrcDecision = _McrcDecisionAppService.GetMcrcDecisionList().Where(x => x.ApplicationId == app.Id).FirstOrDefault();
+                        var BP = _BusinessPlanAppServices.GetBusinessPlanByApplicationId(app.Id).Result;
+                        ViewBag.LoanAmount = BP.LoanAmountRecommended;
                         if (decision.Count > 0)
                         {
                             if (!decision.Where(x => x.fk_userid == userid).Any())
@@ -94,8 +101,9 @@ namespace TFCLPortal.Web.Controllers
                     foreach (var app in applications)
                     {
                         var decision = _managmentCommitteeDecisionRepository.GetAllList(x => x.ApplicationId == app.Id);
-                        var getMcrcDecision = _McrcDecisionAppService.GetMcrcDecisionList().Where(x => x.ApplicationId == app.Id).FirstOrDefault();
-                        ViewBag.LoanAmount = getMcrcDecision.LoanAmount;
+                        //var getMcrcDecision = _McrcDecisionAppService.GetMcrcDecisionList().Where(x => x.ApplicationId == app.Id).FirstOrDefault();
+                        var BP = _BusinessPlanAppServices.GetBusinessPlanByApplicationId(app.Id).Result;
+                        ViewBag.LoanAmount = BP.LoanAmountRecommended;
                         if (decision.Count > 0)
                         {
                             if (!decision.Where(x => x.fk_userid == userid).Any())
@@ -112,8 +120,9 @@ namespace TFCLPortal.Web.Controllers
                 {
                     foreach (var app in applications)
                     {
-                        var getMcrcDecision = _McrcDecisionAppService.GetMcrcDecisionList().Where(x => x.ApplicationId == app.Id).FirstOrDefault();
-                        ViewBag.LoanAmount = getMcrcDecision.LoanAmount;
+                        //var getMcrcDecision = _McrcDecisionAppService.GetMcrcDecisionList().Where(x => x.ApplicationId == app.Id).FirstOrDefault();
+                        var BP = _BusinessPlanAppServices.GetBusinessPlanByApplicationId(app.Id).Result;
+                        app.LoanAmount = BP.LoanAmountRecommended;
                         returnList.Add(app);
                     }
                 }
