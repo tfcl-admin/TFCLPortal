@@ -31,5 +31,7 @@ namespace TFCLPortal.Applications
 
         public int FundingSource { get; set; } // New Dropdown
         public string FundingSourceName { get; set; }
+
+        public string LoanAmount { get; set; }
     }
 }
