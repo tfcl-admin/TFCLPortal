@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -87,7 +86,7 @@
                 <p class="detailHeading">
                     Reason for Recommendation
                 </p>
-                <p class="detailText">@(ViewBag.BCCMember1Reason == null || ViewBag.BCCMember1Reason == "" ? "--" : ViewBag.BCCMember1Reason )</p>
+                <p class="detailText">@(ViewBag.BCCMember1Reason == null || ViewBag.BCCMember1Reason == "" ? "--" : ViewBag.BCCMember1Reason)</p>
             </div>
 
             <div class="col-md-4">
@@ -106,7 +105,7 @@
                 <p class="detailHeading">
                     Reason for Recommendation
                 </p>
-                <p class="detailText">@(ViewBag.BCCMember2Reason == null || ViewBag.BCCMember2Reason == "" ? "--" : ViewBag.BCCMember2Reason )</p>
+                <p class="detailText">@(ViewBag.BCCMember2Reason == null || ViewBag.BCCMember2Reason == "" ? "--" : ViewBag.BCCMember2Reason)</p>
             </div>
 
             <div class="col-md-4">
@@ -125,25 +124,29 @@
                 <p class="detailHeading">
                     Reason for Recommendation
                 </p>
-                <p class="detailText">@(ViewBag.BCCMember3Reason==null || ViewBag.BCCMember3Reason == "" ? "--" : ViewBag.BCCMember3Reason )</p>
+                <p class="detailText">@(ViewBag.BCCMember3Reason == null || ViewBag.BCCMember3Reason == "" ? "--" : ViewBag.BCCMember3Reason)</p>
             </div>
 
 
             <div class="col-md-4">
                 <p class="detailHeading">
                     Decision of BCC
-                </p>                
-                        <select class="form-control" id="Decision">
-                            <option value="">Select Decision</option>
-                            <option value="Approve">Approve</option>
-                            <option value="Decline">Decline</option>
-                            <option value="Discrepent">Discrepent</option>
-                            <option value="Under MCRC Review">Forward to MCRC</option>
-                        </select>
-                   
+                </p>
+                @*@decimal.Parse(ViewBag.LoanAmount.Replace(",",""))*@
+                <select class="form-control" id="Decision">
+                    <option value="">Select Decision</option>
+                    @if (decimal.Parse(ViewBag.LoanAmount.Replace(",",""))<=150000)
+                    {
+                        <option value="Approve">Approve</option>
+                    }
+                    <option value="Decline">Decline</option>
+                    <option value="Discrepent">Discrepent</option>
+                    <option value="Under MCRC Review">Forward to MCRC</option>
+                </select>
+
 
             </div>
-                
+
             <div class="col-md-8  d-none" id="reasonDiv">
                 <p class="detailHeading">
                     If Discrepant/Decline, Reason
@@ -326,7 +329,7 @@
                 $('#reasonDiv').removeClass('d-none');
                 $('#approvalDiv').addClass('d-none');
             }
-            else if (value == "Approve" || value=="Under MCRC Review") {
+            else if (value == "Approve" || value == "Under MCRC Review") {
                 $('#approvalDiv').removeClass('d-none');
                 $('#reasonDiv').addClass('d-none');
             }
@@ -340,23 +343,24 @@
         $(document).ready(function () {
             var mcrcDecision = '@ViewBag.McrcDecision';
             var requiredLoan = '@ViewBag.LoanAmount';
-          requiredLoan =  requiredLoan.replace(",","");
-           requiredLoan = parseInt(requiredLoan);
-           // requiredLoan.valueOf();
-            console.log(requiredLoan);
-            if (requiredLoan <= 150000) {
-                $("#Decision option[value='Under MCRC Review']").remove();
-                $("#Decision option[value='Decline']").remove();
-                $("#Decision option[value='Discrepent']").remove();
-                $("#Decision option[value='Approve']").add();
-            }
-            //else if (requiredLoan == "150,000") {
-            //    $("#Decision option[value='Under MCRC Review']").remove();
-            //    $("#Decision option[value='Decline']").remove();
-            //    $("#Decision option[value='Discrepent']").remove();
+            //requiredLoan = requiredLoan.replace(",", "");
+            //requiredLoan = parseInt(requiredLoan);
+            //// requiredLoan.valueOf();
+            //alert(requiredLoan);
+            //if (requiredLoan <= 150000) {
+            //    //$("#Decision option[value='Discrepent']").remove();
             //    $("#Decision option[value='Approve']").add();
             //}
-            else if (mcrcDecision == "Discrepent") {
+            //else {
+            //    $("#Decision option[value='Approve']").remove();
+            //}
+                    //else if (requiredLoan == "150,000") {
+                    //    $("#Decision option[value='Under MCRC Review']").remove();
+                    //    $("#Decision option[value='Decline']").remove();
+                    //    $("#Decision option[value='Discrepent']").remove();
+                    //    $("#Decision option[value='Approve']").add();
+                    //}
+                    else if (mcrcDecision == "Discrepent") {
                 $("#Decision option[value='Under MCRC Review']").remove();
             }
             else if (mcrcDecision == "Discrepent & Represent") {
@@ -373,7 +377,7 @@
 
 
             var ApplicationId = $('#ApplicationId').val();
-             var BccId = '@ViewBag.BCCNo';
+            var BccId = '@ViewBag.BCCNo';
             var UserId = $('#UserId').val();
             var BccMember1UserId = $('#BCCmember1UserId').val();
             var BccMember2UserId = $('#BCCmember2UserId').val();
@@ -417,31 +421,28 @@
             if (ApplicationId == "") {
                 abp.notify.error("Application Id not found.");
             }
-            else if (BccId=="")
-            {
+            else if (BccId == "") {
                 abp.notify.error("BCC Id not found.");
             }
             else if (UserId == "") {
                 abp.notify.error("User Id not found.");
             }
-            else if (Decision=="")
-            {
+            else if (Decision == "") {
                 abp.notify.error("Please Select Decision");
             }
             else if (Decision == "Approve" && GraceDays == "") {
                 abp.notify.error("Please Enter Grace Days");
             }
-            else if (Decision == "Approve" && isDeferment=="")
-            {
+            else if (Decision == "Approve" && isDeferment == "") {
                 abp.notify.error("Please Select Deferment Applied");
             }
-            else if (Decision == "Approve" && isDeferment=="Yes" && DefermentPeriod == "") {
+            else if (Decision == "Approve" && isDeferment == "Yes" && DefermentPeriod == "") {
                 abp.notify.error("Please Enter Deferment Period");
             }
             else if (Decision == "Approve" && isTranches == "") {
                 abp.notify.error("Please Select Tranches Applied");
             }
-            else if (Decision == "Approve" && isTranches == "Yes" &&  TranchesAmount == "") {
+            else if (Decision == "Approve" && isTranches == "Yes" && TranchesAmount == "") {
                 abp.notify.error("Please Enter Tranches Amount");
             }
             else if (Decision == "Approve" && isTranches == "Yes" && TranchesDates == "") {
@@ -472,8 +473,7 @@
             else if (Decision == "Under MCRC Review" && CheckName == "") {
                 abp.notify.error("Please Enter 'CHEQUE TO BE ISSUED IN FAVOUR OF'");
             }
-            else if (Decision == "Under MCRC Review" && (myFile == null || myFile == ""))
-            {
+            else if (Decision == "Under MCRC Review" && (myFile == null || myFile == "")) {
                 abp.notify.error("Please Select Document.");
             }
             else {
@@ -511,18 +511,18 @@
                 formData.append('isTranches', isTranches);
 
 
-                 $.ajax({
+                $.ajax({
                     type: 'POST',
                     datatype: "json",
-                     processData: false,
-                     contentType: false,
+                    processData: false,
+                    contentType: false,
                     url: '@Url.Content("~/BCC/CreateBccDecision")',
-                     data: formData,
-                     success: function (data) {
+                    data: formData,
+                    success: function (data) {
 
-                         var returnData = data.result;
-                         abp.notify.success(returnData, "Success");
-                         window.location.reload();
+                        var returnData = data.result;
+                        abp.notify.success(returnData, "Success");
+                        window.location.reload();
 
                     },
                     error: function (data) {
