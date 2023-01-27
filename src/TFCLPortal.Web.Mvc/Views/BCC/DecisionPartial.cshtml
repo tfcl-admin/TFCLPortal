@@ -325,6 +325,7 @@
 
         $('#Decision').on('change', function () {
             var value = this.value;
+            //alert(value);
             if (value == "Decline" || value == "Discrepent") {
                 $('#reasonDiv').removeClass('d-none');
                 $('#approvalDiv').addClass('d-none');
@@ -360,15 +361,15 @@
                     //    $("#Decision option[value='Discrepent']").remove();
                     //    $("#Decision option[value='Approve']").add();
                     //}
-                    else if (mcrcDecision == "Discrepent") {
-                $("#Decision option[value='Under MCRC Review']").remove();
-            }
-            else if (mcrcDecision == "Discrepent & Represent") {
-                $("#Decision option[value='Approve']").remove();
-            }
-            else if (mcrcDecision == "") {
-                $("#Decision option[value='Approve']").remove();
-            }
+            //        else if (mcrcDecision == "Discrepent") {
+            //    $("#Decision option[value='Under MCRC Review']").remove();
+            //}
+            //else if (mcrcDecision == "Discrepent & Represent") {
+            //    $("#Decision option[value='Approve']").remove();
+            //}
+            //else if (mcrcDecision == "") {
+            //    $("#Decision option[value='Approve']").remove();
+            //}
         });
 
         $('#recommend').click(function (e) {
