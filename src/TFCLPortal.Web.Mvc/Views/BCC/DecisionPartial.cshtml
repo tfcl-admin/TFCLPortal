@@ -347,14 +347,21 @@
             //requiredLoan = requiredLoan.replace(",", "");
             //requiredLoan = parseInt(requiredLoan);
             //// requiredLoan.valueOf();
-            //alert(requiredLoan);
-            //if (requiredLoan <= 150000) {
-            //    //$("#Decision option[value='Discrepent']").remove();
-            //    $("#Decision option[value='Approve']").add();
-            //}
-            //else {
-            //    $("#Decision option[value='Approve']").remove();
-            //}
+            //alert(mcrcDecision);
+            if (mcrcDecision == "Discrepent") {
+                //$("#Decision option[value='Discrepent']").remove();
+                //$("#Decision option[value='Approve']").add();
+                $('#Decision').append('<option value="Approve">Approve</option>');
+            }
+            else if (mcrcDecision == "Discrepent & Represent") {
+                $("#Decision option[value='Approve']").remove();
+            }
+            else if (mcrcDecision == "") {
+                $("#Decision option[value='Approve']").remove();
+            }
+            else {
+                $("#Decision option[value='Approve']").remove();
+            }
                     //else if (requiredLoan == "150,000") {
                     //    $("#Decision option[value='Under MCRC Review']").remove();
                     //    $("#Decision option[value='Decline']").remove();
@@ -364,12 +371,7 @@
             //        else if (mcrcDecision == "Discrepent") {
             //    $("#Decision option[value='Under MCRC Review']").remove();
             //}
-            //else if (mcrcDecision == "Discrepent & Represent") {
-            //    $("#Decision option[value='Approve']").remove();
-            //}
-            //else if (mcrcDecision == "") {
-            //    $("#Decision option[value='Approve']").remove();
-            //}
+           
         });
 
         $('#recommend').click(function (e) {
