@@ -135,7 +135,7 @@
                 @*@decimal.Parse(ViewBag.LoanAmount.Replace(",",""))*@
                 <select class="form-control" id="Decision">
                     <option value="">Select Decision</option>
-                    @if (decimal.Parse(ViewBag.LoanAmount.Replace(",",""))<=150000)
+                    @if (decimal.Parse(ViewBag.LoanAmount.Replace(",", "")) <= 150000)
                     {
                         <option value="Approve">Approve</option>
                     }
@@ -349,29 +349,16 @@
             //// requiredLoan.valueOf();
             //alert(mcrcDecision);
             if (mcrcDecision == "Discrepent") {
-                //$("#Decision option[value='Discrepent']").remove();
-                //$("#Decision option[value='Approve']").add();
-                $('#Decision').append('<option value="Approve">Approve</option>');
+                if ($("#Decision option[value='Approve']").length <= 0) {
+                    $('#Decision').append('<option value="Approve">Approve</option>');
+                }
             }
-            else if (mcrcDecision == "Discrepent & Represent") {
+
+            if (mcrcDecision == "Discrepent & Represent") {
                 $("#Decision option[value='Approve']").remove();
             }
-            else if (mcrcDecision == "") {
-                $("#Decision option[value='Approve']").remove();
-            }
-            else {
-                $("#Decision option[value='Approve']").remove();
-            }
-                    //else if (requiredLoan == "150,000") {
-                    //    $("#Decision option[value='Under MCRC Review']").remove();
-                    //    $("#Decision option[value='Decline']").remove();
-                    //    $("#Decision option[value='Discrepent']").remove();
-                    //    $("#Decision option[value='Approve']").add();
-                    //}
-            //        else if (mcrcDecision == "Discrepent") {
-            //    $("#Decision option[value='Under MCRC Review']").remove();
-            //}
-           
+
+
         });
 
         $('#recommend').click(function (e) {
