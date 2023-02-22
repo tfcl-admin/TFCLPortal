@@ -1,5 +1,7 @@
 ﻿@model List<TFCLPortal.Applications.ApplicationDto>
-@{ int i = 0;}
+@{
+    int i = 0;
+}
 
 @{
     ViewData["Title"] = "Funding Source";
@@ -50,8 +52,8 @@
     </div>
     <div class="card p-10 mB-20 mT-20">
         @*<p>
-                <a asp-action="Create">Create New</a>
-            </p>*@
+        <a asp-action="Create">Create New</a>
+        </p>*@
         <div class="row">
             <div class="col-md-4">
                 <p class="detailHeading">
@@ -98,18 +100,20 @@
                     }
                 </select>
             </div>
+
+
             @*<div class="col-md-3 pt-4">
-                    <a class="btn btn-outline-warning btn-sm dis-inline" onClick="window.location.reload();" style="width:100%">Clear Filter</a>
-                </div>*@
+            <a class="btn btn-outline-warning btn-sm dis-inline" onClick="window.location.reload();" style="width:100%">Clear Filter</a>
+            </div>*@
 
         </div>
 
         <div class="row resultDiv d-none" style=" margin-top: 20px; ">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <p class="detailHeading">Client ID</p>
                 <p class="detailText" id="selectedClientId">--</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <p class="detailHeading">CNIC</p>
                 <p class="detailText" id="selectedCnic">--</p>
             </div>
@@ -117,11 +121,13 @@
                 <p class="detailHeading">Applicant Name</p>
                 <p class="detailText" id="selectedApplicant">--</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <p class="detailHeading">Funding Source</p>
                 <p class="detailText" id="selectedFundingSource">--</p>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <p class="detailHeading">GL Code</p>
+                <p class="detailText" id="selectedGLCode">--</p>
             </div>
 
             <div class="col-md-4 mt-5">
@@ -132,26 +138,33 @@
                 <option value="">Select Funding Source</option>
                 @if (Model != null)
                 {
-                    foreach (var item in Model)
-                    {
-                        <option value="@item.CNICNo">@item.CNICNo</option>
-                    }
+                foreach (var item in Model)
+                {
+                <option value="@item.CNICNo">@item.CNICNo</option>
                 }
-            </select>*@
+                }
+                </select>*@
                 @Html.DropDownListFor(x => x.First().FundingSource, ViewBag.sourcesList as SelectList, "Select Funding Source", new { @class = "form-control text-capitalize select2" })
 
-                <a onclick="SaveFundingSource();" class="btn btn-outline-success mt-3 w-100">Save Funding Source</a>
+
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3 mt-5">
+                <p class="detailHeading">Enter GL Code</p>
+                <input id="GLCode" name="GLCode" type="number" maxlength="11" class="form-control" placeholder="Enter GL Code" />
+            </div>
+
+            <div class="col-md-3 mt-5">
+                <a onclick="SaveFundingSource();" class="btn btn-outline-success mt-4 w-20">Save Data</a>
             </div>
 
         </div>
+ 
         <div class="row">
             <div class="col-md-12">
                 <div class="card p-10 mB-20">
                     @*<p>
-                <a asp-action="Create">Create New</a>
-            </p>*@
+                    <a asp-action="Create">Create New</a>
+                    </p>*@
                     <table id="dataTable" class="table table-striped table-bordered  table-scrollable" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -166,34 +179,40 @@
                                 </th>
                                 <th>
                                     Client / School / Business Name
-                                </th>   <th>
-    Funding Source
-</th>
+                                </th>
+                                <th>Funding Source</th>
+                                <th>GL Code</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr>
-                                <td> @{i = i + 1;} @i</td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ClientID)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ApplicantName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SchoolName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FundingSourceName)
-                                </td>
-                               
-                                @*<td>
-            <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i> Details</a>
-        </td>*@
-                            </tr>
+                                <tr>
+                                    <td>
+                                        @{
+                                            i = i + 1;
+                                        } @i
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClientID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ApplicantName)
+                                    </td>
+                                    <td>
+                                        @(item.SchoolName == "" || item.SchoolName == null ? "--" : item.SchoolName)
+                                    </td>
+                                    <td>
+                                        @(item.FundingSourceName == "" || item.FundingSourceName == null ? "--" : item.FundingSourceName)
+                                    </td>
+                                    <td>
+                                        @(item.GLCode == "" || item.GLCode == null ? "--" : item.GLCode)
+                                        </td>
+                                    @*<td>
+                                <a asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i> Details</a>
+                                </td>*@
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -210,8 +229,11 @@
 <script>
     $('.select2').select2();
 
+    //var ClientIdglobal = "";
+
+
     $('#ApplicantName').on('change', function () {
-        if (this.value!="") {
+        if (this.value != "") {
             search("ApplicantName", this.value);
 
         }
@@ -222,6 +244,22 @@
 
         }
     });
+
+    $('#GLCode').on('input', function (e) {
+        var code = $('#GLCode').val();
+        //alert(code.length);
+
+        if (code.length <= 0 || code.length > 11) {
+            //alert('Not Acceptable');
+
+            $('#GLCode').val(code.substring(0,11));
+
+            return false;
+        }
+
+
+    });
+
     $('#ClientId').on('change', function () {
         if (this.value != "") {
             search("ClientId", this.value);
@@ -229,17 +267,41 @@
         }
     });
 
+    function setGLCode(clientid) {
+
+
+        if (clientid.indexOf('TSA') >= 0) {
+            $("#GLCode").val("0270005");
+        }
+        else if (clientid.indexOf('TSS') >= 0) {
+            $("#GLCode").val("0270010");
+        }
+        else if (clientid.indexOf('TJS') >= 0) {
+            $("#GLCode").val("0270015");
+        }
+        else if (clientid.indexOf('TDS') >= 0) {
+            $("#GLCode").val("0270025");
+        }
+    }
+
+    $('#ClientId').on('change', function () {
+
+    });
+
+
     var appid = 0;
+
 
     function search(filter, value) {
 
         var items = @Html.Raw(Json.Serialize(Model));
 
-        var ApplicationID=0;
-        var CNIC="";
-        var ApplicantName="";
-        var ClientId="";
-        var fSource="";
+        var ApplicationID = 0;
+        var CNIC = "";
+        var ApplicantName = "";
+        var ClientId = "";
+        var fSource = "";
+
 
         if (filter == "ClientId") {
             items.forEach(function (item, index) {
@@ -250,6 +312,7 @@
                     ApplicantName = item.applicantName;
                     fSourceName = item.fundingSourceName;
                     fSource = item.fundingSource;
+
                 }
             });
         }
@@ -262,6 +325,7 @@
                     ApplicantName = item.applicantName;
                     fSource = item.fundingSource;
                     fSourceName = item.fundingSourceName;
+
                 }
             });
         }
@@ -274,6 +338,7 @@
                     ApplicantName = item.applicantName;
                     fSource = item.fundingSource;
                     fSourceName = item.fundingSourceName;
+
                 }
             });
         }
@@ -284,6 +349,7 @@
             ApplicantName = "--";
             fSourceName = "--";
             fSource = 0;
+
         }
 
         //$(".select2").prop('selectedIndex',0);
@@ -292,45 +358,74 @@
         $("#selectedCnic").text(CNIC);
         $("#selectedApplicant").text(ApplicantName);
         $("#selectedFundingSource").text(fSourceName);
+        //if ($("#selectedClientId").val() == $()   )
+        //if ( $("#selectedClientId:contains('TSS-')")
+        //{
+        //    $("#GLCode").val("020700");
+        //}
+        // $("#selectedGLCode").text(GCode);
         //alert(fSource);
 
         //$('#select2-FundingSource-container').val(fSource).trigger('change');
 
+        setGLCode(ClientId);
 
         $(".resultDiv").removeClass('d-none');
 
         appid = ApplicationID;
     }
 
+
     function SaveFundingSource() {
 
-          $(".pageloader").toggleClass("d-none");
-        var fsource=$("#FundingSource").val();
+        var fsource = $("#FundingSource").val();
+        var code = $('#GLCode').val();
+        //if ($("#selectedClientId:contains('TSS-')")
+        //   {
+        //         $("#GLCode").val("020700");
+        //   }
 
+        if (fsource.length == 0) {
+            fsource = 0;
+        }
+
+        if(code.length<11)
+        {
+            alert('GL Code should be of 11 digits')
+            return false;
+        }
+
+
+        var GLCode = document.getElementById("GLCode").value;
         var ApplicationId = appid;
 
-                 $.ajax({
-                    type: 'POST',
-                    datatype: "json",
-                    contenttype: 'application/json; charset=utf-8',
-                    url: '@Url.Content("~/Accountant/SaveFundingSource")',
-                     data: {
-                         'ApplicationId': ApplicationId,
-                         'fsource': fsource
-                     },
-                     success: function (data) {
+        $(".pageloader").toggleClass("d-none");
 
-                         var returnData = data.result;
-                         abp.notify.success(returnData, "Success");
-                         window.location.reload();
+        $.ajax({
+            type: 'POST',
+            datatype: "json",
+            contenttype: 'application/json; charset=utf-8',
+            url: '@Url.Content("~/Accountant/SaveFundingSource")',
+            data: {
+                'ApplicationId': ApplicationId,
+                'fsource': fsource,
+                'GLCode': GLCode
+                //GLCode: $("#GLCode").val()
 
-                    },
-                    error: function (data) {
+            },
+            success: function (data) {
 
-                        abp.notify.error("Some error occure contact with admin..!", "error");
-                        console.log(data);
-                    }
-                });
+                var returnData = data.result;
+                abp.notify.success(returnData, "Success");
+                window.location.reload();
+
+            },
+            error: function (data) {
+
+                abp.notify.error("Some error occure contact with admin..!", "error");
+                console.log(data);
+            }
+        });
 
 
     }

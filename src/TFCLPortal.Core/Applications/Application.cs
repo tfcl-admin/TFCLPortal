@@ -52,6 +52,7 @@ namespace TFCLPortal.Applications
         public int? ApplicationNumber { get; set; }
         public string ClientID { get; set; }
         public string LastScreen { get; set; }
+        public string GLCode { get; set; }
 
         //in case of SDE tab Crash
         public int AcademicSession { get; set; } // New Dropdown2

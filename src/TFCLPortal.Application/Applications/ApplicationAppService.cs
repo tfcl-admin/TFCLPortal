@@ -373,18 +373,18 @@ namespace TFCLPortal.Applications
                     var applications = _applicationRepository.Insert(mobilizations);
                     CurrentUnitOfWork.SaveChanges();
 
-                    var accounts = _customerAccountRepository.GetAllList(x => x.CNIC == mobilizations.CNICNo).FirstOrDefault();
-                    if (accounts != null)
-                    {
-                        CustomerAccount account = new CustomerAccount();
-                        account.CNIC = mobilizations.CNICNo;
-                        account.Phone = mobilizations.MobileNo;
-                        account.Name = mobilizations.ClientName;
-                        account.Balance = 0;
-                        account.ProfilePicUrl = "Application App Service Line No 294";
-                        account.isActive = true;
-                        var accountCreation = _customerAccountRepository.Insert(account);
-                    }
+                    //var accounts = _customerAccountRepository.GetAllList(x => x.CNIC == mobilizations.CNICNo).FirstOrDefault();
+                    //if (accounts != null)
+                    //{
+                    //    CustomerAccount account = new CustomerAccount();
+                    //    account.CNIC = mobilizations.CNICNo;
+                    //    account.Phone = mobilizations.MobileNo;
+                    //    account.Name = mobilizations.ClientName;
+                    //    account.Balance = 0;
+                    //    account.ProfilePicUrl = "Application App Service Line No 294";
+                    //    account.isActive = true;
+                    //    var accountCreation = _customerAccountRepository.Insert(account);
+                    //}
 
                     int ApplicationNumber = 0;
 

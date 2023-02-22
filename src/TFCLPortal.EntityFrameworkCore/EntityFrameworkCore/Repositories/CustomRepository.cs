@@ -346,6 +346,7 @@ namespace TFCLPortal.EntityFrameworkCore.Repositories
                             obj.Comments = dataReader["Comments"].ToString();
                             obj.LastScreen = Convert.ToString(dataReader["LastScreen"]);
                             obj.Transferred = Convert.ToString(dataReader["transferred"]);
+                            obj.GLCode = dataReader["GLCode"].ToString();
                             AppList.Add(obj);
 
                         }

@@ -2215,17 +2215,18 @@ namespace TFCLPortal.Web.Controllers
             return View(mobilizationList);
         }
         [HttpPost]
-        public async Task<JsonResult> SaveFundingSource(int ApplicationId, int fsource)
+        public async Task<JsonResult> SaveFundingSource(int ApplicationId, int fsource , string GLCode)
         {
             string response = "";
             try
             {
                 var appData = _applicationRepository.Get(ApplicationId);
                 appData.FundingSource = fsource;
+                appData.GLCode= GLCode;
                 _applicationRepository.Update(appData);
                 CurrentUnitOfWork.SaveChanges();
 
-                response = "Funding Source Updated";
+                response = "Funding Source/GL Code Updated";
             }
             catch (Exception ex)
             {

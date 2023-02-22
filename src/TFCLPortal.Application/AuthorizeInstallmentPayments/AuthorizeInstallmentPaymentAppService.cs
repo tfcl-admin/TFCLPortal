@@ -358,6 +358,9 @@ namespace TFCLPortal.AuthorizeInstallmentPayments
             }
             return "Success";
         }
+
+
+        //Below is actual code for installemt deduction
         public async Task<string> DeductInstallmentPaymentRevised(CreateInstallmentPayment payment)
         {
             try

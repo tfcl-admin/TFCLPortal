@@ -33,5 +33,6 @@ namespace TFCLPortal.Applications
         public string FundingSourceName { get; set; }
 
         public string LoanAmount { get; set; }
+        public string GLCode { get; set; }
     }
 }

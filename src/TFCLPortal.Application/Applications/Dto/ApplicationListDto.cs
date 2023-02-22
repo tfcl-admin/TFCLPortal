@@ -31,6 +31,7 @@ namespace TFCLPortal.Applications.Dto
         public long CreatorUserId { get; set; }
         public string ReportPdfUrl { get; set; }
         public string SDE_Name { get; set; }
+        public string GLCode { get; set; }
 
         public int FK_branchid { get; set; }
         public BranchDetailList Brances { get; set; }

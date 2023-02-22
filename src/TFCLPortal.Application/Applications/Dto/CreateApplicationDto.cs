@@ -24,6 +24,7 @@ namespace TFCLPortal.Applications.Dto
         public string BranchCode { get; set; }
         public long CreatorUserId { get; set; }
         public int FK_branchid { get; set; }
+        public string GLCode { get; set; }
 
         // new field added to dto
 
