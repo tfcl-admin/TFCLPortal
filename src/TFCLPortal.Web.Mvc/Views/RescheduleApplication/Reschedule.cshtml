@@ -218,7 +218,8 @@
                 </tr>
                 <tr>
                     <td><b>Installment</b></td>
-                    <td style="background-color:lightyellow" id="installmentDiv">@(ViewBag.Input.Installment == null || ViewBag.Input.Installment == "--"  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.Installment)))</td>
+                    @*<td style="background-color:lightyellow" id="installmentDiv">@(ViewBag.Input.Installment == null || ViewBag.Input.Installment == "--"  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.Installment)))</td>*@
+                    <td style="background-color:lightyellow" id="installmentDiv">@(ViewBag.Input.Installment == null || ViewBag.Input.Installment == "--" ? "--" : string.Format("{0:#,##}", decimal.Parse(ViewBag.Input.Installment)))</td>
                 </tr>
                 <tr>
                     <td><b>Loan Start Date</b></td>

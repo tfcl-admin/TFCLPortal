@@ -111,7 +111,6 @@
 
                     <td>
 
-
                             @if (item.ClientID.Length > 0)
                             {
 
@@ -140,7 +139,8 @@
     <!-- Modal -->
 </main>
 <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
 <script>
 
     $('.Disburse').click(function () {
@@ -155,28 +155,66 @@
     });
 
     function DeclineApp(appid) {
-        //let text;
-        let msg = prompt("Please enter reason for decline:", "");
-        $(".pageloader").toggleClass("d-none");
+        swal("Please enter decline reason:", {
+            content: "input",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((value) => {
+                if (value == null || value == "") {
+                    swal("File is not Declined!", {
+                        icon: "warning",
+                    });
+                }
+                else {
+                    swal("Poof! File is Declined!", {
+                        icon: "success",
+                    });
+                    window.location.href = '../Accountant/CreateAccdecline?Id=' + appid + '&&Reason=' + value;
 
-        if (msg == null || msg == "") {
-            // text = "User cancelled the prompt.";
-        } else {
-            //text = msg;
-            window.location.href = '../Accountant/CreateAccdecline?Id=' + appid + '&&Reason=' + msg;
-        }
+                }
+            });
+        //let text;
+        //let msg = prompt("Please enter reason for decline:", "");
+        //$(".pageloader").toggleClass("d-none");
+
+        //if (msg == null || msg == "") {
+        //    // text = "User cancelled the prompt.";
+        //} else {
+        //    //text = msg;
+        //    window.location.href = '../Accountant/CreateAccdecline?Id=' + appid + '&&Reason=' + msg;
+        //}
     }
     function DiscrepentApp(appid) {
-        //let text;
-        let msg = prompt("Please enter discrepancy:", "");
-        $(".pageloader").toggleClass("d-none");
+        swal("Please enter discrepancy:", {
+            content: "input",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((value) => {
+                if (value == null || value == "") {
+                    swal("File is not Discrepanted!", {
+                        icon: "warning",
+                    });
+                }
+                else {
+                    swal("Poof! File is Discrepented!", {
+                        icon: "success",
+                    });
+                    window.location.href = '../Accountant/CreateDiscrepancy?Id=' + appid + '&&Reason=' + value;
 
-        if (msg == null || msg == "") {
-            // text = "User cancelled the prompt.";
-        } else {
-            //text = msg;
-            window.location.href = '../Accountant/CreateDiscrepancy?Id=' + appid + '&&Reason=' + msg;
-        }
+                }
+            });
+        //let text
+        //let msg = prompt("Please enter discrepancy:", "");
+        //$(".pageloader").toggleClass("d-none");
+
+        //if (msg == null || msg == "") {
+        //    // text = "User cancelled the prompt.";
+        //} else {
+        //    //text = msg;
+        //    window.location.href = '../Accountant/CreateDiscrepancy?Id=' + appid + '&&Reason=' + msg;
+        //}
     }
-
+        
 </script>

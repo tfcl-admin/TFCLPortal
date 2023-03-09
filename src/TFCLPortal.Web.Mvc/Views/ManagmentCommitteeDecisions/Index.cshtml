@@ -12,6 +12,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
 }
+ 
 <style>
     .dataTable tr th, .dataTable tr td {
         text-align: center;
@@ -285,34 +286,77 @@
 
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
     function DeclineApp(appid) {
+        swal("Please enter decline reason:", {
+            content: "input",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((value) => {
+                if (value == null || value == "") {
+                    swal("File is not Declined!", {
+                        icon: "warning",
+                    });
+                }
+                else {
+                    swal("Poof! File is Declined!", {
+                        icon: "success",
+                    });
+                    window.location.href = '../ManagmentCommitteeDecisions/CreateMCdecline?Id=' + appid + '&&Reason=' + value;
+
+                }
+            });
+
         //let text;
-        let msg = prompt("Please enter reason for decline:", "");
-        $(".pageloader").toggleClass("d-none");
+        //let msg = prompt("Please enter reason for decline:", "");
+        //$(".pageloader").toggleClass("d-none");
 
-        if (msg == null || msg == "") {
-            $(".pageloader").toggleClass("d-none");
+        //if (msg == null || msg == "") {
+        //    $(".pageloader").toggleClass("d-none");
 
-            // text = "User cancelled the prompt.";
-        } else {
-            //text = msg;
-            window.location.href = '../ManagmentCommitteeDecisions/CreateMCdecline?Id=' + appid + '&&Reason=' + msg;
-        }
+        //    // text = "User cancelled the prompt.";
+        //} else {
+        //    //text = msg;
+        //    window.location.href = '../ManagmentCommitteeDecisions/CreateMCdecline?Id=' + appid + '&&Reason=' + msg;
+        //}
     }
     function DiscrepentApp(appid) {
         //let text;
-        let msg = prompt("Please enter discrepancy:", "");
-        $(".pageloader").toggleClass("d-none");
+        swal("Please enter discrepancy:", {
+            content: "input",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((value) => {
+                if(value ==null || value=="")
+                {
+                    swal("File is not Discrepented!",{
+                        icon: "warning",
+                    });
+                }
+                else{
+                    swal("Poof! File is Discrepented!", {
+                        icon: "success",
+                    });
+                window.location.href = '../ManagmentCommitteeDecisions/CreateDiscrepancy?Id=' + appid + '&&Reason=' + value;
 
-        if (msg == null || msg == "") {
-            $(".pageloader").toggleClass("d-none");
+                }
+            });
+        //let msg = prompt("Please enter discrepancy:", "");
+ 
+        //$(".pageloader").toggleClass("d-none");
 
-            // text = "User cancelled the prompt.";
-        } else {
-            //text = msg;
-            window.location.href = '../ManagmentCommitteeDecisions/CreateDiscrepancy?Id=' + appid + '&&Reason=' + msg;
-        }
+        //if (msg == null || msg == "") {
+        //    $(".pageloader").toggleClass("d-none");
+
+        //    // text = "User cancelled the prompt.";
+        //} else {
+        //    //text = msg;
+        //    window.location.href = '../ManagmentCommitteeDecisions/CreateDiscrepancy?Id=' + appid + '&&Reason=' + msg;
+        //}
     }
 </script>
+ 
