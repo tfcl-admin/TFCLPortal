@@ -479,18 +479,19 @@
     var TAT = '@TAT';
     var reasonForLateDisbursement = '';
 
-    if (isLate == 'True') {
-        let reasonForLateDisbursement = prompt("Turn Arround Time : " + TAT + "\n\nPlease Justify : ", '');
-        if (reasonForLateDisbursement == null || reasonForLateDisbursement == "") {
-            alert('Please Justify Late Disbursement!');
-            window.location.reload();
-        }
-        else {
-            $('#ReasonForDelayTAT').val(reasonForLateDisbursement);
-        }
-    }
-    //alert($('#ReasonForDelayTAT').val());
-    //   $(document).on('click', '#applyBaloonPayment', function (e) {
+    //if (isLate == 'True') {
+    //    let reasonForLateDisbursement = prompt("Turn Arround Time : " + TAT + "\n\nPlease Justify : ", '');
+    //    if (reasonForLateDisbursement == null || reasonForLateDisbursement == "") {
+    //        alert('Please Justify Late Disbursement!');
+    //        window.location.reload();
+    //    }
+    //    else {
+    //        $('#ReasonForDelayTAT').val(reasonForLateDisbursement);
+    //    }
+    //}
+ 
+        
+
     $("#createSchedule").click(function (event) {
         if ( $('#ChequeNo').val() == "" || $('#ChequeNo').val() == null )
         {//
@@ -510,6 +511,32 @@
                 });
         }//
     });
+
+
+    if (isLate == 'True') {
+        let reasonForLateDisbursement = swal("Turn Arround Time : " + TAT + "\n\nPlease Justify :", {
+            content: "input",
+            icon: "info",
+            // buttons: true,
+            dangerMode: true,
+        })
+            .then((value) => {
+                if (value == null || value == "") {
+                    swal("Enter justification!", {
+                        icon: "warning",
+                    });
+                    window.location.reload();
+                }
+                else {
+                    swal("Thanks for your feedback", {
+                        icon: "success",
+                    });
+                    $('#ReasonForDelayTAT').val(reasonForLateDisbursement);
+
+                }
+            });
+    }
+
 
     $('#isDeferrment').on('change', function () {
         if ($('#isDeferrment').val() == "false") {
