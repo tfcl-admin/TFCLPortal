@@ -520,6 +520,24 @@ namespace TFCLPortal.Web.Controllers
             return View(apps);
         }
 
+        public IActionResult ViewAuthorizeReSchedule()
+        {
+            var schedules = _scheduleTempAppService.GetScheduleTempList().Result.Where(x => x.isAuthorizedByBM == null && x.UpdationReason == "Reschedule");
+
+            List<ApplicationListDto> apps = new List<ApplicationListDto>();
+            if (schedules != null)
+            {
+                foreach (var schedule in schedules)
+                {
+                    var app = _applicationAppService.GetApplicationById(schedule.ApplicationId);
+                    app.Comments = schedule.UpdationReason;
+                    app.isBaloon = schedule.isBaloon;
+                    apps.Add(app);
+                }
+            }
+            return View(apps);
+        }
+
         public async Task<ActionResult> AuthorizationPartial(int appid)
         {
             ViewBag.AppId = appid;

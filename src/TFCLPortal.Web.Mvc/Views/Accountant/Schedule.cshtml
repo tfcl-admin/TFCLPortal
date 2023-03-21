@@ -356,7 +356,7 @@
                             <p class="detailHeading">
                                 Disbursement Date
                             </p>
-                            <input asp-for="DisbursmentDate" id="#EnterDate" type="date" class="form-control" />
+                            <input asp-for="DisbursmentDate" type="date" class="form-control" />
                         </div>
                         <div class="col-md-4">
                             <p class="detailHeading">
@@ -460,7 +460,7 @@
                         </div>
 
                         <div class="col-md-12 text-right" style="margin-top:30px">
-                            <input type="submit" value="Create Schedule" class="btn btn-sm btn-outline-success bg1 eft-1" />
+                            <input type="submit" id="createSchedule" value="Create Schedule" class="btn btn-sm btn-outline-success bg1 eft-1" />
                         </div>
                     </div>
                 </form>
@@ -471,7 +471,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
 
@@ -490,7 +490,26 @@
         }
     }
     //alert($('#ReasonForDelayTAT').val());
-
+    //   $(document).on('click', '#applyBaloonPayment', function (e) {
+    $("#createSchedule").click(function (event) {
+        if ( $('#ChequeNo').val() == "" || $('#ChequeNo').val() == null )
+        {//
+            event.preventDefault();
+            swal("Please enter cheque number:", {
+                icon: "warning",
+                title:"Cheque Number",
+            })
+                .then((value) => {
+                    if (value == null || value == "") {
+                        swal("Cheque Number Required!", {
+                            icon: "warning",
+                        });
+                    }
+                    else {                       
+                    }
+                });
+        }//
+    });
 
     $('#isDeferrment').on('change', function () {
         if ($('#isDeferrment').val() == "false") {

@@ -476,6 +476,17 @@
                         </li>
 
                     }
+                    @if (User.Identity.Name.Contains("furrukh") || User.Identity.Name.Contains("admin"))
+                    {
+                        <li class="nav-item">
+                            <a href="~/Accountant/ViewAuthorizeReSchedule" class="dropdown-toggle">
+                                <span class="icon-holder">
+                                    <i class="fa fa-file-image-o"></i>
+                                </span>
+                                <h6>Re-Schedule Authorization</h6>
+                            </a>
+                        </li>
+                    }
 
                     @if (User.Identity.Name.Contains("furrukh")||User.Identity.Name.Contains("admin"))
                     {
@@ -758,7 +769,7 @@
                             <ul id="BAO" class="collapse sidebar-menua">
 
 
-                                @if (User.Identity.Name == "nabeel" || User.Identity.Name == "Noor")
+                                @if (User.Identity.Name == "nabeel" || User.Identity.Name == "Ayesha")
                                 {
                                     <li class="nav-item dropdown">
                                         <a href="~/Accountant/FundingSource" class="dropdown-toggle">
