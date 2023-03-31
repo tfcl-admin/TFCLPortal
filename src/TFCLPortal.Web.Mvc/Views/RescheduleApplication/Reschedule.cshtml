@@ -1525,14 +1525,36 @@
                 isBaloon = 'true';
             }
 
+            //        var GLCode = document.getElementById("GLCode").value;
 
-             var dataToSend = {
+            var NewSet_Markup;
+            if( $('#NewMarkupRateText').val() == "" || $('#NewMarkupRateText').val() == null )
+            {
+                NewSet_Markup = $("#txtMarkup").text();
+            }
+            else{
+                NewSet_Markup = $('#NewMarkupRateText').val();
+            }
+
+            var NewSet_Tenure;
+            if( $('#NewRemainingInstallmentsText').val() != "" || $('#NewRemainingInstallmentsText').val() != null )
+            {
+                NewSet_Tenure =  $('#NewRemainingInstallmentsText').val();
+            }
+            else
+            {
+                NewSet_Tenure =   ($("#txtTenure").text()).trim();
+            }
+
+             var dataToSend = {                 
                 'ApplicationId':'@ViewBag.ApplicationId',
                 'ClientId':'@ViewBag.Application.ClientID',
                 'ScheduleType':'@ViewBag.Input.ScheduleType',
                 'LoanAmount': ($("#txtLoanAmount").text()).trim(),
-                 'Tenure': ($("#txtTenure").text()).trim(),
-                'Markup': $("#txtMarkup").text(),
+                //'Tenure': ($("#txtTenure").text()).trim(), 
+                'Tenure': NewSet_Tenure,
+                'Markup': NewSet_Markup,
+                // 'Markup': $("#txtMarkup").text(),
                  'DisbursmentDate': $("#txtDisbursmentDate").text().trim(),
                 'GraceDays': $("#txtGraceDays").text(),
                 'Deferment': $("#txtDeferment").text(),
