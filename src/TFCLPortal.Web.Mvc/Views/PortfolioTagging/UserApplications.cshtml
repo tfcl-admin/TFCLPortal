@@ -27,6 +27,8 @@
         background: url('/Theame/images/loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
         opacity: .8;
     }
+   
+
 </style>
 <!-- ### $App Screen Content ### -->
 <main class='main-content bgc-grey-100' style="padding-top:50px">
@@ -46,7 +48,8 @@
         </div>
     </div>
     <div class="card p-10 mB-20">
-        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%" style="min-height: 400px;">
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%" style="min-height: 600px;">
+
             <thead>
                 <tr>
                     <th>Sr#</th>
@@ -79,11 +82,14 @@
                                     <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-list"></i>
                                     </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+
                                         @foreach (var user in ViewBag.UsersList)
                                         {
-                                            <a class="dropdown-item" onclick="callFunc(@item.CreatorUserId,@item.Id,@user.Id,'@item.ClientID','@user.FullName');"><i class="fa fa-at"></i> Tag to @user.FullName</a>
+                                            <a class="dropdown-item" onclick="callFunc(@item.CreatorUserId,@item.Id,@user.Id,'@item.ClientID','@user.FullName');"><i class="fa fa-at"></i> Tag to @user.FullName</a>                                          
+
                                         }
+
                                     </div>
                                 </div>
 
@@ -107,7 +113,7 @@
 
         </div>
         <div class="card p-10 mB-20">
-            <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" height="auto" width="100%">
                 <thead>
                     <tr>
                         <th>Sr#</th>
@@ -146,6 +152,7 @@
     }
 
     <script>
+
         function callFunc(CurrentUser, ApplicationId, TagTo, ClientID, newSDEName) {
             if (confirm('Are you sure you want to transfer ' + ClientID + ' to ' + newSDEName)) {
                 //alert(CurrentUser + ' : ' + ApplicationId + ' : ' + TagTo);
@@ -173,6 +180,9 @@
 
             }
         }
+
+        
     </script>
+    
 
 </main>
