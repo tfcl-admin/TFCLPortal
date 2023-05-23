@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TFCLPortal.LoanSchedules.Dto.GetFromFormDto
+@{
     Layout = null;
 }
 
@@ -236,8 +237,7 @@
             <table width="100%" class="tblTopData" style="margin-top:20px">
                 <tr>
                         <td width="40%"><b>Processing Charges</b></td>
-                        <td  style="background-color:lightyellow"  id="ProcessingChargesTxt">@ViewBag.Input.ProcessingCharges</td>
-
+                    <td style="background-color:lightyellow" id="ProcessingChargesTxt">@ViewBag.Input.ProcessingCharges</td>                  
                     </tr>
                     <tr>
                         <td><b>FED on Processing Charges</b></td>
@@ -338,6 +338,7 @@
 <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js" asp-append-version="true"></script>
 <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js" asp-append-version="true"></script>
 <script>
+
     $(function () {
 
         var Installments = Number('@ViewBag.Input.Tenure');
@@ -503,10 +504,8 @@
                 trancheTable += '</tr>';
             });
             $('#innerTranchesTbl').append(trancheTable);
-
-
-            //alert(Number(tranches[0].amount));
-
+           
+            //alert(Number(tranches[0].amount));            
             var osPrincipalAmount = Number(tranches[0].amount);
             var instCalculationAmount = osPrincipalAmount;
 

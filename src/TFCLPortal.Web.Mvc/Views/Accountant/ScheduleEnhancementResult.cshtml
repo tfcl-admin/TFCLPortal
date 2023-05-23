@@ -289,7 +289,7 @@
                 <tr>
                     <td><b>Per Day Mark-up</b></td>
                     <td style="background-color:lightyellow" id="DayDiv">@(ViewBag.Input.PerDayMarkup == null || ViewBag.Input.PerDayMarkup == ""  ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.PerDayMarkup)))</td>
-                    <td class="paidInst" id="DayDivOld">@(ViewBag.Input.OldSchedule.PerDayMarkup == null || ViewBag.Input.OldSchedule.PerDayMarkup == "" ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.OldSchedule.PerDayMarkup)))</td>
+                    <td class="paidInst" id="DayDivOld">@(ViewBag.Input.OldSchedule.PerDayMarkup == null || ViewBag.Input.OldSchedule.PerDayMarkup == "" || ViewBag.Input.OldSchedule.PerDayMarkup == "--" ? "--" : string.Format("{0:#,##0.##}", decimal.Parse(ViewBag.Input.OldSchedule.PerDayMarkup)))</td>
                 </tr>
             </table>
         </div>

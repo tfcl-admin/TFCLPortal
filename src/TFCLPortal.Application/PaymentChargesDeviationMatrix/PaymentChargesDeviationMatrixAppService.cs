@@ -88,6 +88,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
 
                 //Result
                 PaymentChargesValues rtnObject = new PaymentChargesValues();
+                PaymentChargesDeviationMatrixListDto obj = new PaymentChargesDeviationMatrixListDto();
 
                 if (paymentCharges != null)
                 {
@@ -119,7 +120,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                             rtnObject.ProcessingCharges = LPC;
                             rtnObject.FEDonPC = LPC * 0.16;
                             rtnObject.NetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
-
+                            obj.Type = BP.CollateralGiven;
 
                             if (isOldRequired)
                             {
@@ -181,6 +182,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                             rtnObject.ProcessingCharges = LPC;
                             rtnObject.FEDonPC = LPC * 0.16;
                             rtnObject.NetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+                            obj.Type = BP.CollateralGiven;
 
                             if (isOldRequired)
                             {
@@ -214,7 +216,7 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                                     rtnObject.TotalProcessingCharges = LPC;
                                     rtnObject.TotalFEDonPC = LPC * 0.16;
                                     rtnObject.TotalNetDisbursement = loanAmount - rtnObject.TotalProcessingCharges - rtnObject.TotalFEDonPC;
-
+                                    obj.Type = BP.CollateralGiven;
                                 }
                             }
 

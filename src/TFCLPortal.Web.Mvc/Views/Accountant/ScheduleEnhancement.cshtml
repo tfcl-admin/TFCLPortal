@@ -338,58 +338,7 @@
             </div>
         </div>
 
-        <div class="card mB-20">
-           <div class="card-header text-white">Payment Charges</div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            Earlier Processing Charges
-                        </p>
-                        <input asp-for="OldProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.EarlierProcessingCharges == 0 ? "0" : ViewBag.ProcessingCharges.EarlierProcessingCharges.ToString("#,###.##"))" />
-                    </div>
-                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            Earlier FED on Processing Charges
-                        </p>
-                        <input asp-for="OldFEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.EarlierFEDonPC == 0 ? "0" : ViewBag.ProcessingCharges.EarlierFEDonPC.ToString("#,###.##"))" />
-                    </div>
-@*                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            Net Disbursment Amount
-                        </p>
-                        <input asp-for="OldNetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
-                    </div>*@
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            Due Processing Charges
-                        </p>
-                        <input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.ProcessingCharges == 0 ? "0" : (ViewBag.ProcessingCharges.ProcessingCharges.ToString("#,###.##")))" />
-                    </div>
-                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            Due FED on Processing Charges
-                        </p>
-                        <input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.FEDonPC == 0 ? "0" : (ViewBag.ProcessingCharges.FEDonPC.ToString("#,###.##")))" />
-                    </div>
-                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            Net Disbursment Amount
-                        </p>
-                      @*  @{
-                            string NetDisbursment="";
-                            double nd = (Convert.ToDouble(ViewBag.ProcessingCharges) - Convert.ToDouble(ViewBag.OldPC.Replace(",", "")));
-                            nd += ((Convert.ToDouble(ViewBag.ProcessingCharges) - Convert.ToDouble(ViewBag.OldPC.Replace(",", ""))) * 0.16);
-                            NetDisbursment = (NewLoanAmount - nd).ToString("#,###.##");
-                        }*@
-
-                        <input asp-for="NetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.NetDisbursement == 0 ? "0" : (ViewBag.ProcessingCharges.NetDisbursement.ToString("#,###.##")))" />
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <div class="card">
             <div class="card-header text-white">Selection Parameters</div>
@@ -407,13 +356,71 @@
                     <input type="hidden" asp-for="LoanAmount" value="@ViewBag.LoanRequisitionDetails.LoanAmountRecommended" />
                     <input type="hidden" asp-for="Tenure" value="@ViewBag.LoanRequisitionDetails.LoanTenureRequestedName" />
 
-                    <input type="hidden" asp-for="ProcessingCharges" value="@(ViewBag.ProcessingCharges.TotalProcessingCharges == 0 ? "0" : (ViewBag.ProcessingCharges.TotalProcessingCharges).ToString("#,###.##"))" />
+                   @* <input type="hidden" asp-for="ProcessingCharges" value="@(ViewBag.ProcessingCharges.TotalProcessingCharges == 0 ? "0" : (ViewBag.ProcessingCharges.TotalProcessingCharges).ToString("#,###.##"))" />
                     <input type="hidden" asp-for="FEDonProcessingCharges" value="@(ViewBag.ProcessingCharges.TotalFEDonPC == 0 ? "0" : (ViewBag.ProcessingCharges.TotalFEDonPC).ToString("#,###.##"))" />
-                    <input type="hidden" asp-for="NetDisbursmentAmount" value="@(ViewBag.ProcessingCharges.TotalNetDisbursement == 0 ? "0" : (ViewBag.ProcessingCharges.TotalNetDisbursement).ToString("#,###.##"))" />
+                    <input type="hidden" asp-for="NetDisbursmentAmount" value="@(ViewBag.ProcessingCharges.TotalNetDisbursement == 0 ? "0" : (ViewBag.ProcessingCharges.TotalNetDisbursement).ToString("#,###.##"))" />*@
 
                     <input type="hidden" asp-for="newLoanAmountDiff" value="@diff" />
                     <input type="hidden" asp-for="newEnhancedAmount" value="@NewLoanAmount" />
                     <input type="hidden" asp-for="newEnhancedTenure" value="@NewTenure" />
+
+                    <div class="row" >
+                        <div class="col-md-12">
+                            <div class="card mB-20">
+                                <div class="card-header text-white">Payment Charges</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Earlier Processing Charges
+                                            </p>
+                                            <input asp-for="OldProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.EarlierProcessingCharges == 0 ? "0" : ViewBag.ProcessingCharges.EarlierProcessingCharges.ToString("#,###.##"))" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Earlier FED on Processing Charges
+                                            </p>
+                                            <input asp-for="OldFEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.EarlierFEDonPC == 0 ? "0" : ViewBag.ProcessingCharges.EarlierFEDonPC.ToString("#,###.##"))" />
+                                        </div>
+                                        @*<div class="col-md-4">
+                                        <p class="detailHeading">
+                                        Net Disbursment Amount
+                                        </p>
+                                        <input asp-for="OldNetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
+                                        </div>*@
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Due Processing Charges
+                                            </p>
+                                            <input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.ProcessingCharges == 0 ? "0" : (ViewBag.ProcessingCharges.ProcessingCharges.ToString("#,###.##")))" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Due FED on Processing Charges
+                                            </p>
+                                            <input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.FEDonPC == 0 ? "0" : (ViewBag.ProcessingCharges.FEDonPC.ToString("#,###.##")))" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Net Disbursment Amount
+                                            </p>
+                                            @*  @{
+                                            string NetDisbursment="";
+                                            double nd = (Convert.ToDouble(ViewBag.ProcessingCharges) - Convert.ToDouble(ViewBag.OldPC.Replace(",", "")));
+                                            nd += ((Convert.ToDouble(ViewBag.ProcessingCharges) - Convert.ToDouble(ViewBag.OldPC.Replace(",", ""))) * 0.16);
+                                            NetDisbursment = (NewLoanAmount - nd).ToString("#,###.##");
+                                            }*@
+
+                                            <input asp-for="NetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.NetDisbursement == 0 ? "0" : (ViewBag.ProcessingCharges.NetDisbursement.ToString("#,###.##")))" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <p class="detailHeading">
@@ -536,7 +543,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
 
 <script>
+    function readyFn(jQuery) {
+        var loanType = '@ViewBag.CollateralGiven';
+        var enhancementAmount = @diff;
+        var processCharges = 0, FedOnProcessing = 0 , netDisburseAmount = 0 ;
+   
+        
+        if (loanType == "SECURED") {
 
+            processCharges = ((enhancementAmount * 0.45) / 100);
+            FedOnProcessing = (processCharges * 0.16);
+            enhancementAmount = (enhancementAmount - processCharges - FedOnProcessing);
+             
+            if (processCharges > 13500) {
+
+                processCharges = 13500;
+                FedOnProcessing = 2160;
+                enhancementAmount = (enhancementAmount - 13500 - 2160);
+            }
+            else {
+            }
+
+        }
+        else {
+            processCharges = ((loanAmount * 0.77) / 100);
+            FedOnProcessing = (processCharges * 0.16);
+            enhancementAmount = (enhancementAmount - processCharges - FedOnProcessing);
+
+        }
+
+        $('#ProcessingCharges').val(numberWithCommas(processCharges));
+        $('#FEDonProcessingCharges').val(numberWithCommas(FedOnProcessing));
+        $('#NetDisbursmentAmount').val(numberWithCommas(enhancementAmount));
+       
+ 
+    }
+
+    $(document).ready(readyFn);
+    
     $('#isDeferrment').on('change', function () {
         if ($('#isDeferrment').val() == "false") {
             $('#DefermentStartDate').val('');
@@ -641,10 +685,52 @@
 
     });
 
+    $('#listForTranches_0__Amount').on('input', function () {
+        
+        var text = $(this).val();
+        var clientid = '@ViewBag.Decision.ClientId';
+        var actual_loanAmount = Number('@ViewBag.LoanRequisitionDetails.LoanAmountRecommended');
+        var loanAmount = $('#listForTranches_0__Amount').val();
+        var processCharges = 0, FedOnProcessing = 0;
+        var loanType = '@ViewBag.CollateralGiven';
 
 
 
+        if (loanType == "SECURED") {
 
+            processCharges = ((loanAmount * 0.45) / 100);
+            FedOnProcessing = (processCharges * 0.16);
+            loanAmount = (loanAmount - processCharges - FedOnProcessing);
+
+            if (processCharges > 13500) {
+
+                processCharges = 13500;
+                FedOnProcessing = 2160;
+                loanAmount = (loanAmount - 13500 - 2160);
+            }
+            else {
+            }
+
+        }
+        else {
+            processCharges = ((loanAmount * 0.77) / 100);
+            FedOnProcessing = (processCharges * 0.16);
+            loanAmount = (loanAmount - processCharges - FedOnProcessing);
+
+        }
+        //$('Id#ProcessingCharges').val(
+        // thCommas(processCharges));
+
+        $('#ProcessingCharges').val(numberWithCommas(processCharges));
+        $('#FEDonProcessingCharges').val(numberWithCommas(FedOnProcessing));
+        $('#NetDisbursmentAmount').val(numberWithCommas(loanAmount));
+    });
+
+
+    function numberWithCommas(x) {
+        x = Math.round(x);
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
 
 

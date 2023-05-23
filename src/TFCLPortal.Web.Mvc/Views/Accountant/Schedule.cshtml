@@ -296,35 +296,12 @@
                 </div>
             </div>
         </div>
-        <div class="card mB-20">
-            <div class="card-header text-white">Tax Calculations</div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            Processing Charges
-                        </p>
-                        <input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.ProcessingCharges).ToString("#,###.##"))" />
-                    </div>
-                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            FED% on Processing Charges
-                        </p>
-                        <input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.FEDonProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.FEDonProcessingCharges).ToString("#,###.##"))" />
-                    </div>
-                    <div class="col-md-4">
-                        <p class="detailHeading">
-                            Net Disbursment Amount
-                        </p>
-                        <input asp-for="NetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="card">
             <div class="card-header text-white">Selection Parameters</div>
             <div class="card-body">
                 <form asp-action="ScheduleResult" method="post">
+                
                     <input type="hidden" asp-for="ApplicationId" value="@ViewBag.ApplicationId" />
                     <input type="hidden" asp-for="ScheduleNo" value="" />
                     <input type="hidden" asp-for="RevisionNo" value="" />
@@ -337,10 +314,45 @@
                     <input type="hidden" asp-for="Tenure" value="@ViewBag.LoanRequisitionDetails.LoanTenureRequestedName" />
                     <input type="hidden" asp-for="TurnArroundTimeMins" value="@TATMinutes" />
                     <input type="hidden" asp-for="ReasonForDelayTAT" value="" />
-
-                    <input type="hidden" asp-for="ProcessingCharges" value="@(ViewBag.ProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.ProcessingCharges).ToString("#,###.##"))" />
+                   @* <input type="hidden" asp-for="ProcessingCharges" value="@(ViewBag.ProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.ProcessingCharges).ToString("#,###.##"))" />
                     <input type="hidden" asp-for="FEDonProcessingCharges" value="@(ViewBag.FEDonProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.FEDonProcessingCharges).ToString("#,###.##"))" />
-                    <input type="hidden" asp-for="NetDisbursmentAmount" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
+                    <input type="hidden" asp-for="NetDisbursmentAmount" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />*@
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="card mB-20">
+                                <div class="card-header text-white">Tax Calculations</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Processing Charges
+                                            </p>
+                                            <input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.ProcessingCharges).ToString("#,###.##"))" />
+                                            @*<input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled"   />*@
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                FED% on Processing Charges
+                                            </p>
+                                            <input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.FEDonProcessingCharges == null ? "0" : Convert.ToDouble(ViewBag.FEDonProcessingCharges).ToString("#,###.##"))" />
+                                            @*<input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled"  />*@
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Net Disbursment Amount
+                                            </p>
+                                            <input asp-for="NetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
+                                            @*<input asp-for="NetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled"  />*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <p class="detailHeading">
@@ -417,11 +429,11 @@
 
                         <div class="col-md-4">
                             <p class="detailHeading">Cheque Number</p>
-                            <input asp-for="ChequeNo" type="number" class="form-control"  />
+                            <input asp-for="ChequeNo" type="number" class="form-control" />
                         </div>
                         <div class="col-md-4">
                             <p class="detailHeading">Cheque Date</p>
-                            <input asp-for="ChequeDate" type="date" class="form-control"  />
+                            <input asp-for="ChequeDate" type="date" class="form-control" />
                         </div>
 
                         @*<wdiv class="col-md-8">
@@ -463,6 +475,7 @@
                             <input type="submit" id="createSchedule" value="Create Schedule" class="btn btn-sm btn-outline-success bg1 eft-1" />
                         </div>
                     </div>
+                 
                 </form>
             </div>
         </div>
@@ -489,16 +502,15 @@
     //        $('#ReasonForDelayTAT').val(reasonForLateDisbursement);
     //    }
     //}
- 
-        
+
+
 
     $("#createSchedule").click(function (event) {
-        if ( $('#ChequeNo').val() == "" || $('#ChequeNo').val() == null )
-        {//
+        if ($('#ChequeNo').val() == "" || $('#ChequeNo').val() == null) {//
             event.preventDefault();
             swal("Please enter cheque number:", {
                 icon: "warning",
-                title:"Cheque Number",
+                title: "Cheque Number",
             })
                 .then((value) => {
                     if (value == null || value == "") {
@@ -506,10 +518,10 @@
                             icon: "warning",
                         });
                     }
-                    else {                       
+                    else {
                     }
                 });
-        }//
+        }// we can add ajax call here for post method {if scheduleType = Tranch then [this data] else if scheduleType = Standard then [this data] }
     });
 
 
@@ -621,6 +633,46 @@
             $('.btn-add').addClass('d-none');
         }
     });
+    $('#listForTranches_0__Amount').on('input', function () {
+        debugger
+        var text = $(this).val();
+        var clientid = '@ViewBag.Decision.ClientId';
+        var actual_loanAmount = Number('@ViewBag.LoanRequisitionDetails.LoanAmountRecommended');
+        var loanAmount = $('#listForTranches_0__Amount').val();
+        var processCharges = 0, FedOnProcessing = 0;
+        var loanType = '@ViewBag.CollateralGiven';
+
+
+
+        if (loanType == "SECURED") {
+
+            processCharges = ((loanAmount * 0.45) / 100);
+            FedOnProcessing = (processCharges * 0.16);
+            loanAmount = (loanAmount - processCharges - FedOnProcessing);
+
+            if (processCharges > 13500) {
+
+                processCharges = 13500;
+                FedOnProcessing = 2160;
+                loanAmount = (loanAmount - 13500 - 2160);
+            }
+            else {
+            }
+
+        }
+        else {
+            processCharges = ((loanAmount * 0.77) / 100);
+            FedOnProcessing = (processCharges * 0.16);
+            loanAmount = (loanAmount - processCharges - FedOnProcessing);
+
+        }
+        //$('Id#ProcessingCharges').val(
+        // thCommas(processCharges));
+
+        $('#ProcessingCharges').val(numberWithCommas(processCharges));
+        $('#FEDonProcessingCharges').val(numberWithCommas(FedOnProcessing));
+        $('#NetDisbursmentAmount').val(numberWithCommas(loanAmount));
+    });
 
     //<input type="date" class="form-control" data-val="true" data-val-required="The StartDate field is required." id="listForTranches_0__StartDate" name="listForTranches[0].StartDate" value="">
     var i = 1;
@@ -641,4 +693,8 @@
         $('.tranchInner').append(html);
 
     });
+    function numberWithCommas(x) {
+        x = Math.round(x);
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>

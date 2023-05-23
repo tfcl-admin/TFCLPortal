@@ -853,6 +853,8 @@
         });
 
 
+ 
+
         $(document).on('click', '#applyBaloonPayment', function (e) {
 
             var maxPayment = '@ViewBag.customerAcc.Result.Balance';
@@ -875,11 +877,22 @@
                 if (Amount == "" || Amount == null) {
                     Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
                 }
-
+                    
+                var LastInstallmentPaid = installments.filter(x => x.isPaid == false && x.InstallmentDueDate == null);
                 var NewMarkup = '@ViewBag.Input.Markup';
-                var ReScheduleDate = '@ViewBag.Input.DisbursmentDate';
+                //var ReScheduleDate = '@ViewBag.Input.DisbursmentDate';
+               // var ReScheduleDate = '@ViewBag.Input.LoanStartDate';
 
-                reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU,NewMarkup,ReScheduleDate,0);
+                //var UnPaidInstallmentIndex = installments.filter(x => x.isPaid == null || x.isPaid == false)[0];
+                //    var instDate = moment(UnPaidInstallmentIndex.installmentDueDate).format('DD-MMM-yyyy');
+                //var ReScheduleDate=instDate;
+               // var ReScheduleDate = '@ViewBag.Input.LoanStartDate';
+                
+                 var firstInstallment = installments.filter( x => x.instNumber != 'G*')[0];
+               
+                 var firstDueDate = moment(firstInstallment.installmentDueDate).add(-1,'M');
+                //reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU,NewMarkup,ReScheduleDate,0);
+                    reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU, NewMarkup, firstDueDate, 0);
                 console.log("------------------------------------Apply Change Start------------------------------------");
                 console.log("Tenure : " + tenure);
                 console.log("Amount : " + Amount);
@@ -923,8 +936,8 @@
                     Amount = FirstInstallmentU.osPrincipal_op.replaceAll(",", "");
                 }
             var NewMarkup = '@ViewBag.Input.Markup';
-            var ReScheduleDate = '@ViewBag.Input.DisbursmentDate';
-
+            var ReScheduleDate = '@ViewBag.Input.LoanStartDate';
+            alert(ReScheduleDate);
                 reDisplayTable(tenure, Amount, LastInstallmentP, FirstInstallmentU,NewMarkup,ReScheduleDate,0);
                 console.log("------------------------------------Apply Change Start------------------------------------");
                 console.log("Tenure : " + tenure);
@@ -1052,13 +1065,13 @@
                //
                else{
                     var startDate = Number(moment(LoanStartDate).add(counter, 'M'));
-
+                   
                }
                 //alert(moment(startDate).format('DD MM yyyy'));
                     //content += '<td style="text-align: center">' + getInstallmentDate(startDate) + '</td>';
                
                 console.log(data[counter].installmentDueDate);
-
+                
                 for (i = counter, counter = 0, j = (Tenure - 1); counter < Tenure; i++, counter++, j--) {
 
                     content += '<tr  style="background-color: #FFFFE0">';
@@ -1067,6 +1080,7 @@
                     //Re-Schedule Date
                     content += '<td style="text-align: center">' + getInstallmentDate(startDate) + '</td>';
                     //end of Re-Schedule date
+                    
                     if (counter == 0) {
                         content += '<td style="text-align: center">' + numberWithCommas(FirstUnpaidInstallment.osPrincipal_op.replaceAll(",", "")) + '</td>';
                     }

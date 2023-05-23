@@ -1236,11 +1236,15 @@ namespace TFCLPortal.Web.Controllers
             double dailyMarkup = yearlyMarkup / 365;
             ViewBag.DailyMarkup = dailyMarkup;
 
+       
+            var BP = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId).Result;
+            ViewBag.CollateralGiven = BP.CollateralGiven;
+
             var ProcessCharges = _paymentChargesDeviationMatrixAppService.GetPaymentChargesDeviationMatrixByApplicationId(ApplicationId, application.isEnhancementApplication, false, 0);
             if (ProcessCharges != null)
             {
 
-
+                
                 ViewBag.ProcessingCharges = ProcessCharges.ProcessingCharges;
                 double calculation = 0.16;
                 double FED = 0;
@@ -1254,7 +1258,15 @@ namespace TFCLPortal.Web.Controllers
 
             }
 
+            //GetFromFormDto mdl = new GetFromFormDto();
+            //mdl.ProcessingCharges = Convert.ToString(ViewBag.ProcessingCharges);
+            //mdl.FEDonProcessingCharges = Convert.ToString(ViewBag.FEDonProcessingCharges);
+            //mdl.NetDisbursmentAmount = Convert.ToString(ViewBag.NetDisbursmentAmount);
+            //mdl.YearlyMarkup= Convert.ToString(ViewBag.YearlyMarkup);
             ViewBag.Application = application;
+
+
+
             return View();
         }
 
@@ -1265,6 +1277,10 @@ namespace TFCLPortal.Web.Controllers
             int tenure = 0;
             int LoanAmount = 0;
             var application = _applicationAppService.GetApplicationById(ApplicationId);
+
+            var BP = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId).Result;
+            ViewBag.CollateralGiven = BP.CollateralGiven;
+
             if (application != null)
             {
                 ViewBag.OldApplicationId = application.PrevApplicationId;
@@ -1783,6 +1799,10 @@ namespace TFCLPortal.Web.Controllers
             List<signatories> listForSignatories = new List<signatories>();
 
             ViewBag.ApplicationId = Schedule.ApplicationId;
+            //GetFromFormDto mdl = new GetFromFormDto();
+
+            var BP = _businessPlanAppService.GetBusinessPlanByApplicationId(Schedule.ApplicationId).Result;
+            ViewBag.CollateralGiven = BP.CollateralGiven;
 
             var application = _applicationAppService.GetApplicationById(Schedule.ApplicationId);
             if (application != null)
@@ -1895,6 +1915,13 @@ namespace TFCLPortal.Web.Controllers
             {
                 ViewBag.BranchCode = branch.BranchCode;
             }
+
+            //GetFromFormDto mdl = new GetFromFormDto();
+            //mdl.ProcessingCharges = Convert.ToString(ViewBag.ProcessingCharges);
+            //mdl.FEDonProcessingCharges = Convert.ToString(ViewBag.FEDonProcessingCharge);
+            //mdl.NetDisbursmentAmount = Convert.ToString(ViewBag.NetDisbursmentAmount);
+ 
+
             return View();
         }
 
@@ -1961,7 +1988,6 @@ namespace TFCLPortal.Web.Controllers
                     }
                 }
 
-
             }
 
             ViewBag.Signatories = listForSignatories;
@@ -1998,7 +2024,6 @@ namespace TFCLPortal.Web.Controllers
                 {
                     ViewBag.LoanEligibilityOld = getLEold;
                 }
-
 
                 markup = markup / 100;
 
