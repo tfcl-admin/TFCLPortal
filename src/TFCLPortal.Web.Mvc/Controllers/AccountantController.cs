@@ -2307,7 +2307,7 @@ namespace TFCLPortal.Web.Controllers
                     ViewBag.PaymentDate = string.Format("{0:yyyy-MM-dd}", lastPaidInstallment.InstallmentDueDate);
 
                     var paymentDetails = _installmentPaymentAppService.GetAllInstallmentPaymentByApplicationId(ApplicationId).Result;
-                    var excess_short = paymentDetails.Where(x => x.NoOfInstallment.ToString() == lastPaidInstallment.InstNumber).FirstOrDefault().ExcessShortPayment;
+                    var excess_short = paymentDetails.Where(x => x.NoOfInstallment.ToString() == lastPaidInstallment.InstNumber && x.isAuthorized == true).LastOrDefault().ExcessShortPayment;
                     ViewBag.PreviousBalance = string.Format("{0:#,##0}", excess_short);
                 }
                 else
