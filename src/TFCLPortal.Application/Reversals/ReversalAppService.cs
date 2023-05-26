@@ -102,7 +102,7 @@ namespace TFCLPortal.Reversals
                 {
                     if (item.TransactionId != 0)
                     {
-                        var transaction = transactions.Where(x => x.Id == item.TransactionId).FirstOrDefault();
+                        var transaction = transactions.Where(x => x.Id == item.TransactionId && x.IsDeleted == false).FirstOrDefault();
                         var account = accounts.Where(x => x.Id == transaction.Fk_AccountId).FirstOrDefault();
                         var app = apps.Where(x => x.Id == transaction.ApplicationId).FirstOrDefault();
 
@@ -248,16 +248,24 @@ namespace TFCLPortal.Reversals
                         {
                             if (item.Details.Contains("Inst No # "))
                             {
-                                string tmpstr = item.Details;
-                                tmpstr = tmpstr.Replace("Markup Collection Inst No # ", "");
-                                tmpstr = tmpstr.Replace("Partial Markup Collection Inst No # ", "");
-                                tmpstr = tmpstr.Replace("Markup Collection from Previous Balance Inst No # ", "");
-                                tmpstr = tmpstr.Replace("Principal Collection Inst No # ", "");
-                                tmpstr = tmpstr.Replace("Partial Principal Collection Inst No # ", "");
-                                tmpstr = tmpstr.Replace("Collection Inst No # ", "");
+                                try
+                                {
+                                    string tmpstr = item.Details;
+                                    tmpstr = tmpstr.Replace("Partial Markup Collection Inst No # ", "");
+                                    tmpstr = tmpstr.Replace("Markup Collection Inst No # ", "");
+                                    tmpstr = tmpstr.Replace("Markup Collection from Previous Balance Inst No # ", "");
+                                    tmpstr = tmpstr.Replace("Partial Principal Collection Inst No # ", "");
+                                    tmpstr = tmpstr.Replace("Principal Collection Inst No # ", "");
+                                    tmpstr = tmpstr.Replace("Collection Inst No # ", "");
 
-                                int inst = Int32.Parse(tmpstr);
-                                instNumber.Add(inst);
+                                    //int inst = Int32.Parse(tmpstr);
+                                    int inst = Convert.ToInt32(tmpstr);
+                                    instNumber.Add(inst);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw;
+                                }
                             }
                         }
                     }
