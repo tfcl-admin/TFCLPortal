@@ -67,6 +67,8 @@ using TFCLPortal.PaymentChargesDeviationMatrix;
 using static System.Net.Mime.MediaTypeNames;
 using Abp.Collections.Extensions;
 using System.Security.Cryptography.X509Certificates;
+using TFCLPortal.Reversals;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -111,7 +113,7 @@ namespace TFCLPortal.Web.Controllers
         private readonly IRepository<DeceasedAuthorization, int> _deceasedAuthorizationRepository;
         private readonly ICustomAppService _customAppService;
 
-
+        private readonly IRepository<CustomerAccount, Int32> _CustomerAccountRepository;
         private readonly IRepository<Transaction, int> _transactionRepository;
         private readonly IRepository<Holiday, int> _holidayRepository;
         private readonly IRepository<FundingSource, int> _fundingSourceRepository;
@@ -124,9 +126,15 @@ namespace TFCLPortal.Web.Controllers
 
         private readonly INotificationLogAppService _notificationLogAppService;
         private readonly IClosingMonthAppService _closingMonthAppService;
-
-        public AccountantController(IClosingMonthAppService closingMonthAppService, IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService, IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService, IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService, IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService, IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository, IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService,
-                                    IRepository<PaymentChargesDeviationMatric, Int32> paymentChargesDeviationMatricRepository, IPaymentChargesDeviationMatrixAppService PaymentChargesDeviationMatrixAppService)
+        private readonly IRepository<Transaction, Int32> _TransactionRepository;
+        public AccountantController(IClosingMonthAppService closingMonthAppService, IRepository<BaloonPayment, int> BaloonPaymentrepository, IBaloonPaymentAppService baloonPaymentAppService, 
+            IRepository<Transaction, int> transactionRepository, ICustomerAccountAppService customerAccountAppAppService, IRepository<EnhancementRequest, int> enhancementRequestRepository, IEnhancementRequestAppService enhancementRequestAppService,
+            IRepository<FundingSource, int> fundingSourceRepository, IRepository<DeceasedAuthorization, int> deceasedAuthorizationRepository, ICustomAppService customAppService, IDeceasedAuthorizationAppService deceasedAuthorizationAppService, ITDSLoanEligibilityAppService tDSLoanEligibilityAppService,
+            IRepository<CoApplicantDetail, int> CoApplicantRepository, IRepository<GuarantorDetail, int> GuarantorRepository, IRepository<Applicationz, Int32> applicationRepository, IRepository<ScheduleTemp, int> scheduleTempRepository, IRepository<DeceasedSettlement, int> deceasedSettlementRepository, IDeceasedSettlementAppService deceasedSettlementAppService,
+            IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService,
+            IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository,
+            IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService,
+                  IRepository<Transaction, Int32> TransactionRepository, IRepository<CustomerAccount, Int32> CustomerAccountRepository  ,  IRepository<PaymentChargesDeviationMatric, Int32> paymentChargesDeviationMatricRepository, IPaymentChargesDeviationMatrixAppService PaymentChargesDeviationMatrixAppService, IRepository<CustomerAccount, int> customerAccountRepository)
         {
             _paymentChargesDeviationMatricRepository = paymentChargesDeviationMatricRepository;
             _paymentChargesDeviationMatrixAppService = PaymentChargesDeviationMatrixAppService;
@@ -176,6 +184,8 @@ namespace TFCLPortal.Web.Controllers
             _authorizeInstallmentPaymentRepository = authorizeInstallmentPaymentRepository;
             _earlySettlementRepository = earlySettlementRepository;
             _earlySettlementAppService = earlySettlementAppService;
+            _CustomerAccountRepository = customerAccountRepository;
+            _TransactionRepository = TransactionRepository;
         }
 
         public IActionResult cnics()
@@ -2278,6 +2288,46 @@ namespace TFCLPortal.Web.Controllers
             return Json(response);
 
         }
+        [HttpPost]
+        public async Task<JsonResult> SaveLatePaymentDeduction(int ApplicationId, int LDays, int newtoalPunishment, int remainBalance , int accBalance)
+        {
+
+            string resp = "";
+            try
+            {
+                var appData = _applicationRepository.Get(ApplicationId);
+                var transaction = _transactionRepository.Get(ApplicationId);
+                Transaction t = new Transaction();
+
+                t.Amount = newtoalPunishment;
+                t.Type = "Late Days";
+                t.DepositDate = DateTime.Now;
+                t.Details = "Late Payment Deduction; Amount "+ newtoalPunishment + "Deduction Date "+ DateTime.Now ;
+                t.BalBefore = accBalance;
+                t.BalAfter = remainBalance;
+                t.Fk_AccountId = transaction.Fk_AccountId;
+                t.AmountWords = "";
+                t.ModeOfPayment = "Deduction";
+                t.ModeOfPaymentOther = "";
+                t.ApplicationId = appData.ApplicationId;
+                t.Reference = "Deduction";
+                t.isReversed = false;
+                t.isAuthorized = true;
+                _TransactionRepository.Insert(t);
+
+                CustomerAccount ca = _CustomerAccountRepository.Get(transaction.Fk_AccountId);
+                ca.Balance = (ca.Balance - newtoalPunishment);
+                _CustomerAccountRepository.Update(ca);
+
+                resp = "Late Payment Charges Deducted from Account";
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return Json(resp);
+        }
+
         public IActionResult LatePaymentDeduction(int ApplicationId)
         {
             ViewBag.Applicationid = ApplicationId;
