@@ -128,6 +128,11 @@
             <div class="col-md-3">
                 <a id="ReleaseTrancheURL" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px">Release Tranche</a>
             </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <a id="latePaymenntDeductionURL" class="btn btn-success text-white text-uppercase" style="width:100%;height:100px; margin-top:20px; padding-top:40px">Late Payment Charges</a>
+            </div>
         </div>
 
     </div>
@@ -220,6 +225,7 @@
             $("#ApplicationDetailsUrl").attr("href", "../Dashboard/Application?id="+ApplicationID);
             $("#RescheduleApplicationURL").attr("href", "../RescheduleApplication/reschedule?ApplicationId="+ApplicationID);
             $("#ReleaseTrancheURL").attr("href", "../Accountant/releaseTranche?ApplicationId="+ApplicationID);
+            $("#latePaymenntDeductionURL").attr("href", "../Accountant/LatePaymentDeduction?ApplicationId=" + ApplicationID);
         }
 
 

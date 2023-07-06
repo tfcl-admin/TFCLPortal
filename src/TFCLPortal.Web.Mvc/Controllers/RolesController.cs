@@ -33,6 +33,13 @@ namespace TFCLPortal.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> MCRoles()
+        {
+ 
+
+            return View();
+        }
+
         public async Task<ActionResult> EditRoleModal(int roleId)
         {
             var output = await _roleAppService.GetRoleForEdit(new EntityDto(roleId));

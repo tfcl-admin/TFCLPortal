@@ -194,6 +194,7 @@ namespace TFCLPortal.Schedules
         {
             try
             {
+                
                 var Schedule = _ScheduleRepository.GetAllList().Where(x => x.ApplicationId == ApplicationId).FirstOrDefault();
                 var result = ObjectMapper.Map<ScheduleListDto>(Schedule);
                 if (result != null)

@@ -1,0 +1,328 @@
+﻿@model List<TFCLPortal.ClosingMonths.Dto.ClosingMonthListDto>
+@{
+    ViewData["Title"] = "Branches | Closed months";
+    Layout = "~/Views/Shared/_NewLayout.cshtml";
+}
+
+
+<main class='main-content bgc-grey-100' style="padding-top:50px">
+    <div class="row page-title">
+        <div class="col-md-6 text-left">
+            <h4 class="page-title-text">
+                Loan Comparison Sheet (SDE)
+            </h4>
+            <h6 class="page-title-breadcrumbs">
+                <a href="~/Dashboard/Dashboard">Home</a> > Application Details > Loan Comparison Sheet (SDE)
+            </h6>
+        </div>
+        <div class="col-md-6 text-right">
+            @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+        </div>
+    </div>
+   @* <div class="card p-10 mB-20">
+        <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Sr#</th>
+                    <th>Branch Code</th>
+                    <th>Branch Name</th>
+                    <th>Closed Month</th>
+                    <th>Updated On</th>
+                    @if (ViewBag.Admin)
+                    {
+                        <th>Edit</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    int i = 0;
+                    foreach (var item in Model.ToList())
+                    {
+                        i = i + 1;
+                <tr>
+                    <td>@i</td>
+                    <td>@item.BranchCode</td>
+                    <td>@item.BranchName</td>
+                    <td>@item.MonthName , @item.Year</td>
+                    <td>@item.CreationTime.ToString("dd MMM yyyy")</td>
+                    @if (ViewBag.Admin)
+                    {
+                        <td><a href="/Dashboard/updateclosingmonth?ItemId=@item.Id&&BranchId=@item.BranchId">Update</a></td>
+                    }
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>*@
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="5"><h4 style="align-content">Loan Comparison Sheet</h4></th>
+            </tr>
+            <tr>                
+                <th scope="col">#</th>
+                <th scope="col">Credentials</th>
+                <th scope="col">Previous</th>
+                <th scope="col">Current</th>
+                <th scope="col">Variance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th rowspan="4">General Information</th>
+                <td>Loan Utilization</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Total Dependants</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>School Going Dependents</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Household Place Status</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th rowspan="6">Business Information</th>
+                <td>Business Place Status</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Total Teaching Staff</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>            
+            <tr>
+                <td>Total Non-Teaching Staff</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>      
+            <tr>
+                <td>Board Affiliation (Y/N)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>           
+            <tr>
+                <td>Registration Status (Y/N)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>           
+            <tr>
+                <td>Associated Academy (Y/N)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>            
+            <tr>
+                <th rowspan="2">Exposure Details</th>
+                <td>Loan Exposure (O/S Amount)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>                      
+            <tr>            
+                <td>Loan Exposure (Monthly Payment)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th rowspan="5">Assets</th>
+                <td>Business Assets</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr> 
+            <tr>
+                <td>Business Liabilities</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>            
+            <tr>
+                <td>Household Assets</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>          
+            <tr>
+                <td>Household Liabilities</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>           
+            <tr class="table-success">
+                <td>Total Net Worth</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+
+            <tr>
+                <th rowspan="19">Cashflow</th>
+                <td>Number of Students (EI)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>            
+            <tr>            
+                <td>Average Fee</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>           
+            <tr>            
+                <td>Total Fee</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>        
+            <tr>            
+                <td>Number of Students (Academy)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>         
+            <tr>            
+                <td>Average Fee</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Total Fee</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>          
+            <tr>
+                <td>Associated Income</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>          
+            <tr>
+                <td>Non Associated Income</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>       
+            <tr class="table-success">
+                <td>Grand Total Income</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Teacher Salary (School)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>         
+            <tr>
+                <td>Other Salary</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>       
+            <tr>
+                <td>Business Expenses (Other than Salary)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>          
+            <tr>
+                <td>Total Expenses</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>          
+            <tr>
+                <td>Teacher Salary (Academy)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>        
+            <tr>
+                <td>Other Salary</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>          
+            <tr>
+                <td>Business Expenses (Other than Salary)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>           
+            <tr>
+                <td>Total Expenses</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr class="table-success">
+                <td>Grand Total Expenses</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Household Expenses</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <th rowspan="4">Loan Eligibility</th>
+                <td>Loan Amount</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Tenure</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>        
+            <tr>
+                <td>Installment Amount</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>      
+            <tr class="table-success">
+                <td>Installment Ratio</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+
+</main>
+
+<!-- ### $App Screen Footer ### -->

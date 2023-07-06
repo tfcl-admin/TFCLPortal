@@ -70,9 +70,19 @@
 
 <script>
 
+   
+
+    
+
+ 
     $(function () {
         $('#uploadBtn').click(function () {
 
+            var Key = [];
+            var ApplicationId = $('#ApplicationId').val();
+            var documentsUpload = Key.filter(x => x.ApplicationId == ApplicationId && x.Status == "Inprocessing" && x.isDeleted == false).toString();
+            alert(documentsUpload);
+            
             var DocType = $('#DocumentType').val();
             var PersonName = $('#PersonName').val();
             var myFile = $('#document').prop('files')[0];

@@ -58,7 +58,7 @@ namespace TFCLPortal.Transactions.Dto
         {
             try
             {
-                var Transaction = _TransactionRepository.GetAllList(x => x.Fk_AccountId == AccountId).ToList();
+                var Transaction = _TransactionRepository.GetAllList(x => x.Fk_AccountId == AccountId && x.isAuthorized== true ).ToList();
                 var returnList = ObjectMapper.Map<List<TransactionListDto>>(Transaction);
                 var apps = _ApplicationzRepository.GetAllList();
                 if (returnList.Count > 0)

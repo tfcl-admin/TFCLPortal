@@ -2278,7 +2278,21 @@ namespace TFCLPortal.Web.Controllers
             return Json(response);
 
         }
+        public IActionResult LatePaymentDeduction(int ApplicationId)
+        {
+            ViewBag.Applicationid = ApplicationId;
+            var app = _applicationAppService.GetApplicationById(ApplicationId);
+            ViewBag.ClientId = app.ClientID;
+            ViewBag.ClientName = app.ClientName;
 
+            var Acc = _customerAccountAppAppService.GetCustomerAccountByCNICwithTransactions(app.CNICNo);
+            if (Acc != null)
+            {
+                ViewBag.Payment = Acc.Balance;
+            }
+
+            return View();
+        }
         //Early Settlement Module Start
         public IActionResult EarlySettlement(int ApplicationId)
         {
@@ -2287,6 +2301,7 @@ namespace TFCLPortal.Web.Controllers
             var app = _applicationAppService.GetApplicationById(ApplicationId);
             ViewBag.ClientId = app.ClientID;
             ViewBag.ClientName = app.ClientName;
+
 
             var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
             if (schedule != null)

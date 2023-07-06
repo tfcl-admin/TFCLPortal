@@ -551,22 +551,22 @@
         
         if (loanType == "SECURED") {
 
-            processCharges = ((enhancementAmount * 0.45) / 100);
+            processCharges = ((enhancementAmount * 0.60) / 100);
             FedOnProcessing = (processCharges * 0.16);
-            enhancementAmount = (enhancementAmount - processCharges - FedOnProcessing);
              
-            if (processCharges > 13500) {
+            if (processCharges > 21000) {
 
-                processCharges = 13500;
+                processCharges = 21000;
                 FedOnProcessing = 2160;
-                enhancementAmount = (enhancementAmount - 13500 - 2160);
+                enhancementAmount = (enhancementAmount - 21000 - 2160);
             }
             else {
+            enhancementAmount = (enhancementAmount - processCharges - FedOnProcessing);
             }
 
         }
         else {
-            processCharges = ((loanAmount * 0.77) / 100);
+            processCharges = ((loanAmount * 1.20) / 100);
             FedOnProcessing = (processCharges * 0.16);
             enhancementAmount = (enhancementAmount - processCharges - FedOnProcessing);
 

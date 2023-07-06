@@ -505,23 +505,76 @@
 
 
 
+    //$("#createSchedule").click(function (event) {
+    //    if ($('#ChequeNo').val() == "" || $('#ChequeNo').val() == null) {// Previous code for only to check cheque number
+    //        event.preventDefault();
+    //        swal("Please enter cheque number:", {
+    //            icon: "warning",
+    //            title: "Cheque Number",
+    //        })
+    //            .then((value) => {
+    //                if (value == null || value == "") {
+    //                    swal("Cheque Number Required!", {
+    //                        icon: "warning",
+    //                    });
+    //                }
+    //                else {
+    //                }
+    //            });
+    //    }// 
+    //});
     $("#createSchedule").click(function (event) {
-        if ($('#ChequeNo').val() == "" || $('#ChequeNo').val() == null) {//
+        //alert($('#DisbursmentDate').val());
+        if ($('#ScheduleType').val() == "" || $('#ScheduleType').val() == null) {
             event.preventDefault();
-            swal("Please enter cheque number:", {
-                icon: "warning",
-                title: "Cheque Number",
+            swal("Please select schedule type", {
+                icon: "error",
+                title: "Schedule Type",
             })
                 .then((value) => {
                     if (value == null || value == "") {
-                        swal("Cheque Number Required!", {
-                            icon: "warning",
+                        swal("Schedule Type Required!", {
+                            icon: "error",
                         });
                     }
                     else {
                     }
                 });
-        }// we can add ajax call here for post method {if scheduleType = Tranch then [this data] else if scheduleType = Standard then [this data] }
+        }
+
+        if ($('#DisbursmentDate').val() == "" || $('#DisbursmentDate').val() == null) {
+            event.preventDefault();
+            swal("Please select Disbursement Date to create schedule", {
+                icon: "error",
+                title: "Disbursement Date",
+            })
+                .then((value) => {
+                    if (value == null || value == "") {
+                        swal("Disbursement Date Required!", {
+                            icon: "error",
+                        });
+                    }
+                    else {
+                    }
+                });
+        }
+
+        if ($('#ChequeNo').val() == "" || $('#ChequeNo').val() == null) {
+            event.preventDefault();
+            swal("Please enter cheque number:", {
+                icon: "error",
+                title: "Cheque Number",
+            })
+                .then((value) => {
+                    if (value == null || value == "") {
+                        swal("Cheque Number Required!", {
+                            icon: "error",
+                        });
+                    }
+                    else {
+                    }
+                });
+        }  
     });
 
 
@@ -646,22 +699,23 @@
 
         if (loanType == "SECURED") {
 
-            processCharges = ((loanAmount * 0.45) / 100);
+            processCharges = ((loanAmount * 0.60) / 100);
             FedOnProcessing = (processCharges * 0.16);
-            loanAmount = (loanAmount - processCharges - FedOnProcessing);
 
-            if (processCharges > 13500) {
+            if (processCharges > 21000) {
 
-                processCharges = 13500;
+                processCharges = 21000;
                 FedOnProcessing = 2160;
-                loanAmount = (loanAmount - 13500 - 2160);
+                loanAmount = (loanAmount - 21000 - 2160);
             }
             else {
+            loanAmount = (loanAmount - processCharges - FedOnProcessing);
+
             }
 
         }
         else {
-            processCharges = ((loanAmount * 0.77) / 100);
+            processCharges = ((loanAmount * 1.20) / 100);
             FedOnProcessing = (processCharges * 0.16);
             loanAmount = (loanAmount - processCharges - FedOnProcessing);
 

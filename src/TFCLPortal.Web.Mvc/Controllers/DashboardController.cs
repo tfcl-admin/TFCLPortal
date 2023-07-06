@@ -301,6 +301,11 @@ namespace TFCLPortal.Web.Mvc.Controllers
             return View();
         }
 
+        public IActionResult LoanComparion_SDE()
+        {
+            return View();
+        }
+
         public IActionResult CreatePDForm(int ApplicationId)
         {
             if (ApplicationId != 0)

@@ -21,6 +21,7 @@ using TFCLPortal.Schedules;
 using TFCLPortal.EarlySettlements;
 using TFCLPortal.Applications.Dto;
 using TFCLPortal.NotificationLogs;
+using System.Security.Principal;
 
 namespace TFCLPortal.Reversals
 {
@@ -187,7 +188,13 @@ namespace TFCLPortal.Reversals
                             _TransactionRepository.Update(revTrans);
                             CurrentUnitOfWork.SaveChanges();
 
-                            if (transaction.Details.Contains("Principal Collection") || transaction.Details.Contains("Markup Collection"))
+                            //added to cater partial collections
+                            if (transaction.Details.Contains("Partial Principal Collection") || transaction.Details.Contains("Partial Markup Collection"))
+                            {
+                                isInstallmentPaid = false;
+                            }
+
+                            else if (transaction.Details.Contains("Principal Collection") || transaction.Details.Contains("Markup Collection"))
                             {
                                 isInstallmentPaid = true;
                             }
