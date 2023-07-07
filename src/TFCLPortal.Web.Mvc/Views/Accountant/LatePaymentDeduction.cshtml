@@ -167,26 +167,25 @@
             url: '@Url.Content("~/Accountant/SaveLatePaymentDeduction")',
             data: {
 
-                'ApplicationId': ApplicationId,
-                'LDays': LDays,
-                'newtoalPunishment': newtoalPunishment,
-                'remainBalance': remainBalance,
-                'accBalance': accBalance                
+                ApplicationId: Number(ApplicationId),
+                LDays: Number(LDays),
+                newtoalPunishment: Number(newtoalPunishment),
+                remainBalance: Number(remainBalance),
+                accBalance: Number(accBalance)
             },
  
             success: function (response) {
                 $(".pageloader").toggleClass("d-none");
                // var returnData = data.result;
-                //abp.notify.success(returnData, "Success");
+                abp.notify.success("Success");
                 console.log(response);
                 window.location.reload();
 
             },
-            error: function (xhr, status, error) {
+            error: function (error) {
                 
-                abp.notify.error("Some error occured, please contact with admin !", "error");
+                console.log(error);
                 $(".pageloader").toggleClass("d-none");
-                console.error(error);
             }
         });
 

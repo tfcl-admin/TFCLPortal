@@ -2297,25 +2297,27 @@ namespace TFCLPortal.Web.Controllers
             {
                 var appData = _applicationRepository.Get(ApplicationId);
                 var transaction = _transactionRepository.Get(ApplicationId);
+                var Transaction = _TransactionRepository.GetAllList(x => x.ApplicationId == ApplicationId).FirstOrDefault();
+
                 Transaction t = new Transaction();
 
                 t.Amount = newtoalPunishment;
                 t.Type = "Late Days";
                 t.DepositDate = DateTime.Now;
-                t.Details = "Late Payment Deduction; Amount "+ newtoalPunishment + "Deduction Date "+ DateTime.Now ;
+                t.Details = "Late Payment Deduction; Amount "+ newtoalPunishment + " Late Days " + LDays + "; Deduction Date "+ DateTime.Now ;
                 t.BalBefore = accBalance;
                 t.BalAfter = remainBalance;
-                t.Fk_AccountId = transaction.Fk_AccountId;
+                t.Fk_AccountId = Transaction.Fk_AccountId;
                 t.AmountWords = "";
                 t.ModeOfPayment = "Deduction";
                 t.ModeOfPaymentOther = "";
-                t.ApplicationId = appData.ApplicationId;
+                t.ApplicationId = ApplicationId;
                 t.Reference = "Deduction";
                 t.isReversed = false;
                 t.isAuthorized = true;
                 _TransactionRepository.Insert(t);
 
-                CustomerAccount ca = _CustomerAccountRepository.Get(transaction.Fk_AccountId);
+                CustomerAccount ca = _CustomerAccountRepository.Get(Transaction.Fk_AccountId);
                 ca.Balance = (ca.Balance - newtoalPunishment);
                 _CustomerAccountRepository.Update(ca);
 
