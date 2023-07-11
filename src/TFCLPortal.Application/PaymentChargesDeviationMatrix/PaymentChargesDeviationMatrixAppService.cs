@@ -79,8 +79,8 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
             try
             {
 
-                double LPC = 0, FED = 0, loanAmount = 0, result;
-                decimal val = 0;
+                double LPC = 0, FED = 0, loanAmount = 0, legalCharges = 0 , Fed_LegalCharges = 0 , result;
+                decimal val = 0   ;
 
                 ApplicationListDto app = _applicationAppService.GetApplicationByApplicationId(ApplicationId);
                 var BP = _BusinessPlansAppService.GetBusinessPlanByApplicationId(ApplicationId).Result;
@@ -107,6 +107,18 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                             {
                                 loanAmount = Convert.ToDouble(product.LoanAmountRequried.Replace(",", ""));
                             }
+                            //check if loanAmount is less or equal to 2.5M
+
+                            if (loanAmount <= 2500000)
+                            {
+                                legalCharges = 3000;
+                                Fed_LegalCharges = (legalCharges * 0.16);
+                            }
+                            else if (loanAmount > 2500000)
+                            {
+                                legalCharges = 5000;
+                                Fed_LegalCharges = (legalCharges * 0.16);
+                            }
 
                             //if to check processing charges are less then 13500
 
@@ -119,7 +131,9 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
 
                             rtnObject.ProcessingCharges = LPC;
                             rtnObject.FEDonPC = LPC * 0.16;
-                            rtnObject.NetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+                            rtnObject.LegalProcessingCharges = legalCharges;
+                            rtnObject.FEDonLegalPC = Fed_LegalCharges;
+                            rtnObject.NetDisbursement = loanAmount - (rtnObject.ProcessingCharges + rtnObject.FEDonPC) - (rtnObject.LegalProcessingCharges + rtnObject.FEDonLegalPC);
                             obj.Type = BP.CollateralGiven;
 
                             if (isOldRequired)
@@ -148,11 +162,11 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
 
                                     rtnObject.ProcessingCharges = LPC - pc;
                                     rtnObject.TotalFEDonPC = (LPC - pc) * 0.16;
-                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC - rtnObject.LegalProcessingCharges - rtnObject.FEDonLegalPC;
 
                                     rtnObject.TotalProcessingCharges = LPC;
                                     rtnObject.TotalFEDonPC = LPC * 0.16;
-                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.TotalProcessingCharges - rtnObject.TotalFEDonPC;
+                                    rtnObject.TotalNetDisbursement = loanAmount - rtnObject.TotalProcessingCharges - rtnObject.TotalFEDonPC - rtnObject.LegalProcessingCharges - rtnObject.FEDonLegalPC;
 
 
                                 }
@@ -244,9 +258,24 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
                             {
                                 LPC = Convert.ToDouble(securedPaymentCharges.MaxAmount);
                             }
+
+                            //check if loanAmount is less or equal to 2.5M
+
+                            if (loanAmount <= 2500000)
+                            {
+                                legalCharges = 3000;
+                                Fed_LegalCharges = (legalCharges * 0.16);
+                            }
+                            else if (loanAmount > 2500000)
+                            {
+                                legalCharges = 5000;
+                                Fed_LegalCharges = (legalCharges * 0.16);
+                            }
                             rtnObject.ProcessingCharges = LPC;
                             rtnObject.FEDonPC = LPC * 0.16;
-                            rtnObject.NetDisbursement = loanAmount - rtnObject.ProcessingCharges - rtnObject.FEDonPC;
+                            rtnObject.LegalProcessingCharges = legalCharges;
+                            rtnObject.FEDonLegalPC = Fed_LegalCharges;
+                            rtnObject.NetDisbursement = loanAmount - (rtnObject.ProcessingCharges + rtnObject.FEDonPC) - (rtnObject.LegalProcessingCharges + rtnObject.FEDonLegalPC);
 
                             //FED = LPC * 0.16;
                             if (isOldRequired)

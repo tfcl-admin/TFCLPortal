@@ -58,6 +58,10 @@ namespace TFCLPortal.LoanSchedules.Dto
         public string OldProcessingCharges { get; set; }
         public string OldFEDonProcessingCharges { get; set; }
         public string OldNetDisbursmentAmount { get; set; }
+        public string LegalProcessingCharges { get; set; }
+        public string FEDonLegalProcessingCharges { get; set; }
+        public string OldLegalProcessingCharges { get; set; }
+        public string OldFEDonLegalProcessingCharges { get; set; }
         public string IdProcessingCharges { get; set; }
 
         public string CollateralGiven { get; set; }

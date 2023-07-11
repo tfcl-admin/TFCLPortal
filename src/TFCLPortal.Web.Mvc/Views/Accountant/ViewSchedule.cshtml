@@ -255,7 +255,7 @@
                         <td style="text-align:right">
                             @item.OsPrincipal_Closing
                         </td>
-
+                        @*string.Format("{0:#,##0}", Decimal.Parse((item.PaidAmount).Replace(",", ""))))*@
                         @if (ViewBag.ScreenStatus.ToUpper() == "EARLY SETTLED" && item.isPaid!=true)
                         {
                             <td colspan="6" style="background-color:#28a745;text-align:center"> Early Settled </td>
@@ -335,7 +335,7 @@
                         {
                             totalPrincipal += decimal.Parse(item.principal.Replace(",", ""));
                         }
-
+                @*(item.PaidAmount == null || item.PaidAmount == "" || item.PaidAmount == "0" ? "--" : string.Format("{0:#,##0}", Decimal.Parse((item.PaidAmount).Replace(",", ""))))*@
                         @if (item.markup == "--" || item.markup == "" || item.markup == null)
                         {
                             totalInterest += 0;

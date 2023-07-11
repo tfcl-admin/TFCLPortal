@@ -13,5 +13,8 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix
         public string Type { get; set; }
         public Decimal MaxAmount { get; set; }
         public decimal Percentage { get; set; }
+
+        public decimal MinLegalProcessingCharges { get; set; }
+        public decimal MaxLegalProcessingCharges { get; set; }
     }
 }

@@ -382,26 +382,48 @@
                                             </p>
                                             <input asp-for="OldFEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.EarlierFEDonPC == 0 ? "0" : ViewBag.ProcessingCharges.EarlierFEDonPC.ToString("#,###.##"))" />
                                         </div>
-                                        @*<div class="col-md-4">
-                                        <p class="detailHeading">
-                                        Net Disbursment Amount
-                                        </p>
-                                        <input asp-for="OldNetDisbursmentAmount" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.NetDisbursmentAmount == null ? "0" : Convert.ToDouble(ViewBag.NetDisbursmentAmount).ToString("#,###.##"))" />
-                                        </div>*@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Earlier Legal Processing Charges
+                                            </p>
+                                            <input asp-for="OldLegalProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.EarlierLegalPC == 0 ? "0" : ViewBag.EarlierLegalPC.ToString("#,###.##"))" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="detailHeading">
+                                                Earlier FED on Legal Charges
+                                            </p>
+                                            <input asp-for="OldFEDonLegalProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.EarlierFEDonLegalPC == 0 ? "0" : ViewBag.EarlierFEDonLegalPC.ToString("#,###.##"))" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <p class="detailHeading">
                                                 Due Processing Charges
                                             </p>
                                             <input asp-for="ProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.ProcessingCharges == 0 ? "0" : (ViewBag.ProcessingCharges.ProcessingCharges.ToString("#,###.##")))" />
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <p class="detailHeading">
                                                 Due FED on Processing Charges
                                             </p>
                                             <input asp-for="FEDonProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.ProcessingCharges.FEDonPC == 0 ? "0" : (ViewBag.ProcessingCharges.FEDonPC.ToString("#,###.##")))" />
                                         </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Due Legal Processing Charges
+                                            </p>
+                                            <input asp-for="LegalProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.LegalProcessingCharges == 0 ? "0" : (ViewBag.LegalProcessingCharges.ToString("#,###.##")))" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p class="detailHeading">
+                                                Due FED on Legal Processing Charges
+                                            </p>
+                                            <input asp-for="FEDonLegalProcessingCharges" type="text" readonly="readonly" class="form-control disabled" value="@(ViewBag.FEDonLegalProcessingCharges == 0 ? "0" : (ViewBag.FEDonLegalProcessingCharges.ToString("#,###.##")))" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-4">
                                             <p class="detailHeading">
                                                 Net Disbursment Amount
@@ -546,9 +568,11 @@
     function readyFn(jQuery) {
         var loanType = '@ViewBag.CollateralGiven';
         var enhancementAmount = @diff;
-        var processCharges = 0, FedOnProcessing = 0 , netDisburseAmount = 0 ;
-   
+        var processCharges = 0, FedOnProcessing = 0 , netDisburseAmount = 0;
+        var LegalProcessingCharges = Number('@ViewBag.LegalProcessingCharges');
+        var FeDonLegalCharges = Number('@ViewBag.FEDonLegalProcessingCharges');
         
+ 
         if (loanType == "SECURED") {
 
             processCharges = ((enhancementAmount * 0.60) / 100);
@@ -558,10 +582,10 @@
 
                 processCharges = 21000;
                 FedOnProcessing = 2160;
-                enhancementAmount = (enhancementAmount - 21000 - 2160);
+                enhancementAmount = (enhancementAmount - 21000 - 2160 - LegalProcessingCharges - FeDonLegalCharges);
             }
             else {
-            enhancementAmount = (enhancementAmount - processCharges - FedOnProcessing);
+                enhancementAmount = (enhancementAmount - processCharges - FedOnProcessing - LegalProcessingCharges - FeDonLegalCharges);
             }
 
         }
@@ -693,27 +717,30 @@
         var loanAmount = $('#listForTranches_0__Amount').val();
         var processCharges = 0, FedOnProcessing = 0;
         var loanType = '@ViewBag.CollateralGiven';
-
+        var LegalProcessingCharges = Number('@ViewBag.LegalProcessingCharges');
+        var FeDonLegalCharges = Number('@ViewBag.FEDonLegalProcessingCharges');
 
 
         if (loanType == "SECURED") {
 
-            processCharges = ((loanAmount * 0.45) / 100);
+            processCharges = ((loanAmount * 0.60) / 100);
             FedOnProcessing = (processCharges * 0.16);
-            loanAmount = (loanAmount - processCharges - FedOnProcessing);
 
-            if (processCharges > 13500) {
+            if (processCharges > 21000) {
 
-                processCharges = 13500;
+                processCharges = 21000;
                 FedOnProcessing = 2160;
-                loanAmount = (loanAmount - 13500 - 2160);
+                loanAmount = (loanAmount - 21000 - 2160 - (LegalProcessingCharges + FeDonLegalCharges));
             }
             else {
+
+            loanAmount = (loanAmount - processCharges - FedOnProcessing - (LegalProcessingCharges + FeDonLegalCharges));
+
             }
 
         }
         else {
-            processCharges = ((loanAmount * 0.77) / 100);
+            processCharges = ((loanAmount * 1.20) / 100);
             FedOnProcessing = (processCharges * 0.16);
             loanAmount = (loanAmount - processCharges - FedOnProcessing);
 

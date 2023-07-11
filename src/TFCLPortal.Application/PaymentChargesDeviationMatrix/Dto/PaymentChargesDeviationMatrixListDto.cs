@@ -12,6 +12,8 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix.Dto
         public decimal MaxAmount { get; set; }
 
         public decimal Percentage { get; set; }
+        public decimal MinLegalProcessingCharges { get; set; }
+        public decimal MaxLegalProcessingCharges { get; set; }
     }
 
 
@@ -19,10 +21,14 @@ namespace TFCLPortal.PaymentChargesDeviationMatrix.Dto
     {
         public double EarlierProcessingCharges { get; set; }
         public double EarlierFEDonPC { get; set; }
+        public double EarlierFEDonLegalPC { get; set; }
+        public double EarlierLegalPC { get; set; }
         public double EarlierNetDisbursement { get; set; }
 
         public double ProcessingCharges { get; set; }
-        public double FEDonPC{ get; set; }
+        public double LegalProcessingCharges { get; set; }
+        public double FEDonLegalPC { get; set; }
+        public double FEDonPC { get; set; }
         public double NetDisbursement{ get; set; }
 
         public double TotalProcessingCharges { get; set; }

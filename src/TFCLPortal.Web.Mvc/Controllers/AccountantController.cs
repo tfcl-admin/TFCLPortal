@@ -1260,19 +1260,15 @@ namespace TFCLPortal.Web.Controllers
                 double FED = 0;
                 FED = Convert.ToDouble(ProcessCharges.ProcessingCharges) * calculation;
                 ViewBag.FEDonProcessingCharges = FED;
+                ViewBag.FEDonLegalProcessingCharges = ProcessCharges.FEDonLegalPC;
+                ViewBag.LegalProcessingCharges = ProcessCharges.LegalProcessingCharges;
 
-                ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges.ProcessingCharges) + FED);
+                ViewBag.NetDisbursmentAmount = LoanAmount - (Convert.ToDouble(ProcessCharges.ProcessingCharges) + FED) - (Convert.ToDouble(ProcessCharges.LegalProcessingCharges) + Convert.ToDouble(ProcessCharges.FEDonLegalPC)) ;
 
                 ViewBag.OldPC = ProcessCharges.ProcessingCharges;
                 ViewBag.OldFEDonPC = FED;
 
             }
-
-            //GetFromFormDto mdl = new GetFromFormDto();
-            //mdl.ProcessingCharges = Convert.ToString(ViewBag.ProcessingCharges);
-            //mdl.FEDonProcessingCharges = Convert.ToString(ViewBag.FEDonProcessingCharges);
-            //mdl.NetDisbursmentAmount = Convert.ToString(ViewBag.NetDisbursmentAmount);
-            //mdl.YearlyMarkup= Convert.ToString(ViewBag.YearlyMarkup);
             ViewBag.Application = application;
 
 
@@ -1412,6 +1408,27 @@ namespace TFCLPortal.Web.Controllers
                 if (ProcessCharges != null)
                 {
                     ViewBag.ProcessingCharges = ProcessCharges;
+                    //ViewBag.ProcessingCharges.EarlierProcessingCharges = ProcessCharges.ProcessingCharges;
+                    //ViewBag.ProcessingCharges.EarlierFEDonPC = ProcessCharges.FEDonPC;
+
+                    var schedule = _scheduleAppService.GetScheduleByApplicationId(ApplicationId).Result;
+                    ViewBag.DisbursmentDate = schedule.DisbursmentDate;
+
+                    var disbursemntDate = "07 July 2023";
+
+                    if (Convert.ToDateTime(schedule.DisbursmentDate) >= Convert.ToDateTime(disbursemntDate))
+                    {
+                        ViewBag.LegalProcessingCharges = ProcessCharges.LegalProcessingCharges;
+                        ViewBag.FEDonLegalProcessingCharges = ProcessCharges.FEDonLegalPC;
+                    }
+
+                    else {
+                        ViewBag.LegalProcessingCharges = 0;
+                        ViewBag.FEDonLegalProcessingCharges = 0;
+                    }
+
+                    ViewBag.EarlierLegalPC = ProcessCharges.EarlierLegalPC;
+                    ViewBag.EarlierFEDonLegalPC = ProcessCharges.EarlierFEDonLegalPC;
                     //double calculation = 0.16;
                     //double FED = 0;
                     //FED = Convert.ToDouble(ProcessCharges) * calculation;

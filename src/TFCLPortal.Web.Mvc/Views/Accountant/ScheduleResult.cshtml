@@ -244,6 +244,16 @@
                     <td style="background-color:lightyellow" id="FEDonProcessingChargesTxt">@ViewBag.Input.FEDonProcessingCharges</td>
 
                     </tr>
+                <tr>
+                    <td><b>Legal Charges</b></td>
+                    <td style="background-color:lightyellow" id="LegalProcessingChargesTxt">@ViewBag.Input.LegalProcessingCharges</td>
+
+                </tr>
+                <tr>
+                    <td><b>FED on Legal Charges</b></td>
+                    <td style="background-color:lightyellow" id="FEDonLegalProcessingChargesTxt">@ViewBag.Input.FEDonLegalProcessingCharges</td>
+
+                </tr>
                     <tr>
                         <td><b>Net Disbursment Amount</b></td>
                     <td style="background-color:lightyellow" id="NetDisbursmentAmountTxt">@ViewBag.Input.NetDisbursmentAmount</td>
@@ -895,6 +905,8 @@
                 'PerDayMarkup': $("#DayDiv").text(),
                 'ProcessingCharges': $("#ProcessingChargesTxt").text().trim(),
                 'FEDonProcessingCharges': $("#FEDonProcessingChargesTxt").text(),
+                'LegalProcessingCharges': $("#LegalProcessingChargesTxt").text().trim(),
+                'FEDonLegalProcessingCharges': $("#FEDonLegalProcessingChargesTxt").text(),
                 'NetDisbursmentAmount': $("#NetDisbursmentAmountTxt").text(),
                 'ChequeDate':$("#ChequeDateTxt").text().trim(),
                 'ChequeNo':$("#ChequeNoTxt").text(),
@@ -1080,6 +1092,31 @@
                         </tr>
                     }
 
+                </table>
+                <table width="100%" class="tblTopData" style="margin-top:20px">
+                    <tr>
+                        <td width="40%"><b>Processing Charges</b></td>
+                        <td style="background-color:lightyellow" id="ProcessingChargesTxt">@ViewBag.Input.ProcessingCharges</td>
+                    </tr>
+                    <tr>
+                        <td><b>FED on Processing Charges</b></td>
+                        <td style="background-color:lightyellow" id="FEDonProcessingChargesTxt">@ViewBag.Input.FEDonProcessingCharges</td>
+
+                    </tr>
+                    <tr>
+                        <td><b>Legal Charges</b></td>
+                        <td style="background-color:lightyellow" id="LegalProcessingChargesTxt">@ViewBag.Input.LegalProcessingCharges</td>
+
+                    </tr>
+                    <tr>
+                        <td><b>FED on Legal Charges</b></td>
+                        <td style="background-color:lightyellow" id="FEDonLegalProcessingChargesTxt">@ViewBag.Input.FEDonLegalProcessingCharges</td>
+
+                    </tr>
+                    <tr>
+                        <td><b>Net Disbursment Amount</b></td>
+                        <td style="background-color:lightyellow" id="NetDisbursmentAmountTxt">@ViewBag.Input.NetDisbursmentAmount</td>
+                    </tr>
                 </table>
 
             </div>

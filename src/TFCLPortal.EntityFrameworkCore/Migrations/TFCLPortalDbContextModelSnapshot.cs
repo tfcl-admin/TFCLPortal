@@ -7653,6 +7653,10 @@ namespace TFCLPortal.Migrations
 
                     b.Property<decimal>("MaxAmount");
 
+                    b.Property<decimal>("MaxLegalProcessingCharges");
+
+                    b.Property<decimal>("MinLegalProcessingCharges");
+
                     b.Property<decimal>("Percentage");
 
                     b.Property<string>("Type");
@@ -8648,6 +8652,8 @@ namespace TFCLPortal.Migrations
 
                     b.Property<string>("FEDonProcessingCharges");
 
+                    b.Property<string>("FedonLegalProcessingCharges");
+
                     b.Property<string>("GraceDays");
 
                     b.Property<string>("IRR");
@@ -8661,6 +8667,8 @@ namespace TFCLPortal.Migrations
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("LegalProcessingCharges");
 
                     b.Property<string>("LoanAmount");
 
