@@ -40,6 +40,8 @@ namespace TFCLPortal.Schedules.Dto
         public string ProcessingCharges { get; set; }
         public string FEDonProcessingCharges { get; set; }
         public string NetDisbursmentAmount { get; set; }
+        public string LegalProcessingCharges { get; set; }
+        public string FedonLegalProcessingCharges { get; set; }
 
         public string ChequeNo { get; set; }
         public string ChequeDate { get; set; }
