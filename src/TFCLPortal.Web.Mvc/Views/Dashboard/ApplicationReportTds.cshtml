@@ -2070,102 +2070,106 @@
 
 
         }
-        @if (ViewBag.NAI.isNonAssociatedIncome != "NO")
+        @if (ViewBag.NAI !=  null)
         {
+            @if (ViewBag.NAI.isNonAssociatedIncome != "NO")
+            {
 
-            <table border="1" width="100%" class="tbl">
+                <table border="1" width="100%" class="tbl">
 
-                <thead>
-                    <tr>
-                        <th class="title text-center bg-gray ScreenTitle" colspan="4">Other INCOME Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (ViewBag.NAI.NonAssociatedIncomeChilds != null)
-                    {
-
-                        @if (ViewBag.NAI.NonAssociatedIncomeChilds.Count > 0)
+                    <thead>
+                        <tr>
+                            <th class="title text-center bg-gray ScreenTitle" colspan="4">Other INCOME Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.NAI.NonAssociatedIncomeChilds != null)
                         {
 
-                            @foreach (var item in ViewBag.NAI.NonAssociatedIncomeChilds)
+                            @if (ViewBag.NAI.NonAssociatedIncomeChilds.Count > 0)
                             {
 
+                                @foreach (var item in ViewBag.NAI.NonAssociatedIncomeChilds)
+                                {
 
 
-                                <tr>
-                                    <td class="title" width="30%">
-                                        Other Occupation
-                                    </td>
-                                    <td class="text" width="25%">@(item.OtherOccupationName == null || item.OtherOccupationName == "" ? "--" : item.OtherOccupationName)</td>
 
-                                    <td class="title" width="25%">
-                                        Other
-                                    </td>
-                                    <td class="text" width="20%">@(item.OtherOccupationOthers == null || item.OtherOccupationOthers == "" ? "--" : item.OtherOccupationOthers)</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        Source Of Income
-                                    </td>
-                                    <td class="text">@(item.SourceOfIncomeName == null || item.SourceOfIncomeName == "" ? "--" : item.SourceOfIncomeName)</td>
+                                    <tr>
+                                        <td class="title" width="30%">
+                                            Other Occupation
+                                        </td>
+                                        <td class="text" width="25%">@(item.OtherOccupationName == null || item.OtherOccupationName == "" ? "--" : item.OtherOccupationName)</td>
 
-                                    <td class="title">
-                                        Others
-                                    </td>
-                                    <td class="text">@(item.SourceOfIncomeOthers == null || item.SourceOfIncomeOthers == "" ? "--" : item.SourceOfIncomeOthers)</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        Documentary Proof
-                                    </td>
-                                    @if (item.DocumentProof == null)
-                                    {
-                                        <td class="text">N/A</td>
-                                    }
-                                    else if (item.DocumentProof == false)
-                                    {
-                                        <td class="text">No</td>
-                                    }
-                                    else if (item.DocumentProof == true)
-                                    {
-                                        <td class="text">Yes</td>
-                                    }
+                                        <td class="title" width="25%">
+                                            Other
+                                        </td>
+                                        <td class="text" width="20%">@(item.OtherOccupationOthers == null || item.OtherOccupationOthers == "" ? "--" : item.OtherOccupationOthers)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title">
+                                            Source Of Income
+                                        </td>
+                                        <td class="text">@(item.SourceOfIncomeName == null || item.SourceOfIncomeName == "" ? "--" : item.SourceOfIncomeName)</td>
 
-                                    <td class="title">
-                                        Actual Revenue
-                                    </td>
-                                    <td class="text">@(item.ActualRevenue == null || item.ActualRevenue == "" ? "--" : string.Format("{0:#,###}", Int32.Parse((item.ActualRevenue).Replace(",",""))))</td>
-                                </tr>
-                                <tr>
-                                    <td class="title">
-                                        Considered %age
-                                    </td>
-                                    <td class="text">@(item.ConsideredPercentage == null || item.ConsideredPercentage == "" ? "--" : item.ConsideredPercentage)</td>
+                                        <td class="title">
+                                            Others
+                                        </td>
+                                        <td class="text">@(item.SourceOfIncomeOthers == null || item.SourceOfIncomeOthers == "" ? "--" : item.SourceOfIncomeOthers)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title">
+                                            Documentary Proof
+                                        </td>
+                                        @if (item.DocumentProof == null)
+                                        {
+                                            <td class="text">N/A</td>
+                                        }
+                                        else if (item.DocumentProof == false)
+                                        {
+                                            <td class="text">No</td>
+                                        }
+                                        else if (item.DocumentProof == true)
+                                        {
+                                            <td class="text">Yes</td>
+                                        }
 
-                                    <td class="title">
-                                        Considered Amount
-                                    </td>
-                                    <td class="text">@(item.ConsideredAmount == null || item.ConsideredAmount == "" || item.ConsideredAmount == "0" ? "0" : string.Format("{0:#,###}", Int32.Parse((item.ConsideredAmount).Replace(",",""))))</td>
-                                </tr>
+                                        <td class="title">
+                                            Actual Revenue
+                                        </td>
+                                        <td class="text">@(item.ActualRevenue == null || item.ActualRevenue == "" ? "--" : string.Format("{0:#,###}", Int32.Parse((item.ActualRevenue).Replace(",", ""))))</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title">
+                                            Considered %age
+                                        </td>
+                                        <td class="text">@(item.ConsideredPercentage == null || item.ConsideredPercentage == "" ? "--" : item.ConsideredPercentage)</td>
+
+                                        <td class="title">
+                                            Considered Amount
+                                        </td>
+                                        <td class="text">@(item.ConsideredAmount == null || item.ConsideredAmount == "" || item.ConsideredAmount == "0" ? "0" : string.Format("{0:#,###}", Int32.Parse((item.ConsideredAmount).Replace(",", ""))))</td>
+                                    </tr>
 
 
-                                <tr>
-                                    <td class="title text-left bg-gray" colspan="4"></td>
-                                </tr>
+                                    <tr>
+                                        <td class="title text-left bg-gray" colspan="4"></td>
+                                    </tr>
+                                }
+
                             }
 
                         }
-
-                    }
-                    <tr>
-                        <td class="title" width="30%">Grand Total Non Associated Income</td>
-                        <td class="text" width="25%">@(ViewBag.NAI.TotalNonAssociatedIncome == null || ViewBag.NAI.TotalNonAssociatedIncome == "" || ViewBag.NAI.TotalNonAssociatedIncome == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.NAI.TotalNonAssociatedIncome).Replace(",",""))))</td>
-                        <td width="25%"></td>
-                        <td width="20%"></td>
-                    </tr>
-                </tbody>
-            </table>
+                        <tr>
+                            <td class="title" width="30%">Grand Total Non Associated Income</td>
+                            <td class="text" width="25%">@(ViewBag.NAI.TotalNonAssociatedIncome == null || ViewBag.NAI.TotalNonAssociatedIncome == "" || ViewBag.NAI.TotalNonAssociatedIncome == "0" ? "--" : string.Format("{0:#,##0}", Int32.Parse((ViewBag.NAI.TotalNonAssociatedIncome).Replace(",", ""))))</td>
+                            <td width="25%"></td>
+                            <td width="20%"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
         }
+       
         @if (ViewBag.BE != null)
         {
             <table border="1" width="100%" class="tbl">

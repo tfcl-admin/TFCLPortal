@@ -93,6 +93,7 @@ using TFCLPortal.DynamicDropdowns.ParentEngagements;
 using TFCLPortal.DynamicDropdowns.SpouseFamilyOtherIncomes;
 using TFCLPortal.DynamicDropdowns.OtherPaymentBehaviours;
 using TFCLPortal.LiabilityTypes;
+using TFCLPortal.DynamicDropdowns.DeclineReasons;
 
 namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
 {
@@ -182,6 +183,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
         private readonly IRepository<BankingTransaction> _bankingTransactionRepository;
         private readonly IRepository<ParentEngagement> _ParentEngagementRepository;
         private readonly IRepository<SpouseFamilyOtherIncome> _SpouseFamilyOtherIncomeRepository;
+        private readonly IRepository<DeclineReason> _DeclineReasonRepository;
         public GenericDropdownAppService
         (ILoanPurposeAppService loanPurposeAppService,
             IRepository<LearningAid> LearningAidRepository,
@@ -265,9 +267,11 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
             IBankRatingAppService bankRatingAppService,
             ICreditBureauReportedAppService creditBureauReportedAppService,
             IClientBusinessClassificationAppService clientBusinessClassificationAppService,
-            INatureOfBusinessAppService natureOfBusinessAppService)
+            INatureOfBusinessAppService natureOfBusinessAppService,
+            IRepository<DeclineReason> DeclineReasonRepository)
         {
             _SpouseFamilyOtherIncomeRepository = SpouseFamilyOtherIncomeRepository;
+            _DeclineReasonRepository = DeclineReasonRepository;
             _powerBackupRepository = powerBackupRepository;
             _CleanWaterRepository = CleanWaterRepository;
             _loanPurposeAppService = loanPurposeAppService;
@@ -586,6 +590,8 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
                 var RecordMaintenances = _inventoryRecordMaintenanceAppService.GetAllList();
                 var RecordMaintenanceDto = ObjectMapper.Map<List<InventoryRecordMaintenanceListDto>>(RecordMaintenances);
 
+                 
+
 
                 //New Added for Mobilization
                 //var loanList = _loanPurposeAppService.GetAllList();
@@ -684,6 +690,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
                 genericDropdownDto.SpouseFamilyOtherIncomeRep = _SpouseFamilyOtherIncomeRepository.GetAllList();
                 genericDropdownDto.OtherPaymentBehaviourRep = _OtherPaymentBehaviourRepository.GetAllList();
                 genericDropdownDto.LiabilityTypeRep = _LiabilityTypeRepository.GetAllList();
+                genericDropdownDto.DeclineReasonList = _DeclineReasonRepository.GetAllList();
                 //new Mobiization Dropdowns
 
 

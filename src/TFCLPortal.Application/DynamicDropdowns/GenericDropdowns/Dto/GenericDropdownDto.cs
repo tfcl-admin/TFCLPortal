@@ -27,6 +27,7 @@ using TFCLPortal.DynamicDropdowns.ParentEngagements;
 using TFCLPortal.DynamicDropdowns.SpouseFamilyOtherIncomes;
 using TFCLPortal.DynamicDropdowns.OtherPaymentBehaviours;
 using TFCLPortal.LiabilityTypes;
+using TFCLPortal.DynamicDropdowns.DeclineReasons;
 
 namespace TFCLPortal.DynamicDropdowns.GenericDropdowns.Dto
 {
@@ -131,6 +132,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns.Dto
         public List<SpouseFamilyOtherIncome> SpouseFamilyOtherIncomeRep { get; set; }
         public List<OtherPaymentBehaviour> OtherPaymentBehaviourRep { get; set; }
         public List<LiabilityType> LiabilityTypeRep { get; set; }
+        public List<DeclineReason> DeclineReasonList { get; set; }
 
 
     }
