@@ -1,8 +1,8 @@
 ﻿@using TFCLPortal.Web.Startup
-@model List<TFCLPortal.CustomerAccounts.Dto.CustomerAccountListDto>
+@model List<TFCLPortal.LateDaysAuthorizations.Dto.LateDaysAuthorizationListDto>
 
 @{
-    ViewBag.CurrentPageName = "Customer Accounts List"; // The menu item will be active for this page.
+      // The menu item will be active for this page.
     Layout = "~/Views/Shared/_NewLayout.cshtml";
 }
 
@@ -11,7 +11,7 @@
     <div class="row page-title">
         <div class="col-md-6 text-left">
             <h4 class="page-title-text">
-                Customer Accounts List
+                Late Days Account List
             </h4>
             <h6 class="page-title-breadcrumbs">
                 <a href="~/Dashboard/Dashboard">Home</a> > Customer Accounts > Accounts List For Late Payment
@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-6 text-right">
             @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
-            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>
+            <a href="~/Dashboard/Dashboard" class="btn btn-sm btn-outline-success bg1 eft-1" title="Back"><i class="fa fa-angle-double-left"></i> Back To Home </a>          
         </div>
     </div>
     <div class="card p-10 mB-20">
@@ -36,17 +36,17 @@
                         Client NAME
                     </th>
                     <th>
-                        CNIC
-                    </th>
-
-                    <th>
                         Client ID
                     </th>
+                        CNIC
                     <th>
-                        Balance
+                        
                     </th>
                     <th>
-                        Branch
+                        Late Days
+                    </th>
+                    <th>
+                        Amount
                     </th>
                     <th>
                         Action
@@ -61,16 +61,17 @@
                 {
                     <tr>
                         <td>@(i++)</td>
-                        <td>@item.Name</td>
-                        <td>@item.CNIC</td>                        
-                        <td>@(item.ClientId == null || item.ClientId == "" ? "--" : item.ClientId)</td>
-                        <td>@(item.Balance == 0 ? "0" : string.Format("{0:#,##0}", item.Balance))</td>
+                        <td>@item.ClientName</td>
+ 
+                        <td>@(item.ClientID == null || item.ClientID == "" ? "--" : item.ClientID)</td>
+                        <td>@item.CNIC</td>                                                 
+                        <td>@(item.LateDays == 0 ? "0" : string.Format("{0:#,##0}", item.LateDays))</td>
+                         
+                        <td>@(item.TotalPunishment == 0  ? "0" : string.Format("{0:#,##0}", item.TotalPunishment))</td>
+                        
                         <td>
-                            @(item.Branch == null || item.Branch == "" ? "--" : item.Branch)
-                        </td>
-                        <td>
-                            <a class="text-success" href="/CustomerAccount/AuthorizeTransaction?id=@item.Id&&authorize=true"> Authorize </a> -
-                            <a class="text-danger" onclick="if (confirm('Are you sure you want to reject this entry?')) { window.location = '/CustomerAccount/AuthorizeTransaction?id=@item.Id&&authorize=false';}"> Reject </a>
+                            <a class="text-success" href="/Accountant/AuthorizeTransaction?id=@item.Id&&authorize=true"> Authorize </a> -
+                            <a class="text-danger" onclick="if (confirm('Are you sure you want to reject this entry?')) { window.location = '/Accountant/AuthorizeTransaction?id=@item.Id&&authorize=false';}"> Reject </a>
                         </td>
                     </tr>
                 }

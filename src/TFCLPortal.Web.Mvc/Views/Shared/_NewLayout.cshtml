@@ -465,6 +465,14 @@
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
+                                    <a href="~/Accountant/LateDaysAuthorization" class="dropdown-toggle">
+                                        <span class="icon-holder">
+                                            <i class="fa fa-edit"></i>
+                                        </span>
+                                        <h6>Late Days Authorizations</h6>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
                                     <a href="~/Accountant/EnhancementRequestList" class="dropdown-toggle">
                                         <span class="icon-holder">
                                             <i class="fa fa-edit"></i>
@@ -1297,16 +1305,16 @@
                 @*<div class="position-center"><h4>Loan Origination & Management System</h4></div>*@
                 <ul class="nav-right">
                     <li class="notifications dropdown" style="z-index: 1130;">
-                        <span class="counter bgc-red" id="NotificationCount">...</span>
-                        <a id="NotificationButton" class="dropdown-toggle no-after" data-toggle="dropdown">
+                        @*<span class="counter bgc-red" id="NotificationCount">...</span>*@
+@*                        <a id="NotificationButton" class="dropdown-toggle no-after" data-toggle="dropdown">
                             <i class="ti-bell"></i>
-                        </a>
+                        </a>*@
 
                         <ul class="dropdown-menu">
-                            <li class="pX-20 pY-15 bdB">
+@*                            <li class="pX-20 pY-15 bdB">
                                 <i class="ti-bell pR-10"></i> <span id="NotificationCount2">Notifications</span>
                                 <span class="fsz-sm fw-600 c-grey-900">Notifications</span>
-                            </li>
+                            </li>*@
                             <li>
                                 <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm" id="innerNotifications" style=" max-height: 300px;">
                                     <li>
@@ -1330,7 +1338,7 @@
                             </li>
                             <li class="pX-20 pY-15 ta-c bdT">
                                 <span>
-                                    <a href="/Dashboard/ViewNotifications" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a>
+                                    @*<a href="/Dashboard/ViewNotifications" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a>*@
                                 </span>
                             </li>
                         </ul>

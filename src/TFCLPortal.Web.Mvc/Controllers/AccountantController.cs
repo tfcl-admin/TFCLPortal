@@ -64,11 +64,16 @@ using TFCLPortal.BaloonPayments;
 using TFCLPortal.BaloonPayments.Dto;
 using TFCLPortal.ClosingMonths;
 using TFCLPortal.PaymentChargesDeviationMatrix;
+using TFCLPortal.LateDaysAuthorizations;
 using static System.Net.Mime.MediaTypeNames;
 using Abp.Collections.Extensions;
 using System.Security.Cryptography.X509Certificates;
 using TFCLPortal.Reversals;
 using Swashbuckle.AspNetCore.Swagger;
+using TFCLPortal.Transactions.Dto;
+using TFCLPortal.LateDaysAuthorizations.Dto;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Abp.UI;
 
 namespace TFCLPortal.Web.Controllers
 {
@@ -112,7 +117,7 @@ namespace TFCLPortal.Web.Controllers
         private readonly ICustomerAccountAppService _customerAccountAppAppService;
         private readonly IRepository<DeceasedAuthorization, int> _deceasedAuthorizationRepository;
         private readonly ICustomAppService _customAppService;
-
+        private readonly IRepository<Applicationz> _ApplicationzRepository;
         private readonly IRepository<CustomerAccount, Int32> _CustomerAccountRepository;
         private readonly IRepository<Transaction, int> _transactionRepository;
         private readonly IRepository<Holiday, int> _holidayRepository;
@@ -123,6 +128,8 @@ namespace TFCLPortal.Web.Controllers
         private readonly IRepository<Applicationz, Int32> _applicationRepository;
         private readonly IRepository<InstallmentPayment, int> _installmentPaymentRepository;
         private readonly IRepository<AuthorizeInstallmentPayment, int> _authorizeInstallmentPaymentRepository;
+        private readonly IRepository<LateDaysAuthorization, int> _lateDaysAuthorizationRepository;
+        private readonly IRepository<LateDaysAuthorization, Int32> _LateDaysAuthorizationRepository;
 
         private readonly INotificationLogAppService _notificationLogAppService;
         private readonly IClosingMonthAppService _closingMonthAppService;
@@ -134,9 +141,11 @@ namespace TFCLPortal.Web.Controllers
             IRepository<WriteOff, int> writeOffRepository, IWriteOffAppService writeOffAppService, IRepository<EarlySettlement, int> earlySettlementRepository, IEarlySettlementAppService earlySettlementAppService, IRepository<AuthorizeInstallmentPayment, int> authorizeInstallmentPaymentRepository, IAuthorizeInstallmentPaymentAppService authorizeInstallmentPaymentAppService,
             IRepository<InstallmentPayment, int> installmentPaymentRepository, IRepository<Holiday, int> holidayRepository, IRepository<ScheduleInstallment, int> scheduleInstallmentRepository, IInstallmentPaymentAppService installmentPaymentAppService, IRepository<NatureOfPayment, int> natureOfPaymentRepository,
             IRepository<CompanyBankAccount, int> companyBankAccountRepository, IBADataCheckAppService IBADataCheckAppService, INotificationLogAppService notificationLogAppService, IScheduleTempAppService scheduleTempAppService, UserManager userManager, IRepository<Schedule, int> scheduleRepository, IScheduleAppService scheduleAppService, ICoApplicantDetailAppService coApplicantDetailAppService, IGuarantorDetailAppService guarantorDetailAppService, IBranchDetailAppService branchDetailAppService, IBankAccountAppService bankAccountAppService, ILoanEligibilityAppService loanEligibilityAppService, IBusinessPlanAppService businessPlanAppService, IBccDecisionAppService bccDecisionAppService, IApplicationAppService applicationAppService, IUserAppService userAppService, IFinalWorkflowAppService finalWorkflowAppService,
-                  IRepository<Transaction, Int32> TransactionRepository, IRepository<CustomerAccount, Int32> CustomerAccountRepository  ,  IRepository<PaymentChargesDeviationMatric, Int32> paymentChargesDeviationMatricRepository, IPaymentChargesDeviationMatrixAppService PaymentChargesDeviationMatrixAppService, IRepository<CustomerAccount, int> customerAccountRepository)
+                  IRepository<Transaction, Int32> TransactionRepository, IRepository<CustomerAccount, Int32> CustomerAccountRepository  ,  IRepository<PaymentChargesDeviationMatric, Int32> paymentChargesDeviationMatricRepository, IPaymentChargesDeviationMatrixAppService PaymentChargesDeviationMatrixAppService, IRepository<CustomerAccount, int> customerAccountRepository , IRepository<LateDaysAuthorization, int> lateDaysAuthorizationRepository , IRepository<Applicationz> ApplicationzRepository)
         {
             _paymentChargesDeviationMatricRepository = paymentChargesDeviationMatricRepository;
+            _ApplicationzRepository = ApplicationzRepository;
+            _lateDaysAuthorizationRepository = lateDaysAuthorizationRepository;
             _paymentChargesDeviationMatrixAppService = PaymentChargesDeviationMatrixAppService;
             _BaloonPaymentrepository = BaloonPaymentrepository;
             _baloonPaymentAppService = baloonPaymentAppService;
@@ -2313,38 +2322,132 @@ namespace TFCLPortal.Web.Controllers
             try
             {
                 var appData = _applicationRepository.Get(ApplicationId);
-                var transaction = _transactionRepository.Get(ApplicationId);
-                var Transaction = _TransactionRepository.GetAllList(x => x.ApplicationId == ApplicationId).FirstOrDefault();
+                //var transaction = _transactionRepository.Get(ApplicationId);
+                //var Transaction = _TransactionRepository.GetAllList(x => x.ApplicationId == ApplicationId).FirstOrDefault();
+               // var lateDays = _lateDaysAuthorizationRepository.Get(ApplicationId);
+                //var LateDays = _LateDaysAuthorizationRepository.GetAllList(x => x.ApplicationId == ApplicationId).FirstOrDefault();
 
-                Transaction t = new Transaction();
+                LateDaysAuthorization L = new LateDaysAuthorization();
+               // Transaction t = new Transaction();
 
-                t.Amount = newtoalPunishment;
-                t.Type = "Late Days";
-                t.DepositDate = DateTime.Now;
-                t.Details = "Late Payment Deduction; Amount "+ newtoalPunishment + " Late Days " + LDays + "; Deduction Date "+ DateTime.Now ;
-                t.BalBefore = accBalance;
-                t.BalAfter = remainBalance;
-                t.Fk_AccountId = Transaction.Fk_AccountId;
-                t.AmountWords = "";
-                t.ModeOfPayment = "Deduction";
-                t.ModeOfPaymentOther = "";
-                t.ApplicationId = ApplicationId;
-                t.Reference = "Deduction";
-                t.isReversed = false;
-                t.isAuthorized = true;
-                _TransactionRepository.Insert(t);
+                L.TotalPunishment = newtoalPunishment;
+                L.ApplicationId = ApplicationId;
+                L.CreationTime = DateTime.Now;
 
-                CustomerAccount ca = _CustomerAccountRepository.Get(Transaction.Fk_AccountId);
-                ca.Balance = (ca.Balance - newtoalPunishment);
-                _CustomerAccountRepository.Update(ca);
+                //t.Details = "Late Payment Deduction; Amount "+ newtoalPunishment + " Late Days " + LDays + "; Deduction Date "+ DateTime.Now ;
 
-                resp = "Late Payment Charges Deducted from Account";
+                L.BalBefore = accBalance;
+                L.BalAfter = remainBalance;
+                L.LateDays = LDays;
+                L.isAuthorized = null;
+                L.IsDeleted = false;
+                // _LateDaysAuthorizationRepository.Insert(L);
+             var cs =   _lateDaysAuthorizationRepository.InsertAsync(L);
+          //CustomerAccount ca = _CustomerAccountRepository.Get(Transaction.Fk_AccountId);
+                 //ca.Balance = (ca.Balance - newtoalPunishment);
+                 //_CustomerAccountRepository.Update(ca);                 //t.Reference = "Deduction";
+                 //t.isReversed = false;
+                 //t.isAuthorized = true;
+                 //_TransactionRepository.Insert(t);
+
+       
+
+                 resp = "Late Payment Charges Request Sent to BM";
             }
             catch (Exception ex)
             {
-                throw;
+                throw new UserFriendlyException(L("UpdateMethodError{0}", "payment"));
             }
             return Json(resp);
+        }
+        public IActionResult LateDaysAuthorization()
+        {
+            //try 
+            //{
+                var unAuthList = _lateDaysAuthorizationRepository.GetAllList(x => x.isAuthorized == null);
+                var LateDaysMapped = ObjectMapper.Map<List<LateDaysAuthorizationListDto>>(unAuthList);
+
+                if (unAuthList != null)
+                {
+                    foreach (var transaction in LateDaysMapped.ToArray())
+                    {
+                        if (transaction.ApplicationId != 0)
+                        {
+                            var getDeatils = LateDaysMapped.Find(x => x.ApplicationId == transaction.ApplicationId);
+                            if (getDeatils != null)
+                            {
+                                var app = _applicationAppService.GetApplicationByApplicationId(transaction.ApplicationId);
+                                transaction.ClientID = app.ClientID;
+                                transaction.ApplicationId = app.Id;
+                                ViewBag.ApplicationId = app.Id;
+                                transaction.ClientName = app.ClientName;
+                                transaction.CNIC = app.CNICNo;
+                                ViewBag.LateDays = transaction.LateDays;
+                                ViewBag.TotalPunishment = transaction.TotalPunishment;
+                            }
+                        }
+                    }
+                }
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new UserFriendlyException(L("UpdateMethodError{0}", "payment"));
+            //}
+            return View(LateDaysMapped);
+        }
+
+        public IActionResult AuthorizeTransaction(int id, bool authorize) 
+        {
+            Transaction t = new Transaction();
+
+            if (authorize != null)
+            {
+                if (authorize == true)
+                {
+                    var cus = _lateDaysAuthorizationRepository.Get(id);
+                    var getAppId = cus.ApplicationId;
+
+                    var appRep = _applicationAppService.GetApplicationById(getAppId);
+                    var cnic = appRep.CNICNo;
+
+                    var ca = _customerAccountAppAppService.GetCustomerAccountByCNICwithTransactions(cnic);
+
+
+
+                    //t.Details
+                    t = _TransactionRepository.GetAllList(x => x.ApplicationId == cus.ApplicationId).FirstOrDefault();
+                    t.CreationTime = DateTime.Now;
+                    t.AmountWords = "";
+                    t.Amount = ( cus.BalBefore - cus.BalAfter );
+                    t.Details = "Late Days Installment Deduction";
+                    t.CompanyBankId = 0;
+                    t.IsDeleted = false;
+                    t.ModeOfPayment = "Online Payment";
+                    t.BalBefore = cus.BalBefore;
+                    t.BalAfter = cus.BalAfter;
+                    t.isAuthorized = true;
+                    t.Type = "Credit";
+                    t.Fk_AccountId = ca.Id;
+                    t.ApplicationId = cus.ApplicationId;
+                    t.isReversed = false;
+                    _transactionRepository.Insert(t);
+
+                    var acc = _CustomerAccountRepository.Get(t.Fk_AccountId);
+                    acc.Balance = t.BalAfter;
+                    _CustomerAccountRepository.Update(acc);
+                    cus.isAuthorized = true;
+                    _lateDaysAuthorizationRepository.Update(cus);
+
+                }
+                else
+                {
+                    var cus = _lateDaysAuthorizationRepository.Get(id);
+                    cus.isAuthorized = false;
+                    _lateDaysAuthorizationRepository.Update(cus);
+                }
+            }
+            return RedirectToAction("LateDaysAuthorization","Accountant");
         }
 
         public IActionResult LatePaymentDeduction(int ApplicationId)
@@ -2838,23 +2941,6 @@ namespace TFCLPortal.Web.Controllers
 
         return Json("");
     }
-    //Write Off Module End
-
-    //Deceased Settlement Module Start
-
-    //public IActionResult ProcessingFee(int ApplicationId)
-    //{
-    //    ViewBag.ApplicationId = ApplicationId;
-    //    var app = _applicationAppService.GetApplicationById(ApplicationId);
-    //    ViewBag.ClientId = app.ClientID;
-    //    ViewBag.ClientName = app.ClientName;
-
-    //    var BP = _businessPlanAppService.GetBusinessPlanByApplicationId(ApplicationId);
-    //    ViewBag.BP= BP;
-
-
-    //    return View();
-    //}
 
     public IActionResult DeceasedSettlement(int ApplicationId)
     {

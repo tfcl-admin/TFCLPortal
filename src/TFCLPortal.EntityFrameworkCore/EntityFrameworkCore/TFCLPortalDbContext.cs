@@ -197,6 +197,7 @@ using TFCLPortal.ClosingMonths;
 using TFCLPortal.NameChanges;
 using TFCLPortal.PaymentChargesDeviationMatrix;
 using TFCLPortal.DynamicDropdowns.DeclineReasons;
+using TFCLPortal.LateDaysAuthorizations;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -440,6 +441,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<RentAgreementSignatory> RentAgreementSignatoryDbSet { get; set; }
         public DbSet<RentAgreementSignatoryOther> RentAgreementSignatoryOtherDbSet { get; set; }
         public DbSet<DeclineReason> DeclineReasonDbSet { get; set; }
+        public DbSet<LateDaysAuthorization> LateDaysAuthorizationDbSet { get; set; }
 
         public DbSet<PaymentChargesDeviationMatric> PaymentChargesDeviationMatrixDbSet { get; set; }
         public TFCLPortalDbContext(DbContextOptions<TFCLPortalDbContext> options)

@@ -522,74 +522,74 @@ namespace TFCLPortal.Web.Mvc.Controllers
             }
             return Json(response);
         }
+        #region AddNotification 27 July
+        //[HttpPost]
+        //public JsonResult getAllNotifications()
+        //{
 
-        [HttpPost]
-        public JsonResult getAllNotifications()
-        {
+        //    try
+        //    {
+        //        var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).OrderByDescending(x => x.Id).Take(20).ToList();
 
-            try
-            {
-                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).OrderByDescending(x => x.Id).Take(20).ToList();
+        //        return Json(getNotifications);
 
-                return Json(getNotifications);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json("");
 
-            }
-            catch (Exception ex)
-            {
-                return Json("");
+        //    }
+        //}
 
-            }
-        }
+        //public IActionResult ViewNotifications()
+        //{
 
-        public IActionResult ViewNotifications()
-        {
+        //    try
+        //    {
+        //        var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).OrderByDescending(x => x.Id).ToList();
 
-            try
-            {
-                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).OrderByDescending(x => x.Id).ToList();
+        //        return View(getNotifications);
 
-                return View(getNotifications);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return View();
 
-            }
-            catch (Exception ex)
-            {
-                return View();
-
-            }
-        }
+        //    }
+        //}
 
 
-        [HttpPost]
-        public JsonResult markReadNotifications()
-        {
-            try
-            {
-                var markRead = _notificationLogAppService.MarkRead((int)AbpSession.UserId);
-                return Json(markRead);
-            }
-            catch (Exception ex)
-            {
-                return Json("");
+        //[HttpPost]
+        //public JsonResult markReadNotifications()
+        //{
+        //    try
+        //    {
+        //        var markRead = _notificationLogAppService.MarkRead((int)AbpSession.UserId);
+        //        return Json(markRead);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json("");
 
-            }
-        }
+        //    }
+        //}
 
-        [HttpPost]
-        public JsonResult getNotificationsCount()
-        {
+        //[HttpPost]
+        //public JsonResult getNotificationsCount()
+        //{
 
-            try
-            {
-                var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).Where(x => x.isRead == false).Count();
-                return Json(getNotifications);
+        //    try
+        //    {
+        //        var getNotifications = _notificationLogAppService.GetNotificationLogListByUserId((int)AbpSession.UserId).Where(x => x.isRead == false).Count();
+        //        return Json(getNotifications);
 
-            }
-            catch (Exception ex)
-            {
-                return Json("");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json("");
 
-            }
-        }
+        //    }
+        //}
         //[HttpPost]
         //public JsonResult getStateWiseCount()
         //{
@@ -614,6 +614,8 @@ namespace TFCLPortal.Web.Mvc.Controllers
 
         //    }
         //}
+
+        #endregion
 
         public int? Branchid()
         {
