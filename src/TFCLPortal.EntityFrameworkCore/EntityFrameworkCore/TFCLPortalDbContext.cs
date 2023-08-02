@@ -198,6 +198,7 @@ using TFCLPortal.NameChanges;
 using TFCLPortal.PaymentChargesDeviationMatrix;
 using TFCLPortal.DynamicDropdowns.DeclineReasons;
 using TFCLPortal.LateDaysAuthorizations;
+using TFCLPortal.StudentDetails;
 
 namespace TFCLPortal.EntityFrameworkCore
 {
@@ -444,6 +445,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<LateDaysAuthorization> LateDaysAuthorizationDbSet { get; set; }
 
         public DbSet<PaymentChargesDeviationMatric> PaymentChargesDeviationMatrixDbSet { get; set; }
+        public DbSet<StudentDetail> StudentDetailDbSet { get; set; }
         public TFCLPortalDbContext(DbContextOptions<TFCLPortalDbContext> options)
             : base(options)
         {
