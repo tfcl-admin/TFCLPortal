@@ -388,7 +388,8 @@
                         </ul>
                     </li>
 
-                    @if (IsGranted(PermissionNames.Pages_BM) || IsGranted(PermissionNames.Pages_VO))
+                   @* @if (IsGranted(PermissionNames.Pages_BM) || IsGranted(PermissionNames.Pages_VO))*@
+                   @if (IsGranted(PermissionNames.Pages_BM))
                     {
                         <li class="nav-item dropdown collapsed" data-toggle="collapse" data-target="#LO">
                             <a>
@@ -456,14 +457,7 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item dropdown">
-                                    <a href="~/Accountant/WriteOffAuthorizationList" class="dropdown-toggle">
-                                        <span class="icon-holder">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
-                                        <h6>Write Off Authorizations</h6>
-                                    </a>
-                                </li>
+
                                 <li class="nav-item dropdown">
                                     <a href="~/Accountant/LateDaysAuthorization" class="dropdown-toggle">
                                         <span class="icon-holder">
@@ -495,10 +489,10 @@
                                 <h6>Re-Schedule Authorization</h6>
                             </a>
                         </li>
-                    }
+@*                    }
 
                     @if (User.Identity.Name.Contains("furrukh")||User.Identity.Name.Contains("admin"))
-                    {
+                    {*@
                         <li class="nav-item">
                             <a href="~/Accountant/DeceasedSettlementAuthorizationList" class="dropdown-toggle">
                                 <span class="icon-holder">
