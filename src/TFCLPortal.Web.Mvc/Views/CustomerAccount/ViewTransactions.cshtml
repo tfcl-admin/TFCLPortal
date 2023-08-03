@@ -39,6 +39,7 @@
         </div>
         <div class="col-md-6 text-right">
             @*<button class="btn btn-sm btn-outline-success" onclick="$('#filterForm').toggle();"><i class="fa fa-filter"></i> Filter Records</button>*@
+            <a class="btn btn-outline-success" href="/Accountant/LatePaymentDeduction?ApplicationId=@ViewBag.ApplicationId"><i class="fa fa-calendar"></i> Late Days</a>
             <a class="btn btn-outline-success" href="/Accountant/ViewSchedule?ApplicationId=@ViewBag.ApplicationId"><i class="fa fa-calendar"></i> View Schedule</a>
             <a class="btn btn-outline-success" href="/CustomerAccount/CreditForm?AccountId=@ViewBag.AccountId"><i class="fa fa-plus"></i> Credit</a>
             <a class="btn btn-sm btn-outline-primary" onclick="printList();"><i class="fa fa-print"></i> Print</a>
