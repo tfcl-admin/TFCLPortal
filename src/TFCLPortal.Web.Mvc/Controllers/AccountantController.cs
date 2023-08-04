@@ -2416,7 +2416,7 @@ namespace TFCLPortal.Web.Controllers
 
 
                     //t.Details
-                    t = _TransactionRepository.GetAllList(x => x.ApplicationId == cus.ApplicationId).FirstOrDefault();
+                   // t = _TransactionRepository.GetAllList(x => x.ApplicationId == cus.ApplicationId).FirstOrDefault();
                     t.CreationTime = DateTime.Now;
                     t.AmountWords = "";
                     t.Amount = ( cus.BalBefore - cus.BalAfter );
@@ -2427,11 +2427,11 @@ namespace TFCLPortal.Web.Controllers
                     t.BalBefore = cus.BalBefore;
                     t.BalAfter = cus.BalAfter;
                     t.isAuthorized = true;
-                    t.Type = "Credit";
+                    t.Type = "Debit";
                     t.Fk_AccountId = ca.Id;
                     t.ApplicationId = cus.ApplicationId;
                     t.isReversed = false;
-                    _transactionRepository.Insert(t);
+                    _transactionRepository.InsertAsync(t);
 
                     var acc = _CustomerAccountRepository.Get(t.Fk_AccountId);
                     acc.Balance = t.BalAfter;
