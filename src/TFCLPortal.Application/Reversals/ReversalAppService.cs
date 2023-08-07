@@ -311,10 +311,6 @@ namespace TFCLPortal.Reversals
                             }
 
                         }
-
-
-
-
                     }
 
 

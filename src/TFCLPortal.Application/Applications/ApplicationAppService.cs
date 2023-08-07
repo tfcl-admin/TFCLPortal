@@ -72,6 +72,8 @@ using TFCLPortal.AssociatedIncomeChilds;
 using TFCLPortal.TdsInventoryDetails;
 using TFCLPortal.TDSBusinessExpenses;
 using TFCLPortal.NameChanges;
+using TFCLPortal.TaleemFeeSahulats;
+using TFCLPortal.TaleemFeeSahulats.Dto;
 
 //using TFCLPortal.Schedules;
 
@@ -104,6 +106,7 @@ namespace TFCLPortal.Applications
         private readonly ITaleemDostSahulatAppService _taleemDostSahulatAppService;
         private readonly ITaleemJariSahulatAppService _taleemJariSahulatAppService;
         private readonly ITaleemTeacherSahulatAppService _taleemTeacherSahulatAppService;
+        private readonly ITaleemFeeSahulatAppService _taleemFeeSahulatAppService;
         private readonly IRepository<Mobilization, Int32> _mobilizationRepository;
         private readonly IApiCallLogAppService _apiCallLogAppService;
         private readonly IRepository<MobilizationsLog, Int32> _mobilizationLogRepository;
@@ -186,6 +189,7 @@ namespace TFCLPortal.Applications
                IRepository<EnhancementRequest> enhancementRequestRepository,
             ITaleemSchoolAsasahAppService taleemSchoolAsasahAppService,
             ITaleemSchoolSarmayaAppService taleemSchoolSarmayaAppService,
+            ITaleemFeeSahulatAppService taleemFeeSahulatAppService,
             ICustomRepository customRepository,
             IBranchManagerActionAppService branchManagerActionAppService,
             ITaleemDostSahulatAppService taleemDostSahulatAppService,
@@ -239,6 +243,7 @@ namespace TFCLPortal.Applications
             _CoApplicantDetailsrepo = CoApplicantDetailsrepo;
             _taleemJariSahulatAppService = taleemJariSahulatAppService;
             _taleemTeacherSahulatAppService = taleemTeacherSahulatAppService;
+            _taleemFeeSahulatAppService = taleemFeeSahulatAppService;
             _customRepository = customRepository;
             _taggedPortfolioAppService = taggedPortfolioAppService;
             _mobilizationRepository = mobilizationRepository;
@@ -424,6 +429,14 @@ namespace TFCLPortal.Applications
                         TeacherDto.ApplicationId = applications.Id;
                         ApplicationNumber = _taleemTeacherSahulatAppService.CreateTaleemTeacherSahulatAndReturnApplicationNumber(TeacherDto);
                         clientID = "TTS-" + CreateClientIDbyAppNo(ApplicationNumber);
+                    }
+
+                    else if (input.ProductType == 11)
+                    {
+                        CreateTaleemFeeSahulatDto FeeDto = new CreateTaleemFeeSahulatDto();
+                        FeeDto.ApplicationId = applications.Id;
+                        ApplicationNumber = _taleemFeeSahulatAppService.CreateTaleemFeeSahulatAndReturnApplicationNumber(FeeDto);
+                        clientID = "TFS-" + CreateClientIDbyAppNo(ApplicationNumber);
                     }
 
                     var applicationSaveAppNumber = _applicationRepository.GetAllList().Where(x => x.Id == applications.Id).Single();

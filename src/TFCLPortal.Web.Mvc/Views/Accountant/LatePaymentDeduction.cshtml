@@ -122,7 +122,7 @@
         var fed = (totalPunishment * 0.16);
         var newtoalPunishment = (totalPunishment + fed);
         
-        if (accBalance <= 0 || remainBalance < 0 ) {
+        if (accBalance <= 0 && remainBalance < 0 ) {
             event.preventDefault();
         
             swal("Please deposit before deduction", {

@@ -2399,7 +2399,6 @@ namespace TFCLPortal.Web.Controllers
 
         public IActionResult AuthorizeTransaction(int id, bool authorize) 
         {
-            Transaction t = new Transaction();
 
             if (authorize != null)
             {
@@ -2413,10 +2412,7 @@ namespace TFCLPortal.Web.Controllers
 
                     var ca = _customerAccountAppAppService.GetCustomerAccountByCNICwithTransactions(cnic);
 
-
-
-                    //t.Details
-                   // t = _TransactionRepository.GetAllList(x => x.ApplicationId == cus.ApplicationId).FirstOrDefault();
+                    Transaction t = new Transaction();                                      
                     t.CreationTime = DateTime.Now;
                     t.AmountWords = "";
                     t.Amount = ( cus.BalBefore - cus.BalAfter );
@@ -2432,6 +2428,11 @@ namespace TFCLPortal.Web.Controllers
                     t.ApplicationId = cus.ApplicationId;
                     t.isReversed = false;
                     _transactionRepository.InsertAsync(t);
+
+                    //Transaction tran = new Transaction();
+                    //tran.CreationTime = DateTime.Now;
+                    //tran.AmountWords = "";
+                    //tran.Amount = 0;
 
                     var acc = _CustomerAccountRepository.Get(t.Fk_AccountId);
                     acc.Balance = t.BalAfter;

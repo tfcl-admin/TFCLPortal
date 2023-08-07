@@ -25,6 +25,7 @@ namespace TFCLPortal.BusinessPlans
         public string LoanAmountRecommended { get; set; } //updated Field Name from Loan Amount Required.
         public string RequiredLoanAmount { get; set; } //added Field Name
         public int LoanTenureRequested { get; set; }
+        public int AdvanceAmount { get; set; } // ADDED NEW FIELD FOR TFS
         public string CollateralGiven { get; set; }
         public int PaymentFrequency { get; set; }
         public string ScreenStatus { get; set; }
