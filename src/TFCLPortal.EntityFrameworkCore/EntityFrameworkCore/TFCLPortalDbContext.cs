@@ -131,6 +131,7 @@ using TFCLPortal.ScheduleTemps;
 using TFCLPortal.ScheduleInstallmentTemps;
 using TFCLPortal.TaleemDostSahulats;
 using TFCLPortal.TaleemJariSahulats;
+using TFCLPortal.TaleemFeeSahulats;
 using TFCLPortal.TaleemTeacherSahulats;
 using TFCLPortal.InstallmentPayments;
 using TFCLPortal.CompanyBankAccounts;
@@ -384,6 +385,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<TaleemSchoolSarmaya> TaleemSchoolSarmayaDbSet { get; set; }
         public DbSet<TaleemDostSahulat> TaleemDostSahulatDbSet { get; set; }
         public DbSet<TaleemJariSahulat> TaleemJariSahulatDbSet { get; set; }
+        public DbSet<TaleemFeeSahulat> TaleemFeeSahulatDbSet { get; set; }
         public DbSet<TaleemTeacherSahulat> TaleemTeacherSahulatDbSet { get; set; }
         public DbSet<DependentEducationDetail> DependentEducationDetailDbSet { get; set; }
         public DbSet<DependentEducationDetailChild> DependentEducationDetailChildDbSet { get; set; }
