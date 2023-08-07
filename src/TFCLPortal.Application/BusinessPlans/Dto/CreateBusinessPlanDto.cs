@@ -13,6 +13,7 @@ namespace TFCLPortal.BusinessPlans.Dto
         public string BranchCode { get; set; }
         public string ApplicationNo { get; set; }
         public DateTime? ApplicationDate { get; set; }
+        public int AdvanceAmount { get; set; }
         public int Purpose { get; set; }
         public string PEPs { get; set; }
         public string ClientExistInCelBel { get; set; }

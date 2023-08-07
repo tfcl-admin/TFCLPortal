@@ -45,6 +45,7 @@ namespace TFCLPortal.BusinessPlans.Dto
         public string ReasonOfDeclineName { get; set; }
         public string ReasonOfDecineOthers { get; set; }
         public int CreditBureauCheck { get; set; }
+        public int AdvanceAmount { get; set; }
         public string CreditBureauCheckName { get; set; }
         public bool? OverDues { get; set; }
         public string ApprovalTaken { get; set; }
