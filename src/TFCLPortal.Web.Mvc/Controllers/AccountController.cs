@@ -420,9 +420,13 @@ namespace TFCLPortal.Web.Controllers
             return RedirectToAction("Dashboard", "Dashboard");
         }
 
+        //public string GetAppHomeUrl()
+        //{
+        //    return Url.Action("Dashboard", "Dashboard");
+        //}
         public string GetAppHomeUrl()
         {
-            return Url.Action("Dashboard", "Dashboard");
+            return Url.Action("WelcomePage", "Home");
         }
 
         #endregion

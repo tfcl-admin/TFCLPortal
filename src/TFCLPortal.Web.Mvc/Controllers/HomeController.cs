@@ -11,5 +11,10 @@ namespace TFCLPortal.Web.Controllers
         {
             return View();
         }
-	}
+        public ActionResult WelcomePage()
+        {
+            return View();
+        }
+        
+    }
 }
