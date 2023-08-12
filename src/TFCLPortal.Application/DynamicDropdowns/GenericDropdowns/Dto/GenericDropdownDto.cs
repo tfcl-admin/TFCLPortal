@@ -67,6 +67,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns.Dto
         public List<ReferenceCheckListDto> ReferenceCheckLists { get; set; }
         public List<SchoolClassListDto> SchoolClassLists { get; set; }
         public List<LoanTenureRequiredListDto> loanTenureRequired { get; set; }
+        public List<TFSLoanTenureRequiredListDto> loanTenureTFSRequired { get; set; }
         public List<NatureOfBusinessListDto> NatureOfBusinessLists { get; set; }
 
 

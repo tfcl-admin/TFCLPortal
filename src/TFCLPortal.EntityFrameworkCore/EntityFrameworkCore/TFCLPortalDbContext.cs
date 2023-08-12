@@ -24,6 +24,7 @@ using TFCLPortal.DynamicDropdowns.MobilizationStatuses;
 using TFCLPortal.DynamicDropdowns.ProductTypes;
 using TFCLPortal.DynamicDropdowns.SchoolClasses;
 using TFCLPortal.DynamicDropdowns.Provinces;
+using TFCLPortal.DynamicDropdowns.TFSLoanTenureRequireds;
 using TFCLPortal.OtherDetails;
 using TFCLPortal.BusinessPlans;
 using TFCLPortal.ExposureDetails;
@@ -375,6 +376,7 @@ namespace TFCLPortal.EntityFrameworkCore
         public DbSet<WorkFlow> WorkFlowDbSet { get; set; }
         public DbSet<WorkFlowApplicationState> WorkFlowApplicationStateDbSet { get; set; }
         public DbSet<LoanTenureRequired> LoanTenureRequiredDbSet { get; set; }
+        public DbSet<TFSLoanTenureRequired> TFSLoanTenureRequiredDbSet { get; set; }
         public DbSet<LoanAmortizations.LoanAmortization> LoanAmortizationDbSet { get; set; }
         public DbSet<LoanAmortizationChild> LoanAmortizationChildDbSet { get; set; }
         public DbSet<LoanEligibility> LoanEligibilityDbSet { get; set; }

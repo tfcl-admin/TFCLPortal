@@ -94,6 +94,7 @@ using TFCLPortal.DynamicDropdowns.SpouseFamilyOtherIncomes;
 using TFCLPortal.DynamicDropdowns.OtherPaymentBehaviours;
 using TFCLPortal.LiabilityTypes;
 using TFCLPortal.DynamicDropdowns.DeclineReasons;
+using TFCLPortal.DynamicDropdowns.TFSLoanTenureRequireds;
 
 namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
 {
@@ -124,6 +125,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
         private readonly IReferenceCheckAppService _referenceCheckAppService;
         private readonly ISchoolClassAppService _schoolClassAppService;
         private readonly ILoanTenureRequiredAppService _loanTenureRequiredAppService;
+        private readonly ITFSLoanTenureRequiredAppService _TFSloanTenureRequiredAppService;
         private readonly INatureOfBusinessAppService _natureOfBusinessAppService;
         private readonly IRespondantDesignationAppService _respondantDesignationAppService;
         private readonly IApplicantSourceAppService _applicantSourceAppService;
@@ -233,6 +235,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
             IReferenceCheckAppService referenceCheckAppService,
             ISchoolClassAppService schoolClassAppService,
             ILoanTenureRequiredAppService loanTenureRequiredAppService,
+            ITFSLoanTenureRequiredAppService loanTenureTFSRequiredAppService,
             IApplicantSourceAppService applicantSourceAppService,
             IAcademicSessionAppService academicSessionAppService,
             IReasonForNotBeingInterestedAppService reasonForNotBeingInterestedAppService,
@@ -308,6 +311,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
             _referenceCheckAppService = referenceCheckAppService;
             _schoolClassAppService = schoolClassAppService;
             _loanTenureRequiredAppService = loanTenureRequiredAppService;
+            _TFSloanTenureRequiredAppService = loanTenureTFSRequiredAppService;
             _natureOfBusinessAppService = natureOfBusinessAppService;
             _respondantDesignationAppService = respondantDesignationAppService;
             _applicantSourceAppService = applicantSourceAppService;
@@ -521,6 +525,9 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
                 var loanTenure = _loanTenureRequiredAppService.GetAllList();//.OrderBy(x => x.Name);
                 var loanTenureListDtos = ObjectMapper.Map<List<LoanTenureRequiredListDto>>(loanTenure);
 
+                var TFSloanTenure = _TFSloanTenureRequiredAppService.GetAllList();//.OrderBy(x => x.Name);
+                var TFSloanTenureListDtos = ObjectMapper.Map<List<TFSLoanTenureRequiredListDto>>(TFSloanTenure);
+
                 var naturebusiness = _natureOfBusinessAppService.GetAllList();//.OrderBy(x => x.Name);
                 var BusinessListDtos = ObjectMapper.Map<List<NatureOfBusinessListDto>>(naturebusiness);
 
@@ -628,6 +635,7 @@ namespace TFCLPortal.DynamicDropdowns.GenericDropdowns
                 genericDropdownDto.ReferenceCheckLists = ReferenceCheckListDtos;
                 genericDropdownDto.SchoolClassLists = SchoolClassListDtos;
                 genericDropdownDto.loanTenureRequired = loanTenureListDtos;
+                genericDropdownDto.loanTenureTFSRequired = TFSloanTenureListDtos;
                 genericDropdownDto.NatureOfBusinessLists = BusinessListDtos;
                 genericDropdownDto.RespondantDesignations = respondantDesignationDtos;
                 genericDropdownDto.ApplicantSources = applicantSourceDtos;
